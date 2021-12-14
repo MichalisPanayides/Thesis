@@ -45,7 +45,3 @@ jobs:
         run: |
           npm install alex --global
           inv alex
-
-      - name: Run doctests
-        run: |
-          inv doctests
