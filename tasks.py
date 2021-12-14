@@ -81,3 +81,13 @@ def proselint(c):
                 print(error)
             exit_codes.append(1)
     sys.exit(max(exit_codes))
+
+
+@task
+def alex(c):
+    """
+    Check for inconsiderate and insensitive writing of all .tex files
+    """
+    all_tex_files = list(pathlib.Path().glob("**/*.tex"))
+    for file in all_tex_files:
+        c.run(f"alex {file}")
