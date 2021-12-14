@@ -92,10 +92,3 @@ def alex(c):
     for file in all_tex_files:
         c.run(f"alex {file}")
 
-
-@task
-def doctests(c):
-    """
-    Run doctests
-    """
-    c.run('python -m pytest --doctest-glob="*.tex"')
