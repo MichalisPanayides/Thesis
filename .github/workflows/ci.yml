@@ -1,0 +1,47 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    defaults:
+      run:
+        shell: bash -l {0}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+  
+      - name: Install node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.17.5'
+          npm-version: '6.14.14'
+
+      - name: Install conda and activate environment
+        uses: conda-incubator/setup-miniconda@v2.0.0
+        with:
+          environment-file: ./environment.yml
+          activate-environment: thesis_env
+
+      - name: Set up latex libraries
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y latexmk
+          sudo apt-get install -y texlive-latex-extra
+          sudo apt-get install -y texlive-xetex
+          sudo apt-get install aspell
+
+      - name: Test PDF compiles
+        run: inv compile
+
+      - name: Test spellcheck
+        run: inv spellcheck
+
+      - name: Run proselint
+        run: inv proselint
+
+      - name: Install and run alex checker for inconsiderate / insensitive writing
+        run: |
+          npm install alex --global
+          inv alex

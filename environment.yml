@@ -1,0 +1,12 @@
+name: thesis_env
+channels:
+  - defaults
+dependencies:
+  - pip==21.2.4
+  - python==3.9
+  - pytest==6.2.4
+  - pip:
+    - proselint==0.11.0
+    - ambulance_game==0.0.2
+    - invoke==1.6.0
+prefix: C:\Users\c1400990\anaconda3\envs\thesis_env
