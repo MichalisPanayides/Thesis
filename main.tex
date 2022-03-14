@@ -8,35 +8,17 @@
     \tableofcontents
     \newpage
 
-    \section{Introduction}
-    \section{Literature review}
-        \subsection{EMS/ED OR models}
-        \subsection{Game theory in Healthcare}
-        \subsection{Game theory and Queueing theory}
-        \subsection{Behavioural modelling}
-    \section{Queueing theoretic model}
-        \subsection{Markov chain}
-            \subsubsection{State mapping function}
-            \subsubsection{Steady state}
-            \subsubsection{Graph theoretic approach to steady state}
-        \subsection{Performance measures}
-            \subsubsection{Waiting time}
-            \subsubsection{Blocking time}
-            \subsubsection{Proportion of individuals within target}
-    \section{Game theoretic model}
-        \subsection{Formulation}
-    \section{Methodology}
-        \subsection{Backwards Induction}
-        \subsection{Nash equilibrium}
-        \subsection{Learning algorithms}
-    \section{EMS-ED application}
-        \subsection{Formulation}
-        \subsection{Numerical results}
-    \section{Agent-based extension}
-        \subsection{State-dependent model}
-        \subsection{Server-dependent model}
-        \subsection{Reinforcement learning}
-    \section{Results}
-    \section{Conclusion}
+    \input{chapters/01_introduction/main.tex}
+    \input{chapters/02_literature_review/main.tex}
+    \input{chapters/03_queueing_model/main.tex}
+    \input{chapters/04_game_theoretic_model/main.tex}
+    \input{chapters/05_methodology/main.tex}
+    \input{chapters/06_ems_ed_application/main.tex}
+    \input{chapters/07_agent_based_extension/main.tex}
+    \input{chapters/08_results/main.tex}
+    \input{chapters/09_conclusion/main.tex}
+    
+    \bibliographystyle{plain}
+    \bibliography{bibliography.bib}
 
 \end{document}
