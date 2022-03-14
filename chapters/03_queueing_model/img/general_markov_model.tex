@@ -1,0 +1,198 @@
+\begin{figure}[H]
+    \centering
+    \scalebox{.8}
+    {
+        \begin{tikzpicture}[-, node distance = 0.9cm, auto, every node/.style={scale=0.7}]
+
+            % Markov chain variables
+            \tikzmath{
+                let \initdist = 0.5cm;
+                let \altdist = 1.2cm;
+                let \minsz = 1.6cm;
+            }
+
+            % S_1 and S_2 rectangles
+            \tikzmath{
+                let \leftOne = -0.8;
+                let \rightOne = 2.7;
+                let \upOne = 0.8;
+                let \downOne = -2.7;
+                let \leftTwo = 2.8;
+                let \rightTwo = 13;
+                let \upTwo = -2.95;
+                let \downTwo = -16.4;
+            }
+
+            % General case variables
+            \tikzmath{
+                let \GCsmallx = 8.3;
+                let \GCsmally = -9.5;
+                let \GCbigx = 4.1;
+                let \GCbigy = -11.8;
+            }
+
+            % Rectangle for S1
+            \draw[ultra thin, dashed] (\leftOne, \downOne) -- (\leftOne, \upOne);
+            \draw[ultra thin, dashed] (\leftOne, \upOne) -- (\rightOne, \upOne);
+            \draw[ultra thin, dashed] (\rightOne, \upOne) -- node 
+            {\Huge{\( \quad S_1 \)}}(\rightOne, \downOne);
+            \draw[ultra thin, dashed] (\rightOne, \downOne) -- (\leftOne, \downOne);
+
+            % Rectangle for S2
+            \draw[ultra thin, dashed] (\leftTwo, \downTwo) -- node 
+            {\Huge{\( S_2 \quad \)}}(\leftTwo, \upTwo);
+            \draw[ultra thin, dashed] (\leftTwo, \upTwo) -- (\rightTwo, \upTwo);
+            \draw[ultra thin, dashed] (\rightTwo, \upTwo) -- (\rightTwo, \downTwo);
+            \draw[ultra thin, dashed] (\rightTwo, \downTwo) -- (\leftTwo, \downTwo);
+
+            % Small square of general case
+            \draw [thick] (\GCsmallx, \GCsmally) -- node {} 
+            (\GCsmallx + 0.4, \GCsmally);
+            \draw [thick] (\GCsmallx + 0.4, \GCsmally) -- node {} 
+            (\GCsmallx + 0.4, \GCsmally - 0.4);
+            \draw [thick] (\GCsmallx + 0.4, \GCsmally - 0.4) -- node {} 
+            (\GCsmallx, \GCsmally - 0.4);
+            \draw [thick] (\GCsmallx, \GCsmally - 0.4) -- node {} 
+            (\GCsmallx, \GCsmally);
+
+
+            % Dashed lines to from small square to big one 
+            \draw [ultra thin] (\GCsmallx, \GCsmally) -- node {} 
+            (\GCbigx, \GCbigy);
+            \draw [ultra thin] (\GCsmallx + 0.4, \GCsmally) -- node {} 
+            (\GCbigx + 4, \GCbigy);
+            \draw [ultra thin] (\GCsmallx, \GCsmally - 0.4) -- node {} (7, \GCbigy);
+            \draw [ultra thin] (\GCsmallx + 0.4, \GCsmally - 0.4) -- node {} 
+            (\GCbigx + 4, \GCbigy - 4);
+            
+            % Big Square of general case
+            \draw [ultra thick] (\GCbigx, \GCbigy) -- node {} (\GCbigx + 4, \GCbigy);
+            \draw [ultra thick] (\GCbigx + 4, \GCbigy) -- node {} 
+            (\GCbigx + 4, \GCbigy - 4);
+            \draw [ultra thick] (\GCbigx + 4, \GCbigy - 4) -- node {General Case} 
+            (\GCbigx, \GCbigy - 4);
+            \draw [ultra thick] (\GCbigx, \GCbigy - 4) -- node {} (\GCbigx, \GCbigy);
+
+            % First Line
+            \node[state, minimum size=1.5cm] (zero) {(0,0)};
+            \node[state, node distance = \initdist, minimum size=\minsz, below right=of zero] 
+            (one) {(0,1)};
+            \node[draw=none, node distance = \initdist, minimum size=\minsz, below right=of one] 
+            (two) {\textbf{\( \ddots \)}};
+            \node[state, node distance = \initdist, minimum size=\minsz, below right=of two] 
+            (three) {(0,T)};
+            \node[state, node distance = \altdist, minimum size=\minsz, right=of three] 
+            (four) {(0,T+1)};
+            \node[draw=none, node distance = \altdist, minimum size=\minsz, right=of four] 
+            (five) {\textbf{\dots}};
+            \node[state, minimum size=\minsz, right=of five] (six) {(0,C)};
+            \node[draw=none, minimum size=\minsz, right=of six] (seven) {\textbf{\dots}};
+
+            % Second Line
+            \node[state, minimum size=\minsz, below=of three] (three_one) {(1,T)};
+            \node[state, minimum size=\minsz, below=of four] (four_one) {(1,T+1)};
+            \node[draw=none, minimum size=\minsz, below=of five] (five_one) {\textbf{\dots}};
+            \node[state, minimum size=\minsz, right=of five_one] (six_one) {(1,C)};
+            \node[draw=none, minimum size=\minsz, right=of six_one] (seven_one) {\textbf{\dots}};
+            
+            % Third Line
+            \node[state, minimum size=\minsz, below=of three_one] (three_two) {(2,T)};
+            \node[state, minimum size=\minsz, below=of four_one] (four_two) {(2,T+1)};
+            \node[draw=none, minimum size=\minsz, below=of five_one] (five_two) 
+            {\textbf{\dots}};
+            \node[state, minimum size=\minsz, right=of five_two] (six_two) {(2,C)};
+            \node[draw=none, minimum size=\minsz, right=of six_two] (seven_two) 
+            {\textbf{\dots}};
+
+            % Fourth line
+            \node[draw=none, node distance = \altdist, minimum size=\minsz, below=of three_two] 
+            (three_three) {\textbf{\vdots}};
+            \node[draw=none, node distance = \altdist, minimum size=\minsz, below=of four_two] 
+            (four_three) {\textbf{\vdots}};
+            \node[draw=none, node distance = 2cm, minimum size=\minsz, below=of five_two] 
+            (five_three) {};
+            \node[draw=none, node distance = \altdist, minimum size=\minsz, below=of six_two] 
+            (six_three) {\textbf{\vdots}};
+
+            % Fifth line
+            \node[draw=none, node distance = 0.3cm, minimum size=\minsz, below=of four_three] 
+            (general_case_up) {};
+            \node[state, node distance = \altdist, minimum size=\minsz, below=of general_case_up] 
+            (general_case_mid) {\( (u_i, v_i) \)};
+
+            \node[draw=none, node distance = \altdist, minimum size=\minsz, below=of general_case_mid] 
+            (general_case_down) {};
+            \node[draw=none, node distance = \altdist, minimum size=\minsz, left=of general_case_mid] 
+            (general_case_left) {};
+            \node[draw=none, node distance = \altdist, minimum size=\minsz, right=of general_case_mid] 
+            (general_case_right) {};
+
+            \draw[every loop]
+                % First Horizontal Edges
+                (zero) edge[bend left] node {\( \Lambda \)} (one)
+                (one) edge[bend left] node {\( \mu \)} (zero)
+                (one) edge[bend left] node {\( \Lambda \)} (two)
+                (two) edge[bend left] node {\( 2 \mu \)} (one)
+                (two) edge[bend left] node {\( \Lambda \)} (three)
+                (three) edge[bend left] node {\( T \mu \)} (two)
+                (three) edge[bend left] node {\( \lambda_1 \)} (four)
+                (four) edge[bend left] node {\( (T+1) \mu \)} (three)
+                (four) edge[bend left] node {\( \lambda_1 \)} (five)
+                (five) edge[bend left] node {\( (T+2) \mu \)} (four)
+                (five) edge[bend left] node {\( \lambda_1 \)} (six)
+                (six) edge[bend left] node {\( C\mu \)} (five)
+                (six) edge[bend left] node {\( \lambda_1 \)} (seven)
+                (seven) edge[bend left] node {\( C\mu \)} (six)
+
+                % Second Horizontal Edges
+                (three_one) edge[bend left] node {\( \lambda_1 \)} (four_one)
+                (four_one) edge[bend left] node {\( (T+1) \mu \)} (three_one)
+                (four_one) edge[bend left] node {\( \lambda_1 \)} (five_one)
+                (five_one) edge[bend left] node {\( (T+2) \mu \)} (four_one)
+                (five_one) edge[bend left] node {\( \lambda_1 \)} (six_one)
+                (six_one) edge[bend left] node {\( C\mu \)} (five_one)
+                (six_one) edge[bend left] node {\( \lambda_1 \)} (seven_one)
+                (seven_one) edge[bend left] node {\( C\mu \)} (six_one)
+
+                % Third Horizontal Edges
+                (three_two) edge[bend left] node {\( \lambda_1 \)} (four_two)
+                (four_two) edge[bend left] node [below] {\( (T+1) \mu \)} (three_two)
+                (four_two) edge[bend left] node {\( \lambda_1 \)} (five_two)
+                (five_two) edge[bend left] node {\( (T+2) \mu \)} (four_two)
+                (five_two) edge[bend left] node {\( \lambda_1 \)} (six_two)
+                (six_two) edge[bend left] node {\( C\mu \)} (five_two)
+                (six_two) edge[bend left] node {\( \lambda_1 \)} (seven_two)
+                (seven_two) edge[bend left] node {\( C\mu \)} (six_two)
+
+                % First Vertical Edges
+                (three) edge[bend left] node {\( \lambda_2 \)} (three_one)
+                (three_one) edge[bend left] node {\( T \mu \)} (three)
+                (three_one) edge[bend left] node {\( \lambda_2 \)} (three_two)
+                (three_two) edge[bend left] node {\( T\mu \)} (three_one)
+                (three_two) edge[bend left] node {\( \lambda_2 \)} (three_three)
+                (three_three) edge[bend left] node {\( T\mu \)} (three_two)
+
+                % Second Vertical Edges
+                (four) edge node {\( \lambda_2 \)} (four_one)
+                (four_one) edge node {\( \lambda_2 \)} (four_two)
+                (four_two) edge node {\( \lambda_2 \)} (four_three)
+
+                % Fourth Vertical Edges
+                (six) edge node {\( \lambda_2 \)} (six_one)
+                (six_one) edge node {\( \lambda_2 \)} (six_two)
+                (six_two) edge node {\( \lambda_2 \)} (six_three)
+
+                % General Case
+                (general_case_left) edge[bend left] node {\( \lambda_1 \)} (general_case_mid)
+                (general_case_mid) edge[bend left] node {\( v_i \mu \)} (general_case_left)
+                (general_case_right) edge[bend left] node {\( (v_i +1) \mu \)} (general_case_mid)
+                (general_case_mid) edge[bend left] node {\( \lambda_1 \)} (general_case_right)
+                % (five_three) edge node {\( \lambda_2 \)} (general_case_mid)
+                (general_case_up) edge node {\( \lambda_2 \)} (general_case_mid)
+                (general_case_mid) edge node {\( \lambda_2 \)} (general_case_down)
+                ;
+        \end{tikzpicture}
+    }
+    \caption{General case of the Markov chain model} 
+    \label{fig:general_markov_model}
+\end{figure}

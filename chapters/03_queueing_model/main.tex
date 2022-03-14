@@ -1,0 +1,156 @@
+\section{Queueing theoretic model}
+
+One of the main outcomes of this research is the creation of a queueing model
+that consists of two waiting zones for two types of individuals.
+
+\input{chapters/03_queueing_model/img/queueing_model_diagram.tex}
+
+The model consists of two types of individuals; type 1 and type 2.
+Type 1 individuals arrive instantly at waiting zone 1 and wait to receive their
+service.
+Type 2 individuals arrive at waiting zone 2 and wait there until they are
+allowed to move to waiting zone 1.
+They are allowed to proceed only when the number of
+individuals in waiting zone 1 \textbf{and} in service is less than a
+pre-determined threshold \(T\).
+When the number of individuals is equal to or exceeds this threshold, all
+type 2 individuals that arrive will stay \textit{blocked} in waiting zone 2 
+until the number of people in waiting zone 1 falls below \(T\).
+This is shown diagrammatically in Figure \ref{fig:diagram_of_queueing_system}.
+The parameters of the described queueing model are:
+
+\begin{itemize}
+    \item \(\lambda_i\): The arrival rate of type \(i\) individuals where
+    \(i\in\{1, 2\}\)
+    \item \(\mu\): The service rate for individuals receiving service after
+    waiting zone 1
+    \item \(C\): The number of servers
+    \item \(T\): The threshold at which individuals of the second type are
+    blocked
+\end{itemize}
+
+\subsection{Markov chain}
+
+Under the assumption that all rates (arrival and service) are Markovian the
+queueing system corresponds to a Markov chain~\cite{kemeny1976markov}.
+The states of the Markov chain are denoted by \((u,v)\) where:
+
+\begin{itemize}
+    \item \(u\) is the number of individuals blocked
+    \item \(v\) is the number of individuals either in waiting zone 1 or in the
+    service centre
+\end{itemize}
+
+We denote the state space of the Markov chain as  \(S=S(T)\) which can be
+written as the disjoint union (\ref{eq:definition_of_S_as_disjoint_union}).
+
+\begin{align}
+    S(T) =& S_1(T) \cup S_2(T) \text{ where:} \nonumber \\
+    S_1(T) =& \left\{(0, v)\in\mathbb{N}_0^2 \; | \; v < T \right\}
+    \label{eq:definition_of_S_as_disjoint_union} \\
+    S_2(T) =& \{(u, v)\in\mathbb{N}_0^2 \; | \; v \geq T \} \nonumber
+\end{align}
+
+
+
+
+\subsubsection{Generator matrix}
+
+The generator matrix \(Q\) of the Markov chain consists of the
+rates between the numerous states of the model.
+Every entry \( Q_{ij} = Q_{(u_i, v_i),(u_j, v_j)} \) represents the rate from
+state \( i = (u_i, v_i) \) to state \( j = (u_j , v_j) \) for all
+\( (u_i, v_i), (u_j, v_j) \in S \).
+The entries of \(Q\) can be calculated using the state-mapping function
+described in (\ref{eq:markov_transition_rate}):
+
+\begin{equation} \label{eq:markov_transition_rate}
+    Q_{ij} =
+    \begin{cases}
+        \Lambda, & \textbf{if } (u_i, v_i) - (u_j, v_j) = (0,-1) \textbf{ and }
+        v_i < \text{t} \\
+        \lambda_1, & \textbf{if } (u_i, v_i) - (u_j, v_j) = (0,-1)
+        \textbf{ and } v_i \geq \text{t} \\
+        \lambda_2, & \textbf{if } (u_i, v_i) - (u_j, v_j) = (-1,0) \\
+        v_i \mu, & \textbf{if } (u_i, v_i) - (u_j, v_j) = (0,1) \textbf{ and }
+        v_i \leq C \textbf{ or} \\ & \hspace{0.37cm}(u_i, v_i) - (u_j, v_j) =
+        (1,0) \textbf{ and } v_i = T \leq C \\
+        C \mu, & \textbf{if } (u_i, v_i) - (u_j, v_j) = (0,1) \textbf{ and }
+        v_i > C
+        \textbf{ or} \\ & \hspace{0.37cm}(u_i, v_i) - (u_j, v_j) = (1,0)
+        \textbf{ and } v_i = T > C\\
+        -\sum_{j=1}^{|Q|}{Q_{ij}} & \textbf{if } i = j \\
+        0, & \textbf{otherwise}
+    \end{cases}
+\end{equation}
+
+Note that \(\Lambda\) here denotes the overall arrival rate in the model by both
+types of individuals (i.e. \(\Lambda = \lambda_1 + \lambda_2\)).
+A visualisation of how the transition rates relate to the states of the model
+can be seen in the general Markov chain model shown in Figure
+\ref{fig:general_markov_model}.
+
+\input{chapters/03_queueing_model/img/general_markov_model.tex}
+
+
+In order to consider this model numerically an adjustment needs to be made.
+The problem defined above assumes no upper boundary to the number of individuals
+that can wait for service or for the ones that are blocked in the buffer centre.
+Therefore, a different state space \( \tilde S \) is constructed where
+\( \tilde S \subseteq S \) and there is a maximum allowed number of individuals
+\(N\) that can be in the system and a maximum allowed number of individuals
+\(M\) that can be blocked in the buffer centre:
+
+\begin{equation}
+    \tilde S = \left\{ (u, v) \in S\;| u \leq M, v\leq N \right\}
+\end{equation}
+
+
+
+\subsubsection{Steady state}
+The generator matrix \( Q \) defined in (\ref{eq:markov_transition_rate}) can
+be used to get the probability vector \( \pi \).
+The vector \( \pi \) is commonly used to study stochastic systems and it's main
+purpose is to keep track of the probability of being at any given state of
+the system.
+\(\pi_i\) is the steady state probability of being in state \((u_i, v_i) \in
+\tilde S\) which is the \(i^{\text{th}}\) state of \(\tilde S\) for some ordering of
+\(\tilde S\).
+The term \textit{steady state} refers to the instance of the vector \( \pi \)
+where the probabilities of being at any state become stable over time.
+Thus, by considering the steady state vector \( \pi \) the relationship between
+it and \( Q \) is given by:
+
+\[
+    \frac{d\pi}{dt} = \pi Q = 0
+\]
+
+\subsubsection{Graph theoretic approach to steady state}
+
+
+\subsection{Performance measures}
+Using vector \(\pi\) there are numerous performance measures of the model that
+can be calculated.
+The following equations utilise \(\pi\) to get performance measures on the
+average number of people at certain sets of state:
+
+\begin{itemize}
+    \item Average number of people in the system:
+        \[L = \sum_{i=1}^{|\pi|} \pi_i (u_i + v_i)\]
+    \item Average number of people in the service centre:
+        \[L_H = \sum_{i=1}^{|\pi|} \pi_i v_i\]
+    \item Average number of people in waiting zone 2:
+        \[L_A = \sum_{i=1}^{|\pi|} \pi_i u_i\]
+\end{itemize}
+
+Consequently, there are some additional performance measures of interest that
+are not as straightforward to calculate.
+Such performance measures are the mean waiting time in the system (for both
+type 1 and type 2 individuals), the mean time blocked in waiting zone 2 (only
+valid for type 2 individuals) and the proportion of individuals that wait in
+waiting zone 1 within a predefined time target (for both types).
+
+\subsubsection{Waiting time}
+\subsubsection{Blocking time}
+\subsubsection{Proportion of individuals within target}
+
