@@ -4,6 +4,7 @@ words = {
     "automata",
     "calc",
     "dt",
+    "EDs",
     "ij",
     "Markovian",
     "math",
