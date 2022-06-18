@@ -55,7 +55,7 @@ def proselint(c):
         """
         Remove errors that were expected from the error list
         """
-        expected_errors = ()
+        expected_errors = ["annotations.misc"]
         updated_errors = []
         for error in errors:
             if error[0] not in expected_errors:
