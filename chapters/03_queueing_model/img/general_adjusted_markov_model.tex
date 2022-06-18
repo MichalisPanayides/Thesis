@@ -1,0 +1,113 @@
+\begin{figure}[H]
+    \centering
+    \scalebox{.8}
+    {
+        \begin{tikzpicture}[-, node distance = 0.9cm, auto, every node/.style={scale=0.7}]
+
+            % Markov chain variables
+            \tikzmath{
+                let \initdist = 0.9cm;
+                let \altdist = 0.9cm;
+                let \minsz = 1.8cm;
+            }
+
+
+            % First Line
+            \node[state, minimum size=\minsz] (one) {(0,0)};
+            \node[draw=none, node distance = \initdist, minimum size=\minsz, right=of one] 
+            (two) {\textbf{\dots}};
+            \node[state, node distance = \initdist, minimum size=\minsz, right=of two] 
+            (three) {(0,T)};
+            \node[draw=none, node distance = \altdist, minimum size=\minsz, right=of three] 
+            (four) {\textbf{\dots}};
+            \node[state, node distance = \altdist, minimum size=\minsz, right=of four] 
+            (five) {(0, C)};
+            \node[draw=none, minimum size=\minsz, right=of five] (six) {\textbf{\dots}};
+            \node[state, minimum size=\minsz, right=of six] (seven) {(0, N)};
+
+            % Second Line
+            \node[state, minimum size=\minsz, below=of three] (three_one) {(1,T)};
+            \node[draw=none, minimum size=\minsz, below=of four] (four_one) {\textbf{\dots}};
+            \node[state, minimum size=\minsz, below=of five] (five_one) {(1, C)};
+            \node[draw=none, minimum size=\minsz, right=of five_one] (six_one) {\textbf{\dots}};
+            \node[state, minimum size=\minsz, right=of six_one] (seven_one) {(1, N)};
+            
+            % Third Line
+            \node[draw=none, minimum size=\minsz, below=of three_one] (three_two) {\textbf{\vdots}};
+            \node[draw=none, minimum size=\minsz, below=of four_one] (four_two) {\textbf{\(\ddots\)}};
+            \node[draw=none, minimum size=\minsz, below=of five_one] (five_two) 
+            {\textbf{\vdots}};
+            \node[draw=none, minimum size=\minsz, right=of five_two] (six_two) {\textbf{\(\ddots\)}};
+            \node[draw=none, minimum size=\minsz, right=of six_two] (seven_two) 
+            {\textbf{\vdots}};
+
+            % Fourth line
+            \node[state, node distance = \altdist, minimum size=\minsz, below=of three_two] 
+            (three_three) {(M, T)};
+            \node[draw=none, node distance = \altdist, minimum size=\minsz, below=of four_two] 
+            (four_three) {\textbf{\dots}};
+            \node[state, node distance = \altdist, minimum size=\minsz, below=of five_two] 
+            (five_three) {(M, C)};
+            \node[draw=none, node distance = \altdist, minimum size=\minsz, below=of six_two] 
+            (six_three) {\textbf{\dots}};
+            \node[state, node distance = \altdist, minimum size=\minsz, below=of seven_two] 
+            (seven_three) {(M, N)};
+
+            \draw[every loop]
+                % First Horizontal Edges
+                (one) edge[bend left] node {\( \Lambda \)} (two)
+                (two) edge[bend left] node {\( 2 \mu \)} (one)
+                (two) edge[bend left] node {\( \Lambda \)} (three)
+                (three) edge[bend left] node {\( T \mu \)} (two)
+                (three) edge[bend left] node {\( \lambda_1 \)} (four)
+                (four) edge[bend left] node {\( (T+1) \mu \)} (three)
+                (four) edge[bend left] node {\( \lambda_1 \)} (five)
+                (five) edge[bend left] node {\( C\mu \)} (four)
+                (five) edge[bend left] node {\( \lambda_1 \)} (six)
+                (six) edge[bend left] node {\( C\mu \)} (five)
+                (six) edge[bend left] node {\( \lambda_1 \)} (seven)
+                (seven) edge[bend left] node {\( C\mu \)} (six)
+
+                % Second Horizontal Edges
+                (three_one) edge[bend left] node {\( \lambda_1 \)} (four_one)
+                (four_one) edge[bend left] node {\( (T+1) \mu \)} (three_one)
+                (four_one) edge[bend left] node {\( \lambda_1 \)} (five_one)
+                (five_one) edge[bend left] node {\( C\mu \)} (four_one)
+                (five_one) edge[bend left] node {\( \lambda_1 \)} (six_one)
+                (six_one) edge[bend left] node {\( C\mu \)} (five_one)
+                (six_one) edge[bend left] node {\( \lambda_1 \)} (seven_one)
+                (seven_one) edge[bend left] node {\( C\mu \)} (six_one)
+
+                % Third Horizontal Edges
+                (three_three) edge[bend left] node {\( \lambda_1 \)} (four_three)
+                (four_three) edge[bend left] node [below] {\( (T+1) \mu \)} (three_three)
+                (four_three) edge[bend left] node {\( \lambda_1 \)} (five_three)
+                (five_three) edge[bend left] node {\( C\mu \)} (four_three)
+                (five_three) edge[bend left] node {\( \lambda_1 \)} (six_three)
+                (six_three) edge[bend left] node {\( C\mu \)} (five_three)
+                (six_three) edge[bend left] node {\( \lambda_1 \)} (seven_three)
+                (seven_three) edge[bend left] node {\( C\mu \)} (six_three)
+
+                % First Vertical Edges
+                (three) edge[bend left] node {\( \lambda_2 \)} (three_one)
+                (three_one) edge[bend left] node {\( T \mu \)} (three)
+                (three_one) edge[bend left] node {\( \lambda_2 \)} (three_two)
+                (three_two) edge[bend left] node {\( T\mu \)} (three_one)
+                (three_two) edge[bend left] node {\( \lambda_2 \)} (three_three)
+                (three_three) edge[bend left] node {\( T\mu \)} (three_two)
+
+                % Second Vertical Edges
+                (five) edge node {\( \lambda_2 \)} (five_one)
+                (five_one) edge node {\( \lambda_2 \)} (five_two)
+                (five_two) edge node {\( \lambda_2 \)} (five_three)
+
+                % Fourth Vertical Edges
+                (seven) edge node {\( \lambda_2 \)} (seven_one)
+                (seven_one) edge node {\( \lambda_2 \)} (seven_two)
+                (seven_two) edge node {\( \lambda_2 \)} (seven_three)
+                ;
+        \end{tikzpicture}
+    }
+    \caption{Adjusted case of the Markov chain model} 
+    \label{fig:adjusted_markov_model}
+\end{figure}

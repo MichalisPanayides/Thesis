@@ -58,11 +58,11 @@
         % Arrow line to Queue 2
         \draw[->] (4.2, 0.525) -- (4.8, 0.525);
     \end{tikzpicture}
-    \caption{A diagrammatic representation of the queueing model.
+    \caption{A diagrammatic representation of the queueing network.
     The threshold \(T\) only applies to type 2 individuals.
-    If the number of individuals in the hospital is \(T\), only
-    individuals of type 1 are accepted (at a rate \(\lambda_1\)) and
-    individuals of type 2 (arriving at a rate \(\lambda_2\)) are blocked in the
-    parking space.}
+    If the number of individuals in waiting zone 1 is greater than or equal to
+    \(T\), only individuals of type 1 are accepted (at a rate \(\lambda_1\))
+    and individuals of type 2 (arriving at a rate \(\lambda_2\)) are blocked in
+    waiting zone 2.}
     \label{fig:diagram_of_queueing_system}
 \end{figure}

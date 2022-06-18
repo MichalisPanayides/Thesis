@@ -1,7 +1,7 @@
 \section{Queueing theoretic model}
 
-One of the main outcomes of this research is the creation of a queueing model
-that consists of two waiting zones for two types of individuals.
+One of the main outcomes of this research is the creation of a queueing network
+model that consists two waiting zones and accepts two types of individuals.
 
 \input{chapters/03_queueing_model/img/queueing_model_diagram.tex}
 
@@ -14,7 +14,7 @@ They are allowed to proceed only when the number of
 individuals in waiting zone 1 \textbf{and} in service is less than a
 pre-determined threshold \(T\).
 When the number of individuals is equal to or exceeds this threshold, all
-type 2 individuals that arrive will stay \textit{blocked} in waiting zone 2 
+type 2 individuals that arrive will stay \textit{blocked} in waiting zone 2
 until the number of people in waiting zone 1 falls below \(T\).
 This is shown diagrammatically in Figure \ref{fig:diagram_of_queueing_system}.
 The parameters of the described queueing model are:
@@ -22,27 +22,40 @@ The parameters of the described queueing model are:
 \begin{itemize}
     \item \(\lambda_i\): The arrival rate of type \(i\) individuals where
     \(i\in\{1, 2\}\)
-    \item \(\mu\): The service rate for individuals receiving service after
+    \item \(\mu\): The service rate for individuals receiving service at
     waiting zone 1
     \item \(C\): The number of servers
     \item \(T\): The threshold at which individuals of the second type are
     blocked
 \end{itemize}
 
-\subsection{Markov chain}
+In chapter ?
+% TODO: reference chapter \ref{ch:ed-ems-application}
+this queueing network will be used to model the emergent behaviour between
+Emergency Departments (EDs) and the Emergency Medical Systems (EMS).
 
+\subsection{Discrete Event Simulation}
+% TODO: Is this subsection needed here? What would even be here?
+
+\subsection{Markov chain model}
+
+A Markov chain is a stochastic model that is the primary analytical tool to 
+study queues.
 Under the assumption that all rates (arrival and service) are Markovian the
-queueing system corresponds to a Markov chain~\cite{kemeny1976markov}.
+queueing system can be represented by a Markov chain
+model~\cite{kemeny1976markov}.
 The states of the Markov chain are denoted by \((u,v)\) where:
 
 \begin{itemize}
-    \item \(u\) is the number of individuals blocked
+    \item \(u\) is the number of individuals blocked in waiting zone 2
     \item \(v\) is the number of individuals either in waiting zone 1 or in the
     service centre
 \end{itemize}
 
-We denote the state space of the Markov chain as  \(S=S(T)\) which can be
-written as the disjoint union (\ref{eq:definition_of_S_as_disjoint_union}).
+The set of all possible combination of pairs \((u, v)\) form all the possible 
+states that the system can visit.
+We denote the state space of the Markov chain as the set \(S=S(T)\) which can be
+written as the disjoint union:
 
 \begin{align}
     S(T) =& S_1(T) \cup S_2(T) \text{ where:} \nonumber \\
@@ -51,11 +64,16 @@ written as the disjoint union (\ref{eq:definition_of_S_as_disjoint_union}).
     S_2(T) =& \{(u, v)\in\mathbb{N}_0^2 \; | \; v \geq T \} \nonumber
 \end{align}
 
+\(S_1\) consists of the set of states where the number of individuals in waiting
+zone 1 is less than \(T\) (i.e. \(v < 0\)) and subsequently the number of
+individuals in waiting zone 2 is zero (i.e. \(u = 0\)).
+Similarly, \(S_2\) consists of the set of states where the number of individuals
+in waiting zone 1 is greater than or equal to \(T\) (i.e. \(v \geq T\)) and 
+hence it is possible for individuals to be at waiting zone 2 (i.e. 
+\(u \geq 0\)).
 
-
-
-\subsubsection{Generator matrix}
-
+Having defined the set of states of the Markov chain model, the generator
+matrix can also be obtained.
 The generator matrix \(Q\) of the Markov chain consists of the
 rates between the numerous states of the model.
 Every entry \( Q_{ij} = Q_{(u_i, v_i),(u_j, v_j)} \) represents the rate from
@@ -95,29 +113,35 @@ can be seen in the general Markov chain model shown in Figure
 
 In order to consider this model numerically an adjustment needs to be made.
 The problem defined above assumes no upper boundary to the number of individuals
-that can wait for service or for the ones that are blocked in the buffer centre.
+that can wait for service or for the ones that are blocked in waiting zone 2.
 Therefore, a different state space \( \tilde S \) is constructed where
 \( \tilde S \subseteq S \) and there is a maximum allowed number of individuals
-\(N\) that can be in the system and a maximum allowed number of individuals
-\(M\) that can be blocked in the buffer centre:
+\(N\) that can be in waiting zone 1 and a maximum allowed number of individuals
+\(M\) that can be blocked in waiting zone 2:
 
 \begin{equation}
     \tilde S = \left\{ (u, v) \in S\;| u \leq M, v\leq N \right\}
 \end{equation}
 
+The adjusted Markov chain model with states \(\tilde S\) can be seen in Figure
+\ref{fig:adjusted_markov_model}.
+
+\input{chapters/03_queueing_model/img/general_adjusted_markov_model.tex}
 
 
-\subsubsection{Steady state}
+
+\subsubsection{Steady state probability vector \(\pi\)}
 The generator matrix \( Q \) defined in (\ref{eq:markov_transition_rate}) can
-be used to get the probability vector \( \pi \).
+be used to get the probability vector \( \pi \) that contains the steady state
+probabilities of the Markov chain model.
 The vector \( \pi \) is commonly used to study stochastic systems and it's main
 purpose is to keep track of the probability of being at any given state of
-the system.
+the Markov chain model.
 \(\pi_i\) is the steady state probability of being in state \((u_i, v_i) \in
-\tilde S\) which is the \(i^{\text{th}}\) state of \(\tilde S\) for some ordering of
-\(\tilde S\).
-The term \textit{steady state} refers to the instance of the vector \( \pi \)
-where the probabilities of being at any state become stable over time.
+\tilde S\) which is the \(i^{\text{th}}\) state of \(\tilde S\) for some
+ordering of \(\tilde S\).
+The term \textbf{steady state} refers to the instance of the vector \( \pi \)
+where the probabilities of being at any state becomes stable over time.
 Thus, by considering the steady state vector \( \pi \) the relationship between
 it and \( Q \) is given by:
 
@@ -125,22 +149,37 @@ it and \( Q \) is given by:
     \frac{d\pi}{dt} = \pi Q = 0
 \]
 
-\subsubsection{Graph theoretic approach to steady state}
+\subsubsection{Linear algebraic approach}
+% TODO: Write paragraph on np.linalg.solve
 
+\subsubsection{Numerical integration}
+% TODO: Write paragraph on solve_ivp / odeint
+
+\subsubsection{Least Squares approach}
+% TODO: Write paragraph on np.linalg.lstsq
+
+\subsubsection{Graph theoretic approach to steady state}
+% TODO: Write graph theoretic approach to get steady state
 
 \subsection{Performance measures}
 Using vector \(\pi\) there are numerous performance measures of the model that
 can be calculated.
 The following equations utilise \(\pi\) to get performance measures on the
-average number of people at certain sets of state:
+average number of individuals in waiting zone 1 and in waiting zone 2:
 
 \begin{itemize}
-    \item Average number of people in the system:
-        \[L = \sum_{i=1}^{|\pi|} \pi_i (u_i + v_i)\]
-    \item Average number of people in the service centre:
-        \[L_H = \sum_{i=1}^{|\pi|} \pi_i v_i\]
-    \item Average number of people in waiting zone 2:
-        \[L_A = \sum_{i=1}^{|\pi|} \pi_i u_i\]
+    \item Mean number of individuals in the entire system:
+        \begin{equation}
+            L = \sum_{i=1}^{|\pi|} \pi_i (u_i + v_i)
+        \end{equation}
+    \item Mean number of individuals in waiting zone 1:
+        \begin{equation}
+            L_H = \sum_{i=1}^{|\pi|} \pi_i v_i
+        \end{equation}
+    \item Mean number of individuals in waiting zone 2:
+        \begin{equation}
+            L_A = \sum_{i=1}^{|\pi|} \pi_i u_i
+        \end{equation}
 \end{itemize}
 
 Consequently, there are some additional performance measures of interest that
@@ -151,6 +190,11 @@ valid for type 2 individuals) and the proportion of individuals that wait in
 waiting zone 1 within a predefined time target (for both types).
 
 \subsubsection{Waiting time}
+% TODO: Write waiting time subsection
+
 \subsubsection{Blocking time}
+% TODO: Write blocking time subsection
+
 \subsubsection{Proportion of individuals within target}
+% TODO: Write proportion of individuals within target subsection
 
