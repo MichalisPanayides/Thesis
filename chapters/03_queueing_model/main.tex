@@ -119,7 +119,7 @@ Therefore, a different state space \( \tilde S \) is constructed where
 \(N\) that can be in waiting zone 1 and a maximum allowed number of individuals
 \(M\) that can be blocked in waiting zone 2:
 
-\begin{equation}
+\begin{equation}\label{eq:truncated_state_space}
     \tilde S = \left\{ (u, v) \in S\;| u \leq M, v\leq N \right\}
 \end{equation}
 
@@ -145,18 +145,70 @@ where the probabilities of being at any state becomes stable over time.
 Thus, by considering the steady state vector \( \pi \) the relationship between
 it and \( Q \) is given by:
 
-\[
-    \frac{d\pi}{dt} = \pi Q = 0
-\]
+\begin{equation}\label{eq:steady_state_from_generator_matrix}
+    \frac{d\pi}{dt} = \pi Q = \vec{0}
+\end{equation}
 
 \subsubsection{Linear algebraic approach}
-% TODO: Write paragraph on np.linalg.solve
+The steady state probability vector \( \pi \) can be obtained by solving the
+linear equation:
+
+\begin{equation}\label{eq:numpy_linalg_solve_1}
+    Q^T \pi = \vec{0} \hspace{0.5cm} \text{such that} \hspace{0.5cm} 
+    \sum_{i} \pi_i = 1
+\end{equation}
+
+The two equations can be combined into one by augmenting the matrix \( Q^T \)
+in such a way that it includes the extra constraint \( \sum_i \pi_i = 1 \).
+The new augmented matrix \(\tilde Q\) is defined as \(Q\) with the final
+column replaced with a vector of ones.
+Note that, \(\tilde Q\) needs to be a square matrix in order to solve the
+equation using linear algebra (i.e. the matrix needs to be invertible).
+
+Thus, the steady state probability vector can be calculated by solving the
+linear equation:
+
+\begin{equation}
+    \tilde Q^T \pi = \vec{0}
+\end{equation}
+
+The function \textit{numpy.linalg.solve} from the python library \textit{numpy}
+was used for this calculation \cite{2020NumPy-Array}.
 
 \subsubsection{Numerical integration approach}
-% TODO: Write paragraph on solve_ivp / odeint
+Another method that can be used to get the steady state probability vector is
+to solve the differential equation from equation
+\ref{eq:steady_state_from_generator_matrix} numerically.
+The functions \textit{integrate.odeint} and \textit{integrate.solve\_ivp} from 
+the python library \textit{scipy} \cite{2020SciPy-NMeth} are both used to get
+the solution. 
+The \textit{odeint} function implements the \textit{lsoda} integration method
+from the FORTRAN library odepack, while \textit{solve\_ivp} uses the explicit
+Runge-Kutta method of order 5(4) (``RK45'') \cite{solve_ivp_rk45_method}.
+Both methods observe the value of \(\pi\) over time until it
+reaches the steady state based on some initial starting value \(\pi_0\):
 
-\subsubsection{Least Squares approach}
-% TODO: Write paragraph on np.linalg.lstsq
+\begin{gather}
+    \frac{d\pi}{dt} = \pi Q \\
+    \pi(t_0) = \pi_0 \nonumber \\
+    \text{where } \pi_0 = 
+    [\frac{1}{|\pi|}, \frac{1}{|\pi|}, \dots, \frac{1}{|\pi|}] \nonumber
+\end{gather}
+
+\subsubsection{Least squares approach}
+Another approach that is considered is the least squares method. 
+As the problem becomes more complex (i.e. as the artificial parameters \(N\)
+and \(M\) defined in equation \ref{eq:truncated_state_space} increase)
+the computational time required to solve it increases by a lot.
+Thus, one may obtain a good approximation of the steady state vector \( \pi \)
+by solving the following equation:
+
+\begin{equation}
+    \pi = \text{argmin}_{x\in\mathbb{R}^{d}}\|Mx-b\|_2^2
+\end{equation}
+
+The function \textit{numpy.linalg.lstsq} from the python library \textit{numpy}
+was used for this calculation \cite{2020NumPy-Array}.
 
 \subsubsection{Graph theoretic approach}
 % TODO: Write graph theoretic approach to get steady state
