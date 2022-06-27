@@ -1,7 +1,7 @@
 \section{Queueing theoretic model}
 
 One of the main outcomes of this research is the creation of a queueing network
-model that consists two waiting zones and accepts two types of individuals.
+model that consists of two waiting zones and accepts two types of individuals.
 
 \input{chapters/03_queueing_model/img/queueing_model_diagram.tex}
 
@@ -54,8 +54,8 @@ The states of the Markov chain are denoted by \((u,v)\) where:
 
 The set of all possible combination of pairs \((u, v)\) form all the possible 
 states that the system can visit.
-We denote the state space of the Markov chain as the set \(S=S(T)\) which can be
-written as the disjoint union:
+The state space of the Markov chain is denoted as the set \(S=S(T)\) which can
+be written as the disjoint union:
 
 \begin{align}
     S(T) =& S_1(T) \cup S_2(T) \text{ where:} \nonumber \\
@@ -71,6 +71,7 @@ Similarly, \(S_2\) consists of the set of states where the number of individuals
 in waiting zone 1 is greater than or equal to \(T\) (i.e. \(v \geq T\)) and 
 hence it is possible for individuals to be at waiting zone 2 (i.e. 
 \(u \geq 0\)).
+This is illustrated diagrammatically in figure \ref{fig:general_markov_model}.
 
 Having defined the set of states of the Markov chain model, the generator
 matrix can also be obtained.
@@ -80,7 +81,9 @@ Every entry \( Q_{ij} = Q_{(u_i, v_i),(u_j, v_j)} \) represents the rate from
 state \( i = (u_i, v_i) \) to state \( j = (u_j , v_j) \) for all
 \( (u_i, v_i), (u_j, v_j) \in S \).
 The entries of \(Q\) can be calculated using the state-mapping function
-described in (\ref{eq:markov_transition_rate}):
+described in equation (\ref{eq:markov_transition_rate}).
+Here \(\Lambda\) denotes the overall arrival rate in the model for
+both types of individuals (i.e. \(\Lambda = \lambda_1 + \lambda_2\)).
 
 \begin{equation} \label{eq:markov_transition_rate}
     Q_{ij} =
@@ -102,8 +105,27 @@ described in (\ref{eq:markov_transition_rate}):
     \end{cases}
 \end{equation}
 
-Note that \(\Lambda\) here denotes the overall arrival rate in the model by both
-types of individuals (i.e. \(\Lambda = \lambda_1 + \lambda_2\)).
+Note that for large values of \(N\) and \(M\) most of the entries of the
+transition matrix will be zero.
+In order to speed up the computation of the transition matrix, instead of
+considering every possible pair of states in the state space a new function
+that maps a state to every possible destination state can be used.
+Equation (\ref{eq:state_map_to_destination_states}) maps a state \((u, v)\)
+to all possible destination states that the system can go to when on that state.
+
+\begin{equation}\label{eq:state_map_to_destination_states}
+    \mathcal{M}(u, v) = 
+    \begin{cases}
+        \{(u, v + 1), (u, v - 1)\} & \textbf{if } v < T \\
+        \{(u + 1, v), (u, v + 1), (u, v - 1)\} & \textbf{if } v = T 
+        \textbf{ and } u = 0 \\
+        \{(u + 1, v), (u, v + 1), (u - 1, v)\} & \textbf{if } v = T
+        \textbf{ and } u > 0 \\
+        \{(u, v + 1), (u + 1, v), (u, v - 1)\} & \textbf{if } v > T \\
+    \end{cases}
+\end{equation}
+
+
 A visualisation of how the transition rates relate to the states of the model
 can be seen in the general Markov chain model shown in Figure
 \ref{fig:general_markov_model}.
@@ -131,6 +153,7 @@ The adjusted Markov chain model with states \(\tilde S\) can be seen in Figure
 
 
 \subsubsection{Steady state probability vector \(\pi\)}
+
 The generator matrix \( Q \) defined in (\ref{eq:markov_transition_rate}) can
 be used to get the probability vector \( \pi \) that contains the steady state
 probabilities of the Markov chain model.
@@ -149,7 +172,63 @@ it and \( Q \) is given by:
     \frac{d\pi}{dt} = \pi Q = \vec{0}
 \end{equation}
 
+
+\subsubsection{Numerical integration approach}
+
+Another method that can be used to get the steady state probability vector is
+to solve the differential equation from equation
+\ref{eq:steady_state_from_generator_matrix} numerically.
+Two methods of solving the differential equation were considered.
+Both methods observe the value of \(\pi\) over time until it
+reaches the steady state based on some initial starting value \(\pi_0\):
+
+\begin{gather}
+    \frac{d\pi}{dt} = \pi Q \\
+    \pi(t_0) = \pi_0 \nonumber \\
+    \text{where } \pi_0 = 
+    [\frac{1}{|\pi|}, \frac{1}{|\pi|}, \dots, \frac{1}{|\pi|}] \nonumber
+\end{gather}
+
+Two types of methods were considered to solve the differential equation
+numerically.
+The first method uses a combination of Adams' method~\cite{adams_method} and the
+backward differentiation formula (BDF)~\cite{backward_differentiation_formula}.
+This method is generally used to solve systems of the form
+\(\frac{dy}{dt} = f\) with a dense or banded Jacobian when the problem is stiff,
+which then uses the BDF algorithm, while when the problem is non-stiff it uses
+Adams' method.
+This was implemented using \textit{scipy.integrate. odeint} from the python
+library \textit{SciPy}~\cite{2020SciPy-NMeth} that uses the
+\textit{lsoda}~\cite{lsoda_algorithm} integration method.
+
+The second approach uses the explicit Runge-Kutta integration method of order 5
+by controlling the error assuming accuracy of of order 4
+\cite{solve_ivp_rk45_method, runge_kutta_formulas}.
+The general recursive formula for the explicit family of Runge-Kutta methods is
+given by:
+
+\begin{equation}
+    y_{n+1} = y_n + h \sum_{i=1}^s b_i k_i
+\end{equation}
+\begin{align}
+    k_1 & = f(t_n, y_n), \nonumber \\
+    k_2 & = f(t_n+c_2h, y_n+h(a_{21}k_1)), \nonumber \\
+    k_3 & = f(t_n+c_3h, y_n+h(a_{31}k_1+a_{32}k_2)), \nonumber \\
+        & \ \ \vdots \nonumber \\
+    k_s & = f(t_n+c_s h, y_n+h(a_{s1}k_1+a_{s2}k_2+\cdots+a_{s,s-1}k_{s-1})) 
+    \nonumber
+\end{align}
+
+where \(y_0\) is the given initial value, \(s\) is the number of stages and
+\(h\) is the step size.
+The coefficients \(b_i\), \(c_i\), and \(a_{ij}\) are usually arranged in a
+mnemonic device known as the Butcher's tableau.
+This was implemented using \textit{scipy.integrate. solve\_ivp} from the python
+library \textit{SciPy}~\cite{2020SciPy-NMeth}.
+
+
 \subsubsection{Linear algebraic approach}
+
 The steady state probability vector \( \pi \) can be obtained by solving the
 linear equation:
 
@@ -161,41 +240,28 @@ linear equation:
 The two equations can be combined into one by augmenting the matrix \( Q^T \)
 in such a way that it includes the extra constraint \( \sum_i \pi_i = 1 \).
 The new augmented matrix \(\tilde Q\) is defined as \(Q\) with the final
-column replaced with a vector of ones.
+column replaced with a vector of ones and vector \(\vec{b}\) is defined
+as a column vector of \(0\)s apart from the final element which is \(1\).
 Note that, \(\tilde Q\) needs to be a square matrix in order to solve the
 equation using linear algebra (i.e. the matrix needs to be invertible).
-
 Thus, the steady state probability vector can be calculated by solving the
 linear equation:
 
 \begin{equation}
-    \tilde Q^T \pi = \vec{0}
+    \tilde Q^T \pi = \vec{b}
 \end{equation}
 
-The function \textit{numpy.linalg.solve} from the python library \textit{numpy}
-was used for this calculation \cite{2020NumPy-Array}.
+Using LU decomposition with partial pivoting and row interchanges, matrix
+\(Q^T\) can be expressed of the form \(P \times L \times U\), where \(P\) is
+a permutation matrix, \(L\) is a unit lower triangular matrix, and \(U\) is
+an upper triangular matrix~\cite{strang2006linear}.
+The factored form of \(Q^T\) can then be used to solve the system.
+This was implemented using \textit{numpy.linalg.solve} from the
+python library \textit{numpy} \cite{2020NumPy-Array} \cite{lapack99}.
 
-\subsubsection{Numerical integration approach}
-Another method that can be used to get the steady state probability vector is
-to solve the differential equation from equation
-\ref{eq:steady_state_from_generator_matrix} numerically.
-The functions \textit{integrate.odeint} and \textit{integrate.solve\_ivp} from 
-the python library \textit{scipy} \cite{2020SciPy-NMeth} are both used to get
-the solution. 
-The \textit{odeint} function implements the \textit{lsoda} integration method
-from the FORTRAN library odepack, while \textit{solve\_ivp} uses the explicit
-Runge-Kutta method of order 5(4) (``RK45'') \cite{solve_ivp_rk45_method}.
-Both methods observe the value of \(\pi\) over time until it
-reaches the steady state based on some initial starting value \(\pi_0\):
-
-\begin{gather}
-    \frac{d\pi}{dt} = \pi Q \\
-    \pi(t_0) = \pi_0 \nonumber \\
-    \text{where } \pi_0 = 
-    [\frac{1}{|\pi|}, \frac{1}{|\pi|}, \dots, \frac{1}{|\pi|}] \nonumber
-\end{gather}
 
 \subsubsection{Least squares approach}
+
 Another approach that is considered is the least squares method. 
 As the problem becomes more complex (i.e. as the artificial parameters \(N\)
 and \(M\) defined in equation \ref{eq:truncated_state_space} increase)
@@ -204,14 +270,16 @@ Thus, one may obtain a good approximation of the steady state vector \( \pi \)
 by solving the following equation:
 
 \begin{equation}
-    \pi = \text{argmin}_{x\in\mathbb{R}^{d}}\|Mx-b\|_2^2
+    \pi = \text{argmin}_{\pi \in \mathbb{R}^{|\pi|}}\|\tilde Q^T \pi - b\|_2^2
 \end{equation}
 
-The function \textit{numpy.linalg.lstsq} from the python library \textit{numpy}
-was used for this calculation \cite{2020NumPy-Array}.
+The above expression gets the vector \( \pi \) that approximately solves 
+equation \(\tilde Q^T \pi = b\).
+This was implemented using \textit{numpy.linalg.lstsq} from the python 
+library \textit{numpy}~\cite{2020NumPy-Array}.
 
-\subsubsection{Graph theoretic approach}
-% TODO: Write graph theoretic approach to get steady state
+\subsubsection{Closed-form formula approach}
+% TODO: Write closed-form formula section to get steady state
 
 \subsection{Performance measures}
 Using vector \(\pi\) there are numerous performance measures of the model that
@@ -222,15 +290,15 @@ average number of individuals in waiting zone 1 and in waiting zone 2:
 \begin{itemize}
     \item Mean number of individuals in the entire system:
         \begin{equation}
-            L = \sum_{i=1}^{|\pi|} \pi_i (u_i + v_i)
+            L_S = \sum_{i=1}^{|\pi|} \pi_i (u_i + v_i)
         \end{equation}
     \item Mean number of individuals in waiting zone 1:
         \begin{equation}
-            L_H = \sum_{i=1}^{|\pi|} \pi_i v_i
+            L_1 = \sum_{i=1}^{|\pi|} \pi_i v_i
         \end{equation}
     \item Mean number of individuals in waiting zone 2:
         \begin{equation}
-            L_A = \sum_{i=1}^{|\pi|} \pi_i u_i
+            L_2 = \sum_{i=1}^{|\pi|} \pi_i u_i
         \end{equation}
 \end{itemize}
 
