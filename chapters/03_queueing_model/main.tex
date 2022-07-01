@@ -35,7 +35,8 @@ this queueing network will be used to model the emergent behaviour between
 Emergency Departments (EDs) and the Emergency Medical Systems (EMS).
 
 \subsection{Discrete Event Simulation}
-% TODO: Is this subsection needed here? What would even be here?
+% TODO: Write DES subsection - emphasise on custom Node + include some code for
+% node class
 
 \subsection{Markov chain model}
 
@@ -202,7 +203,7 @@ library \textit{SciPy}~\cite{2020SciPy-NMeth} that uses the
 \textit{lsoda}~\cite{lsoda_algorithm} integration method.
 
 The second approach uses the explicit Runge-Kutta integration method of order 5
-by controlling the error assuming accuracy of of order 4
+by controlling the error assuming accuracy of order 4
 \cite{solve_ivp_rk45_method, runge_kutta_formulas}.
 The general recursive formula for the explicit family of Runge-Kutta methods is
 given by:
@@ -278,8 +279,8 @@ equation \(\tilde Q^T \pi = b\).
 This was implemented using \textit{numpy.linalg.lstsq} from the python 
 library \textit{numpy}~\cite{2020NumPy-Array}.
 
-\subsubsection{Closed-form formula approach}
-% TODO: Write closed-form formula section to get steady state
+\subsubsection{Closed-form approach}
+% TODO: Write closed form section to get steady state
 
 \subsection{Performance measures}
 Using vector \(\pi\) there are numerous performance measures of the model that
@@ -318,3 +319,10 @@ waiting zone 1 within a predefined time target (for both types).
 \subsubsection{Proportion of individuals within target}
 % TODO: Write proportion of individuals within target subsection
 
+
+\subsection{Numeric results and timings}
+% TODO: Write numeric results and timings section (compare DES with Markov)
+
+
+\subsection{ED-EMS application}
+% TODO: Write ED-EMS application subsection
