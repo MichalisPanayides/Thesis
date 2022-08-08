@@ -3,3 +3,27 @@
 \usepackage{float}
 \usepackage{tikz}
 \usetikzlibrary{calc, automata, chains, arrows.meta, math}
+\usepackage{listings}
+
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{backcolor}{rgb}{0.95,0.95,0.92}
+\definecolor{keywordcolor1}{RGB}{9, 119, 39}
+\definecolor{keywordcolor2}{RGB}{198, 98, 18}
+\definecolor{keywordcolor3}{RGB}{18, 135, 180}
+\lstdefinestyle{pystyle}{
+    language=Python,
+    basicstyle=\ttfamily\footnotesize,
+    backgroundcolor=\color{backcolor},
+    commentstyle=\color{codegreen},
+    keywords=[1]{import, as},
+    keywordstyle=[1]\bfseries\color{keywordcolor1},
+    alsoletter={>>>, ...},
+    keywords=[2]{>>> , ... },
+    keywordstyle=[2]\color{keywordcolor2},
+    keywords=[3]{ambulance_game, abg, numpy, np},
+    keywordstyle=[3]\bfseries\color{keywordcolor3},
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+}

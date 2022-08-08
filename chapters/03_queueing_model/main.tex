@@ -111,8 +111,9 @@ transition matrix will be zero.
 In order to speed up the computation of the transition matrix, instead of
 considering every possible pair of states in the state space a new function
 that maps a state to every possible destination state can be used.
-Equation (\ref{eq:state_map_to_destination_states}) maps a state \((u, v)\)
-to all possible destination states that the system can go to when on that state.
+Function \(\mathcal{M}\) from equation \ref{eq:state_map_to_destination_states}
+takes a state \((u, v)\) and maps it to the set of
+all possible destination states that the system can go to when on that state.
 
 \begin{equation}\label{eq:state_map_to_destination_states}
     \mathcal{M}(u, v) = 
@@ -173,6 +174,20 @@ it and \( Q \) is given by:
     \frac{d\pi}{dt} = \pi Q = \vec{0}
 \end{equation}
 
+The following parameters of the Markov model will act as a running example for
+all approaches:
+
+\begin{center}
+    \begin{tabular}{|c|c|c|c|c|c|c|c|}
+        \hline
+        Parameter & \(\lambda_1\) & \(\lambda_2\) & \(\mu\) & \(C\) & \(T\)
+        & \(N\) & \(M\) \\ 
+        \hline
+        Value & 1.0 & 2.0 & 2.0 & 2.0 & 3.0 & 4.0 & 2.0 \\
+        \hline
+    \end{tabular}    
+\end{center}
+
 
 \subsubsection{Numerical integration approach}
 
@@ -202,6 +217,25 @@ This was implemented using \textit{scipy.integrate. odeint} from the python
 library \textit{SciPy}~\cite{2020SciPy-NMeth} that uses the
 \textit{lsoda}~\cite{lsoda_algorithm} integration method.
 
+\begin{lstlisting}[style=pystyle]
+    >>> Q = abg.markov.get_transition_matrix(
+    ...     lambda_1=1,
+    ...     lambda_2=2,
+    ...     mu=2,
+    ...     num_of_servers=2,
+    ...     threshold=3,
+    ...     system_capacity=4,
+    ...     buffer_capacity=2
+    ... )
+    >>> pi = abg.markov.get_steady_state_numerically(
+    ...     Q, integration_function=sci.integrate.odeint
+    ... )
+    >>> pi
+    array([0.17596013, 0.2639402 , 0.19795515, 0.14846636, 0.08660538, 0.05464387, 0.02474439, 0.02268236, 0.02500215])
+
+\end{lstlisting}
+
+
 The second approach uses the explicit Runge-Kutta integration method of order 5
 by controlling the error assuming accuracy of order 4
 \cite{solve_ivp_rk45_method, runge_kutta_formulas}.
@@ -226,6 +260,15 @@ The coefficients \(b_i\), \(c_i\), and \(a_{ij}\) are usually arranged in a
 mnemonic device known as the Butcher's tableau.
 This was implemented using \textit{scipy.integrate. solve\_ivp} from the python
 library \textit{SciPy}~\cite{2020SciPy-NMeth}.
+
+\begin{lstlisting}[style=pystyle]
+    >>> pi = abg.markov.get_steady_state_numerically(
+    ...     Q, integration_function=sci.integrate.solve_ivp
+    ... )
+    >>> pi
+    array([0.17596012, 0.26394019, 0.19795515, 0.14846637, 0.08660539, 0.05464388, 0.02474439, 0.02268236, 0.02500215])
+
+\end{lstlisting}
 
 
 \subsubsection{Linear algebraic approach}
@@ -261,6 +304,16 @@ This was implemented using \textit{numpy.linalg.solve} from the
 python library \textit{numpy} \cite{2020NumPy-Array} \cite{lapack99}.
 
 
+\begin{lstlisting}[style=pystyle]
+    >>> pi = abg.markov.get_steady_state_algebraically(
+    ...     Q, algebraic_function=np.linalg.solve
+    ... )
+    >>> pi
+    array([0.17596013, 0.2639402 , 0.19795515, 0.14846636, 0.08660538, 0.05464387, 0.02474439, 0.02268236, 0.02500215])
+
+\end{lstlisting}
+
+
 \subsubsection{Least squares approach}
 
 Another approach that is considered is the least squares method. 
@@ -278,6 +331,15 @@ The above expression gets the vector \( \pi \) that approximately solves
 equation \(\tilde Q^T \pi = b\).
 This was implemented using \textit{numpy.linalg.lstsq} from the python 
 library \textit{numpy}~\cite{2020NumPy-Array}.
+
+\begin{lstlisting}[style=pystyle]
+    >>> pi = abg.markov.get_steady_state_algebraically(
+    ...     Q, algebraic_function=np.linalg.lstsq
+    ... )
+    >>> pi
+    array([0.17596013, 0.2639402 , 0.19795515, 0.14846636, 0.08660538, 0.05464387, 0.02474439, 0.02268236, 0.02500215])
+
+\end{lstlisting}
 
 \subsubsection{Closed-form approach}
 % TODO: Write closed form section to get steady state
