@@ -55,10 +55,28 @@ def proselint(c):
         """
         Remove errors that were expected from the error list
         """
-        expected_errors = ["annotations.misc"]
+        expected_errors = [
+            "annotations.misc",
+            "typography.symbols.ellipsis",
+            "typography.symbols.sentence_spacing",
+        ]
         updated_errors = []
         for error in errors:
             if error[0] not in expected_errors:
+                updated_errors.append(error)
+        return updated_errors
+
+    def remove_specific_errors(errors):
+        """
+        Remove some very specific errors that are expected
+
+        Known errors: 
+            - spelling consistency of centre/center
+        """
+        specific_errors = [("consistency.spelling", "center")]
+        updated_errors = []
+        for error in errors:
+            if (error[0], error[-1]) not in specific_errors:
                 updated_errors.append(error)
         return updated_errors
 
@@ -81,6 +99,7 @@ def proselint(c):
             text = "\n" + f.read()
             errors = plnt.tools.lint(text)
         errors = remove_expected_errors(errors)
+        errors = remove_specific_errors(errors)
         if errors:
             print(f"In {path} the following errors were found: ")
             for error in errors:
@@ -94,7 +113,9 @@ def alex(c):
     """
     Check for inconsiderate and insensitive writing of all .tex files
     """
+    exception_files = ["packages.tex"]
     all_tex_files = list(pathlib.Path().glob("**/*.tex"))
     for file in all_tex_files:
-        c.run(f"alex {file}")
+        if str(file) not in exception_files:
+            c.run(f"alex {file}")
 

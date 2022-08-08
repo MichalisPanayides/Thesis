@@ -40,7 +40,7 @@ Emergency Departments (EDs) and the Emergency Medical Systems (EMS).
 
 \subsection{Markov chain model}
 
-A Markov chain is a stochastic model that is the primary analytical tool to 
+A Markov chain is a stochastic model that is the primary analytical tool to
 study queues.
 Under the assumption that all rates (arrival and service) are Markovian the
 queueing system can be represented by a Markov chain
@@ -53,7 +53,7 @@ The states of the Markov chain are denoted by \((u,v)\) where:
     service centre
 \end{itemize}
 
-The set of all possible combination of pairs \((u, v)\) form all the possible 
+The set of all possible combination of pairs \((u, v)\) form all the possible
 states that the system can visit.
 The state space of the Markov chain is denoted as the set \(S=S(T)\) which can
 be written as the disjoint union:
@@ -69,8 +69,8 @@ be written as the disjoint union:
 zone 1 is less than \(T\) (i.e. \(v < 0\)) and subsequently the number of
 individuals in waiting zone 2 is zero (i.e. \(u = 0\)).
 Similarly, \(S_2\) consists of the set of states where the number of individuals
-in waiting zone 1 is greater than or equal to \(T\) (i.e. \(v \geq T\)) and 
-hence it is possible for individuals to be at waiting zone 2 (i.e. 
+in waiting zone 1 is greater than or equal to \(T\) (i.e. \(v \geq T\)) and
+hence it is possible for individuals to be at waiting zone 2 (i.e.
 \(u \geq 0\)).
 This is illustrated diagrammatically in figure \ref{fig:general_markov_model}.
 
@@ -116,10 +116,10 @@ takes a state \((u, v)\) and maps it to the set of
 all possible destination states that the system can go to when on that state.
 
 \begin{equation}\label{eq:state_map_to_destination_states}
-    \mathcal{M}(u, v) = 
+    \mathcal{M}(u, v) =
     \begin{cases}
         \{(u, v + 1), (u, v - 1)\} & \textbf{if } v < T \\
-        \{(u + 1, v), (u, v + 1), (u, v - 1)\} & \textbf{if } v = T 
+        \{(u + 1, v), (u, v + 1), (u, v - 1)\} & \textbf{if } v = T
         \textbf{ and } u = 0 \\
         \{(u + 1, v), (u, v + 1), (u - 1, v)\} & \textbf{if } v = T
         \textbf{ and } u > 0 \\
@@ -181,11 +181,11 @@ all approaches:
     \begin{tabular}{|c|c|c|c|c|c|c|c|}
         \hline
         Parameter & \(\lambda_1\) & \(\lambda_2\) & \(\mu\) & \(C\) & \(T\)
-        & \(N\) & \(M\) \\ 
+        & \(N\) & \(M\) \\
         \hline
         Value & 1.0 & 2.0 & 2.0 & 2.0 & 3.0 & 4.0 & 2.0 \\
         \hline
-    \end{tabular}    
+    \end{tabular}
 \end{center}
 
 
@@ -201,7 +201,7 @@ reaches the steady state based on some initial starting value \(\pi_0\):
 \begin{gather}
     \frac{d\pi}{dt} = \pi Q \\
     \pi(t_0) = \pi_0 \nonumber \\
-    \text{where } \pi_0 = 
+    \text{where } \pi_0 =
     [\frac{1}{|\pi|}, \frac{1}{|\pi|}, \dots, \frac{1}{|\pi|}] \nonumber
 \end{gather}
 
@@ -250,7 +250,7 @@ given by:
     k_2 & = f(t_n+c_2h, y_n+h(a_{21}k_1)), \nonumber \\
     k_3 & = f(t_n+c_3h, y_n+h(a_{31}k_1+a_{32}k_2)), \nonumber \\
         & \ \ \vdots \nonumber \\
-    k_s & = f(t_n+c_s h, y_n+h(a_{s1}k_1+a_{s2}k_2+\cdots+a_{s,s-1}k_{s-1})) 
+    k_s & = f(t_n+c_s h, y_n+h(a_{s1}k_1+a_{s2}k_2+\cdots+a_{s,s-1}k_{s-1}))
     \nonumber
 \end{align}
 
@@ -277,7 +277,7 @@ The steady state probability vector \( \pi \) can be obtained by solving the
 linear equation:
 
 \begin{equation}\label{eq:numpy_linalg_solve_1}
-    Q^T \pi = \vec{0} \hspace{0.5cm} \text{such that} \hspace{0.5cm} 
+    Q^T \pi = \vec{0} \hspace{0.5cm} \text{such that} \hspace{0.5cm}
     \sum_{i} \pi_i = 1
 \end{equation}
 
@@ -316,7 +316,7 @@ python library \textit{numpy} \cite{2020NumPy-Array} \cite{lapack99}.
 
 \subsubsection{Least squares approach}
 
-Another approach that is considered is the least squares method. 
+Another approach that is considered is the least squares method.
 As the problem becomes more complex (i.e. as the artificial parameters \(N\)
 and \(M\) defined in equation \ref{eq:truncated_state_space} increase)
 the computational time required to solve it increases by a lot.
@@ -327,9 +327,9 @@ by solving the following equation:
     \pi = \text{argmin}_{\pi \in \mathbb{R}^{|\pi|}}\|\tilde Q^T \pi - b\|_2^2
 \end{equation}
 
-The above expression gets the vector \( \pi \) that approximately solves 
+The above expression gets the vector \( \pi \) that approximately solves
 equation \(\tilde Q^T \pi = b\).
-This was implemented using \textit{numpy.linalg.lstsq} from the python 
+This was implemented using \textit{numpy.linalg.lstsq} from the python
 library \textit{numpy}~\cite{2020NumPy-Array}.
 
 \begin{lstlisting}[style=pystyle]
