@@ -218,6 +218,8 @@ library \textit{SciPy}~\cite{2020SciPy-NMeth} that uses the
 \textit{lsoda}~\cite{lsoda_algorithm} integration method.
 
 \begin{lstlisting}[style=pystyle]
+    >>> import ambulance_game as abg
+    >>> import scipy as sci
     >>> Q = abg.markov.get_transition_matrix(
     ...     lambda_1=1,
     ...     lambda_2=2,
@@ -231,9 +233,11 @@ library \textit{SciPy}~\cite{2020SciPy-NMeth} that uses the
     ...     Q, integration_function=sci.integrate.odeint
     ... )
     >>> pi
-    array([0.17596013, 0.2639402 , 0.19795515, 0.14846636, 0.08660538, 0.05464387, 0.02474439, 0.02268236, 0.02500215])
+    array([0.17596013, 0.2639402 , 0.19795515, 0.14846636, 0.08660538, 
+    0.05464387, 0.02474439, 0.02268236, 0.02500215])
 
 \end{lstlisting}
+
 
 
 The second approach uses the explicit Runge-Kutta integration method of order 5
@@ -266,7 +270,8 @@ library \textit{SciPy}~\cite{2020SciPy-NMeth}.
     ...     Q, integration_function=sci.integrate.solve_ivp
     ... )
     >>> pi
-    array([0.17596012, 0.26394019, 0.19795515, 0.14846637, 0.08660539, 0.05464388, 0.02474439, 0.02268236, 0.02500215])
+    array([0.17596012, 0.26394019, 0.19795515, 0.14846637, 0.08660539,
+    0.05464388, 0.02474439, 0.02268236, 0.02500215])
 
 \end{lstlisting}
 
@@ -305,6 +310,7 @@ python library \textit{numpy} \cite{2020NumPy-Array} \cite{lapack99}.
 
 
 \begin{lstlisting}[style=pystyle]
+    >>> import numpy as np
     >>> pi = abg.markov.get_steady_state_algebraically(
     ...     Q, algebraic_function=np.linalg.solve
     ... )
