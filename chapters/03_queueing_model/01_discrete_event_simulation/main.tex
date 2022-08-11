@@ -11,7 +11,7 @@ and a queue capacity.
 For more complex systems additional inputs can be used (baulking, reneging,
 priority change) but for the model described in this section these won't be
 needed.
-The following code can be used to generate a simple queueing network with two
+The following code can be used to generate a queueing network with two
 queues and two types of individuals, where type 1 individuals arrive at node
 2 (waiting zone 1) with an arrival rate of \lstinline[style=pystyle]{lambda_1}
 and type 2 individuals arrive at node 1 (waiting zone 2) with an arrival rate of
@@ -62,7 +62,7 @@ but no waiting should take place in node 1, only blockage.
 
 
 \subsubsection{Custom node class}
-Another very specific feature of the particular model is that type 2 individuals
+Another specific feature of the particular model is that type 2 individuals
 need to stay blocked in node 2 whenever the number of individuals in node 1
 reaches a certain threshold \(T\).
 This part of the queueing network is not as straightforward to implement as the
@@ -79,8 +79,8 @@ behaviour of all nodes can be altered.
 ...     """Build a custom node to replace the default ciw.Node. Inherits from
 ...     the original ciw.Node class and replaces methods
 ...     release_blocked_individual and finish_service.
-...     The methods are modified in such a way such that all individuals that
-...     are in the buffer space node (node 1) remain blocked as long as the
+...     The methods are modified in such a way that all individuals that
+...     are in the buffer space (node 1) stay blocked as long as the
 ...     number of individuals in the service area node (node 2) exceeds the
 ...     threshold.
 ...
@@ -113,7 +113,7 @@ behaviour of all nodes can be altered.
 ...             """
 ...             Releases an individual who becomes unblocked when
 ...             another individual is released:
-...             - check if individual in node 2 and should remain blocked
+...             - check if individual in node 2 and should stay blocked
 ...                 i.e. if the number of individuals in that
 ...                      node > threshold
 ...             - check if anyone is blocked by this node
@@ -197,7 +197,7 @@ threshold is incorporated.
 In the \lstinline[style=pystyle]{release_blocked_individual} method an
 additional check is added before releasing a potentially blocked individual from
 node 1 to node 2.
-This basically checks whether the id of the node is 2 and
+This essentially checks whether the id of the node is 2 and
 the number of individuals in it are more than or equal to the
 \lstinline[style=pystyle]{threshold} so that it can accept a blocked individual.
 Similarly \lstinline[style=pystyle]{finish_service} is called once an individual

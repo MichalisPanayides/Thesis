@@ -73,7 +73,10 @@ def proselint(c):
         Known errors: 
             - spelling consistency of centre/center
         """
-        specific_errors = [("consistency.spelling", "center")]
+        specific_errors = [
+            ("consistency.spelling", "center"), 
+            ("typography.symbols.curly_quotes", None)
+        ]
         updated_errors = []
         for error in errors:
             if (error[0], error[-1]) not in specific_errors:
