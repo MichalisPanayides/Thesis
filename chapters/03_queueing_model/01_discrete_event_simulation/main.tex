@@ -76,7 +76,8 @@ behaviour of all nodes can be altered.
 \begin{lstlisting}[style=pystyle]
 
 >>> def build_custom_node(threshold=float("inf")):
-...     """Build a custom node to replace the default ciw.Node. Inherits from
+...     """
+...     Build a custom node to replace the default ciw.Node. Inherits from
 ...     the original ciw.Node class and replaces methods
 ...     release_blocked_individual and finish_service.
 ...     The methods are modified in such a way that all individuals that
