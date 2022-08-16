@@ -27,6 +27,9 @@ The parameters of the described queueing model are:
     \item \(C\): The number of servers
     \item \(T\): The threshold at which individuals of the second type are
     blocked
+    \item \(N\): The capacity of waiting zone 1 (i.e \(N=C + 
+    \text{(Queue capacity)}\))
+    \item \(M\): The capacity of waiting zone 2
 \end{itemize}
 
 In chapter ?
@@ -379,15 +382,18 @@ Such performance measures are the mean waiting time in the system (for both
 type 1 and type 2 individuals), the mean time blocked in waiting zone 2 (only
 valid for type 2 individuals) and the proportion of individuals that wait in
 waiting zone 1 within a predefined time target (for both types).
+Under the scope of this study three approaches have been considered to calculate
+these performance measures; a direct approach, a recursive algorithm and
+a closed-form formula. 
+Furthermore, different formulas arise for type 1 individuals and different
+ones for type 2 individuals.
 
-\subsubsection{Waiting time}
-% TODO: Write waiting time subsection
 
-\subsubsection{Blocking time}
-% TODO: Write blocking time subsection
+\input{chapters/03_queueing_model/02_waiting_time/main.tex}
 
-\subsubsection{Proportion of individuals within target}
-% TODO: Write proportion of individuals within target subsection
+\input{chapters/03_queueing_model/03_blocking_time/main.tex}
+
+\input{chapters/03_queueing_model/04_proportion_of_individuals_within_time/main.tex}
 
 
 \subsection{Numeric results and timings}
