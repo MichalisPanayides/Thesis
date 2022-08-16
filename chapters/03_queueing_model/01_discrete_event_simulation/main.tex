@@ -2,15 +2,12 @@
 % TODO: Write DES subsection - emphasise on custom Node + include some code for
 % node class
 This section describes the discrete event simulation (DES) model used to
-represent the queueing network.
+represent the queueing network of Section~\ref{sec:}.  % TODO Add correct label for section.
 The python library \lstinline[style=pystyle]{ciw}~\cite{ciwpython, ciwarticle}
 was used to implement the DES model.
 The library treats queues as distinct nodes in the network where each node has
 an arrival distribution, a service distribution, a number of available servers
 and a queue capacity.
-For more complex systems additional inputs can be used (baulking, reneging,
-priority change) but for the model described in this section these won't be
-needed.
 The following code can be used to generate a queueing network with two
 queues and two types of individuals, where type 1 individuals arrive at node
 2 (waiting zone 1) with an arrival rate of \lstinline[style=pystyle]{lambda_1}
@@ -39,12 +36,12 @@ exponential service rate of \lstinline[style=pystyle]{mu}.
 ... )
 \end{lstlisting}
 
-As described earlier in section \ref{sec:queueing-section} and as shown in
-figure \ref{fig:diagram_of_queueing_system}, type 1 individuals arrive at node 2
+As described earlier in Section~\ref{sec:queueing-section} and as shown in
+Figure~\ref{fig:diagram_of_queueing_system}, type 1 individuals arrive at node 2
 and exit the system after their service finishes, but type 2 individuals arrive
 at node 1 and then proceed to node 2 after leaving node 1.
 This logic is implemented in the queueing network using the
-\lstinline[style=pystyle]{routing} matrix that consists of the routing
+\lstinline[style=pystyle]{routing} parameter that consists of the routing
 probabilities between different nodes.
 For the current implementation the routing matrix is a \(2 \times 2\) array
 that routes individuals from node 1 to node 2 with a probability of \(1.0\).
