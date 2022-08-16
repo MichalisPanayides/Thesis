@@ -2,7 +2,7 @@ name: thesis_env
 channels:
   - defaults
 dependencies:
-  - pip==21.0.1
+  - pip==21.2.4
   - python==3.9
   - pytest==6.2.4
   - pip:
