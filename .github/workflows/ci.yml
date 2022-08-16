@@ -32,6 +32,12 @@ jobs:
           sudo apt-get install -y texlive-xetex
           sudo apt-get install aspell
 
+      - name: Install dependencies
+        run: |
+          python -m pip install proselint
+          python -m pip install ambulance_game
+          python -m pip install invoke 
+
       - name: Test PDF compiles
         run: inv compile
 
