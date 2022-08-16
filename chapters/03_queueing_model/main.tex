@@ -218,23 +218,23 @@ library \textit{SciPy}~\cite{2020SciPy-NMeth} that uses the
 \textit{lsoda}~\cite{lsoda_algorithm} integration method.
 
 \begin{lstlisting}[style=pystyle]
-    >>> import ambulance_game as abg
-    >>> import scipy as sci
-    >>> Q = abg.markov.get_transition_matrix(
-    ...     lambda_1=1,
-    ...     lambda_2=2,
-    ...     mu=2,
-    ...     num_of_servers=2,
-    ...     threshold=3,
-    ...     system_capacity=4,
-    ...     buffer_capacity=2
-    ... )
-    >>> pi = abg.markov.get_steady_state_numerically(
-    ...     Q, integration_function=sci.integrate.odeint
-    ... )
-    >>> pi
-    array([0.17596013, 0.2639402 , 0.19795515, 0.14846636, 0.08660538, 
-    0.05464387, 0.02474439, 0.02268236, 0.02500215])
+>>> import ambulance_game as abg
+>>> import scipy as sci
+>>> Q = abg.markov.get_transition_matrix(
+...     lambda_1=1,
+...     lambda_2=2,
+...     mu=2,
+...     num_of_servers=2,
+...     threshold=3,
+...     system_capacity=4,
+...     buffer_capacity=2
+... )
+>>> pi = abg.markov.get_steady_state_numerically(
+...     Q, integration_function=sci.integrate.odeint
+... )
+>>> pi
+array([0.17596013, 0.2639402 , 0.19795515, 0.14846636, 0.08660538,
+       0.05464387, 0.02474439, 0.02268236, 0.02500215])
 
 \end{lstlisting}
 
@@ -266,12 +266,12 @@ This was implemented using \textit{scipy.integrate. solve\_ivp} from the python
 library \textit{SciPy}~\cite{2020SciPy-NMeth}.
 
 \begin{lstlisting}[style=pystyle]
-    >>> pi = abg.markov.get_steady_state_numerically(
-    ...     Q, integration_function=sci.integrate.solve_ivp
-    ... )
-    >>> pi
-    array([0.17596012, 0.26394019, 0.19795515, 0.14846637, 0.08660539,
-    0.05464388, 0.02474439, 0.02268236, 0.02500215])
+>>> pi = abg.markov.get_steady_state_numerically(
+...     Q, integration_function=sci.integrate.solve_ivp
+... )
+>>> pi
+array([0.17596012, 0.26394019, 0.19795515, 0.14846637, 0.08660539,
+       0.05464388, 0.02474439, 0.02268236, 0.02500215])
 
 \end{lstlisting}
 
@@ -310,12 +310,13 @@ python library \textit{numpy} \cite{2020NumPy-Array} \cite{lapack99}.
 
 
 \begin{lstlisting}[style=pystyle]
-    >>> import numpy as np
-    >>> pi = abg.markov.get_steady_state_algebraically(
-    ...     Q, algebraic_function=np.linalg.solve
-    ... )
-    >>> pi
-    array([0.17596013, 0.2639402 , 0.19795515, 0.14846636, 0.08660538, 0.05464387, 0.02474439, 0.02268236, 0.02500215])
+>>> import numpy as np
+>>> pi = abg.markov.get_steady_state_algebraically(
+...     Q, algebraic_function=np.linalg.solve
+... )
+>>> pi
+array([0.17596013, 0.2639402 , 0.19795515, 0.14846636, 0.08660538,
+       0.05464387, 0.02474439, 0.02268236, 0.02500215])
 
 \end{lstlisting}
 
@@ -339,11 +340,12 @@ This was implemented using \textit{numpy.linalg.lstsq} from the python
 library \textit{numpy}~\cite{2020NumPy-Array}.
 
 \begin{lstlisting}[style=pystyle]
-    >>> pi = abg.markov.get_steady_state_algebraically(
-    ...     Q, algebraic_function=np.linalg.lstsq
-    ... )
-    >>> pi
-    array([0.17596013, 0.2639402 , 0.19795515, 0.14846636, 0.08660538, 0.05464387, 0.02474439, 0.02268236, 0.02500215])
+>>> pi = abg.markov.get_steady_state_algebraically(
+...     Q, algebraic_function=np.linalg.lstsq
+... )
+>>> pi
+array([0.17596013, 0.2639402 , 0.19795515, 0.14846636, 0.08660538,
+       0.05464387, 0.02474439, 0.02268236, 0.02500215])
 
 \end{lstlisting}
 

@@ -125,3 +125,10 @@ def alex(c):
         if str(file) not in exception_files:
             c.run(f"alex {file}")
 
+
+@task
+def doctests(c):
+    """
+    Run doctests
+    """
+    c.run('python -m pytest --doctest-glob="*.tex"')

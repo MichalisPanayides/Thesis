@@ -1,8 +1,6 @@
 \subsection{Discrete Event Simulation}
-% TODO: Write DES subsection - emphasise on custom Node + include some code for
-% node class
 This section describes the discrete event simulation (DES) model used to
-represent the queueing network of Section~\ref{sec:}.  % TODO Add correct label for section.
+represent the queueing network of Section~\ref{sec:queueing-section}.
 The python library \lstinline[style=pystyle]{ciw}~\cite{ciwpython, ciwarticle}
 was used to implement the DES model.
 The library treats queues as distinct nodes in the network where each node has
@@ -19,6 +17,12 @@ exponential service rate of \lstinline[style=pystyle]{mu}.
 
 \begin{lstlisting}[style=pystyle]
 >>> import ciw
+>>> lambda_1 = 1.0
+>>> lambda_2 = 2.0
+>>> mu = 0.5
+>>> num_of_servers = 3
+>>> system_capacity = 10
+>>> buffer_capacity = 5
 >>> model = ciw.create_network(
 ...     arrival_distributions=[
 ...         ciw.dists.Exponential(lambda_2),
@@ -34,6 +38,7 @@ exponential service rate of \lstinline[style=pystyle]{mu}.
 ...     number_of_servers=[buffer_capacity, num_of_servers],
 ...     queue_capacities=[0, system_capacity - num_of_servers],
 ... )
+
 \end{lstlisting}
 
 As described earlier in Section~\ref{sec:queueing-section} and as shown in
@@ -71,7 +76,7 @@ behaviour of all nodes can be altered.
 
 
 \begin{lstlisting}[style=pystyle]
-
+>>> import numpy as np
 >>> def build_custom_node(threshold=float("inf")):
 ...     """
 ...     Build a custom node to replace the default ciw.Node. Inherits from
@@ -184,8 +189,8 @@ behaviour of all nodes can be altered.
 ...                 self.block_individual(next_individual, next_node)
 ...
 ...     return CustomNode
+
 \end{lstlisting}
-% TODO: Is this too long? Should I only include the "important" stuff?
 
 The class \lstinline[style=pystyle]{CustomNode} inherits from
 \lstinline[style=pystyle]{ciw.Node} and changes two of the methods
@@ -208,7 +213,8 @@ Finally, the simulation object can be created and simulated for a specific
 running:
 
 \begin{lstlisting}[style=pystyle]
-
+>>> threshold = 4
+>>> runtime = 1000
 >>> custom_node = build_custom_node(threshold)
 >>> simulation = ciw.Simulation(model, node_class=custom_node)
 >>> simulation.simulate_until_max_time(runtime)
