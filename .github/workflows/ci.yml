@@ -46,5 +46,5 @@ jobs:
           npm install alex --global
           inv alex
 
-      - name: Run proselint
+      - name: Run doctests
         run: inv doctests
