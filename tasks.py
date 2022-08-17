@@ -79,6 +79,8 @@ def proselint(c):
         specific_errors = [
             ("consistency.spelling", 54),
             ("typography.symbols.curly_quotes", 79),
+            ("typography.symbols.curly_quotes", 81),
+            ("typography.symbols.curly_quotes", 180),
         ]
         updated_errors = []
         for error in errors:
@@ -132,3 +134,16 @@ def doctests(c):
     Run doctests
     """
     c.run('python -m pytest --doctest-glob="*.tex"')
+
+
+@task
+def runall(c):
+    """
+    Run all tasks
+    """
+    print("Doctests:")
+    doctests(c)
+    print("\n\nAlex:")
+    alex(c)
+    print("\n\nProselint:")
+    proselint(c)
