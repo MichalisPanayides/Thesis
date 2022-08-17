@@ -45,6 +45,7 @@ words = {
     "odepack",
     "Panayides",
     "pre",
+    "probabilistically",
     "pystyle",
     "Queue",
     "Queueing",
