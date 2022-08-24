@@ -1,11 +1,24 @@
+% Treat \paragraph as \subsubsubsection
+\setcounter{secnumdepth}{4}
+\makeatletter
+\renewcommand{\paragraph}{\@startsection{paragraph}{4}{0ex}%
+   {-3.25ex plus -1ex minus -0.2ex}%
+   {1.5ex plus 0.2ex}%
+   {\normalfont\normalsize\bfseries}}
+\makeatother
+
+% Packages
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{float}
 \usepackage{tikz}
 \usetikzlibrary{calc, automata, chains, arrows.meta, math}
 \usepackage{listings}
+\usepackage{multicol}
 
+\setcounter{MaxMatrixCols}{20}
 
+% Specifications for python environment
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{backcolor}{rgb}{0.95,0.95,0.92}
 \definecolor{keywordcolor1}{RGB}{9, 119, 39}
