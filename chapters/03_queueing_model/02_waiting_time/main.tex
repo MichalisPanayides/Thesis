@@ -384,3 +384,30 @@ can be utilised once more to compute the overall mean waiting time for both
 individual types.
 
 % TODO: Add python implementation for direct approach
+
+
+\paragraph{Closed-form approach}\label{sec:closed_form_waiting_time}
+
+The final approach for getting the mean waiting time is to use a closed-form
+approach.
+This approach is an immediate simplification of the recursive approach
+described in Section \ref{sec:recursive_waiting_time}.
+
+\begin{equation} \label{eq:closed_form_waiting_type_1}
+    W^{(1)} = \frac{\sum_{\substack{(u,v) \, \in S_A^{(1)} \\ v \geq C}} 
+    \frac{1}{C \mu} \times (v-C+1) \times \pi(u,v)}{\sum_{(u,v) \, 
+    \in S_A^{(1)}} \pi(u,v)}
+\end{equation}
+
+The mean waiting time of type 2 individuals:
+
+\begin{equation}\label{eq:closed_form_waiting_type_2}
+    W^{(2)} = \frac{\sum_{\substack{(u,v) \, \in S_A^{(2)} \\ min(v,T) \geq C}} 
+    \frac{1}{C \mu} \times (\min(v+1,T)-C) \times \pi(u,v)}{\sum_{(u,v) \, 
+    \in S_A^{(2)}} \pi(u,v)}
+\end{equation} 
+
+Equation \ref{eq:overall_waiting_time} can then be used to compute the overall
+mean waiting time for both types \(W\).
+
+% TODO: Add python implementation for closed-form approach
