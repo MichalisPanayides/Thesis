@@ -1,0 +1,525 @@
+\subsubsection{Proportion of individuals within target}
+
+Another performance measure that needs to be taken into consideration is the
+proportion of individuals whose waiting and service times lie within a specified
+time target.
+In order to consider such measure though one would need to obtain the
+distribution of time in the system for all individuals.
+The complexity of such a task lies on the fact that different individuals
+arrive at different states of the Markov model.
+Consider the case when an arrival occurs when the model is at a specific state.
+
+\paragraph{Distribution of time at a specific state (with 1 server)}
+
+\begin{figure}[h]
+    \centering
+    \scalebox{0.75}{\input{chapters/03_queueing_model/img/example_model_1242/main.tex}}
+    \caption{Example Markov model \(C=1, T=2, N=4, M=2\)}
+    \label{fig:distribution_of_time_at_specific_state_1_server}
+\end{figure}
+
+Consider the Markov model of figure
+\ref{fig:distribution_of_time_at_specific_state_1_server} with one server (i.e.
+the rate of service completion is \(\mu\) throughout the Markov model)
+and a threshold of two individuals.
+Assume that a type 1 individual arrives when the model is at state
+\((0,3)\), thus forcing the model to move to state \((0,4)\).
+The distribution of the time needed for the specified individual to exit the
+system from state \((0,4)\) is given by the sum of exponentially distributed
+random variables with the same parameter \(\mu\).
+The sum of such random variables form the Erlang distribution which is defined
+by the number of random variables \(k\) that are added together and their
+exponential parameter \(\mu\).
+
+\begin{align}
+    & X_i \sim \text{Exp}(\mu) \nonumber \\
+    X_1 + X_2 + & \dots + X_k \sim \text{Erlang}(k,\mu)
+    \label{eq:erlang_distribution_definition}
+\end{align}
+
+Note here that these random variables represent the individual's pathway from
+the perspective of the individual.
+Thus, \(X_i\) represents the random variable of the time that it takes for an
+individual to move from the \(i^{\text{th}}\) position of the queue to the
+\((i-1)^{\text{th}}\) position (i.e. for someone in front of them to finish
+their service) and \(X_0\) is the time it takes that individual from
+starting their service to exiting the system.
+
+
+\begin{align}
+    (0,4) \Rightarrow \quad & X_3 \sim Exp(\mu) \nonumber \\
+    (0,3) \Rightarrow \quad & X_2 \sim Exp(\mu) \nonumber \\
+    (0,2) \Rightarrow \quad & X_1 \sim Exp(\mu) \nonumber \\
+    (0,1) \Rightarrow \quad & X_0 \sim Exp(\mu) \nonumber \\
+    S = X_3 + X_2 + & X_1 + X_0 = Erlang(4, \mu)
+\end{align}
+
+Thus, the waiting and service time of an individual in the model of figure
+\ref{fig:distribution_of_time_at_specific_state_1_server} can be captured by an
+erlang distributed random variable.
+The general CDF of the erlang distribution \(Erlang(k, \mu)\) is given by:
+
+\begin{equation} \label{eq:cdf_erlang}
+    P(S < t) = 1 - \sum_{i=0}^{k-1} \frac{1}{i!} e^{-\mu t} (\mu t)^i
+\end{equation}
+
+Unfortunately, the erlang distribution can only be used for the sum of
+identically distributed random variables from the exponential distribution.
+Therefore, this approach cannot be used when one of the random variables has a
+different parameter than the others.
+In fact the only case where this can be use is only when the number of servers 
+are \(C=1\), just like in the explored example, or when an individual arrives
+and goes straight to service (i.e. when there is no other individual waiting
+and there is an empty server).
+
+
+\paragraph{Distribution of time at a specific state (with multiple servers)}
+
+\begin{figure}[h]
+    \centering
+    \scalebox{0.75}{\input{chapters/03_queueing_model/img/example_model_2242/main.tex}}
+    \caption{Example Markov model \(C=2, T=2, N=4, M=2\)}
+    \label{fig:distribution_of_time_at_specific_state_2_servers}
+\end{figure}
+
+Figure \ref{fig:distribution_of_time_at_specific_state_2_servers} represents the
+same Markov model as figure
+\ref{fig:distribution_of_time_at_specific_state_1_server} with the only
+exception that there are 2 servers here.
+By applying the same logic, assuming that an individual arrives at state
+\((0,4)\), the sum of the following random variables arises.
+
+\begin{align}
+    (0,4) \Rightarrow \quad & X_2 \sim Exp(2\mu) \nonumber \\
+    (0,3) \Rightarrow \quad & X_1 \sim Exp(2\mu) \\
+    (0,2) \Rightarrow \quad & X_0 \sim Exp(\mu) \nonumber
+\end{align}
+
+Since these exponentially distributed random variables do not share the same
+parameter, an erlang distribution cannot be used.
+In fact, the problem can now be viewed as the sum of exponentially
+distributed random variables with different parameters, which is in turn the
+sum of erlang distributed random variables.
+The sum of erlang distributed random variables is said to follow the
+hypoexponential distribution.
+The hypoexponential distribution is defined with two vectors of size equal
+to the number of Erlang random variables that are added together
+\cite{Akkouchi2008}, \cite{Smaili2013}.
+For this particular example:
+
+\footnotesize
+\begin{align} \label{eq:multiple_servers_distribution_example}
+    \begin{rcases}
+        \begin{rcases}
+            X_2 \sim Exp(2\mu) \\
+            X_1 \sim Exp(2\mu)
+        \end{rcases}
+        X_1 + X_2 = S_1 \sim Erlang(2, 2\mu) \\
+        X_0 \sim Exp(\mu) \Rightarrow \hspace{1cm} X_0 = S_2 \sim Erlang(1, \mu)
+    \end{rcases}
+    S_1 + S_2 = H \sim Hypo((2,1), (2\mu, \mu))
+\end{align}
+\normalsize
+
+The random variable \(H\) from equation
+\ref{eq:multiple_servers_distribution_example} follows a hypoexponential
+distribution with two vector parameters (\((2,1)\) and \((2\mu, \mu)\)).
+The CDF of this distribution can be therefore used to get the probability of the
+time spent in the system being less than a given target.
+The CDF of the general hypoexponential distribution \(Hypo(\vec{r},
+\vec{\lambda})\), is given by the \ref{eq:general_cdf_hypoexponential}, where
+vector \(\vec{r}\) contains all \(k\)-values of the erlang distributions
+defined in \ref{eq:erlang_distribution_definition} and \(\vec{\lambda}\)
+is a vector of the distinct parameters \cite{Favaro2010}.
+
+\begin{align} \label{eq:general_cdf_hypoexponential}
+    & P(H < t) = 1 - \left( \prod_{j=1}^{\mid \vec{r} \mid} \lambda_j^{r_j}
+    \right) \sum_{k=1}^{\mid \vec{r} \mid} \sum_{l=1}^{r_k}
+    \frac{\Psi_{k,l}(-\lambda_k)t^{r_k - l} e^{-\lambda_k t}}
+    {(r_k - l)! (l - 1)!} \nonumber \\
+    & \textbf{where} \qquad \Psi_{k,l}(t) = - \frac{\partial^{l - 1}}
+    {\partial t ^{l - 1}} \left( \prod_{j = 0, j \neq k}^{\mid \vec{r} \mid}
+    (\lambda_j + t)^{-r_j} \right) \nonumber \\
+    & \textbf{and} \quad \qquad \lambda_0 = 0, r_0 = 1
+\end{align}
+
+
+The computation of the derivative makes equation \ref{eq:general_cdf_hypoexponential}
+computationally expensive.
+In \cite{Legros2015} an alternative linear version of that CDF is explored via
+matrix analysis, and is given by the following formula:
+
+\small
+\begin{equation} \label{eq:linear_general_cdf_hypoexponential}
+    \begin{split}
+        F(x) = &1 - \sum_{k=1}^{n} \sum_{l=0}^{k-1} (-1)^{k-1} \binom{n}{k}
+            \binom{k-1}{l} \sum_{j=1}^{n} \sum_{s=1}^{j-1} e^{-x \lambda_s}
+            \prod_{l=1}^{s-1} \left( \frac{\lambda_l}{\lambda_l - \lambda_s} \right)
+            ^ {k_s} \\
+        & \times \sum_{s < a_1 < \dots < a_{l-1} < j}
+            \left( \frac{\lambda_s}{\lambda_s - \lambda_{a_1}} \right) ^ {k_s}
+            \prod_{m=s+1}^{a_1-1} \left( \frac{\lambda_m}{\lambda_m -
+            \lambda_{a_1}}\right) ^ {k_m}
+            \prod_{n=a_1}^{a_2-1} \left( \frac{\lambda_n}{\lambda_n -
+            \lambda_{a_2}}\right) ^ {k_n} \\
+        & \dots \prod_{r=a_l-1}^{j-1} \left( \frac{\lambda_r}{\lambda_r -
+            \lambda_{a_j}}\right) ^ {k_r}
+            \sum_{q=0}^{k_s - 1} \frac{((\lambda_s - \lambda_{a_1})x)^q}{q!}, \\
+        & \text{for } \geq 0
+    \end{split}
+\end{equation}
+\normalsize
+
+Although equation \ref{eq:linear_general_cdf_hypoexponential} is a simplified
+version of equation \ref{eq:general_cdf_hypoexponential} it still has some
+unnecessary complexity.
+The described expressions are general expressions used to get the CDF of
+the hypoexponential distribution, which is in turn the sum of multiple
+Erlang distributed random variables.
+However, the random variable \(H\), described in
+\ref{eq:multiple_servers_distribution_example}, is the sum of just two
+different erlang distributed random variables.
+Thus, perhaps a more simplified version of the above expressions can be derived
+that is specific to the case of two erlang distributed random variables.
+
+
+\paragraph{Specific CDF of hypoexponential distribution}
+Equations \ref{eq:general_cdf_hypoexponential} and
+\ref{eq:linear_general_cdf_hypoexponential} refers to the general CDF of the
+hypoexponential distribution where the size of the vector parameters can be of
+any size \cite{Favaro2010}.
+In the Markov chain models described in figures
+\ref{fig:distribution_of_time_at_specific_state_1_server} and
+\ref{fig:distribution_of_time_at_specific_state_2_servers} the parameter vectors
+of the hypoexponential distribution are of size two, and in fact, for any
+possible version of the investigated Markov chain model the vectors can only be
+of size two.
+This is true since for any dimensions of this Markov chain model there will
+always be at most two distinct exponential parameters; the parameter for
+finishing a service (\(\mu\)) and the parameter for moving forward in the queue
+(\(C \mu\)).
+For the special case of \(C=1\) the hypoexponential distribution will not be
+used as this is equivalent to an erlang distribution.
+Therefore, by fixing the sizes of \(\vec{r}\) and \(\vec{\lambda}\) to 2, the
+following specific expression for the CDF of the hypoexponential distribution
+arises, where the derivative is removed:
+
+
+\begin{align} \label{eq:specific_cdf_hypoexponential}
+    & P(H < t) = 1 - \left( \prod_{j=1}^{\mid \vec{r} \mid} \lambda_j^{r_j}
+    \right) \sum_{k=1}^{\mid \vec{r} \mid} \sum_{l=1}^{r_k}
+    \frac{\Psi_{k,l}(-\lambda_k)t^{r_k - l} e^{-\lambda_k t}}{(r_k - l)!
+    (l - 1)!} \nonumber \\
+    & \textbf{where} \qquad \Psi_{k,l}(t) =
+    \begin{cases}
+        \frac{(-1)^{l} (l-1)!}{\lambda_2} \left[\frac{1}{t^l} - \frac{1}
+        {(t + \lambda_2)^l}\right] , & k=1 \\
+        - \frac{1}{t (t + \lambda_1)^{r_1}}, & k=2
+    \end{cases} \nonumber \\
+    & \textbf{and} \quad \qquad \lambda_0 = 0, r_0 = 1
+\end{align}
+
+Note here that the only difference between equation
+\ref{eq:general_cdf_hypoexponential} and \ref{eq:specific_cdf_hypoexponential}
+is the \(\Psi\), where it is now only computed for \(k=1,2\).
+The following subsection proves the following expression:
+
+\begin{equation} \label{eq:hypoexponential_expression_to_proof}
+    - \frac{\partial^{l - 1}}{\partial t ^{l - 1}}
+    \left(
+        \prod_{j = 0, j \neq k}^{\mid \vec{r} \mid} (\lambda_j + t)^{-r_j}
+    \right) =
+    \begin{cases}
+        \frac{(-1)^{l} (l-1)!}{\lambda_2} \left[\frac{1}{t^l} - \frac{1}
+        {(t + \lambda_2)^l}\right] , & k=1 \\
+        - \frac{1}{t (t + \lambda_1)^{r_1}}, & k=2
+    \end{cases}
+\end{equation}
+
+
+
+\paragraph{Proof of specific hypoexponential distribution
+(equation \ref{eq:hypoexponential_expression_to_proof})}
+
+This section aims to show that there exists a simplified expression of equation
+\ref{eq:general_cdf_hypoexponential} that is specific to the proposed Markov
+model.
+Function \(\Psi\) is defined using the parameter \(t\) and the variables \(k\)
+and \(l\).
+Given the Markov model, the range of values that \(k\) and \(l\) can take can be
+bounded.
+First, from the range of the double summation in equation
+\ref{eq:general_cdf_hypoexponential}, it can be seen that
+\(k = 1, 2, \dots, \mid \vec{r} \mid\).
+Now, \(\mid \vec{r} \mid\) represents the size of the parameter vectors that,
+for the Markov model, will always be 2.
+That is because, for all the exponentially distributed random variables that are
+added together to form the new distribution, there only two distinct parameters,
+thus forming two erlang distributions. Therefore:
+
+\begin{equation*}
+    k = 1, 2
+\end{equation*}
+
+By observing equation \ref{eq:general_cdf_hypoexponential} once more, the range
+of values that \(l\) takes are \(l = 1, 2, \dots, r_k\), where \(r_1\) is
+subject to the individual's position in the queue and \(r_2 = 1\).
+In essence, the hypoexponential distribution will be used with these bounds:
+
+\begin{align}
+    k = 1 & \qquad \Rightarrow \qquad l = 1, 2, \dots, r_1 \nonumber \\
+    k = 2 & \qquad \Rightarrow \qquad l = 1
+\end{align}
+
+Thus the left hand side of equation \ref{eq:hypoexponential_expression_to_proof}
+needs only to be defined for these bounds.
+The specific hypoexponential distribution investigated here is of the form
+\(Hypo((r_1, 1)(\lambda_1, \lambda_2))\).
+Note the initial conditions \(\lambda_0=0, r_0=1\) defined in equation
+\ref{eq:general_cdf_hypoexponential} also hold here.
+Thus the proof is split into two parts, for \(k=1\) and \(k=2\).
+
+
+
+\begin{itemize}
+    \item \(k = 2, l = 1\)
+    \begin{equation*}
+        \begin{split}
+            LHS &= - \frac{\partial^{1-1}}{\partial t^{1-1}}
+            \left( \prod_{j=0, j \neq 2}^{2} (\lambda_j + t)^{-r_j} \right) \\
+            &=-\left( (\lambda_0 + t)^{-r_0} \times (\lambda_1 + t)^{-r_1}
+            \right) \\
+            &=-\left( t^{-1} \times (\lambda_1 + t)^{-r_1} \right) \\
+            &= - \frac{1}{t(t + \lambda_1)^{r_1}} \\
+            & \hspace{7cm} \square
+        \end{split}
+    \end{equation*}
+    \item \(k = 1, l = 1, \dots, r_1\)
+    \begin{equation*}
+        \begin{split}
+            LHS &= -\frac{\partial^{l-1}}{\partial t^{l-1}}
+            \left( \prod_{j=0, j \neq 1}^{2} (\lambda_j + t)^{-r_j} \right) \\
+            &= -\frac{\partial^{l-1}}{\partial t^{l-1}}
+            \left( (\lambda_o + t)^{-r_0} \times (\lambda_2 + t)^{-r_2}
+            \right) \\
+            &= -\frac{\partial^{l-1}}{\partial t^{l-1}}
+            \left( \frac{1}{t(t + \lambda_2)}\right)
+        \end{split}
+    \end{equation*}
+
+    In essence, it only remains to show that:
+
+    \[
+        -\frac{\partial^{l-1}}{\partial t^{l-1}}
+        \left( \frac{1}{t(t + \lambda_2)}\right) =
+        \frac{(-1)^{l} (l-1)!}{\lambda_2}\left[\frac{1}{t^l} - \frac{1}{(t +
+        \lambda_2)^l}\right]
+    \]
+
+    \textbf{Proof by Induction:}
+    \begin{enumerate}
+        \item Base case (\(l=1\)):
+        \begin{equation*}
+            \begin{split}
+                LHS &= -\frac{\partial^{1-1}}{\partial t^{1-1}}
+                \left( \frac{1}{t(t + \lambda_2)}\right) =
+                - \frac{1}{t(t + \lambda_2)} \\
+                RHS &= \frac{(-1)^{1} (1-1)!}{\lambda_2}
+                \left[\frac{1}{t^1} - \frac{1}{(t + \lambda_2)^1}\right] \\
+                &= - \frac{t + \lambda_2 - t}{\lambda_2 t (t + \lambda_2)} \\
+                &= - \frac{1}{t (t + \lambda_2)} \\
+                LHS &= RHS
+            \end{split}
+        \end{equation*}
+        \item Assume true for \(l = x\):
+        \begin{equation*}
+            -\frac{\partial^{x-1}}{\partial t^{x-1}}
+            \left( \frac{1}{t(t + \lambda_2)}\right) =
+            \frac{(-1)^{x} (x-1)!}{\lambda_2}
+            \left[\frac{1}{t^x} - \frac{1}{(t + \lambda_2)^x}\right]
+        \end{equation*}
+        \item Prove true for \(l = x + 1\):
+        
+        \small
+        \[
+            \Bigg( \text{Show that:} \hspace{0.5cm}
+            \frac{\partial^x}{\partial t ^ x}
+            \left( \frac{-1}{t (t + \lambda_2)} \right) =
+            \frac{(-1)^{x + 1} (x)!}{\lambda_2}
+            \left[\frac{1}{t^{x+1}}-\frac{1}{(t + \lambda_2)^{x+1}}\right]\Bigg)
+        \]
+        \normalsize
+
+        \begin{equation*}
+            \begin{split}
+                LHS &= \frac{\partial}{\partial t}
+                \left[ \frac{\partial^{x-1}}{\partial t ^ {x-1}}
+                \left( \frac{-1}{t (t + \lambda_2)} \right) \right] \\
+                &= \frac{\partial}{\partial t} \left[
+                    \frac{(-1)^x (x-1)!}{\lambda_2} \left(
+                        \frac{1}{t^x} - \frac{1}{(t + \lambda_2)^x}
+                    \right)
+                \right] \\
+                &= \frac{(-1)^x (x-1)!}{\lambda_2} \left(
+                    \frac{(-x)}{t^{x+1}} - \frac{(-x)}{(t + \lambda_2)^x}
+                \right) \\
+                &= \frac{(-1)^x (x-1)! (-x)}{\lambda_2} \left(
+                    \frac{1}{t^{x+1}} - \frac{1}{(t + \lambda_2)^x}
+                \right) \\
+                &= \frac{(-1)^{x+1} (x)!}{\lambda_2} \left(
+                    \frac{1}{t^{x+1}} - \frac{1}{(t + \lambda_2)^x}
+                \right) \\
+                & = RHS \\
+                & \hspace{7cm} \square
+            \end{split}
+        \end{equation*}
+    \end{enumerate}
+\end{itemize}
+
+\paragraph{Proportion within target for type 1 and type 2 individuals}
+
+Given the two CDFs of the Erlang and Hypoexponential distributions (equations
+\ref{eq:erlang_distribution_definition} and
+\ref{eq:specific_cdf_hypoexponential}) a new function has to be defined to
+decide which one to use between the two.
+Based on the state of the model, there can be three scenarios when an individual
+arrives.
+\begin{enumerate}
+    \item There is a free server and the individual does not have to wait
+    \begin{equation*}
+        X_{(u,v)} \sim Erlang(1, \mu)
+    \end{equation*}
+    \item The individual arrives at the queue at the \(n^{th}\) position and the
+    model has \(C > 1\) servers
+    \begin{equation*}
+        X_{(u,v)} \sim Hypo((n, 1), (C \mu, \mu))
+    \end{equation*}
+    \item The individual arrives at a queue at the \(n^{th}\) position and the
+    model has \(C = 1\) servers
+    \begin{equation*}
+        X_{(u,v)} \sim Erlang(n + 1, \mu)
+    \end{equation*}
+\end{enumerate}
+
+Note here that for the first case \(Erlang(1, \mu)\) is equivalent to
+\(Exp(\mu)\).
+Define \(X_{(u,v)}^{(1)}\) as the distribution of type 1 individuals and
+\(X_{(u,v)}^{(2)}\) as the distribution of type 2 individuals, when arriving at
+state \((u,v)\) of the model.
+
+\small
+\begin{equation}
+    X_{(u,v)}^{(1)} \sim
+    \begin{cases}
+        \textbf{Erlang}(v, \mu), & \textbf{if } C = 1 \textbf{ and } v>1 \\
+        \textbf{Hypo}\left(\vec{r}=(v - C, 1), \vec{\lambda}=(C \mu, \mu)\right),
+            & \textbf{if } C > 1 \textbf{ and } v>C \\
+        \textbf{Erlang}(1, \mu), & \textbf{if } v \leq C
+    \end{cases}
+\end{equation}
+
+\begin{equation}
+    X_{(u,v)}^{(2)} \sim
+    \begin{cases}
+        \textbf{Erlang}(\min(v, T), \mu), & \textbf{if } C = 1
+            \textbf{ and } v, T > 1 \\
+        \textbf{Hypo}\left(\vec{r}=(\min(v, T) - C, 1), \vec{\lambda}=(C \mu, \mu)\right), &
+            \textbf{if } C > 1 \textbf{ and } v, T  > C \\
+        \textbf{Erlang}(1, \mu), & \textbf{if } v \leq C \textbf{ or } T \leq C
+    \end{cases}
+\end{equation}
+\normalsize
+
+
+Equations \ref{eq:cdf_erlang} and \ref{eq:specific_cdf_hypoexponential} can now
+be used.
+Therefore, the probability that an individual arriving at a specific state is
+within a given time target \(t\) is given by the following formulas:
+
+
+\footnotesize
+\begin{equation}
+    P(X_{(u,v)}^{(1)} < t) =
+    \begin{cases}
+        1 - \sum_{i=0}^{v-1} \frac{1}{i!} e^{-\mu t} (\mu t)^i,
+            & \textbf{if } C = 1 \\
+        & \textbf{and } v > 1 \\
+        & \\
+        1 - (\mu C)^{v-C} \mu
+            \sum_{k=1}^{\mid \vec{r} \mid} \sum_{l=1}^{r_k}
+            \frac{\Psi_{k,l}(-\lambda_k)t^{r_k - l}
+            e^{-\lambda_k t}}{(r_k - l)! (l - 1)!},
+            & \textbf{if } C > 1 \\
+        \textbf{where } \vec{r}=(v - C, 1) \textbf{ and }
+            \vec{\lambda}=(C \mu, \mu) & \textbf{and } v > C \\
+        & \\
+        1 - e^{-\mu t},  & \textbf{if } v \leq C
+    \end{cases}
+\end{equation}
+
+\begin{equation}
+    P(X_{(u,v)}^{(2)} < t) =
+    \begin{cases}
+        1 - \sum_{i=0}^{\min(v,T)-1} \frac{1}{i!} e^{-\mu t} (\mu t)^i,
+            & \textbf{if } C = 1 \\
+        & \textbf{and } v, T > 1 \\
+        & \\
+        1 - (C \mu ) ^ {\min(v,T) - C} \mu
+            \sum_{k=1}^{\mid \vec{r} \mid} \sum_{l=1}^{r_k}
+            \frac{\Psi_{k,l}(-\lambda_k)t^{r_k - l}
+            e^{-\lambda_k t}}{(r_k - l)! (l - 1)!},
+            & \textbf{if } C > 1 \\
+        \textbf{where } \vec{r}=(\min(v, T) - C, 1) \textbf{ and }
+            \vec{\lambda}=(C \mu, \mu) & \textbf{and } v, T  > C \\
+        & \\
+        1 - e^{-\mu t}, & \textbf{if } v \leq C \\
+        & \textbf{or } T \leq C \\
+    \end{cases}
+\end{equation}
+\normalsize
+
+In addition the set of accepting states for type 1 (\(S_A^{(1)}\)) and type 2
+(\(S_A^{(2)}\)) individuals defined in equations
+\ref{eq:accepting_states_type_1} and \ref{eq:accepting_states_type_2} are also
+needed here.
+Note here that, \(S\) denotes the set of all states of the Markov chain model.
+
+
+Having defined everything, it only remains to use a formula similar to the ones
+of equations \ref{eq:recursive_waiting_time_for_type_i} and
+\ref{eq:example_direct_approach_blocking_time}.
+The following formula uses the state probability vector \(\pi\) to get the
+weighted average of the probability below target of all states in the Markov
+model.
+
+\begin{equation}
+    P(X^{(1)} < t) = \frac{\sum_{(u,v) \in S_A^{(1)}} P(X_{u,v}^{(1)} < t)
+    \pi_{u,v} }{\sum_{(u,v) \in S_A^{(1)}} \pi_{u,v}}
+\end{equation}
+
+\begin{equation}
+    P(X^{(2)} < t) = \frac{\sum_{(u,v) \in S_A^{(2)}} P(X_{u,v}^{(2)} < t)
+    \pi_{u,v} }{\sum_{(u,v) \in S_A^{(2)}} \pi_{u,v}}
+\end{equation}
+
+
+\paragraph{Overall proportion within target}
+
+The overall proportion of individuals for both type 1 and type 2 individuals
+is given by the equivalent formula of equations
+(\ref{eq:overall_waiting_time_coeff}) and (\ref{eq:overall_waiting_time}).
+The following formula uses the probability of lost individuals from both types
+to get the weighted sum of the two already existing probabilities.
+
+\begin{equation*}
+    P(L'_1) = \sum_{(u,v) \, \in S_A^{(1)}} \pi(u,v), \hspace{1.5cm}
+    P(L'_2) = \sum_{(u,v) \, \in S_A^{(2)}} \pi(u,v)
+\end{equation*}
+
+\small
+\begin{equation}\label{eq:overall_proportion_within_target}
+    P(X < t)= \frac{\lambda_1 P(L'_1)}{\lambda_2 P(L'_2)+\lambda_1 P(L'_1)}
+    P(X^{(1)} < t) + \frac{\lambda_2 P(L'_2)}{\lambda_2 P(L'_2) + \lambda_1
+    P(L'_1)} P(X^{(2)} < t)
+\end{equation}
+\normalsize
