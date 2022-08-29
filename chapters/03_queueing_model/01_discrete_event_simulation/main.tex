@@ -1,13 +1,11 @@
 \subsection{Discrete Event Simulation}
 
-Discrete event simulation (DES) is currently one of the most popular modelling
-techniques.
-It is a method for modelling the behaviour of real-world systems in which the
+Discrete Event Simulation (DES) is a method for modelling the behaviour of real-world systems in which the
 system is made up of discrete events, each of which has a certain
 duration~\cite{DESstewart}.
 It can be used to understand complex situations in order to make predictions
 and thus provide improvements~\cite{VinceGeraintBook}.
-There three main approaches to building DES models are the activity scanning
+The three main approaches to building DES models are the activity scanning
 approach, the event scheduling approach and the process interaction
 approach~\cite{DESapproaches}.
 Under the scope of this study only the event scheduling approach is considered.
@@ -15,8 +13,7 @@ This section describes the discrete event simulation (DES) model used to
 represent the queueing network of Section~\ref{sec:queueing-section}.
 
 In order to use DES on the queueing network described in
-Figure~\ref{fig:diagram_of_queueing_system} some slight modifications are
-required.
+Figure~\ref{fig:diagram_of_queueing_system} an equivalent queueing network must be constructed.
 The current queueing network is a two-node queueing system that accepts two
 types of individuals, where type 1 individuals arrive at waiting zone 1 and
 type 2 individuals arrive at waiting zone 2.
@@ -27,7 +24,7 @@ space for individuals to wait there until they are allowed to waiting zone 1.
 From an implementation perspective there is an equivalent system that can be
 used where instead of a node with no service and queueing capacity \(M\), there
 are \(M\) servers each serving with a service rate of \(0\) and no queueing
-capacity.
+capacity. As shown in Figure % TODO Add figure caption.
 
 \input{chapters/03_queueing_model/img/equivalent_queueing_model_diagram.tex}
 
@@ -37,11 +34,11 @@ individuals respectively.
 Waiting zone 1 has an exponentially distributed service time with rate \(\mu\),
 a total of \(C\) servers and a queueing capacity of \(N - C\) (making the
 overall capacity \(N\)). 
-Waiting zone 2 has a deterministic service rate of \(0\), a total of \(M\)
+Waiting zone 2 has a deterministic service time of \(0\), a total of \(M\)
 servers and a queueing capacity of \(M\).
-Note here that parameters \(N\) and \(M\) are optional and can be also set to
-infinity.
-The final parameter to be defined is the routing 
+Note here that, similar to Figure % TODO add caption
+ parameters \(N\) and \(M\) are used to approximate the real world system 
+ and in fact can be taken to be infinite in the DES.
 Finally the routing parameter is defined as an array that probabilistically
 routes individuals from all nodes to all other nodes.
 For this particular system the routing parameter needs only to route individuals
