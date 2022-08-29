@@ -1,8 +1,8 @@
 \subsection{Discrete Event Simulation}
 
-Discrete Event Simulation (DES) is a method for modelling the behaviour of real-world systems in which the
-system is made up of discrete events, each of which has a certain
-duration~\cite{DESstewart}.
+Discrete Event Simulation (DES) is a method for modelling the behaviour of
+real-world systems in which the system is made up of discrete events, each of
+which has a certain duration~\cite{DESstewart}.
 It can be used to understand complex situations in order to make predictions
 and thus provide improvements~\cite{VinceGeraintBook}.
 The three main approaches to building DES models are the activity scanning
@@ -13,7 +13,8 @@ This section describes the discrete event simulation (DES) model used to
 represent the queueing network of Section~\ref{sec:queueing-section}.
 
 In order to use DES on the queueing network described in
-Figure~\ref{fig:diagram_of_queueing_system} an equivalent queueing network must be constructed.
+Figure~\ref{fig:diagram_of_queueing_system} an equivalent queueing network must
+be constructed.
 The current queueing network is a two-node queueing system that accepts two
 types of individuals, where type 1 individuals arrive at waiting zone 1 and
 type 2 individuals arrive at waiting zone 2.
@@ -24,7 +25,7 @@ space for individuals to wait there until they are allowed to waiting zone 1.
 From an implementation perspective there is an equivalent system that can be
 used where instead of a node with no service and queueing capacity \(M\), there
 are \(M\) servers each serving with a service rate of \(0\) and no queueing
-capacity. As shown in Figure % TODO Add figure caption.
+capacity, as shown in Figure \ref{fig:equivalent_diagram_of_queueing_system}.
 
 \input{chapters/03_queueing_model/img/equivalent_queueing_model_diagram.tex}
 
@@ -36,9 +37,9 @@ a total of \(C\) servers and a queueing capacity of \(N - C\) (making the
 overall capacity \(N\)). 
 Waiting zone 2 has a deterministic service time of \(0\), a total of \(M\)
 servers and a queueing capacity of \(M\).
-Note here that, similar to Figure % TODO add caption
- parameters \(N\) and \(M\) are used to approximate the real world system 
- and in fact can be taken to be infinite in the DES.
+Note here that, similar to Figure \ref{fig:diagram_of_queueing_system},
+parameters \(N\) and \(M\) are used to approximate the real world system 
+and in fact can be taken to be infinite in the DES.
 Finally the routing parameter is defined as an array that probabilistically
 routes individuals from all nodes to all other nodes.
 For this particular system the routing parameter needs only to route individuals
