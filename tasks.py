@@ -59,6 +59,8 @@ def proselint(c):
             "annotations.misc",
             "typography.symbols.ellipsis",
             "typography.symbols.sentence_spacing",
+            "lexical_illusions.misc",
+            "leonard.exclamation.30ppm",
         ]
         updated_errors = []
         for error in errors:
