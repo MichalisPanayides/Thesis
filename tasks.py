@@ -79,8 +79,8 @@ def proselint(c):
         specific_errors = [
             ("consistency.spelling", 54),
             ("typography.symbols.curly_quotes", 79),
-            ("typography.symbols.curly_quotes", 138),
-            ("typography.symbols.curly_quotes", 237),
+            ("typography.symbols.curly_quotes", 136),
+            ("typography.symbols.curly_quotes", 235),
         ]
         updated_errors = []
         for error in errors:
