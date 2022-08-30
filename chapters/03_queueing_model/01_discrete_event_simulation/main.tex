@@ -271,9 +271,60 @@ running:
 >>> threshold = 4
 >>> runtime = 1000
 >>> custom_node = build_custom_node(threshold)
+>>> ciw.seed(0)
 >>> simulation = ciw.Simulation(model, node_class=custom_node)
 >>> simulation.simulate_until_max_time(runtime)
 
 \end{lstlisting}
 
 
+\subsubsection{Performance Measures}
+
+Having run the simulation using \lstinline[style=pystyle]{ciw} all necessary
+performance measures can be calculated.
+All performance measure that are related to the duration of time are relatively
+straightforward to calculate.
+The following code gets all waiting times, service times and blocking times for
+all individuals that have passed through the model.
+
+\begin{lstlisting}[style=pystyle]
+>>> def extract_times_from_records(simulation_records, warm_up_time):
+...     """Get the required times (waiting, service, blocking) out of ciw's
+...     records where all individuals are treated the same way. This function
+...     can't distinguish between class 1 and class 2 individuals. It returns
+...     the aggregated waiting time, service times BUT only blocking times of
+...     class 2 individuals.
+...     """
+...     waiting_times = [
+...         r.waiting_time
+...         for r in simulation_records
+...         if r.arrival_date > warm_up_time and r.node == 2
+...     ]
+...     serving_times = [
+...         r.service_time
+...         for r in simulation_records
+...         if r.arrival_date > warm_up_time and r.node == 2
+...     ]
+...     blocking_times = [
+...         r.time_blocked
+...         for r in simulation_records
+...         if r.arrival_date > warm_up_time and r.node == 1
+...     ]
+...     return waiting_times, serving_times, blocking_times
+
+\end{lstlisting}
+
+Using the earlier variable \lstinline[style=pystyle]{simulation}, the waiting
+times, service times and blocking times can be extracted from the simulation
+records.
+
+\begin{lstlisting}[style=pystyle]
+>>> warm_up_time = 100
+>>> all_records = simulation.get_all_records()
+>>> waiting_times, serving_times, blocking_times = extract_times_from_records(
+...     all_records, warm_up_time
+... )
+>>> np.mean(waiting_times), np.mean(serving_times), np.mean(blocking_times)
+(1.7038750111337655, 2.041619227158985, 8.227702587974997)
+
+\end{lstlisting}
