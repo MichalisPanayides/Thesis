@@ -1,0 +1,330 @@
+\subsection{Discrete Event Simulation}
+
+Discrete Event Simulation (DES) is a method for modelling the behaviour of
+real-world systems in which the system is made up of discrete events, each of
+which has a certain duration~\cite{DESstewart}.
+It can be used to understand complex situations in order to make predictions
+and thus provide improvements~\cite{VinceGeraintBook}.
+The three main approaches to building DES models are the activity scanning
+approach, the event scheduling approach and the process interaction
+approach~\cite{DESapproaches}.
+Under the scope of this study only the event scheduling approach is considered.
+This section describes the discrete event simulation (DES) model used to
+represent the queueing network of Section~\ref{sec:queueing-section}.
+
+In order to use DES on the queueing network described in
+Figure~\ref{fig:diagram_of_queueing_system} an equivalent queueing network must
+be constructed.
+The current queueing network is a two-node queueing system that accepts two
+types of individuals, where type 1 individuals arrive at waiting zone 1 and
+type 2 individuals arrive at waiting zone 2.
+The modification that is required revolves around the mechanisms of waiting
+zone 2.
+Waiting zone 2 is defined as a non-service node where there is only a queueing
+space for individuals to wait there until they are allowed to waiting zone 1.
+From an implementation perspective there is an equivalent system that can be
+used where instead of a node with no service and queueing capacity \(M\), there
+are \(M\) servers each serving with a service rate of \(0\) and no queueing
+capacity, as shown in Figure \ref{fig:equivalent_diagram_of_queueing_system}.
+
+\input{chapters/03_queueing_model/img/equivalent_queueing_model_diagram.tex}
+
+The arrival times for both waiting zones are exponentially distributed with
+mean \(\lambda_1\) and \(\lambda_2\) corresponding to type 1 and type 2
+individuals respectively.
+Waiting zone 1 has an exponentially distributed service time with rate \(\mu\),
+a total of \(C\) servers and a queueing capacity of \(N - C\) (making the
+overall capacity \(N\)). 
+Waiting zone 2 has a deterministic service time of \(0\), a total of \(M\)
+servers and a queueing capacity of \(M\).
+Note here that, similar to Figure \ref{fig:diagram_of_queueing_system},
+parameters \(N\) and \(M\) are used to approximate the real world system 
+and in fact can be taken to be infinite in the DES.
+Finally the routing parameter is defined as an array that probabilistically
+routes individuals from all nodes to all other nodes.
+For this particular system the routing parameter needs only to route individuals
+from waiting zone 2 to waiting zone 1.
+
+\begin{equation}
+    \text{routing parameter} = \left[
+    \begin{array}{cc}
+        0 & 1 \\
+        0 & 0
+    \end{array}
+    \right]
+\end{equation}
+
+
+\subsubsection{Implementation}
+The python library \lstinline[style=pystyle]{ciw}~\cite{ciwpython, ciwarticle}
+was used to implement the DES model.
+The library treats queues as distinct nodes in the network where each node has
+an arrival distribution, a service distribution, a number of available servers
+and a queue capacity.
+The following code can be used to generate a queueing network with two
+queues and two types of individuals, where type 1 individuals arrive at node
+2 (waiting zone 1) with an arrival rate of \lstinline[style=pystyle]{lambda_1}
+and type 2 individuals arrive at node 1 (waiting zone 2) with an arrival rate of
+\lstinline[style=pystyle]{lambda_2}.
+Node 1 has a deterministic fixed service rate of \lstinline[style=pystyle]{0}
+(since there is no service involved in the buffer centre) and node 2 has an
+exponential service rate of \lstinline[style=pystyle]{mu}.
+
+\begin{lstlisting}[style=pystyle]
+>>> import ciw
+>>> lambda_1 = 1.0
+>>> lambda_2 = 2.0
+>>> mu = 0.5
+>>> num_of_servers = 3
+>>> system_capacity = 10
+>>> buffer_capacity = 5
+>>> model = ciw.create_network(
+...     arrival_distributions=[
+...         ciw.dists.Exponential(lambda_2),
+...         ciw.dists.Exponential(lambda_1)
+...     ],
+...     service_distributions=[
+...         ciw.dists.Deterministic(0), ciw.dists.Exponential(mu)
+...     ],
+...     routing=[
+...         [0.0, 1.0],
+...         [0.0, 0.0]
+...     ],
+...     number_of_servers=[buffer_capacity, num_of_servers],
+...     queue_capacities=[0, system_capacity - num_of_servers],
+... )
+
+\end{lstlisting}
+
+As described earlier in Section~\ref{sec:queueing-section} and as shown in
+Figure~\ref{fig:diagram_of_queueing_system}, type 1 individuals arrive at node 2
+and exit the system after their service finishes, but type 2 individuals arrive
+at node 1 and then proceed to node 2 after leaving node 1.
+This logic is implemented in the queueing network using the
+\lstinline[style=pystyle]{routing} parameter that consists of the routing
+probabilities between different nodes.
+For the current implementation the routing matrix is a \(2 \times 2\) array
+that routes individuals from node 1 to node 2 with a probability of \(1.0\).
+Furthermore, the server availability for nodes 1 and 2 are set to
+the \lstinline[style=pystyle]{buffer_capacity} and
+\lstinline[style=pystyle]{num_of_servers} respectively and the queue capacities
+are set to \lstinline[style=pystyle]{0} and
+\lstinline[style=pystyle]{system_capacity - num_of_servers}.
+Note that for node 1 (i.e. waiting zone 2) queue capacity is set to 0 and its
+number of servers is set to the buffer capacity.
+From \lstinline[style=pystyle]{ciw}'s data records perspective this made more
+sense since individuals are recorded as blocked this way.
+If the queue capacity was non-zero, individuals could also have a waiting time
+but no waiting should take place in node 1, only blockage.
+
+
+\subsubsection{Custom node class}
+Another specific feature of the particular model is that type 2 individuals
+need to stay blocked in node 2 whenever the number of individuals in node 1
+reaches a certain threshold \(T\).
+This part of the queueing network is not as straightforward to implement as the
+rest of the model.
+\lstinline[style=pystyle]{Ciw} allows users to get more custom behaviour by
+creating their own node class that inherits from the original one.
+By inheriting the original \lstinline[style=pystyle]{ciw.Node} the general
+behaviour of all nodes can be altered.
+
+
+\begin{lstlisting}[style=pystyle]
+>>> import numpy as np
+>>> def build_custom_node(threshold=float("inf")):
+...     """
+...     Build a custom node to replace the default ciw.Node. Inherits from
+...     the original ciw.Node class and replaces methods
+...     release_blocked_individual and finish_service.
+...     The methods are modified in such a way that all individuals that
+...     are in the buffer space (node 1) stay blocked as long as the
+...     number of individuals in the service area node (node 2) exceeds the
+...     threshold.
+...
+...     Parameters
+...     ----------
+...     threshold : int, optional
+...         The capacity threshold to be used by the method
+...     Returns
+...     -------
+...     class
+...         A custom node class that inherits from ciw.Node
+...     """
+...
+...     class CustomNode(ciw.Node):
+...         """
+...         Overrides the default release_blocked_individual and
+...         finish_service methods of the ciw.Node class
+...         """
+...
+...         def __init__(self, id_, simulation):
+...             """
+...             Initializes the node with the given id and simulation using
+...             the initialisation of ciw's Node object with the addition of
+...             the threshold parameter.
+...             """
+...             super().__init__(id_, simulation)
+...             self.simulation.threshold = threshold
+...
+...         def release_blocked_individual(self):
+...             """
+...             Releases an individual who becomes unblocked when
+...             another individual is released:
+...             - check if individual in node 2 and should stay blocked
+...                 i.e. if the number of individuals in that
+...                      node > threshold
+...             - check if anyone is blocked by this node
+...             - find the individual who has been blocked the longest
+...             - remove that individual from blocked queue
+...             - check if that individual had their service interrupted
+...             - release that individual from their node
+...             """
+...             continue_blockage = (
+...                 self.number_of_individuals >= threshold
+...                 and self.id_number == 2
+...             )
+...             if (
+...                 self.len_blocked_queue > 0
+...                 and self.number_of_individuals < self.node_capacity
+...                 and not continue_blockage
+...             ):
+...                 receiving_node = (
+...                     self.simulation.nodes[self.blocked_queue[0][0]]
+...                 )
+...                 individual_to_receive_index = [
+...                     ind.id_number
+...                     for ind in receiving_node.all_individuals
+...                 ].index(self.blocked_queue[0][1])
+...                 individual_to_receive = (
+...                     receiving_node.all_individuals[
+...                         individual_to_receive_index
+...                     ]
+...                 )
+...                 self.blocked_queue.pop(0)
+...                 self.len_blocked_queue -= 1
+...                 if individual_to_receive.interrupted:
+...                     individual_to_receive.interrupted = False
+...                     receiving_node.interrupted_individuals.remove(
+...                         individual_to_receive
+...                     )
+...                     receiving_node.number_interrupted_individuals -= 1
+...                 receiving_node.release(individual_to_receive_index, self)
+...
+...         def finish_service(self):
+...             """
+...             The next individual finishes service:
+...             - finds the individual to finish service
+...             - check if they need to change class
+...             - find their next node
+...             - release the individual if there is capacity at destination,
+...                 otherwise cause blockage
+...             - Note that blockage also occurs when we are at node 1 and
+...                 the number of individuals on node 2 are more than the
+...                 'threshold'
+...             """
+...             (
+...                 next_individual,
+...                 next_individual_index
+...             ) = self.find_next_individual()
+...             self.change_customer_class(next_individual)
+...             next_node = self.next_node(next_individual)
+...             next_individual.destination = next_node.id_number
+...             if not np.isinf(self.c):
+...                 next_individual.server.next_end_service_date=float("Inf")
+...             blockage = (
+...                 next_node.number_of_individuals >= threshold
+...                 and self.id_number == 1
+...             )
+...             if (
+...                 next_node.number_of_individuals < next_node.node_capacity
+...             ) and not blockage:
+...                 self.release(next_individual_index, next_node)
+...             else:
+...                 self.block_individual(next_individual, next_node)
+...
+...     return CustomNode
+
+\end{lstlisting}
+
+The class \lstinline[style=pystyle]{CustomNode} inherits from
+\lstinline[style=pystyle]{ciw.Node} and changes two of the methods
+(\lstinline[style=pystyle]{release_blocked_individual} and
+\lstinline[style=pystyle]{finish_service}) so that the additional logic of the
+threshold is incorporated.
+In the \lstinline[style=pystyle]{release_blocked_individual} method an
+additional check is added before releasing a potentially blocked individual from
+node 1 to node 2.
+This essentially checks whether the id of the node is 2 and
+the number of individuals in it are more than or equal to the
+\lstinline[style=pystyle]{threshold} so that it can accept a blocked individual.
+Similarly \lstinline[style=pystyle]{finish_service} is called once an individual
+finishes their service.
+The additional check that was added checks whether the id of the node is 1 and
+the number of individuals in the next node (i.e. node 2) is more than the
+threshold, which would result in blockage.
+Finally, the simulation object can be created and simulated for a specific
+\lstinline[style=pystyle]{threshold} and \lstinline[style=pystyle]{runtime} by
+running:
+
+\begin{lstlisting}[style=pystyle]
+>>> threshold = 4
+>>> runtime = 1000
+>>> custom_node = build_custom_node(threshold)
+>>> ciw.seed(0)
+>>> simulation = ciw.Simulation(model, node_class=custom_node)
+>>> simulation.simulate_until_max_time(runtime)
+
+\end{lstlisting}
+
+
+\subsubsection{Performance Measures}
+
+Having run the simulation using \lstinline[style=pystyle]{ciw} all necessary
+performance measures can be calculated.
+All performance measure that are related to the duration of time are relatively
+straightforward to calculate.
+The following code gets all waiting times, service times and blocking times for
+all individuals that have passed through the model.
+
+\begin{lstlisting}[style=pystyle]
+>>> def extract_times_from_records(simulation_records, warm_up_time):
+...     """Get the required times (waiting, service, blocking) out of ciw's
+...     records where all individuals are treated the same way. This function
+...     can't distinguish between class 1 and class 2 individuals. It returns
+...     the aggregated waiting time, service times BUT only blocking times of
+...     class 2 individuals.
+...     """
+...     waiting_times = [
+...         r.waiting_time
+...         for r in simulation_records
+...         if r.arrival_date > warm_up_time and r.node == 2
+...     ]
+...     serving_times = [
+...         r.service_time
+...         for r in simulation_records
+...         if r.arrival_date > warm_up_time and r.node == 2
+...     ]
+...     blocking_times = [
+...         r.time_blocked
+...         for r in simulation_records
+...         if r.arrival_date > warm_up_time and r.node == 1
+...     ]
+...     return waiting_times, serving_times, blocking_times
+
+\end{lstlisting}
+
+Using the earlier variable \lstinline[style=pystyle]{simulation}, the waiting
+times, service times and blocking times can be extracted from the simulation
+records.
+
+\begin{lstlisting}[style=pystyle]
+>>> warm_up_time = 100
+>>> all_records = simulation.get_all_records()
+>>> waiting_times, serving_times, blocking_times = extract_times_from_records(
+...     all_records, warm_up_time
+... )
+>>> np.mean(waiting_times), np.mean(serving_times), np.mean(blocking_times)
+(1.7038750111337655, 2.041619227158985, 8.227702587974997)
+
+\end{lstlisting}

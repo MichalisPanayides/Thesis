@@ -53,7 +53,7 @@ def proselint(c):
 
     def remove_expected_errors(errors):
         """
-        Remove errors that were expected from the error list
+        Remove general errors that were expected from the error list
         """
         expected_errors = [
             "annotations.misc",
@@ -68,15 +68,23 @@ def proselint(c):
 
     def remove_specific_errors(errors):
         """
-        Remove some very specific errors that are expected
+        Remove some very specific errors that are expected. The specific errors
+        are stored in a way such that:
+            specific_errors[i] = (error_name, error_line)
 
         Known errors: 
-            - spelling consistency of centre/center
+            - spelling consistency on line 53 for centre/center
+            - not using curly quotes in code block (for docstring)
         """
-        specific_errors = [("consistency.spelling", "center")]
+        specific_errors = [
+            ("consistency.spelling", 54),
+            ("typography.symbols.curly_quotes", 79),
+            ("typography.symbols.curly_quotes", 136),
+            ("typography.symbols.curly_quotes", 235),
+        ]
         updated_errors = []
         for error in errors:
-            if (error[0], error[-1]) not in specific_errors:
+            if (error[0], error[2]) not in specific_errors:
                 updated_errors.append(error)
         return updated_errors
 
@@ -96,7 +104,7 @@ def proselint(c):
     exit_codes = [0]
     for path in all_tex_files_without_imgs:
         with open(path, "r") as f:
-            text = "\n" + f.read()
+            text = "\n\n" + f.read()
             errors = plnt.tools.lint(text)
         errors = remove_expected_errors(errors)
         errors = remove_specific_errors(errors)
@@ -119,3 +127,23 @@ def alex(c):
         if str(file) not in exception_files:
             c.run(f"alex {file}")
 
+
+@task
+def doctests(c):
+    """
+    Run doctests
+    """
+    c.run('python -m pytest --doctest-glob="*.tex"')
+
+
+@task
+def runall(c):
+    """
+    Run all tasks
+    """
+    print("Doctests:")
+    doctests(c)
+    print("\n\nAlex:")
+    alex(c)
+    print("\n\nProselint:")
+    proselint(c)

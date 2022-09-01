@@ -11,6 +11,7 @@
 \definecolor{keywordcolor1}{RGB}{9, 119, 39}
 \definecolor{keywordcolor2}{RGB}{198, 98, 18}
 \definecolor{keywordcolor3}{RGB}{18, 135, 180}
+\definecolor{keywordcolor4}{RGB}{255, 0 255}
 \lstdefinestyle{pystyle}{
     language=Python,
     basicstyle=\ttfamily\scriptsize,
@@ -21,8 +22,10 @@
     alsoletter={>>>, ...},
     keywords=[2]{>>> , ... },
     keywordstyle=[2]\color{keywordcolor2},
-    keywords=[3]{ambulance_game, abg, numpy, np, scipy, sci},
+    keywords=[3]{ambulance_game, abg, numpy, np, scipy, sci, ciw},
     keywordstyle=[3]\bfseries\color{keywordcolor3},
+    keywords=[4]{for, in, def, and, or, not, True, False},
+    keywordstyle=[4]\bfseries\color{keywordcolor4},
     breaklines=true,
     captionpos=b,
     keepspaces=true,
