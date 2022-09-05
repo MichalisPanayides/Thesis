@@ -1,11 +1,11 @@
 \subsubsection{Proportion of individuals within target}
 
 Another performance measure that needs to be taken into consideration is the
-proportion of individuals whose waiting and service times lie within a specified
-time target.
+proportion of individuals whose waiting and service times are within a
+specified time target.
 In order to consider such measure though one would need to obtain the
 distribution of time in the system for all individuals.
-The complexity of such a task lies on the fact that different individuals
+The complexity of such a task comes from the fact that different individuals
 arrive at different states of the Markov model.
 Consider the case when an arrival occurs when the model is at a specific state.
 
@@ -68,7 +68,7 @@ identically distributed random variables from the exponential distribution.
 Therefore, this approach cannot be used when one of the random variables has a
 different parameter than the others.
 In fact the only case where this can be use is only when the number of servers 
-are \(C=1\), just like in the explored example, or when an individual arrives
+are \(C=1\), similar to the explored example, or when an individual arrives
 and goes straight to service (i.e. when there is no other individual waiting
 and there is an empty server).
 
@@ -177,7 +177,7 @@ The described expressions are general expressions used to get the CDF of
 the hypoexponential distribution, which is in turn the sum of multiple
 Erlang distributed random variables.
 However, the random variable \(H\), described in
-\ref{eq:multiple_servers_distribution_example}, is the sum of just two
+\ref{eq:multiple_servers_distribution_example}, is the sum of only two
 different erlang distributed random variables.
 Thus, perhaps a more simplified version of the above expressions can be derived
 that is specific to the case of two erlang distributed random variables.
@@ -198,7 +198,7 @@ This is true since for any dimensions of this Markov chain model there will
 always be at most two distinct exponential parameters; the parameter for
 finishing a service (\(\mu\)) and the parameter for moving forward in the queue
 (\(C \mu\)).
-For the special case of \(C=1\) the hypoexponential distribution will not be
+For the unique case of \(C=1\) the hypoexponential distribution will not be
 used as this is equivalent to an erlang distribution.
 Therefore, by fixing the sizes of \(\vec{r}\) and \(\vec{\lambda}\) to 2, the
 following specific expression for the CDF of the hypoexponential distribution
@@ -307,7 +307,7 @@ Thus the proof is split into two parts, for \(k=1\) and \(k=2\).
         \end{split}
     \end{equation*}
 
-    In essence, it only remains to show that:
+    In essence, the final part of the proof is to show that:
 
     \[
         -\frac{\partial^{l-1}}{\partial t^{l-1}}
@@ -485,9 +485,9 @@ needed here.
 Note here that, \(S\) denotes the set of all states of the Markov chain model.
 
 
-Having defined everything, it only remains to use a formula similar to the ones
+Having defined everything, a formula similar to the ones
 of equations \ref{eq:recursive_waiting_time_for_type_i} and
-\ref{eq:example_direct_approach_blocking_time}.
+\ref{eq:example_direct_approach_blocking_time} can be generated.
 The following formula uses the state probability vector \(\pi\) to get the
 weighted average of the probability below target of all states in the Markov
 model.

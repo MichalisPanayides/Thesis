@@ -83,6 +83,7 @@ def proselint(c):
             ("typography.symbols.curly_quotes", 79),
             ("typography.symbols.curly_quotes", 136),
             ("typography.symbols.curly_quotes", 235),
+            ("consistency.spelling", 57)
         ]
         updated_errors = []
         for error in errors:
