@@ -27,7 +27,17 @@ used where instead of a node with no service and queueing capacity \(M\), there
 are \(M\) servers each serving with a service rate of \(0\) and no queueing
 capacity, as shown in Figure \ref{fig:equivalent_diagram_of_queueing_system}.
 
-\input{chapters/03_queueing_model/img/equivalent_queueing_model_diagram.tex}
+\begin{figure}[h]
+    \centering
+    \input{chapters/03_queueing_model/img/equivalent_queueing_model_diagram.tex}
+    \caption{An equivalent model to the one described in
+    Figure~\ref{fig:diagram_of_queueing_system}. The difference between the two
+    diagrams is the formulation of waiting zone 2. The original diagram uses
+    a node with no servers and a queueing capacity of \(M\) while this one uses
+    \(M\) servers with no queueing capacity.}
+    \label{fig:equivalent_diagram_of_queueing_system}
+\end{figure}
+    
 
 The arrival times for both waiting zones are exponentially distributed with
 mean \(\lambda_1\) and \(\lambda_2\) corresponding to type 1 and type 2

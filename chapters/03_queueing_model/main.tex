@@ -3,7 +3,17 @@
 One of the main outcomes of this research is the creation of a queueing network
 model that consists of two waiting zones and accepts two types of individuals.
 
-\input{chapters/03_queueing_model/img/queueing_model_diagram.tex}
+\begin{figure}[h]
+    \centering
+    \input{chapters/03_queueing_model/img/queueing_model_diagram.tex}
+    \caption{A diagrammatic representation of the queueing network.
+    The threshold \(T\) only applies to type 2 individuals.
+    If the number of individuals in waiting zone 1 is greater than or equal to
+    \(T\), only individuals of type 1 are accepted (at a rate \(\lambda_1\))
+    and individuals of type 2 (arriving at a rate \(\lambda_2\)) are blocked in
+    waiting zone 2.}
+    \label{fig:diagram_of_queueing_system}
+\end{figure}
 
 The model consists of two types of individuals; type 1 and type 2.
 Type 1 individuals arrive instantly at waiting zone 1 and wait to receive their
@@ -135,7 +145,13 @@ A visualisation of how the transition rates relate to the states of the model
 can be seen in the general Markov chain model shown in Figure
 \ref{fig:general_markov_model}.
 
-\input{chapters/03_queueing_model/img/general_markov_model.tex}
+\begin{figure}[H]
+    \centering
+    \scalebox{.8}
+    {\input{chapters/03_queueing_model/img/general_markov_model.tex}}
+    \caption{General case of the Markov chain model} 
+    \label{fig:general_markov_model}
+\end{figure}
 
 
 In order to consider this model numerically an adjustment needs to be made.
@@ -153,8 +169,13 @@ Therefore, a different state space \( \tilde S \) is constructed where
 The adjusted Markov chain model with states \(\tilde S\) can be seen in Figure
 \ref{fig:adjusted_markov_model}.
 
-\input{chapters/03_queueing_model/img/general_adjusted_markov_model.tex}
-
+\begin{figure}[H]
+    \centering
+    \scalebox{.8}
+    {\input{chapters/03_queueing_model/img/general_adjusted_markov_model.tex}}
+    \caption{Adjusted case of the Markov chain model} 
+    \label{fig:adjusted_markov_model}
+\end{figure}
 
 
 \subsubsection{Steady state probability vector \(\pi\)}

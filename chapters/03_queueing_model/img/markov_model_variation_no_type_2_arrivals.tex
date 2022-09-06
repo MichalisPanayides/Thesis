@@ -1,48 +1,44 @@
-\begin{figure}[ht]
-    \centering
-    \begin{tikzpicture}[-, node distance = 1.4cm, auto, every node/.style={scale=0.85}]
 
-        \tikzmath{
-            let \minsize = 1.8cm;
-            let \nosize = 1cm;
-        }
+\begin{tikzpicture}[-, node distance = 1.4cm, auto, every node/.style={scale=0.85}]
 
-        \node[draw=none, minimum size=\nosize] (one) {};
-        \node[state, minimum size=\minsize, right=of one] (two) {(0,T-1)};
-        \node[state, minimum size=\minsize, right=of two] (three) {(0,T)};
-        \node[state, minimum size=\minsize, right=of three] (four) {(0,T+1)};
-        \node[draw=none, minimum size=\nosize, right=of four] (five) {};
+    \tikzmath{
+        let \minsize = 1.8cm;
+        let \nosize = 1cm;
+    }
 
-        \node[state, minimum size=\minsize, below=of three] (three_one) {(1,T)};
-        \node[state, minimum size=\minsize, below=of three_one] (three_two) {(2,T)};
-        \node[state, minimum size=\minsize, below=of four] (four_one) {(1,T+1)};
-        \node[state, minimum size=\minsize, below=of four_one] (four_two) {(2,T+1)};
-        \node[draw=none, minimum size=\nosize, right=of four_one] (five_one) {};
-        \node[draw=none, minimum size=\nosize, right=of four_two] (five_two) {};
-        \node[draw=none, minimum size=\nosize, below=of three_two] (three_three) {};
+    \node[draw=none, minimum size=\nosize] (one) {};
+    \node[state, minimum size=\minsize, right=of one] (two) {(0,T-1)};
+    \node[state, minimum size=\minsize, right=of two] (three) {(0,T)};
+    \node[state, minimum size=\minsize, right=of three] (four) {(0,T+1)};
+    \node[draw=none, minimum size=\nosize, right=of four] (five) {};
 
-        \draw[every loop]
-            (two) edge[bend left] node {\((T-1) \mu\)} (one)
-            (one) edge[bend left] node {\(\lambda_1\)} (two)
-            (three) edge[bend left] node {\(T \mu\)} (two)
-            (two) edge[bend left] node {\(\lambda_1\)} (three)
-            (four) edge[bend left] node {\((T+1) \mu\)} (three)
-            (three) edge[bend left] node {\(\lambda_1\)} (four)
-            (five) edge[bend left] node {\((T+1) \mu\)} (four)
-            (four) edge[bend left] node {\(\lambda_1\)} (five)
-            (three_one) edge node {\(T \mu\)} (three)
-            (four_one) edge[bend left] node {\((T+1) \mu\)} (three_one)
-            (three_one) edge[bend left] node {\(\lambda_1\)} (four_one)
-            (five_one) edge[bend left] node {\((T+1) \mu\)} (four_one)
-            (four_one) edge[bend left] node {\(\lambda_1\)} (five_one)
-            (three_two) edge node {\(T \mu\)} (three_one)
-            (three_three) edge node {\(T \mu\)} (three_two)
-            (four_two) edge[bend left] node {\((T+1) \mu\)} (three_two)
-            (three_two) edge[bend left] node {\(\lambda_1\)} (four_two)
-            (five_two) edge[bend left] node {\((T+1) \mu\)} (four_two)
-            (four_two) edge[bend left] node {\(\lambda_1\)} (five_two)
-            ;
-    \end{tikzpicture}
-    \caption{Variation of Markov chain model where type 2 arrivals are removed}
-    \label{fig:markov_variation_no_type_2_arrivals}
-\end{figure}
+    \node[state, minimum size=\minsize, below=of three] (three_one) {(1,T)};
+    \node[state, minimum size=\minsize, below=of three_one] (three_two) {(2,T)};
+    \node[state, minimum size=\minsize, below=of four] (four_one) {(1,T+1)};
+    \node[state, minimum size=\minsize, below=of four_one] (four_two) {(2,T+1)};
+    \node[draw=none, minimum size=\nosize, right=of four_one] (five_one) {};
+    \node[draw=none, minimum size=\nosize, right=of four_two] (five_two) {};
+    \node[draw=none, minimum size=\nosize, below=of three_two] (three_three) {};
+
+    \draw[every loop]
+        (two) edge[bend left] node {\((T-1) \mu\)} (one)
+        (one) edge[bend left] node {\(\lambda_1\)} (two)
+        (three) edge[bend left] node {\(T \mu\)} (two)
+        (two) edge[bend left] node {\(\lambda_1\)} (three)
+        (four) edge[bend left] node {\((T+1) \mu\)} (three)
+        (three) edge[bend left] node {\(\lambda_1\)} (four)
+        (five) edge[bend left] node {\((T+1) \mu\)} (four)
+        (four) edge[bend left] node {\(\lambda_1\)} (five)
+        (three_one) edge node {\(T \mu\)} (three)
+        (four_one) edge[bend left] node {\((T+1) \mu\)} (three_one)
+        (three_one) edge[bend left] node {\(\lambda_1\)} (four_one)
+        (five_one) edge[bend left] node {\((T+1) \mu\)} (four_one)
+        (four_one) edge[bend left] node {\(\lambda_1\)} (five_one)
+        (three_two) edge node {\(T \mu\)} (three_one)
+        (three_three) edge node {\(T \mu\)} (three_two)
+        (four_two) edge[bend left] node {\((T+1) \mu\)} (three_two)
+        (three_two) edge[bend left] node {\(\lambda_1\)} (four_two)
+        (five_two) edge[bend left] node {\((T+1) \mu\)} (four_two)
+        (four_two) edge[bend left] node {\(\lambda_1\)} (five_two)
+        ;
+\end{tikzpicture}
