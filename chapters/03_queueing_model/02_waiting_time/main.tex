@@ -1,5 +1,5 @@
 \subsubsection{Waiting time}\label{sec:waiting_time}
-Waiting time is the amount of time that patients wait in waiting zone 1 before
+Waiting time is the amount of time that patients wait in node 1 before
 they receive their service.
 For a given set of parameters there are three different performance measures
 around the mean waiting time that need to be considered.
@@ -13,7 +13,7 @@ mean waiting time.
 To calculate the mean waiting time of type 1 individuals one must first
 identify the set of states \((u, v)\) where a wait can occur.
 For this particular Markov chain, these are all states that satisfy \(v > C\)
-i.e. all states where the number of individuals in the waiting zone 1 exceed
+i.e. all states where the number of individuals in the node 1 exceed
 the number of servers.
 The set of such states is defined as the \textit{waiting states} and can be
 denoted as a subset of all the states, where:
@@ -68,7 +68,7 @@ of \( C \mu \) is reached.
 
 Similarly from a type 2 individual's perspective the same logic holds.
 The only difference is that type 2 individuals cannot have a waiting time when
-they are blocked in waiting zone 2.
+they are blocked in node 2.
 From the Markov chain model's perspective, type 2 individuals cannot have a wait
 whenever they are at state \(u, v\) where \(u > 0\).
 Thus, the waiting time at each state for type 2 individuals can be expressed as:
@@ -125,7 +125,7 @@ This can be expressed mathematically as:
 
 Additionally, there are certain states in the model where arrivals cannot occur.
 A type 1 individual cannot arrive whenever the model is at any state \((u, N)\)
-for all \(u\), where \(N\) is the capacity of waiting zone 1.
+for all \(u\), where \(N\) is the capacity of node 1.
 Therefore the set of all such states that an arrival may occur are defined as
 \textit{accepting states}.
 The set of accepting states for type 1 individuals is denoted as:
@@ -135,8 +135,7 @@ The set of accepting states for type 1 individuals is denoted as:
 \end{equation}
 
 Similarly, an arrival of a type 2 individual cannot occur whenever the model is
-at state \((M, v)\) for all \(v\), where \(M\) is the capacity of waiting zone
-2.
+at state \((M, v)\) for all \(v\), where \(M\) is the capacity of node 2.
 The set of accepting states for type 2 individuals is denoted as:
 
 \begin{equation}\label{eq:accepting_states_type_2}
@@ -172,7 +171,7 @@ The two coefficients represent the proportion of individuals of each type that
 traversed through the model.
 Theoretically, getting these percentages should be as straightforward as
 looking at the arrival rates of each type \(\lambda_1\) and \(\lambda_2\), but
-in practise if either waiting zone 1 or waiting zone 2 are full, some
+in practise if either node 1 or node 2 are full, some
 individuals may become lost to the system.
 Thus, one should account for the probability that an individual is lost to the
 system.
