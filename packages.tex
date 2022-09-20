@@ -1,7 +1,14 @@
 % Treat \paragraph as \subsubsubsection
-\setcounter{secnumdepth}{4}
+\setcounter{secnumdepth}{5}
 \makeatletter
 \renewcommand{\paragraph}{\@startsection{paragraph}{4}{0ex}%
+   {-3.25ex plus -1ex minus -0.2ex}%
+   {1.5ex plus 0.2ex}%
+   {\normalfont\normalsize\bfseries}}
+\makeatother
+
+\makeatletter
+\renewcommand{\subparagraph}{\@startsection{subparagraph}{5}{0ex}%
    {-3.25ex plus -1ex minus -0.2ex}%
    {1.5ex plus 0.2ex}%
    {\normalfont\normalsize\bfseries}}
