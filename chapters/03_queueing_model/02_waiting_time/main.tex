@@ -207,8 +207,451 @@ the resultant equation can be used to get the overall waiting time.
 \end{equation}
 
 
-% TODO: Add python implementation for recursive approach
+\subparagraph{Implementation}\label{sec:waiting_recursive_implementation}
 
+Implementing the recursive approach for the waiting time in python uses the
+same logical structure as described in Section \ref{sec:recursive_waiting_time}.
+The first function needed is one that checks if a state belongs in the
+set of waiting states that corresponds to the set defined in
+\ref{eq:waiting_states}.
+
+\begin{lstlisting}[style=pystyle]
+>>> def is_waiting_state(state, num_of_servers):
+...     """Checks if waiting occurs in the given state. In essence, all
+...     states (u,v) where v > C are considered waiting states.
+...     Parameters
+...     ----------
+...     state : tuple
+...         a tuples of the form (u,v)
+...     num_of_servers : int
+...         the number of servers = C
+...     Returns
+...     -------
+...     Boolean
+...         An indication of whether or not any wait occurs on the given
+...         state
+...     """
+...     return state[1] > num_of_servers
+>>>
+>>> is_waiting_state(state=(1, 4), num_of_servers=2)
+True
+
+\end{lstlisting}
+
+Similarly a function that calculates the expected wait in each state is needed
+that corresponds to equations \ref{eq:waiting_time_state_type_1} and
+\ref{eq:waiting_time_state_type_2}.
+Note here that the following function takes the individuals type as an argument
+and thus only one function is needed for both expressions.
+
+\begin{lstlisting}[style=pystyle]
+>>> def expected_time_in_markov_state_ignoring_arrivals(
+...     state,
+...     class_type,
+...     num_of_servers,
+...     mu,
+...     threshold,
+... ):
+...     """Get the expected waiting time in a Markov state when ignoring any
+...     subsequent arrivals. When considering the waiting time of class 2
+...     individuals, and when these individuals are in a blocked state
+...     (v > 0) then by the definition of the problem the waiting time in
+...     that state is set to 0. Additionally, all states where u > 0 and
+...     v = T automatically get a waiting time of 0 because class 1
+...     individuals only pass one of the states of that column (only state
+...     (0,T) is not zero).
+... 
+...     Parameters
+...     ----------
+...     state : tuple
+...         a tuples of the form (u,v)
+...     class_type : int
+...         A string to distinguish between class 1(=0) and class 2(=1)
+...         individuals
+...     num_of_servers : int
+...         The number of servers = C
+...     mu : float
+...         The service rate = mu
+... 
+...     Returns
+...     -------
+...     float
+...         The expected waiting time in the given state
+...     """
+...     if state[0] > 0 and (state[1] == threshold or class_type == 1):
+...         return 0
+...     return 1 / (min(state[1], num_of_servers) * mu)
+>>>
+>>> expected_time_in_markov_state_ignoring_arrivals(
+...     state=(3, 4),
+...     class_type=0,
+...     num_of_servers=1,
+...     mu=4,
+...     threshold=2,
+... )
+0.25
+
+\end{lstlisting}
+
+The following block of code is the implementation of equation
+\ref{eq:recursive_waiting_time_for_state}, where it returns the waiting time
+of an individual when they arrive at a given state until they leave that
+particular state.
+Note that this function uses both of the functions defined earlier.
+
+\begin{lstlisting}[style=pystyle]
+>>> def get_waiting_time_for_each_state_recursively(
+...     state,
+...     class_type,
+...     lambda_2,
+...     lambda_1,
+...     mu,
+...     num_of_servers,
+...     threshold,
+...     system_capacity,
+...     buffer_capacity,
+... ):
+...     """Performs a recursive algorithm to get the expected waiting time of
+...     individuals when they enter the model at a given state. Given an
+...     arriving state the algorithm moves down to all subsequent states
+...     until it reaches one that is not a waiting state.
+... 
+...     Class 1:
+...         - If (u,v) not a waiting state: return 0
+...         - Next state s_d = (0, v - 1)
+...         - w(u,v) = c(u,v) + w(s_d)
+... 
+...     Class 2:
+...         - If (u,v) not a waiting state: return 0
+...         - Next state:   s_n = (u-1, v),    if u >= 1 and v=T
+...                         s_n = (u, v - 1),  otherwise
+...         - w(u,v) = c(u,v) + w(s_n)
+... 
+...     Note: For all class 1 individuals the recursive formula acts in a
+...     linear manner meaning that an individual will have the same waiting
+...     time when arriving at any state of the same column e.g (2, 3) or
+...     (5, 3).
+... 
+...     Parameters
+...     ----------
+...     state : tuple
+...     class_type : int
+...     lambda_2 : float
+...     lambda_1 : float
+...     mu : float
+...     num_of_servers : int
+...     threshold : int
+...     system_capacity : int
+...     buffer_capacity : int
+... 
+...     Returns
+...     -------
+...     float
+...         The expected waiting time from the arriving state of an
+...         individual until service
+...     """
+...     if not is_waiting_state(state, num_of_servers):
+...         return 0
+...     if state[0] >= 1 and state[1] == threshold:
+...         next_state = (state[0] - 1, state[1])
+...     else:
+...         next_state = (state[0], state[1] - 1)
+... 
+...     wait = expected_time_in_markov_state_ignoring_arrivals(
+...         state=state,
+...         class_type=class_type,
+...         num_of_servers=num_of_servers,
+...         mu=mu,
+...         threshold=threshold,
+...     )
+...     wait += get_waiting_time_for_each_state_recursively(
+...         state=next_state,
+...         class_type=class_type,
+...         lambda_2=lambda_2,
+...         lambda_1=lambda_1,
+...         mu=mu,
+...         num_of_servers=num_of_servers,
+...         threshold=threshold,
+...         system_capacity=system_capacity,
+...         buffer_capacity=buffer_capacity,
+...     )
+...     return wait
+>>>
+>>> get_waiting_time_for_each_state_recursively(
+...     state=(3, 4),
+...     class_type=0,
+...     lambda_2=1,
+...     lambda_1=1,
+...     mu=4,
+...     num_of_servers=1,
+...     threshold=2,
+...     system_capacity=4,
+...     buffer_capacity=3,
+... )
+0.75
+
+\end{lstlisting}
+
+Additionally, before getting the mean waiting time for each type of individuals,
+a function for the set of accepting states described in
+\ref{eq:accepting_states_type_1} and \ref{eq:accepting_states_type_1} needs to
+be constructed.
+
+\begin{lstlisting}[style=pystyle]
+>>> def is_accepting_state(
+...     state, class_type, threshold, system_capacity, buffer_capacity
+... ):
+...     """
+...     Checks if a state given is an accepting state. Accepting states are
+...     defined as the states of the system where arrivals may occur. In
+...     essence these states are all states apart from the one when the system
+...     cannot accept additional arrivals. Because there are two types of
+...     arrivals though, the set of accepting states is different for class 1
+...     and class 2 individuals:
+... 
+...     Parameters
+...     ----------
+...     state : tuple
+...         a tuples of the form (u,v)
+...     class_type : int
+...         A string to distinguish between class 1 (=0) and class 2
+...         individuals (=1)
+...     system_capacity : int
+...         The capacity of the system (hospital) = N
+...     buffer_capacity : int
+...         The capacity of the buffer space = M
+... 
+...     Returns
+...     -------
+...     Boolean
+...         An indication of whether or not an arrival of the given type
+...         (class_type) can occur
+...     """
+...     if class_type == 1:
+...         condition = (
+...             (state[0] < buffer_capacity)
+...             if (threshold <= system_capacity)
+...             else (state[1] < system_capacity)
+...         )
+...     if class_type == 0:
+...         condition = state[1] < system_capacity
+...     return condition
+
+\end{lstlisting}
+
+The only thing left to do is to find the weighted average of the waiting times
+for all states using the steady state probabilities.
+The function following function corresponds to the expression for \(W^{(i)}\)
+defined in equation \ref{eq:recursive_waiting_time_for_type_i}.
+
+\begin{lstlisting}[style=pystyle]
+>>> import ambulance_game as abg
+>>> import numpy as np
+>>> def mean_waiting_time_formula_using_recursive_approach(
+...     all_states,
+...     pi,
+...     class_type,
+...     lambda_2,
+...     lambda_1,
+...     mu,
+...     num_of_servers,
+...     threshold,
+...     system_capacity,
+...     buffer_capacity,
+...     **kwargs,
+... ):
+...     """
+...     Get the mean waiting time by using a recursive formula. 
+...     All w(u,v) terms are calculated recursively by going through
+...     the waiting times of all previous states.
+... 
+...     Parameters
+...     ----------
+...     all_states : list
+...     pi : array
+...     class_type : int
+...     lambda_2 : float
+...     lambda_1 : float
+...     mu : float
+...     num_of_servers : int
+...     threshold : int
+...     system_capacity : int
+...     buffer_capacity : int
+... 
+...     Returns
+...     -------
+...     float
+...     """
+...     mean_waiting_time = 0
+...     probability_of_accepting = 0
+...     for u, v in all_states:
+...         if is_accepting_state(
+...             state=(u, v),
+...             class_type=class_type,
+...             threshold=threshold,
+...             system_capacity=system_capacity,
+...             buffer_capacity=buffer_capacity,
+...         ):
+...             arriving_state = (u, v + 1)
+...             if class_type == 1 and v >= threshold:
+...                 arriving_state = (u + 1, v)
+... 
+...             current_state_wait = get_waiting_time_for_each_state_recursively(
+...                 state=arriving_state,
+...                 class_type=class_type,
+...                 lambda_2=lambda_2,
+...                 lambda_1=lambda_1,
+...                 mu=mu,
+...                 num_of_servers=num_of_servers,
+...                 threshold=threshold,
+...                 system_capacity=system_capacity,
+...                 buffer_capacity=buffer_capacity,
+...             )
+...             mean_waiting_time += current_state_wait * pi[u, v]
+...             probability_of_accepting += pi[u, v]
+...     return mean_waiting_time / probability_of_accepting
+>>>
+>>> all_states = abg.markov.build_states(
+...     threshold=2,
+...     system_capacity=4,
+...     buffer_capacity=3,
+... )
+>>> Q = abg.markov.get_transition_matrix(
+...     lambda_1=1,
+...     lambda_2=1,
+...     mu=4,
+...     num_of_servers=1,
+...     threshold=2,
+...     system_capacity=4,
+...     buffer_capacity=3
+... )
+>>> pi = abg.markov.get_markov_state_probabilities(
+...     abg.markov.get_steady_state_algebraically(
+...         Q, algebraic_function=np.linalg.solve
+...     ),
+...     all_states,
+... )
+>>> mean_waiting_time_formula_using_recursive_approach(
+...     all_states=all_states,
+...     pi=pi,
+...     class_type=0,
+...     lambda_2=1,
+...     lambda_1=1,
+...     mu=4,
+...     num_of_servers=1,
+...     threshold=2,
+...     system_capacity=4,
+...     buffer_capacity=3,
+... )
+0.1921401289632943
+
+\end{lstlisting}
+
+Finally the overall waiting time for both individuals can be calculated by
+taking the weighted average of the waiting times for each type of individual
+as described in equation \ref{eq:overall_waiting_time}.
+
+\begin{lstlisting}[style=pystyle]
+>>> def overall_waiting_time_formula(
+...     all_states,
+...     pi,
+...     lambda_2,
+...     lambda_1,
+...     mu,
+...     num_of_servers,
+...     threshold,
+...     system_capacity,
+...     buffer_capacity,
+...     waiting_formula,
+...     **kwargs,
+... ):
+...     """
+...     Gets the overall waiting time for all individuals by calculating both
+...     class 1 and class 2 waiting times. Thus, considering the probability
+...     that an individual is lost to the system (for both classes)
+...     calculates the overall waiting time.
+... 
+...     Parameters
+...     ----------
+...     all_states : list
+...     pi : array
+...     lambda_1 : float
+...     lambda_2 : float
+...     mu : float
+...     num_of_servers : int
+...     threshold : int
+...     system_capacity : int
+...     buffer_capacity : int
+...     waiting_formula : function
+... 
+...     Returns
+...     -------
+...     float
+...         The overall mean waiting time by combining class 1 and class 2
+...         individuals
+...     """
+...     mean_waiting_times_for_each_class = [
+...         waiting_formula(
+...             all_states=all_states,
+...             pi=pi,
+...             class_type=class_type,
+...             lambda_2=lambda_2,
+...             lambda_1=lambda_1,
+...             mu=mu,
+...             num_of_servers=num_of_servers,
+...             threshold=threshold,
+...             system_capacity=system_capacity,
+...             buffer_capacity=buffer_capacity,
+...         )
+...         for class_type in range(2)
+...     ]
+...     prob_accept = [
+...         np.sum(
+...             [
+...                 pi[state]
+...                 for state in all_states
+...                 if is_accepting_state(
+...                     state=state,
+...                     class_type=class_type,
+...                     threshold=threshold,
+...                     system_capacity=system_capacity,
+...                     buffer_capacity=buffer_capacity,
+...                 )
+...             ]
+...         )
+...         for class_type in range(2)
+...     ]
+...     class_rates = [
+...         prob_accept[class_type]
+...         / ((lambda_2 * prob_accept[1]) + (lambda_1 * prob_accept[0]))
+...         for class_type in range(2)
+...     ]
+...     class_rates[0] *= lambda_1
+...     class_rates[1] *= lambda_2
+...     mean_waiting_time = np.sum(
+...         [
+...             mean_waiting_times_for_each_class[class_type]
+...             * class_rates[class_type]
+...             for class_type in range(2)
+...         ]
+...     )
+...     return mean_waiting_time
+>>>
+>>> overall_waiting_time_formula(
+...     all_states=all_states,
+...     pi=pi,
+...     lambda_2=1,
+...     lambda_1=1,
+...     mu=4,
+...     num_of_servers=1,
+...     threshold=2,
+...     system_capacity=4,
+...     buffer_capacity=3,
+...     waiting_formula=mean_waiting_time_formula_using_recursive_approach,
+... )
+0.15724618859452746
+
+\end{lstlisting}
 
 
 \paragraph{Direct approach}\label{sec:direct_waiting_time}
@@ -387,7 +830,315 @@ Now, having \(W^{(1)}\) and \(W^{(2)}\), equation \ref{eq:overall_waiting_time}
 can be utilised once more to compute the overall mean waiting time for both
 individual types.
 
-% TODO: Add python implementation for direct approach
+
+\subparagraph{Implementation}\label{sec:waiting_direct_implementation}
+
+Similar to the implementation of the recursive approach from Section
+\ref{sec:waiting_recursive_implementation} the functions that correspond
+to equations \ref{eq:waiting_states}, \ref{eq:waiting_time_state_type_1},
+\ref{eq:waiting_time_state_type_2}, \ref{eq:accepting_states_type_1},
+\ref{eq:accepting_states_type_2} will be used again.
+For the implementation of the direct approach the aim is to construct matrix
+\(Z\) and vector \(y\) as described in Section
+\ref{sec:direct_waiting_time} in order to solve the system of linear
+equations described in \ref{eq:general_direct_approach_waiting_time}.
+
+The following block of code Returns the values of one row of matrix \(Z\) that
+corresponds to the state \((u,v)\) and the value of vector \(y\) that
+correspond to the state \((u,v)\).
+
+\begin{lstlisting}[style=pystyle]
+>>> import itertools
+>>> def get_coefficients_row_of_array_for_state(
+...     state,
+...     class_type,
+...     mu,
+...     num_of_servers,
+...     threshold,
+...     system_capacity,
+...     buffer_capacity
+... ):
+...     """
+...     For direct approach: Constructs a row of the coefficients matrix.
+...     The row to be constructed corresponds to the waiting time equation
+...     for a given state (u,v)
+...     """
+...     lhs_coefficient_row = np.zeros(
+...         [buffer_capacity + 1, system_capacity + 1]
+...     )
+...     lhs_coefficient_row[state[0], state[1]] = -1
+...     for (u, v) in itertools.product(
+...         range(1, buffer_capacity + 1), range(threshold)
+...     ):
+...         lhs_coefficient_row[u, v] = np.NaN
+... 
+...     rhs_value = 0
+...     if is_waiting_state(state, num_of_servers):
+...         if state[0] >= 1 and state[1] == threshold:
+...             next_state = (state[0] - 1, state[1])
+...         else:
+...             next_state = (state[0], state[1] - 1)
+... 
+...         lhs_coefficient_row[next_state[0], next_state[1]] = 1
+...         rhs_value = -expected_time_in_markov_state_ignoring_arrivals(
+...             state=state,
+...             class_type=class_type,
+...             mu=mu,
+...             num_of_servers=num_of_servers,
+...             threshold=threshold,
+...         )
+...     vectorised_array = np.hstack(
+...         (
+...             lhs_coefficient_row[0, :threshold],
+...             lhs_coefficient_row[:, threshold:].flatten("F"),
+...         )
+...     )
+...     return vectorised_array, rhs_value
+>>>
+>>> get_coefficients_row_of_array_for_state(
+...     state=(2,3),
+...     class_type=0,
+...     mu=4,
+...     num_of_servers=1,
+...     threshold=2,
+...     system_capacity=3,
+...     buffer_capacity=2
+... )
+(array([ 0.,  0.,  0.,  0.,  1.,  0.,  0., -1.]), -0.25)
+
+\end{lstlisting}
+
+In the above code, the function returns a tuple with two elements; the row of
+matrix \(Z\) and the value of vector \(y\) that corresponds to state \((2,3)\).
+Using the function above, the matrix \(Z\) and vector \(y\) can be constructed
+by considering all states of the Markov chain.
+
+\begin{lstlisting}[style=pystyle]
+>>> def get_waiting_time_linear_system(
+...     class_type,
+...     mu,
+...     num_of_servers,
+...     threshold,
+...     system_capacity,
+...     buffer_capacity
+... ):
+...     """
+...     For direct approach: Obtain the linear system Z X = y by finding
+...     the array Z and the column vector y that are required. Here Z is
+...     denoted as "all_coefficients_array" and y as "constant_column".
+...     The function stacks the outputs of
+...     get_coefficients_row_of_array_for_state() for all states. In
+...     essence all outputs are stacked together to form a square matrix
+...     (|) and equivalently a column vector (y) that will be used to find
+...     X s.t. Z*X=y
+...     """
+...     all_coefficients_array = np.array([])
+...     all_states = abg.markov.build_states(
+...         threshold=threshold,
+...         system_capacity=system_capacity,
+...         buffer_capacity=buffer_capacity,
+...     )
+...     for state in all_states:
+...         lhs_vector, rhs_value = get_coefficients_row_of_array_for_state(
+...             state=state,
+...             class_type=class_type,
+...             mu=mu,
+...             num_of_servers=num_of_servers,
+...             threshold=threshold,
+...             system_capacity=system_capacity,
+...             buffer_capacity=buffer_capacity,
+...         )
+...         if len(all_coefficients_array) == 0:
+...             all_coefficients_array = [lhs_vector]
+...             constant_column = [rhs_value]
+...         else:
+...             all_coefficients_array = np.vstack(
+...                 [all_coefficients_array, lhs_vector]
+...             )
+...             constant_column.append(rhs_value)
+...     return all_coefficients_array, constant_column
+>>>
+>>> Z, y = get_waiting_time_linear_system(
+...     class_type=0,
+...     mu=4,
+...     num_of_servers=1,
+...     threshold=2,
+...     system_capacity=3,
+...     buffer_capacity=2
+... )
+>>> Z
+array([[-1.,  0.,  0.,  0.,  0.,  0.,  0.,  0.],
+       [ 0., -1.,  0.,  0.,  0.,  0.,  0.,  0.],
+       [ 0.,  1., -1.,  0.,  0.,  0.,  0.,  0.],
+       [ 0.,  0.,  1., -1.,  0.,  0.,  0.,  0.],
+       [ 0.,  0.,  0.,  1., -1.,  0.,  0.,  0.],
+       [ 0.,  0.,  1.,  0.,  0., -1.,  0.,  0.],
+       [ 0.,  0.,  0.,  1.,  0.,  0., -1.,  0.],
+       [ 0.,  0.,  0.,  0.,  1.,  0.,  0., -1.]])
+>>> y
+[0, 0, -0.25, 0, 0, -0.25, -0.25, -0.25]
+
+\end{lstlisting}
+
+The following piece of code solves the linear system \(Z X = y\) to obtain the
+vector \(X\) containing the waiting times for all states of the Markov chain.
+After solving the linear system for vector \(X\) it also converts the
+1-dimensional array into a 2-dimensional array where the entry at row \(u\) and
+column \(v\) corresponds to the expected waiting time that an individual will
+have to wait when arriving and the Markov chain is at state \((u,v)\).
+
+\begin{lstlisting}[style=pystyle]
+>>> def convert_solution_to_correct_array_format(
+...     array, all_states, system_capacity, buffer_capacity
+... ):
+...     """
+...     For direct approach: Convert the solution into a format that matches
+...     the state probabilities array. The given array is a one-dimensional
+...     array with the waiting times of each state
+...     """
+...     array_with_correct_shape = np.zeros(
+...         [buffer_capacity + 1, system_capacity + 1]
+...     )
+...     for index, (u, v) in enumerate(all_states):
+...         array_with_correct_shape[u, v] = array[index]
+...     return array_with_correct_shape
+>>>
+>>>
+>>> def get_waiting_times_of_all_states_using_direct_approach(
+...     class_type,
+...     all_states,
+...     mu,
+...     num_of_servers,
+...     threshold,
+...     system_capacity,
+...     buffer_capacity,
+... ):
+...     """
+...     For direct approach: Solve M*X = b using numpy.linalg.solve() where:
+...         M = The array containing the coefficients of all w(u,v) equations
+...         b = Vector of constants of equations
+...         X = All w(u,v) variables of the equations
+...     """
+...     M, b = get_waiting_time_linear_system(
+...         class_type=class_type,
+...         mu=mu,
+...         num_of_servers=num_of_servers,
+...         threshold=threshold,
+...         system_capacity=system_capacity,
+...         buffer_capacity=buffer_capacity,
+...     )
+...     state_waiting_times = np.linalg.solve(M, b)
+...     state_waiting_times = convert_solution_to_correct_array_format(
+...         array=state_waiting_times,
+...         all_states=all_states,
+...         system_capacity=system_capacity,
+...         buffer_capacity=buffer_capacity,
+...     )
+...     return state_waiting_times
+>>>
+>>> all_states = abg.markov.build_states(
+...     threshold=2,
+...     system_capacity=3,
+...     buffer_capacity=2,
+... )
+>>>
+>>> get_waiting_times_of_all_states_using_direct_approach(
+...     class_type=0,
+...     all_states=all_states,
+...     mu=4,
+...     num_of_servers=1,
+...     threshold=2,
+...     system_capacity=3,
+...     buffer_capacity=2
+... )
+array([[0.  , 0.  , 0.25, 0.5 ],
+       [0.  , 0.  , 0.25, 0.5 ],
+       [0.  , 0.  , 0.25, 0.5 ]])
+
+\end{lstlisting}
+
+Finally, similar to Section \ref{sec:waiting_recursive_implementation}, using
+equation \ref{eq:recursive_waiting_time_for_type_i} the mean waiting time
+for either type of individuals can be calculated as follows:
+
+\begin{lstlisting}[style=pystyle] 
+>>> def mean_waiting_time_formula_using_direct_approach(
+...     all_states,
+...     pi,
+...     class_type,
+...     lambda_2,
+...     lambda_1,
+...     mu,
+...     num_of_servers,
+...     threshold,
+...     system_capacity,
+...     buffer_capacity,
+...     **kwargs,
+... ):
+...     """
+...     Get the mean waiting time by using a direct approach.
+...     """
+...     wait_times = get_waiting_times_of_all_states_using_direct_approach(
+...         class_type=class_type,
+...         all_states=all_states,
+...         mu=mu,
+...         num_of_servers=num_of_servers,
+...         threshold=threshold,
+...         system_capacity=system_capacity,
+...         buffer_capacity=buffer_capacity,
+...     )
+...     mean_waiting_time, prob_accept_class_2_ind = 0, 0
+...     for (u, v) in all_states:
+...         if is_accepting_state(
+...             state=(u, v),
+...             class_type=class_type,
+...             threshold=threshold,
+...             system_capacity=system_capacity,
+...             buffer_capacity=buffer_capacity,
+...         ):
+...             arriving_state = (u, v + 1)
+...             if class_type == 1 and v >= threshold:
+...                 arriving_state = (u + 1, v)
+...             mean_waiting_time += wait_times[arriving_state] * pi[u, v]
+...             prob_accept_class_2_ind += pi[u, v]
+... 
+...     return mean_waiting_time / prob_accept_class_2_ind
+>>>
+>>> all_states = abg.markov.build_states(
+...     threshold=2,
+...     system_capacity=4,
+...     buffer_capacity=3,
+... )
+>>> Q = abg.markov.get_transition_matrix(
+...     lambda_1=1,
+...     lambda_2=1,
+...     mu=4,
+...     num_of_servers=1,
+...     threshold=2,
+...     system_capacity=4,
+...     buffer_capacity=3
+... )
+>>> pi = abg.markov.get_markov_state_probabilities(
+...     abg.markov.get_steady_state_algebraically(
+...         Q, algebraic_function=np.linalg.solve
+...     ),
+...     all_states,
+... )
+>>> mean_waiting_time_formula_using_direct_approach(
+...     all_states=all_states,
+...     pi=pi,
+...     class_type=0,
+...     lambda_2=1,
+...     lambda_1=1,
+...     mu=4,
+...     num_of_servers=1,
+...     threshold=2,
+...     system_capacity=4,
+...     buffer_capacity=3,
+... )
+0.1921401289632943
+
+\end{lstlisting}
 
 
 \paragraph{Closed-form approach}\label{sec:closed_form_waiting_time}
@@ -411,7 +1162,121 @@ The mean waiting time of type 2 individuals:
     \in S_A^{(2)}} \pi(u,v)}
 \end{equation}
 
-Equation \ref{eq:overall_waiting_time} can then be used to compute the overall
-mean waiting time for both types \(W\).
+Having \(W^{(1)}\) and \(W^{(2)}\), equation \ref{eq:overall_waiting_time} can
+then be used to compute \(W\), the overall mean waiting time for both types.
 
-% TODO: Add python implementation for closed-form approach
+
+\subparagraph{Implementation}\label{sec:waiting_closed_form_implementation}
+
+The closed-form formula can be implemented in one function.
+The functions is broken down in two parts for the case of each individual type.
+
+\begin{lstlisting}[style=pystyle]
+>>> def mean_waiting_time_formula_using_closed_form_approach(
+...     all_states,
+...     pi,
+...     class_type,
+...     mu,
+...     num_of_servers,
+...     threshold,
+...     system_capacity,
+...     buffer_capacity,
+...     **kwargs,
+... ):
+...     """
+...     Get the mean waiting time by using a closed-form formula.
+...     """
+...     sojourn_time = 1 / (num_of_servers * mu)
+...     if class_type == 0:
+...         mean_waiting_time = np.sum(
+...             [
+...                 (state[1] - num_of_servers + 1) * pi[state]
+...                 * sojourn_time
+...                 for state in all_states
+...                 if is_accepting_state(
+...                     state=state,
+...                     class_type=class_type,
+...                     threshold=threshold,
+...                     system_capacity=system_capacity,
+...                     buffer_capacity=buffer_capacity,
+...                 )
+...                 and state[1] >= num_of_servers
+...             ]
+...         ) / np.sum(
+...             [
+...                 pi[state]
+...                 for state in all_states
+...                 if is_accepting_state(
+...                     state=state,
+...                     class_type=class_type,
+...                     threshold=threshold,
+...                     system_capacity=system_capacity,
+...                     buffer_capacity=buffer_capacity,
+...                 )
+...             ]
+...         )
+...
+...     if class_type == 1:
+...         mean_waiting_time = np.sum(
+...             [
+...                 (min(state[1] + 1, threshold) - num_of_servers)
+...                 * pi[state]
+...                 * sojourn_time
+...                 for state in all_states
+...                 if is_accepting_state(
+...                     state=state,
+...                     class_type=class_type,
+...                     threshold=threshold,
+...                     system_capacity=system_capacity,
+...                     buffer_capacity=buffer_capacity,
+...                 )
+...                 and min(state[1], threshold) >= num_of_servers
+...             ]
+...         ) / np.sum(
+...             [
+...                 pi[state]
+...                 for state in all_states
+...                 if is_accepting_state(
+...                     state=state,
+...                     class_type=class_type,
+...                     threshold=threshold,
+...                     system_capacity=system_capacity,
+...                     buffer_capacity=buffer_capacity,
+...                 )
+...             ]
+...         )
+...     return mean_waiting_time
+>>>
+>>> all_states = abg.markov.build_states(
+...     threshold=2,
+...     system_capacity=4,
+...     buffer_capacity=3,
+... )
+>>> Q = abg.markov.get_transition_matrix(
+...     lambda_1=1,
+...     lambda_2=1,
+...     mu=4,
+...     num_of_servers=1,
+...     threshold=2,
+...     system_capacity=4,
+...     buffer_capacity=3
+... )
+>>> pi = abg.markov.get_markov_state_probabilities(
+...     abg.markov.get_steady_state_algebraically(
+...         Q, algebraic_function=np.linalg.solve
+...     ),
+...     all_states,
+... )
+>>> mean_waiting_time_formula_using_closed_form_approach(
+...     all_states=all_states,
+...     pi=pi,
+...     class_type=0,
+...     mu=4,
+...     num_of_servers=1,
+...     threshold=2,
+...     system_capacity=4,
+...     buffer_capacity=3,
+... )
+0.19214012896329433
+
+\end{lstlisting}
