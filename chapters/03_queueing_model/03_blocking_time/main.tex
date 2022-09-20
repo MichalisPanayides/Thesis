@@ -257,3 +257,49 @@ The resultant blocking time formula is given by:
 Note here that \(\pi_(u,v)\) is the steady state probability that the Markov
 chain model is at state \((u,v)\) described in Section
 \ref{sec:steady_state_probabilities}.
+
+
+\paragraph{Implementation}\label{sec:implementation_blocking_time}
+
+The mean blocking time is only calculated using a direct approach
+similar to the one described in Section \ref{sec:waiting_direct_implementation}.
+Since this implementation is the same as the waiting time one the the following
+codes shows only the usage of the function rather than the function itself.
+
+\begin{lstlisting}[style=pystyle]
+>>> import ambulance_game as abg
+>>> import numpy as np
+>>>
+>>> all_states = abg.markov.build_states(
+...     threshold=2,
+...     system_capacity=4,
+...     buffer_capacity=3,
+... )
+>>> Q = abg.markov.get_transition_matrix(
+...     lambda_1=1,
+...     lambda_2=1,
+...     mu=4,
+...     num_of_servers=1,
+...     threshold=2,
+...     system_capacity=4,
+...     buffer_capacity=3
+... )
+>>> pi = abg.markov.get_markov_state_probabilities(
+...     abg.markov.get_steady_state_algebraically(
+...         Q, algebraic_function=np.linalg.solve
+...     ),
+...     all_states,
+... )
+>>> abg.markov.mean_blocking_time_formula_using_direct_approach(
+...     all_states=all_states,
+...     pi=pi,
+...     lambda_1=1,
+...     mu=4,
+...     num_of_servers=1,
+...     threshold=2,
+...     system_capacity=4,
+...     buffer_capacity=3,
+... )
+0.1287843179244461
+
+\end{lstlisting}
