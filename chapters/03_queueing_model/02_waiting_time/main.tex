@@ -1,6 +1,6 @@
 \subsubsection{Waiting time}\label{sec:waiting_time}
-Waiting time is the amount of time that patients wait in node 1 before
-they receive their service.
+Waiting time is the amount of time that individuals wait in node 1 before
+they start their service.
 For a given set of parameters there are three different performance measures
 around the mean waiting time that need to be considered.
 The mean waiting time of type 1 individuals, the mean waiting time of type 2
@@ -1146,7 +1146,7 @@ for either type of individuals can be calculated as follows:
 The final approach for getting the mean waiting time is to use a closed-form
 approach.
 This approach is an immediate simplification of the recursive approach
-described in Section \ref{sec:recursive_waiting_time}.
+described in Section~\ref{sec:recursive_waiting_time}.
 
 \begin{equation} \label{eq:closed_form_waiting_type_1}
     W^{(1)} = \frac{\sum_{\substack{(u,v) \, \in S_A^{(1)} \\ v \geq C}}
@@ -1280,3 +1280,5 @@ The functions is broken down in two parts for the case of each individual type.
 0.19214012896329433
 
 \end{lstlisting}
+
+% TODO: A numeric comparison of the 3 approaches would be good. Perhaps some timing experiments for varying system size? Maybe this needs to be in the numeric examples and timing experiments section
