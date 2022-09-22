@@ -60,7 +60,7 @@ This is done to capture the trip thorough the Markov chain from the perspective
 of type 1 individuals.
 Meaning that individuals visit all states of the threshold column but only the
 one in the first row will return a non-zero waiting time.
-Additionally, in equation \ref{eq:waiting_time_state_type_1} the service rate
+Additionally, in equation (\ref{eq:waiting_time_state_type_1}) the service rate
 \(\mu\) is multiplied by the minimum of \(v\) and \(C\) since, when the system
 is at a state \((u,v)\) where \(v \geq C\), the maximum out-flow service rate
 of \( C \mu \) is reached.
@@ -82,9 +82,9 @@ Thus, the waiting time at each state for type 2 individuals can be expressed as:
 \end{equation}
 
 
-Thus using the set of waiting states defined in \ref{eq:waiting_states} and
-equations \ref{eq:waiting_time_state_type_1} and
-\ref{eq:waiting_time_state_type_2} the following recursive formula can be used
+Thus using the set of waiting states defined in (\ref{eq:waiting_states}) and
+equations (\ref{eq:waiting_time_state_type_1}) and
+(\ref{eq:waiting_time_state_type_2}) the following recursive formula can be used
 to get the mean waiting time spent in each state.
 The formula goes through all states from right to left recursively and adds the
 total expected waiting time of all these states together until it reaches a
@@ -177,7 +177,7 @@ Thus, one should account for the probability that an individual is lost to the
 system.
 This probability can be calculated by using the two sets of accepting
 states \(S_A^{(2)}\) and \(S_A^{(1)}\) defined earlier in
-\ref{eq:accepting_states_type_1} and \ref{eq:accepting_states_type_2}.
+(\ref{eq:accepting_states_type_1}) and (\ref{eq:accepting_states_type_2}).
 Let us define the probability that an individual of type \(i\) is not lost
 to the system as \(P(L'_i)\):
 
@@ -198,7 +198,7 @@ and type 2 individuals in the model.
 \end{equation}
 
 Thus, by using these values as the coefficient of equation
-\ref{eq:overall_waiting_time_coeff}
+(\ref{eq:overall_waiting_time_coeff})
 the resultant equation can be used to get the overall waiting time.
 
 \begin{equation}\label{eq:overall_waiting_time}
@@ -213,7 +213,7 @@ Implementing the recursive approach for the waiting time in python uses the
 same logical structure as described in Section \ref{sec:recursive_waiting_time}.
 The first function needed is one that checks if a state belongs in the
 set of waiting states that corresponds to the set defined in
-\ref{eq:waiting_states}.
+(\ref{eq:waiting_states}).
 
 \begin{lstlisting}[style=pystyle]
 >>> def is_waiting_state(state, num_of_servers):
@@ -239,8 +239,8 @@ True
 \end{lstlisting}
 
 Similarly a function that calculates the expected wait in each state is needed
-that corresponds to equations \ref{eq:waiting_time_state_type_1} and
-\ref{eq:waiting_time_state_type_2}.
+that corresponds to equations (\ref{eq:waiting_time_state_type_1}) and
+(\ref{eq:waiting_time_state_type_2}).
 Note here that the following function takes the individuals type as an argument
 and thus only one function is needed for both expressions.
 
@@ -294,7 +294,7 @@ and thus only one function is needed for both expressions.
 \end{lstlisting}
 
 The following block of code is the implementation of equation
-\ref{eq:recursive_waiting_time_for_state}, where it returns the waiting time
+(\ref{eq:recursive_waiting_time_for_state}), where it returns the waiting time
 of an individual when they arrive at a given state until they leave that
 particular state.
 Note that this function uses both of the functions defined earlier.
@@ -394,8 +394,8 @@ Note that this function uses both of the functions defined earlier.
 
 Additionally, before getting the mean waiting time for each type of individuals,
 a function for the set of accepting states described in
-\ref{eq:accepting_states_type_1} and \ref{eq:accepting_states_type_1} needs to
-be constructed.
+(\ref{eq:accepting_states_type_1}) and (\ref{eq:accepting_states_type_1}) needs
+to be constructed.
 
 \begin{lstlisting}[style=pystyle]
 >>> def is_accepting_state(
@@ -442,7 +442,7 @@ be constructed.
 The only thing left to do is to find the weighted average of the waiting times
 for all states using the steady state probabilities.
 The function following function corresponds to the expression for \(W^{(i)}\)
-defined in equation \ref{eq:recursive_waiting_time_for_type_i}.
+defined in equation (\ref{eq:recursive_waiting_time_for_type_i}).
 
 \begin{lstlisting}[style=pystyle]
 >>> import ambulance_game as abg
@@ -549,7 +549,7 @@ defined in equation \ref{eq:recursive_waiting_time_for_type_i}.
 
 Finally the overall waiting time for both individuals can be calculated by
 taking the weighted average of the waiting times for each type of individual
-as described in equation \ref{eq:overall_waiting_time}.
+as described in equation (\ref{eq:overall_waiting_time}).
 
 \begin{lstlisting}[style=pystyle]
 >>> def overall_waiting_time_formula(
@@ -659,8 +659,8 @@ as described in equation \ref{eq:overall_waiting_time}.
 The direct approach uses similar concepts to the recursive approach of Section
 \ref{sec:recursive_waiting_time}.
 Instead of using recursion, a linear system of the set of equations generated by
-equation \ref{eq:recursive_waiting_time_for_state} for every state \((u,v)\) is
-solved.
+equation (\ref{eq:recursive_waiting_time_for_state}) for every state \((u,v)\)
+is solved.
 The set of equations that need to be solved for individuals of type \(i\) are
 all \( w^{(i)}(u, v) \) for all possible states \((u,v) \in S\).
 
@@ -677,7 +677,7 @@ all \( w^{(i)}(u, v) \) for all possible states \((u,v) \in S\).
 
 Consider a relatively small model where \(C=1, T=2, N=3, M=1\).
 All possible equations \(w^{(i)}(u,v)\) are given by equations
-\ref{eq:first_eq_of_waiting_example} - \ref{eq:last_eq_of_waiting_example}.
+(\ref{eq:first_eq_of_waiting_example}) - (\ref{eq:last_eq_of_waiting_example}).
 
 \begin{minipage}{0.45\textwidth}
     \begin{figure}[H]
@@ -734,7 +734,7 @@ the form \(Zx=y\) where:
 \end{equation}
 
 A more generalised form of the equations in
-\ref{eq:example_direct_approach_waiting_time} can be given for any value of
+(\ref{eq:example_direct_approach_waiting_time}) can be given for any value of
 \(C,T,N,M\) by:
 
 \begin{align}
@@ -824,9 +824,9 @@ is given by \(Zx=y\), where:
 Thus, solving for \(x\) gets the values of all \(w^{(i)}(u,v)\) for all states
 \((u,v) \in S\).
 These values can then be used with equation
-\ref{eq:recursive_waiting_time_for_type_i} to compute the mean waiting time for
+(\ref{eq:recursive_waiting_time_for_type_i}) to compute the mean waiting time for
 type \(i\) individuals \(W^{(i)}\).
-Now, having \(W^{(1)}\) and \(W^{(2)}\), equation \ref{eq:overall_waiting_time}
+Now, having \(W^{(1)}\) and \(W^{(2)}\), equation (\ref{eq:overall_waiting_time})
 can be utilised once more to compute the overall mean waiting time for both
 individual types.
 
@@ -835,13 +835,13 @@ individual types.
 
 Similar to the implementation of the recursive approach from Section
 \ref{sec:waiting_recursive_implementation} the functions that correspond
-to equations \ref{eq:waiting_states}, \ref{eq:waiting_time_state_type_1},
-\ref{eq:waiting_time_state_type_2}, \ref{eq:accepting_states_type_1},
-\ref{eq:accepting_states_type_2} will be used again.
+to equations (\ref{eq:waiting_states}), (\ref{eq:waiting_time_state_type_1}),
+(\ref{eq:waiting_time_state_type_2}), (\ref{eq:accepting_states_type_1}),
+(\ref{eq:accepting_states_type_2}) will be used again.
 For the implementation of the direct approach the aim is to construct matrix
 \(Z\) and vector \(y\) as described in Section
 \ref{sec:direct_waiting_time} in order to solve the system of linear
-equations described in \ref{eq:general_direct_approach_waiting_time}.
+equations described in (\ref{eq:general_direct_approach_waiting_time}).
 
 The following block of code Returns the values of one row of matrix \(Z\) that
 corresponds to the state \((u,v)\) and the value of vector \(y\) that
@@ -1058,7 +1058,7 @@ array([[0.  , 0.  , 0.25, 0.5 ],
 \end{lstlisting}
 
 Finally, similar to Section \ref{sec:waiting_recursive_implementation}, using
-equation \ref{eq:recursive_waiting_time_for_type_i} the mean waiting time
+equation (\ref{eq:recursive_waiting_time_for_type_i}) the mean waiting time
 for either type of individuals can be calculated as follows:
 
 \begin{lstlisting}[style=pystyle] 
@@ -1162,7 +1162,7 @@ The mean waiting time of type 2 individuals:
     \in S_A^{(2)}} \pi(u,v)}
 \end{equation}
 
-Having \(W^{(1)}\) and \(W^{(2)}\), equation \ref{eq:overall_waiting_time} can
+Having \(W^{(1)}\) and \(W^{(2)}\), equation (\ref{eq:overall_waiting_time}) can
 then be used to compute \(W\), the overall mean waiting time for both types.
 
 

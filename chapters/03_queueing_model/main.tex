@@ -124,7 +124,7 @@ transition matrix will be zero.
 In order to speed up the computation of the transition matrix, instead of
 considering every possible pair of states in the state space a new function
 that maps a state to every possible destination state can be used.
-Function \(\mathcal{M}\) from equation \ref{eq:state_map_to_destination_states}
+Function \(\mathcal{M}\) from equation (\ref{eq:state_map_to_destination_states})
 takes a state \((u, v)\) and maps it to the set of
 all possible destination states that the system can go to when on that state.
 
@@ -218,7 +218,7 @@ all approaches:
 
 Another method that can be used to get the steady state probability vector is
 to solve the differential equation 
-\ref{eq:steady_state_from_generator_matrix} numerically.
+(\ref{eq:steady_state_from_generator_matrix}) numerically.
 Two methods of solving the differential equation were considered.
 Both methods observe the value of \(\pi\) over time until it
 reaches the steady state based on some initial starting value \(\pi_0\):
@@ -350,7 +350,7 @@ array([0.17596013, 0.2639402 , 0.19795515, 0.14846636, 0.08660538,
 
 Another approach that is considered is the least squares method.
 As the problem becomes more complex (i.e. as the artificial parameters \(N\)
-and \(M\) defined in equation \ref{eq:truncated_state_space} increase)
+and \(M\) defined in equation (\ref{eq:truncated_state_space}) increase)
 the computational time required to solve it increases by a lot.
 Thus, one may obtain a good approximation of the steady state vector \( \pi \)
 by solving the following equation:
