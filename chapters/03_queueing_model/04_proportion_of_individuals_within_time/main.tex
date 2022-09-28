@@ -19,8 +19,9 @@ Consider the case when an arrival occurs when the model is at a specific state.
     \label{fig:distribution_of_time_at_specific_state_1_server}
 \end{figure}
 
-Consider the Markov model of figure
-\ref{fig:distribution_of_time_at_specific_state_1_server} with one server (i.e.
+Consider the Markov model of
+Figure~\ref{fig:distribution_of_time_at_specific_state_1_server}
+with one server (i.e.
 the rate of service completion is \(\mu\) throughout the Markov model)
 and a threshold of two individuals.
 Assume that a type 1 individual arrives when the model is at state
@@ -55,8 +56,9 @@ starting their service to exiting the system.
     S = X_3 + X_2 + & X_1 + X_0 = Erlang(4, \mu)
 \end{align}
 
-Thus, the waiting and service time of an individual in the model of figure
-\ref{fig:distribution_of_time_at_specific_state_1_server} can be captured by an
+Thus, the waiting and service time of an individual in the model of
+Figure~\ref{fig:distribution_of_time_at_specific_state_1_server}
+can be captured by an
 erlang distributed random variable.
 The general CDF of the erlang distribution \(Erlang(k, \mu)\) is given by:
 
@@ -83,9 +85,9 @@ and there is an empty server).
     \label{fig:distribution_of_time_at_specific_state_2_servers}
 \end{figure}
 
-Figure \ref{fig:distribution_of_time_at_specific_state_2_servers} represents the
-same Markov model as figure
-\ref{fig:distribution_of_time_at_specific_state_1_server} with the only
+Figure~\ref{fig:distribution_of_time_at_specific_state_2_servers} represents the
+same Markov model as
+Figure~\ref{fig:distribution_of_time_at_specific_state_1_server} with the only
 exception that there are 2 servers here.
 By applying the same logic, assuming that an individual arrives at state
 \((0,4)\), the sum of the following random variables arises.
@@ -188,9 +190,9 @@ that is specific to the case of two erlang distributed random variables.
 Equations (\ref{eq:general_cdf_hypoexponential}) and
 (\ref{eq:linear_general_cdf_hypoexponential}) refers to the general CDF of the
 hypoexponential distribution where the size of the vector parameters can be of
-any size \cite{Favaro2010}.
-In the Markov chain models described in figures
-\ref{fig:distribution_of_time_at_specific_state_1_server} and
+any size~\cite{Favaro2010}.
+In the Markov chain models described in
+Figures~\ref{fig:distribution_of_time_at_specific_state_1_server} and
 \ref{fig:distribution_of_time_at_specific_state_2_servers} the parameter vectors
 of the hypoexponential distribution are of size two, and in fact, for any
 possible version of the investigated Markov chain model the vectors can only be
@@ -530,7 +532,7 @@ to get the weighted sum of the two already existing probabilities.
 
 This section focuses on the implementation of all necessary equations to 
 calculate the proportion of individuals within target as described
-in Section \ref{sec:proportion_of_individuals_within_time}.
+in Section~\ref{sec:proportion_of_individuals_within_time}.
 The first equation to be considered is the simplified version of
 \(\Psi_{k, \lambda}(t)\) described in equation
 (\ref{eq:specific_cdf_hypoexponential}).
