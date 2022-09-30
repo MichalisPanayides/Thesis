@@ -26,6 +26,7 @@ words = {
     "dy",
     "EDs",
     "elif",
+    "eq",
     "erlang",
     "func",
     "hstack",
