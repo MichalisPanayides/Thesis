@@ -1,5 +1,8 @@
 \subsection{Numeric results and timings}\label{sec:truncation_effect}
 
+
+\subsubsection{Truncation effect}
+
 The choice of the artificial parameters \(N\) and \(M\) is an important 
 decision of the model.
 In the untruncated simulation these values are not needed.
@@ -9,16 +12,16 @@ Table \ref{tab:truncation_effect_timings} shows the relative timings of the
 different approaches used to get the performance measures.
 
 \tiny
-\begin{table}[h]
+\begin{table}[ht]
     \centering
     \begin{tabular}{c|cc|ccc}
-        & \multicolumn{2}{c}{\textbf{Simulation timings}} & 
-        \multicolumn{3}{c}{\textbf{Markov chain timings}} \\
+        & \multicolumn{2}{c}{\textbf{Simulation}} & 
+        \multicolumn{3}{c}{\textbf{Markov chain}} \\
         \textbf{Value of} & \textbf{Single} & \textbf{100} & 
-        \textbf{Waiting time} & \textbf{Blocking time} & 
-        \textbf{Proportion within} \\
+        \textbf{Waiting} & \textbf{Blocking} & 
+        \textbf{Proportion} \\
         \textbf{\textit{N} and \textit{M}} & \textbf{trial} & \textbf{trials} & 
-        \textbf{formula} & \textbf{formula} & \textbf{time formula} \\
+        \textbf{formula} & \textbf{formula} & \textbf{formula} \\
         \hline
         \(10\) & 1 & 144.3 & 0.015 & 0.014 & 0.014 \\
         \hline
@@ -32,3 +35,6 @@ different approaches used to get the performance measures.
     \label{tab:truncation_effect_timings}
 \end{table}
 \normalsize
+
+
+\subsubsection{Numerical results}
