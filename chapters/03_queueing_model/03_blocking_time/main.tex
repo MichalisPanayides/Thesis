@@ -292,16 +292,22 @@ codes shows only the usage of the function rather than the function itself.
 ...     ),
 ...     all_states,
 ... )
->>> abg.markov.mean_blocking_time_formula_using_direct_approach(
-...     all_states=all_states,
-...     pi=pi,
-...     lambda_1=1,
-...     mu=4,
-...     num_of_servers=1,
-...     threshold=2,
-...     system_capacity=4,
-...     buffer_capacity=3,
+>>> round(
+...     abg.markov.mean_blocking_time_formula_using_direct_approach(
+...         all_states=all_states,
+...         pi=pi,
+...         lambda_1=1,
+...         mu=4,
+...         num_of_servers=1,
+...         threshold=2,
+...         system_capacity=4,
+...         buffer_capacity=3,
+...     ), 10
 ... )
-0.12878431792444614
+0.1287843179
 
 \end{lstlisting}
+
+% TODO: Either remove round() or make every example rounded to 10 decimal places.
+% The reason this is rounded is because for some reason the local tests were not
+% matching with GitHub actions at the 17th decimal place.
