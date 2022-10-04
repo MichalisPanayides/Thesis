@@ -531,19 +531,21 @@ defined in equation (\ref{eq:recursive_waiting_time_for_type_i}).
 ...     ),
 ...     all_states,
 ... )
->>> mean_waiting_time_formula_using_recursive_approach(
-...     all_states=all_states,
-...     pi=pi,
-...     class_type=0,
-...     lambda_2=1,
-...     lambda_1=1,
-...     mu=4,
-...     num_of_servers=1,
-...     threshold=2,
-...     system_capacity=4,
-...     buffer_capacity=3,
+>>> round(
+...     mean_waiting_time_formula_using_recursive_approach(
+...         all_states=all_states,
+...         pi=pi,
+...         class_type=0,
+...         lambda_2=1,
+...         lambda_1=1,
+...         mu=4,
+...         num_of_servers=1,
+...         threshold=2,
+...         system_capacity=4,
+...         buffer_capacity=3,
+...     ), 10
 ... )
-0.19214012896329433
+0.192140129
 
 \end{lstlisting}
 
@@ -637,7 +639,7 @@ as described in equation (\ref{eq:overall_waiting_time}).
 ...     )
 ...     return mean_waiting_time
 >>>
->>> overall_waiting_time_formula(
+>>> round(overall_waiting_time_formula(
 ...     all_states=all_states,
 ...     pi=pi,
 ...     lambda_2=1,
@@ -648,8 +650,8 @@ as described in equation (\ref{eq:overall_waiting_time}).
 ...     system_capacity=4,
 ...     buffer_capacity=3,
 ...     waiting_formula=mean_waiting_time_formula_using_recursive_approach,
-... )
-0.1572461885945275
+... ), 10)
+0.1572461886
 
 \end{lstlisting}
 
@@ -1124,19 +1126,21 @@ for either type of individuals can be calculated as follows:
 ...     ),
 ...     all_states,
 ... )
->>> mean_waiting_time_formula_using_direct_approach(
-...     all_states=all_states,
-...     pi=pi,
-...     class_type=0,
-...     lambda_2=1,
-...     lambda_1=1,
-...     mu=4,
-...     num_of_servers=1,
-...     threshold=2,
-...     system_capacity=4,
-...     buffer_capacity=3,
+>>> round(
+...     mean_waiting_time_formula_using_direct_approach(
+...         all_states=all_states,
+...         pi=pi,
+...         class_type=0,
+...         lambda_2=1,
+...         lambda_1=1,
+...         mu=4,
+...         num_of_servers=1,
+...         threshold=2,
+...         system_capacity=4,
+...         buffer_capacity=3,
+...     ), 10
 ... )
-0.19214012896329433
+0.192140129
 
 \end{lstlisting}
 
@@ -1267,17 +1271,19 @@ The functions is broken down in two parts for the case of each individual type.
 ...     ),
 ...     all_states,
 ... )
->>> mean_waiting_time_formula_using_closed_form_approach(
-...     all_states=all_states,
-...     pi=pi,
-...     class_type=0,
-...     mu=4,
-...     num_of_servers=1,
-...     threshold=2,
-...     system_capacity=4,
-...     buffer_capacity=3,
+>>> round(
+...     mean_waiting_time_formula_using_closed_form_approach(
+...         all_states=all_states,
+...         pi=pi,
+...         class_type=0,
+...         mu=4,
+...         num_of_servers=1,
+...         threshold=2,
+...         system_capacity=4,
+...         buffer_capacity=3,
+...     ), 10
 ... )
-0.19214012896329433
+0.192140129
 
 \end{lstlisting}
 

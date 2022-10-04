@@ -464,12 +464,12 @@ implementation for these functions is relatively straightforward to get.
 >>> pi = abg.markov.get_steady_state_algebraically(
 ...     Q, algebraic_function=np.linalg.lstsq
 ... )
->>> get_mean_number_of_individuals_in_system(pi, all_states)
-2.0872927227425087
->>> get_mean_number_of_individuals_in_node_1(pi, all_states)
-1.8187129478477566
->>> get_mean_number_of_individuals_in_node_2(pi, all_states)
-0.26857977489475193
+>>> round(get_mean_number_of_individuals_in_system(pi, all_states), 10)
+2.0872927227
+>>> round(get_mean_number_of_individuals_in_node_1(pi, all_states), 10)
+1.8187129478
+>>> round(get_mean_number_of_individuals_in_node_2(pi, all_states), 10)
+0.2685797749
 
 \end{lstlisting}
 
