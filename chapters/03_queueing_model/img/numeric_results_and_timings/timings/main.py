@@ -13,11 +13,9 @@ buffer_capacity = 15
 warm_up_time = 100
 runtime = 10000
 
-capacities = (10, 30, 50)
-
 
 def output_to_file(str_list, filename="data/demo.csv"):
-    with open(filename, "a") as f:
+    with open(filename, "a+") as f:
         f.write(str_list + "\n")
 
 
@@ -31,7 +29,7 @@ for _ in range(20):
         num_of_servers=num_of_servers,
         threshold=threshold,
         system_capacity=float("inf"),
-        buffer_capacity=buffer_capacity,
+        buffer_capacity=float("inf"),
         seed_num=None,
         warm_up_time=warm_up_time,
         num_of_trials=1,
@@ -55,7 +53,7 @@ for _ in range(20):
         num_of_servers=num_of_servers,
         threshold=threshold,
         system_capacity=10,
-        buffer_capacity=buffer_capacity,
+        buffer_capacity=10,
         seed_num=None,
         warm_up_time=warm_up_time,
         num_of_trials=1,
@@ -80,7 +78,7 @@ for _ in range(20):
         num_of_servers=num_of_servers,
         threshold=threshold,
         system_capacity=30,
-        buffer_capacity=buffer_capacity,
+        buffer_capacity=30,
         seed_num=None,
         warm_up_time=warm_up_time,
         num_of_trials=1,
@@ -106,7 +104,7 @@ for _ in range(20):
         num_of_servers=num_of_servers,
         threshold=threshold,
         system_capacity=50,
-        buffer_capacity=buffer_capacity,
+        buffer_capacity=50,
         seed_num=None,
         warm_up_time=warm_up_time,
         num_of_trials=1,
@@ -132,7 +130,7 @@ for _ in range(20):
         num_of_servers=num_of_servers,
         threshold=threshold,
         system_capacity=float("inf"),
-        buffer_capacity=buffer_capacity,
+        buffer_capacity=float("inf"),
         seed_num=None,
         warm_up_time=warm_up_time,
         num_of_trials=20,
@@ -158,7 +156,7 @@ for _ in range(20):
         num_of_servers=num_of_servers,
         threshold=threshold,
         system_capacity=10,
-        buffer_capacity=buffer_capacity,
+        buffer_capacity=10,
         seed_num=None,
         warm_up_time=warm_up_time,
         num_of_trials=20,
@@ -184,7 +182,7 @@ for _ in range(20):
         num_of_servers=num_of_servers,
         threshold=threshold,
         system_capacity=30,
-        buffer_capacity=buffer_capacity,
+        buffer_capacity=30,
         seed_num=None,
         warm_up_time=warm_up_time,
         num_of_trials=20,
@@ -210,7 +208,7 @@ for _ in range(20):
         num_of_servers=num_of_servers,
         threshold=threshold,
         system_capacity=50,
-        buffer_capacity=buffer_capacity,
+        buffer_capacity=50,
         seed_num=None,
         warm_up_time=warm_up_time,
         num_of_trials=20,
@@ -236,7 +234,7 @@ for _ in range(20):
         num_of_servers=num_of_servers,
         threshold=threshold,
         system_capacity=10,
-        buffer_capacity=buffer_capacity,
+        buffer_capacity=10,
         class_type=None,
     )
     end_time = time.time()
@@ -256,7 +254,7 @@ for _ in range(20):
         num_of_servers=num_of_servers,
         threshold=threshold,
         system_capacity=30,
-        buffer_capacity=buffer_capacity,
+        buffer_capacity=30,
         class_type=None,
     )
     end_time = time.time()
@@ -276,7 +274,7 @@ for _ in range(20):
         num_of_servers=num_of_servers,
         threshold=threshold,
         system_capacity=50,
-        buffer_capacity=buffer_capacity,
+        buffer_capacity=50,
         class_type=None,
     )
     end_time = time.time()
@@ -297,7 +295,7 @@ for _ in range(20):
         num_of_servers=num_of_servers,
         threshold=threshold,
         system_capacity=10,
-        buffer_capacity=buffer_capacity,
+        buffer_capacity=10,
     )
     end_time = time.time()
     markov_blocking_formula_bounded_10.append(end_time - start_time)
@@ -317,7 +315,7 @@ for _ in range(20):
         num_of_servers=num_of_servers,
         threshold=threshold,
         system_capacity=30,
-        buffer_capacity=buffer_capacity,
+        buffer_capacity=30,
     )
     end_time = time.time()
     markov_blocking_formula_bounded_30.append(end_time - start_time)
@@ -337,7 +335,7 @@ for _ in range(20):
         num_of_servers=num_of_servers,
         threshold=threshold,
         system_capacity=50,
-        buffer_capacity=buffer_capacity,
+        buffer_capacity=50,
     )
     end_time = time.time()
     markov_blocking_formula_bounded_50.append(end_time - start_time)
@@ -357,7 +355,7 @@ for _ in range(20):
         num_of_servers=num_of_servers,
         threshold=threshold,
         system_capacity=10,
-        buffer_capacity=buffer_capacity,
+        buffer_capacity=10,
         class_type=None,
         target=0.5,
     )
@@ -379,7 +377,7 @@ for _ in range(20):
         num_of_servers=num_of_servers,
         threshold=threshold,
         system_capacity=30,
-        buffer_capacity=buffer_capacity,
+        buffer_capacity=30,
         class_type=None,
         target=0.5,
     )
@@ -401,7 +399,7 @@ for _ in range(20):
         num_of_servers=num_of_servers,
         threshold=threshold,
         system_capacity=50,
-        buffer_capacity=buffer_capacity,
+        buffer_capacity=50,
         class_type=None,
         target=0.5,
     )
