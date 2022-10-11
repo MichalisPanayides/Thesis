@@ -1,5 +1,8 @@
 \subsection{Numeric results and timings}\label{sec:truncation_effect}
 
+
+% \graphicspath{{chapters/03_queueing_model/img/numeric_results_and_timings/}}
+
 \subsubsection{Markov chain waiting time approaches comparison}
 \label{sec:waiting_time_approach_comparison}
 
@@ -17,14 +20,16 @@ approaches for different values of \(N\) and \(M\).
 
 
 \begin{figure}[H]
-    \includegraphics[width=12cm]{chapters/03_queueing_model/img/numeric_results_and_timings/waiting_time_formulas_comparison/waiting_time_over_NN.png}
-    \caption{Waiting times of the three waiting time approaches for different
-    values of \(N\).}
+    \includegraphics[width=\textwidth]{chapters/03_queueing_model/img/numeric_results_and_timings/waiting_time_formulas_comparison/waiting_time_over_N.pdf}
+    \caption{
+        Waiting times of the three waiting time approaches for different
+        values of \(N\).
+    }
     \label{fig:waiting_time_accuracy_over_N}
 \end{figure}
     
 \begin{figure}[H]
-    \includegraphics[width=12cm]{chapters/03_queueing_model/img/numeric_results_and_timings/waiting_time_formulas_comparison/waiting_time_over_M.png}
+    \includegraphics[width=\textwidth]{chapters/03_queueing_model/img/numeric_results_and_timings/waiting_time_formulas_comparison/waiting_time_over_M.pdf}
     \caption{Waiting times of the three waiting time approaches for different
     values of \(M\).}
     \label{fig:waiting_time_accuracy_over_M}
@@ -41,14 +46,14 @@ time needed to calculate the waiting time for different values of \(N\) and
 \(M\).
 
 \begin{figure}[H]
-    \includegraphics[width=12cm]{chapters/03_queueing_model/img/numeric_results_and_timings/waiting_time_formulas_comparison/algorithm_duration_over_N.png}
+    \includegraphics[width=\textwidth]{chapters/03_queueing_model/img/numeric_results_and_timings/waiting_time_formulas_comparison/algorithm_duration_over_N.pdf}
     \caption{Duration of the three waiting time approaches for different values
     of \(N\).}
     \label{fig:waiting_time_algorithm_duration_over_N}
 \end{figure}
 
 \begin{figure}[H]
-    \includegraphics[width=12cm]{chapters/03_queueing_model/img/numeric_results_and_timings/waiting_time_formulas_comparison/algorithm_duration_over_M.png}
+    \includegraphics[width=\textwidth]{chapters/03_queueing_model/img/numeric_results_and_timings/waiting_time_formulas_comparison/algorithm_duration_over_M.pdf}
     \caption{Duration of the three waiting time approaches for different values
     of \(M\).}
     \label{fig:waiting_time_algorithm_duration_over_M}
@@ -56,7 +61,7 @@ time needed to calculate the waiting time for different values of \(N\) and
 
 
 \begin{figure}[H]
-    \includegraphics[width=12cm]{chapters/03_queueing_model/img/numeric_results_and_timings/waiting_time_formulas_comparison/algorithm_duration_over_N_and_M.png}
+    \includegraphics[width=\textwidth]{chapters/03_queueing_model/img/numeric_results_and_timings/waiting_time_formulas_comparison/algorithm_duration_over_N_and_M.pdf}
     \caption{Duration of the three waiting time approaches for different values
     of \(N\) and \(M\).}
     \label{fig:waiting_time_algorithm_duration_over_N_and_M}
@@ -102,31 +107,31 @@ The rest of the parameters have the following values:
 
 
 \begin{figure}[H]
-    \includegraphics[width=\textwidth, trim=200 60 170 60, clip]{chapters/03_queueing_model/img/numeric_results_and_timings/steady_state_probabilities/main_1.png}
+    \includegraphics[width=\textwidth, trim=200 60 170 60, clip]{chapters/03_queueing_model/img/numeric_results_and_timings/steady_state_probabilities/main_1.pdf}
     \caption{\(\mu = 0.03\)}
     \label{fig:comparison_steady_state_probabilities_1}
 \end{figure}
 
 \begin{figure}[H]
-    \includegraphics[width=\textwidth, trim=200 60 170 60, clip]{chapters/03_queueing_model/img/numeric_results_and_timings/steady_state_probabilities/main_3.png}
+    \includegraphics[width=\textwidth, trim=200 60 170 60, clip]{chapters/03_queueing_model/img/numeric_results_and_timings/steady_state_probabilities/main_3.pdf}
     \caption{\(\mu = 0.09\)}
     \label{fig:comparison_steady_state_probabilities_2}
 \end{figure}
 
 \begin{figure}[H]
-    \includegraphics[width=\textwidth, trim=200 60 170 60, clip]{chapters/03_queueing_model/img/numeric_results_and_timings/steady_state_probabilities/main_5.png}
+    \includegraphics[width=\textwidth, trim=200 60 170 60, clip]{chapters/03_queueing_model/img/numeric_results_and_timings/steady_state_probabilities/main_5.pdf}
     \caption{\(\mu = 0.15\)}
     \label{fig:comparison_steady_state_probabilities_3}
 \end{figure}
 
 \begin{figure}[H]
-    \includegraphics[width=\textwidth, trim=200 60 170 60, clip]{chapters/03_queueing_model/img/numeric_results_and_timings/steady_state_probabilities/main_7.png}
+    \includegraphics[width=\textwidth, trim=200 60 170 60, clip]{chapters/03_queueing_model/img/numeric_results_and_timings/steady_state_probabilities/main_7.pdf}
     \caption{\(\mu = 0.21\)}
     \label{fig:comparison_steady_state_probabilities_4}
 \end{figure}
 
 \begin{figure}[H]
-    \includegraphics[width=\textwidth, trim=200 60 170 60, clip]{chapters/03_queueing_model/img/numeric_results_and_timings/steady_state_probabilities/main_9.png}
+    \includegraphics[width=\textwidth, trim=200 60 170 60, clip]{chapters/03_queueing_model/img/numeric_results_and_timings/steady_state_probabilities/main_9.pdf}
     \caption{\(\mu = 0.27\)}
     \label{fig:comparison_steady_state_probabilities_5}
 \end{figure}
@@ -308,7 +313,7 @@ Note that the blocking time can only be calculated for type 2 individuals.
 \end{figure}
 
 Finally, Figure~\ref{fig:markov_vs_des_proportion_within_time_comparison_overall}
-shows the overall proportion of individuals whose time in the system lies within
+shows the overall proportion of individuals whose time in the system are within
 a time target for different values of \(N\) and \(M\).
 Similar to the previous figures, as \(N\) and \(M\) increase the proportion of
 individuals between the simulation and the Markov chain get closer.
