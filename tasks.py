@@ -14,7 +14,7 @@ def compile(c):
     """
     Compile the LaTeX document.
     """
-    c.run(f"latexmk -xelatex -f main.tex")
+    c.run(f"latexmk -xelatex main.tex")
 
 
 @task
