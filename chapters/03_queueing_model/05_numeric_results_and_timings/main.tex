@@ -1,7 +1,7 @@
 \subsection{Numeric results and timings}\label{sec:truncation_effect}
 
-\subsubsection{Markov chain waiting time approaches comparison}
-\label{sec:waiting_time_approach_comparison}
+% \subsubsection{Markov chain waiting time approaches comparison}
+% \label{sec:waiting_time_approach_comparison}
 
 In Section \ref{sec:waiting_time} three different approaches for calculating
 the waiting time using the Markov chain model have been introduces.
@@ -31,42 +31,42 @@ computation time.
 % \end{figure}
 
 
-Since the results of the three approaches are almost identical, the computation
-time of the three approaches is the main factor that determines which
-approach will be used.
-Figures~\ref{fig:waiting_time_algorithm_duration_over_N}, 
-\ref{fig:waiting_time_algorithm_duration_over_M} and 
-\ref{fig:waiting_time_algorithm_duration_over_N_and_M} show the computation
-time needed to calculate the waiting time for different values of \(N\) and
-\(M\).
+% Since the results of the three approaches are almost identical, the computation
+% time of the three approaches is the main factor that determines which
+% approach will be used.
+% Figures~\ref{fig:waiting_time_algorithm_duration_over_N}, 
+% \ref{fig:waiting_time_algorithm_duration_over_M} and 
+% \ref{fig:waiting_time_algorithm_duration_over_N_and_M} show the computation
+% time needed to calculate the waiting time for different values of \(N\) and
+% \(M\).
 
-\begin{figure}[H]
-    \includegraphics[width=12cm]{chapters/03_queueing_model/img/numeric_results_and_timings/waiting_time_formulas_comparison/algorithm_duration_over_N.png}
-    \caption{Duration of the three waiting time approaches for different values
-    of \(N\).}
-    \label{fig:waiting_time_algorithm_duration_over_N}
-\end{figure}
+% \begin{figure}[H]
+%     \includegraphics[width=12cm]{chapters/03_queueing_model/img/numeric_results_and_timings/waiting_time_formulas_comparison/algorithm_duration_over_N.png}
+%     \caption{Duration of the three waiting time approaches for different values
+%     of \(N\).}
+%     \label{fig:waiting_time_algorithm_duration_over_N}
+% \end{figure}
 
-\begin{figure}[H]
-    \includegraphics[width=12cm]{chapters/03_queueing_model/img/numeric_results_and_timings/waiting_time_formulas_comparison/algorithm_duration_over_M.png}
-    \caption{Duration of the three waiting time approaches for different values
-    of \(M\).}
-    \label{fig:waiting_time_algorithm_duration_over_M}
-\end{figure}
+% \begin{figure}[H]
+%     \includegraphics[width=12cm]{chapters/03_queueing_model/img/numeric_results_and_timings/waiting_time_formulas_comparison/algorithm_duration_over_M.png}
+%     \caption{Duration of the three waiting time approaches for different values
+%     of \(M\).}
+%     \label{fig:waiting_time_algorithm_duration_over_M}
+% \end{figure}
 
 
-\begin{figure}[H]
-    \includegraphics[width=12cm]{chapters/03_queueing_model/img/numeric_results_and_timings/waiting_time_formulas_comparison/algorithm_duration_over_N_and_M.png}
-    \caption{Duration of the three waiting time approaches for different values
-    of \(N\) and \(M\).}
-    \label{fig:waiting_time_algorithm_duration_over_N_and_M}
-\end{figure}
+% \begin{figure}[H]
+%     \includegraphics[width=12cm]{chapters/03_queueing_model/img/numeric_results_and_timings/waiting_time_formulas_comparison/algorithm_duration_over_N_and_M.png}
+%     \caption{Duration of the three waiting time approaches for different values
+%     of \(N\) and \(M\).}
+%     \label{fig:waiting_time_algorithm_duration_over_N_and_M}
+% \end{figure}
 
-The direct approach is the slowest approach, which makes sense since it requires
-solving a system of linear equations.
-The recursive approach and the closed form approach give similar durations,
-although the recursive approach seems to be more linear in nature than the
-closed form method. 
+% The direct approach is the slowest approach, which makes sense since it requires
+% solving a system of linear equations.
+% The recursive approach and the closed form approach give similar durations,
+% although the recursive approach seems to be more linear in nature than the
+% closed form method. 
 
 
 \subsubsection{Markov chain - Simulation comparison of steady state probabilities}
