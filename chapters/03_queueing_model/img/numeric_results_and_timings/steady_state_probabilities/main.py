@@ -35,5 +35,5 @@ for mu in mu_space:
         seed_num=seed_num,
     )
     fig += 1
-    plt.savefig("main_" + str(fig) + ".png")
+    plt.savefig("main_" + str(fig) + ".pdf")
     plt.close()
