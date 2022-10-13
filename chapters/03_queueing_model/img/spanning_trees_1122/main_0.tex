@@ -1,0 +1,17 @@
+
+
+\begin{tikzpicture}[-, node distance = 1cm, auto]
+\node[state] (u0v0) {(0,0)};
+\node[state, right=of u0v0] (u0v1) {(0,1)};
+\draw[->](u0v1) edge node {\(\mu \)} (u0v0);
+\node[state, below=of u0v1] (u1v1) {(1,1)};
+\draw[->](u1v1) edge node {\(\mu \)} (u0v1);
+\node[state, below=of u1v1] (u2v1) {(2,1)};
+\draw[->](u2v1) edge node {\(\mu \)} (u1v1);
+\node[state, right=of u0v1] (u0v2) {(0,2)};
+\node[state, right=of u1v1] (u1v2) {(1,2)};
+\node[state, right=of u2v1] (u2v2) {(2,2)};
+\draw[->](u2v2) edge node {\(\mu \)} (u2v1);
+\draw[->](u0v2) edge node {\(\lambda_2 \)} (u1v2);
+\draw[->](u1v2) edge node {\(\lambda_2 \)} (u2v2);
+\end{tikzpicture}
