@@ -19,7 +19,7 @@ runtime = 10000
 num_of_trials = 10
 seed_num = 0
 
-fig = 0
+fig_num = 0
 for mu in mu_space:
     plt.figure(figsize=(20, 10))
     (
@@ -38,71 +38,68 @@ for mu in mu_space:
         num_of_trials=num_of_trials,
         seed_num=seed_num,
     )
-    grid = plt.GridSpec(2, 4)
 
-    plt.subplot(grid[0, 0:2])
+    fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(20, 5))
 
-    plt.imshow(sim_state_probabilities_array, cmap="cividis")
-    plt.hlines(
+    pos1 = ax1.imshow(sim_state_probabilities_array, cmap="cividis")
+    ax1.hlines(
         y=np.arange(0, system_capacity) + 0.5,
         xmin=np.full(system_capacity, -0.5),
         xmax=np.full(system_capacity, buffer_capacity + 0.5),
         color="grey",
     )
-    plt.vlines(
+    ax1.vlines(
         x=np.arange(0, buffer_capacity) + 0.5,
         ymin=np.full(buffer_capacity, -0.5),
         ymax=np.full(buffer_capacity, system_capacity + 0.5),
         color="grey",
     )
-    plt.title("Simulation state probabilities", fontsize=11, fontweight="bold")
-    plt.xlabel("Individuals in service area", fontsize=11, fontweight="bold")
-    plt.ylabel("Individuals in buffer centre", fontsize=11, fontweight="bold")
-    plt.colorbar()
+    ax1.set_title("Simulation state probabilities", fontsize=11, fontweight="bold")
+    ax1.set_xlabel("Individuals in service area", fontsize=11, fontweight="bold")
+    ax1.set_ylabel("Individuals in buffer centre", fontsize=11, fontweight="bold")
+    fig.colorbar(pos1, ax=ax1)
 
-    plt.subplot(grid[0, 2:4])
-    plt.imshow(markov_state_probabilities_array, cmap="cividis")
-    plt.hlines(
+    pos2 = ax2.imshow(markov_state_probabilities_array, cmap="cividis")
+    ax2.hlines(
         y=np.arange(0, system_capacity) + 0.5,
         xmin=np.full(system_capacity, -0.5),
         xmax=np.full(system_capacity, buffer_capacity + 0.5),
         color="grey",
     )
-    plt.vlines(
+    ax2.vlines(
         x=np.arange(0, buffer_capacity) + 0.5,
         ymin=np.full(buffer_capacity, -0.5),
         ymax=np.full(buffer_capacity, system_capacity + 0.5),
         color="grey",
     )
 
-    plt.title("Markov chain state probabilities", fontsize=11, fontweight="bold")
-    plt.xlabel("Individuals in service area", fontsize=11, fontweight="bold")
-    plt.ylabel("Individuals in buffer centre", fontsize=11, fontweight="bold")
-    plt.colorbar()
+    ax2.set_title("Markov chain state probabilities", fontsize=11, fontweight="bold")
+    ax2.set_xlabel("Individuals in service area", fontsize=11, fontweight="bold")
+    ax2.set_ylabel("Individuals in buffer centre", fontsize=11, fontweight="bold")
+    fig.colorbar(pos2, ax=ax2)
 
-    plt.subplot(grid[1, 1:3])
-    plt.imshow(diff_states_probabilities_array, cmap="viridis")
-    plt.hlines(
+    pos3 = ax3.imshow(diff_states_probabilities_array, cmap="viridis")
+    ax3.hlines(
         y=np.arange(0, system_capacity) + 0.5,
         xmin=np.full(system_capacity, -0.5),
         xmax=np.full(system_capacity, buffer_capacity + 0.5),
         color="grey",
     )
-    plt.vlines(
+    ax3.vlines(
         x=np.arange(0, buffer_capacity) + 0.5,
         ymin=np.full(buffer_capacity, -0.5),
         ymax=np.full(buffer_capacity, system_capacity + 0.5),
         color="grey",
     )
-    plt.title(
-        "Simulation and Markov chain state probability differences",
+    ax3.set_title(
+        "Simulation and Markov chain state\nprobability differences",
         fontsize=11,
         fontweight="bold",
     )
-    plt.xlabel("Individuals in service area", fontsize=11, fontweight="bold")
-    plt.ylabel("Individuals in buffer centre", fontsize=11, fontweight="bold")
-    plt.colorbar()
+    ax3.set_xlabel("Individuals in service area", fontsize=11, fontweight="bold")
+    ax3.set_ylabel("Individuals in buffer centre", fontsize=11, fontweight="bold")
+    fig.colorbar(pos3, ax=ax3)
 
-    fig += 1
-    plt.savefig("main_" + str(fig) + ".pdf")
+    fig_num += 1
+    plt.savefig("main_" + str(fig_num) + ".pdf")
     plt.close()
