@@ -181,6 +181,7 @@ then the corresponding performance measure.
 \tiny
 \begin{table}[H]
     \centering
+    \caption{Relative timings of the simulation and Markov chain model}
     \begin{tabular}{c|cc|ccc}
         & \multicolumn{2}{c}{\textbf{Simulation}} & 
         \multicolumn{3}{c}{\textbf{Markov chain}} \\
@@ -198,7 +199,6 @@ then the corresponding performance measure.
         \hline
         \(\infty\) & 1 & 142.1 & N/A & N/A & N/A \\
     \end{tabular}
-    \caption{Relative timings of the simulation and Markov chain model}
     \label{tab:truncation_effect_timings_old}
 \end{table}
 \normalsize
@@ -227,6 +227,8 @@ of the different approaches change when using this smarter approach.
 \tiny
 \begin{table}[H]
     \centering
+    \caption{Relative timings of the simulation and Markov chain model using
+    the smarter approach}
     \begin{tabular}{c|cc|ccc}
         & \multicolumn{2}{c}{\textbf{Simulation}} & 
         \multicolumn{3}{c}{\textbf{Markov chain}} \\
@@ -244,8 +246,6 @@ of the different approaches change when using this smarter approach.
         \hline
         \(\infty\) & 1 & 127.4 & N/A & N/A & N/A \\
     \end{tabular}
-    \caption{Relative timings of the simulation and Markov chain model using
-    the smarter approach}
     \label{tab:truncation_effect_timings_new}
 \end{table}
 \normalsize
