@@ -1,15 +1,15 @@
 \subsection{Numeric results and timings}\label{sec:truncation_effect}
 
 
-% \graphicspath{{chapters/03_queueing_model/img/numeric_results_and_timings/}}  % TODO 
-
 \subsubsection{Markov chain waiting time approaches comparison}
 \label{sec:waiting_time_approach_comparison}
 
 In Section \ref{sec:waiting_time} three different approaches for calculating
 the waiting time using the Markov chain model have been introduced.
-The three approaches are the recursive approach, the direct approach and
-the closed form approach.  % TODO Add links to subsections.
+The three approaches are the recursive approach
+(Section~\ref{sec:recursive_waiting_time}), the direct approach
+(Section~\ref{sec:direct_waiting_time}) and the closed form
+approach (Section~\ref{sec:closed_form_waiting_time}).
 In this section the three approaches are compared in terms of accuracy and
 computation time.
 
@@ -386,3 +386,7 @@ individuals between the simulation and the Markov chain get closer.
     \label{fig:markov_vs_des_proportion_within_time_comparison_overall}
 \end{figure}
 
+
+% TODO: Scripts that I need to run:
+% - Truncation effect again (waiting, blocking, proportion)
+% - Truncation effect for type 1 and type 2
