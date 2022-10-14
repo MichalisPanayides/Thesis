@@ -157,6 +157,60 @@ have a higher value since individuals now exit the system faster.
 Also, note that for all values of \(\mu\) the difference between the Markov
 chain approach and the simulation is small.
 
+Similarly Figures~\ref{fig:comparison_steady_state_probabilities_2_1} -
+\ref{fig:comparison_steady_state_probabilities_2_5} show a comparison between
+the steady state probabilities between the Markov chain and the simulation
+for different values of the number of servers (\(C\)).
+The value of \(C\) gradually increases from \(C = 1\) to \(C = 5\) and it can
+be seen that as the number of servers increases the steady state probabilities
+of the states tend to move towards the smaller states.
+
+
+\begin{figure}[H]
+    \includegraphics[width=\textwidth, trim=200 60 170 60, clip]{chapters/03_queueing_model/img/numeric_results_and_timings/steady_state_probabilities_2/main_1.pdf}
+    \caption{\(C = 1\)}
+    \label{fig:comparison_steady_state_probabilities_2_1}
+\end{figure}
+
+\begin{figure}[H]
+    \includegraphics[width=\textwidth, trim=200 60 170 60, clip]{chapters/03_queueing_model/img/numeric_results_and_timings/steady_state_probabilities_2/main_2.pdf}
+    \caption{\(C = 2\)}
+    \label{fig:comparison_steady_state_probabilities_2_2}
+\end{figure}
+
+\begin{figure}[H]
+    \includegraphics[width=\textwidth, trim=200 60 170 60, clip]{chapters/03_queueing_model/img/numeric_results_and_timings/steady_state_probabilities_2/main_3.pdf}
+    \caption{\(C = 3\)}
+    \label{fig:comparison_steady_state_probabilities_2_3}
+\end{figure}
+
+\begin{figure}[H]
+    \includegraphics[width=\textwidth, trim=200 60 170 60, clip]{chapters/03_queueing_model/img/numeric_results_and_timings/steady_state_probabilities_2/main_4.pdf}
+    \caption{\(C = 4\)}
+    \label{fig:comparison_steady_state_probabilities_2_4}
+\end{figure}
+
+\begin{figure}[H]
+    \includegraphics[width=\textwidth, trim=200 60 170 60, clip]{chapters/03_queueing_model/img/numeric_results_and_timings/steady_state_probabilities_2/main_5.pdf}
+    \caption{\(C = 5\)}
+    \label{fig:comparison_steady_state_probabilities_2_5}
+\end{figure}
+
+
+The parameter set used for
+Figures~\ref{fig:comparison_steady_state_probabilities_2_1}
+-~\ref{fig:comparison_steady_state_probabilities_2_5} are:
+
+\begin{itemize}
+    \item \(\lambda_1 = 1.5\)
+    \item \(\lambda_2 = 1\)
+    \item \(\mu = 0.7\)
+    \item \(C \in [1, 5]\)
+    \item \(T = 13\)
+    \item \(N = 20\)
+    \item \(M = 20\)
+\end{itemize}
+
 
 \subsubsection{Computation time of Simulation compared to Markov chain }
 
