@@ -54,18 +54,16 @@ for lambda_2 in lambda_2_space:
 
     for capacity_value in all_capacity_values:
         # Markov
-        markov_proportions = (
-            abg.markov.proportion_within_target_using_markov_state_probabilities(
-                lambda_2=lambda_2,
-                lambda_1=lambda_1,
-                mu=mu,
-                num_of_servers=num_of_servers,
-                threshold=threshold,
-                system_capacity=capacity_value,
-                buffer_capacity=capacity_value,
-                class_type=None,
-                target=target,
-            )
+        markov_proportions = abg.markov.proportion_within_target_using_markov_state_probabilities(
+            lambda_2=lambda_2,
+            lambda_1=lambda_1,
+            mu=mu,
+            num_of_servers=num_of_servers,
+            threshold=threshold,
+            system_capacity=capacity_value,
+            buffer_capacity=capacity_value,
+            class_type=None,
+            target=target,
         )
 
         # Bounded simulation
@@ -98,52 +96,52 @@ for lambda_2 in lambda_2_space:
         else:
             raise ValueError("Invalid capacity value")
 
-# Waiting time both individuals
-fig, (ax1, ax2, ax3) = plt.subplots(nrows=1, ncols=3, figsize=(15, 5))
-for index, (ax, all_markov_times, all_bounded_sim_times) in enumerate(
-    zip(
-        [ax1, ax2, ax3],
-        [
-            all_markov_props_low,
-            all_markov_props_mid,
-            all_markov_props_high,
-        ],
-        [
-            all_sim_bound_props_low,
-            all_sim_bound_props_mid,
-            all_sim_bound_props_high,
-        ],
-    )
-):
-    ax.violinplot(
-        all_sim_unbound_props, positions=lambda_2_space, showmeans=True, widths=0.3
-    )
-    ax.violinplot(
-        all_bounded_sim_times, positions=lambda_2_space, showmeans=True, widths=0.3
-    )
-    ax.plot(
-        lambda_2_space,
-        all_markov_times,
-        color="red",
+
+for row in all_sim_unbound_props:
+    output_to_file(
+        str_list=str(row).replace("[", "").replace("]", ""),
+        filename="data/sim_unbound_props_overall.csv",
     )
 
-    legend_elements = [
-        Line2D([0], [0], color="red", lw=2, label="Finite state Markov chain"),
-        Patch(facecolor="tab:blue", label="Simulation", alpha=0.6),
-        Patch(facecolor="tab:orange", label="Truncated simulation", alpha=0.6),
-    ]
-    ax.legend(handles=legend_elements, loc="best")
-    ax.set_title(f"$N$ = $M$ = {all_capacity_values[index]}")
-    ax.set_xlabel("$\lambda_2$")
-    ax.set_ylabel("% within target")
 
-plt.suptitle("Truncation effect on proportion within target")
-plt.savefig("demo.pdf", transparent=True)
+for row in all_sim_bound_props_low:
+    output_to_file(
+        str_list=str(row).replace("[", "").replace("]", ""),
+        filename="data/sim_bound_props_low_overall.csv",
+    )
 
-output_to_file(str(all_sim_unbound_props), "sim_unbound_props.csv")
-output_to_file(str(all_sim_bound_props_low), "sim_bound_props_low.csv")
-output_to_file(str(all_sim_bound_props_mid), "sim_bound_props_mid.csv")
-output_to_file(str(all_sim_bound_props_high), "sim_bound_props_high.csv")
-output_to_file(str(all_markov_props_low), "markov_props_low.csv")
-output_to_file(str(all_markov_props_mid), "markov_props_mid.csv")
-output_to_file(str(all_markov_props_high), "markov_props_high.csv")
+
+for row in all_sim_bound_props_mid:
+    output_to_file(
+        str_list=str(row).replace("[", "").replace("]", ""),
+        filename="data/sim_bound_props_mid_overall.csv",
+    )
+
+
+for row in all_sim_bound_props_high:
+    output_to_file(
+        str_list=str(row).replace("[", "").replace("]", ""),
+        filename="data/sim_bound_props_high_overall.csv",
+    )
+
+
+for row in all_markov_props_low:
+    output_to_file(
+        str_list=str(row).replace("[", "").replace("]", ""),
+        filename="data/markov_props_low_overall.csv",
+    )
+
+
+for row in all_markov_props_mid:
+    output_to_file(
+        str_list=str(row).replace("[", "").replace("]", ""),
+        filename="data/markov_props_mid_overall.csv",
+    )
+
+
+for row in all_markov_props_high:
+    output_to_file(
+        str_list=str(row).replace("[", "").replace("]", ""),
+        filename="data/markov_props_high_overall.csv",
+    )
+

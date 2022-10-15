@@ -32,6 +32,7 @@ all_markov_waiting_times_mid = []
 all_markov_waiting_times_high = []
 for lambda_2 in lambda_2_space:
     # Unbounded simulation
+    print(lambda_2)
     unbounded_simulation_results = abg.simulation.get_multiple_runs_results(
         lambda_2=lambda_2,
         lambda_1=lambda_1,
@@ -52,17 +53,15 @@ for lambda_2 in lambda_2_space:
 
     for capacity_value in all_capacity_values:
         # Markov
-        markov_waiting_time = (
-            abg.markov.get_mean_waiting_time_using_markov_state_probabilities(
-                lambda_2=lambda_2,
-                lambda_1=lambda_1,
-                mu=mu,
-                num_of_servers=num_of_servers,
-                threshold=threshold,
-                system_capacity=capacity_value,
-                buffer_capacity=capacity_value,
-                class_type=None,
-            )
+        markov_waiting_time = abg.markov.get_mean_waiting_time_using_markov_state_probabilities(
+            lambda_2=lambda_2,
+            lambda_1=lambda_1,
+            mu=mu,
+            num_of_servers=num_of_servers,
+            threshold=threshold,
+            system_capacity=capacity_value,
+            buffer_capacity=capacity_value,
+            class_type=None,
         )
         # Bounded simulation
         bounded_simulation_results = abg.simulation.get_multiple_runs_results(
@@ -98,60 +97,45 @@ for lambda_2 in lambda_2_space:
         else:
             raise ValueError("Invalid capacity value")
 
-# Waiting time both individuals
-fig, (ax1, ax2, ax3) = plt.subplots(nrows=1, ncols=3, figsize=(15, 5))
-for index, (ax, all_markov_times, all_bounded_sim_times) in enumerate(
-    zip(
-        [ax1, ax2, ax3],
-        [
-            all_markov_waiting_times_low,
-            all_markov_waiting_times_mid,
-            all_markov_waiting_times_high,
-        ],
-        [
-            all_sim_bound_waiting_times_low,
-            all_sim_bound_waiting_times_mid,
-            all_sim_bound_waiting_times_high,
-        ],
-    )
-):
-    ax.violinplot(
-        all_sim_unbound_waiting_times,
-        positions=lambda_2_space,
-        showmeans=True,
-        widths=0.3,
-    )
-    ax.violinplot(
-        all_bounded_sim_times,
-        positions=lambda_2_space,
-        showmeans=True,
-        widths=0.3,
-    )
-    ax.plot(
-        lambda_2_space,
-        all_markov_times,
-        color="red",
+
+for row in all_sim_unbound_waiting_times:
+    output_to_file(
+        str_list=str(row).replace("[", "").replace("]", ""),
+        filename="data/sim_unbound_waiting_times_overall.csv",
     )
 
-    legend_elements = [
-        Line2D([0], [0], color="red", lw=2, label="Finite state Markov chain"),
-        Patch(facecolor="tab:blue", label="Simulation", alpha=0.6),
-        Patch(facecolor="tab:orange", label="Truncated simulation", alpha=0.6),
-    ]
-    ax.legend(handles=legend_elements, loc="upper left")
-    ax.set_title(f"$N$ = $M$ = {all_capacity_values[index]}")
-    ax.set_xlabel("$\lambda_2$")
-    ax.set_ylabel("Waiting time")
+for row in all_sim_bound_waiting_times_low:
+    output_to_file(
+        str_list=str(row).replace("[", "").replace("]", ""),
+        filename="data/sim_bound_waiting_times_low_overall.csv",
+    )
 
-plt.suptitle("Truncation effect on waiting time")
-plt.savefig("demo.pdf", transparent=True)
+for row in all_sim_bound_waiting_times_mid:
+    output_to_file(
+        str_list=str(row).replace("[", "").replace("]", ""),
+        filename="data/sim_bound_waiting_times_mid_overall.csv",
+    )
 
-output_to_file(str(all_sim_unbound_waiting_times), "sim_unbound_waiting_times.csv")
-output_to_file(str(all_sim_bound_waiting_times_low), "sim_bound_waiting_times_low.csv")
-output_to_file(str(all_sim_bound_waiting_times_mid), "sim_bound_waiting_times_mid.csv")
-output_to_file(
-    str(all_sim_bound_waiting_times_high), "sim_bound_waiting_times_high.csv"
-)
-output_to_file(str(all_markov_waiting_times_low), "markov_waiting_times_low.csv")
-output_to_file(str(all_markov_waiting_times_mid), "markov_waiting_times_mid.csv")
-output_to_file(str(all_markov_waiting_times_high), "markov_waiting_times_high.csv")
+for row in all_sim_bound_waiting_times_high:
+    output_to_file(
+        str_list=str(row).replace("[", "").replace("]", ""),
+        filename="data/sim_bound_waiting_times_high_overall.csv",
+    )
+
+for row in all_markov_waiting_times_low:
+    output_to_file(
+        str_list=str(row).replace("[", "").replace("]", ""),
+        filename="data/markov_waiting_times_low_overall.csv",
+    )
+
+for row in all_markov_waiting_times_mid:
+    output_to_file(
+        str_list=str(row).replace("[", "").replace("]", ""),
+        filename="data/markov_waiting_times_mid_overall.csv",
+    )
+
+for row in all_markov_waiting_times_high:
+    output_to_file(
+        str_list=str(row).replace("[", "").replace("]", ""),
+        filename="data/markov_waiting_times_high_overall.csv",
+    )
