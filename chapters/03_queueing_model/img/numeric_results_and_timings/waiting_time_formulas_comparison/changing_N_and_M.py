@@ -26,50 +26,61 @@ waiting_formulas = (
 )
 
 
-num_of_trials = 20
+num_of_trials = 50
 start, end = 10, 50
 capacity_space = np.linspace(start, end, end - start + 1, dtype=int)
 
 
-all_durations_sys = []
-all_waiting_times_sys = []
+waiting_times = [[] for _ in range(3)]
+durations = [[] for _ in range(3)]
 for capacity_i in capacity_space:
-    waiting_times = [0, 0, 0]
-    durations = [0, 0, 0]
     for i, selected_waiting_formula in enumerate(waiting_formulas):
         for _ in range(num_of_trials):
             start_time = time.time()
-            waiting_times[
-                i
-            ] = abg.markov.get_mean_waiting_time_using_markov_state_probabilities(
-                lambda_1=lambda_1,
-                lambda_2=lambda_2,
-                mu=mu,
-                num_of_servers=num_of_servers,
-                threshold=threshold,
-                system_capacity=capacity_i,
-                buffer_capacity=capacity_i,
-                class_type=None,
-                waiting_formula=selected_waiting_formula,
+            waiting_times[i].append(
+                abg.markov.get_mean_waiting_time_using_markov_state_probabilities(
+                    lambda_1=lambda_1,
+                    lambda_2=lambda_2,
+                    mu=mu,
+                    num_of_servers=num_of_servers,
+                    threshold=threshold,
+                    system_capacity=capacity_i,
+                    buffer_capacity=capacity_i,
+                    class_type=None,
+                    waiting_formula=selected_waiting_formula,
+                )
             )
             end_time = time.time()
-            durations[i] += end_time - start_time
-        durations[i] /= num_of_trials
-    if not np.allclose(waiting_times[0], waiting_times[1], waiting_times[2]):
-        print(capacity_i, end="\t")
-        print(waiting_times)
-    all_durations_sys.append(durations)
-    all_waiting_times_sys.append(waiting_times)
+            durations[i].append(end_time - start_time)
 
-for row in all_durations_sys:
-    output_to_file(
-        str_list=str(row).replace("[", "").replace("]", ""),
-        filename="data/algorithm_duration_over_N_and_M.csv",
-    )
 
-for row in all_waiting_times_sys:
-    output_to_file(
-        str_list=str(row).replace("[", "").replace("]", ""),
-        filename="data/waiting_times_over_N_and_M.csv",
-    )
+filenames = [
+    "data/waiting_time_recursive_N_and_M.csv",
+    "data/waiting_time_direct_N_and_M.csv",
+    "data/waiting_time_closed_form_N_and_M.csv",
+]
 
+filenames_duration = [
+    "data/duration_recursive_N_and_M.csv",
+    "data/duration_direct_N_and_M.csv",
+    "data/duration_closed_form_N_and_M.csv",
+]
+
+
+for values, filename in zip(waiting_times, filenames):
+    for trial in range(end - start + 1):
+        output_to_file(
+            str_list=str(values[trial * num_of_trials : (trial + 1) * num_of_trials])
+            .replace("[", "")
+            .replace("]", ""),
+            filename=filename,
+        )
+
+for values, filename in zip(durations, filenames_duration):
+    for trial in range(end - start + 1):
+        output_to_file(
+            str_list=str(values[trial * num_of_trials : (trial + 1) * num_of_trials])
+            .replace("[", "")
+            .replace("]", ""),
+            filename=filename,
+        )
