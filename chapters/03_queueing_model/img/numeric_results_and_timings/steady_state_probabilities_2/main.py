@@ -54,8 +54,8 @@ for num_of_servers in num_of_servers_space:
         color="grey",
     )
     ax1.set_title("Simulation state probabilities", fontsize=11, fontweight="bold")
-    ax1.set_xlabel("Individuals in service area", fontsize=11, fontweight="bold")
-    ax1.set_ylabel("Individuals in buffer centre", fontsize=11, fontweight="bold")
+    ax1.set_xlabel("Individuals in node 1", fontsize=11, fontweight="bold")
+    ax1.set_ylabel("Individuals in node 2", fontsize=11, fontweight="bold")
     fig.colorbar(pos1, ax=ax1)
 
     pos2 = ax2.imshow(markov_state_probabilities_array, cmap="cividis")
@@ -73,8 +73,8 @@ for num_of_servers in num_of_servers_space:
     )
 
     ax2.set_title("Markov chain state probabilities", fontsize=11, fontweight="bold")
-    ax2.set_xlabel("Individuals in service area", fontsize=11, fontweight="bold")
-    ax2.set_ylabel("Individuals in buffer centre", fontsize=11, fontweight="bold")
+    ax2.set_xlabel("Individuals in node 1", fontsize=11, fontweight="bold")
+    ax2.set_ylabel("Individuals in node 2", fontsize=11, fontweight="bold")
     fig.colorbar(pos2, ax=ax2)
 
     pos3 = ax3.imshow(diff_states_probabilities_array, cmap="viridis")
@@ -95,8 +95,8 @@ for num_of_servers in num_of_servers_space:
         fontsize=11,
         fontweight="bold",
     )
-    ax3.set_xlabel("Individuals in service area", fontsize=11, fontweight="bold")
-    ax3.set_ylabel("Individuals in buffer centre", fontsize=11, fontweight="bold")
+    ax3.set_xlabel("Individuals in node 1", fontsize=11, fontweight="bold")
+    ax3.set_ylabel("Individuals in node 2", fontsize=11, fontweight="bold")
     fig.colorbar(pos3, ax=ax3)
 
     fig_num += 1
