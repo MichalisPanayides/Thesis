@@ -330,6 +330,14 @@ simulated waiting time using discrete event simulation over a range of values of
 \(\lambda_2\) (details of the discrete event simulation model can be found in 
 Section~\ref{sec:discrete_event_simulation}).
 
+\begin{itemize}
+    \item \(\lambda_1 = 2\)
+    \item \(\mu = 3\)
+    \item \(C = 3\)
+    \item \(T = 8\)
+    \item \(N = M = 10, 30, 50\)
+\end{itemize}
+
 \begin{figure}[H]
     \includegraphics[width=\textwidth]{chapters/03_queueing_model/img/numeric_results_and_timings/truncation_effect/waiting_time_overall.pdf}
     \caption{
@@ -446,3 +454,109 @@ obtained from the Markov chain model and the truncated simulation.
 In fact, for any set of parameters, increasing the values of \(N\) and \(M\) in
 the Markov chain model will result in a closer approximation to the untruncated
 simulation.
+
+The same seven plots are also generated for a different set of parameters and
+higher values of \(\lambda_2\).
+Using higher values of \(\lambda_2\) results in a more congested system
+where servers may not be able to serve as fast as individuals arrive.
+The parameters used for
+Figures~\ref{fig:markov_vs_des_waiting_time_comparison_overall_2} 
+-~\ref{fig:markov_vs_des_proportion_within_time_comparison_type_2_2} are:
+
+\begin{itemize}
+    \item \(\lambda_1 = 4\)
+    \item \(\mu = 2\)
+    \item \(C = 5\)
+    \item \(T = 12\)
+    \item \(N = M = 15, 30, 60\)
+\end{itemize}
+
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{chapters/03_queueing_model/img/numeric_results_and_timings/truncation_effect_2/waiting_time_overall.pdf}
+    \caption{
+        Comparison of overall mean waiting time between values obtained from the
+        Markov chain formula, values obtained from the truncated simulation and
+        values obtained from the untruncated simulation.
+    }
+    \label{fig:markov_vs_des_waiting_time_comparison_overall_2}
+\end{figure}
+
+
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{chapters/03_queueing_model/img/numeric_results_and_timings/truncation_effect_2/waiting_time_type_1.pdf}
+    \caption{
+        Comparison of type 1 individuals mean waiting time between values
+        obtained from the Markov chain formula, values obtained from the
+        truncated simulation and values obtained from the untruncated
+        simulation.
+    }
+    \label{fig:markov_vs_des_waiting_time_comparison_type_1_2}
+\end{figure}
+
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{chapters/03_queueing_model/img/numeric_results_and_timings/truncation_effect_2/waiting_time_type_2.pdf}
+    \caption{
+        Comparison of type 2 individuals mean waiting time between values
+        obtained from the Markov chain formula, values obtained from the
+        truncated simulation and values obtained from the untruncated
+        simulation.
+    }
+    \label{fig:markov_vs_des_waiting_time_comparison_type_2_2}
+\end{figure}
+
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{chapters/03_queueing_model/img/numeric_results_and_timings/truncation_effect_2/blocking_time_type_2.pdf}
+    \caption{
+        Comparison of mean waiting time between values obtained from the Markov 
+        chain formula, values obtained from the truncated simulation and values
+        obtained from the untruncated simulation.
+    }
+    \label{fig:markov_vs_des_blocking_time_comparison_overall_2}
+\end{figure}
+
+
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{chapters/03_queueing_model/img/numeric_results_and_timings/truncation_effect_2/proportion_overall.pdf}
+    \caption{
+        Comparison of overall mean waiting time between values obtained from the
+        Markov chain formula, values obtained from the truncated simulation and
+        values obtained from the untruncated simulation.
+    }
+    \label{fig:markov_vs_des_proportion_within_time_comparison_overall_2}
+\end{figure}
+
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{chapters/03_queueing_model/img/numeric_results_and_timings/truncation_effect_2/proportion_type_1.pdf}
+    \caption{
+        Comparison of type 1 individuals mean waiting time between values
+        obtained from the Markov chain formula, values obtained from the
+        truncated simulation and values obtained from the untruncated
+        simulation.
+    }
+    \label{fig:markov_vs_des_proportion_within_time_comparison_type_1_2}
+\end{figure}
+
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{chapters/03_queueing_model/img/numeric_results_and_timings/truncation_effect_2/proportion_type_2.pdf}
+    \caption{
+        Comparison of type 2 individuals mean waiting time between values
+        obtained from the Markov chain formula, values obtained from the
+        truncated simulation and values obtained from the untruncated
+        simulation.
+    }
+    \label{fig:markov_vs_des_proportion_within_time_comparison_type_2_2}
+\end{figure}
+
+
+Figure~\ref{fig:markov_vs_des_blocking_time_comparison_overall_2} shows that as
+\(\lambda_2\) increases the blocking time of the truncated and the untruncated
+simulation do not match.
+That is because as \(\lambda_2\) gets to a value that is beyond what the system
+can respond to, the truncated and untruncated system will never match.
+In essence, when the relative traffic intensity
+\(\rho = \frac{\lambda_1 + \lambda_2}{\mu * C}\) is greater than \(1\) (i.e when
+\(\lambda_1 + \lambda_2 > \mu * C\)) the mean blocking time of the untruncated
+simulation will depend on the runtime of the simulation.
+The longer the simulation is run the more individuals will remain blocked in
+node 2, because there is no maximum capacity for node 2 and individuals will
+simply keep being added.
