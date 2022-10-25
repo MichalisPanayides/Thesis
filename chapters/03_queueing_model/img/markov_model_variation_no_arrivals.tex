@@ -1,0 +1,37 @@
+
+\begin{tikzpicture}[-, node distance = 1.4cm, auto, every node/.style={scale=0.85}]
+
+    \tikzmath{
+        let \minsize = 1.8cm;
+        let \nosize = 0.1cm;
+    }
+
+    \node[draw=none, minimum size=\nosize] (one) {};
+    \node[state, minimum size=\minsize, right=of one] (two) {(0,T-1)};
+    \node[state, minimum size=\minsize, right=of two] (three) {(0,T)};
+    \node[state, minimum size=\minsize, right=of three] (four) {(0,T+1)};
+    \node[draw=none, minimum size=\minsize, right=of four] (five) {};
+
+    \node[state, minimum size=\minsize, below=of three] (three_one) {(1,T)};
+    \node[state, minimum size=\minsize, below=of three_one] (three_two) {(2,T)};
+    \node[state, minimum size=\minsize, below=of four] (four_one) {(1,T+1)};
+    \node[state, minimum size=\minsize, below=of four_one] (four_two) {(2,T+1)};
+    \node[draw=none, minimum size=\nosize, right=of four_one] (five_one) {};
+    \node[draw=none, minimum size=\nosize, right=of four_two] (five_two) {};
+    \node[draw=none, minimum size=\nosize, below=of three_two] (three_three) {};
+
+    \draw[every loop]
+        (two) edge node {\((T-1) \mu\)} (one)
+        (three) edge node {\(T \mu\)} (two)
+        (four) edge node {\((T+1) \mu\)} (three)
+        (five) edge node {\((T+2) \mu\)} (four)
+        (three_one) edge node {\(T \mu\)} (three)
+
+        (four_one) edge node {\((T+1) \mu\)} (three_one)
+        (five_one) edge node {\((T+2) \mu\)} (four_one)
+        (three_two) edge node {\(T \mu\)} (three_one)
+        (three_three) edge node {\(T \mu\)} (three_two)
+        (four_two) edge node {\((T+1) \mu\)} (three_two)
+        (five_two) edge node {\((T+2) \mu\)} (four_two)
+        ;
+\end{tikzpicture}

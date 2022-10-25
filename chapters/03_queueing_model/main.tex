@@ -1,32 +1,45 @@
 \section{Queueing theoretic model}\label{sec:queueing-section}
 
 One of the main outcomes of this research is the creation of a queueing network
-model that consists of two waiting zones and accepts two types of individuals.
+model that consists of two queueing nodes and accepts two types of individuals.
 
-\input{chapters/03_queueing_model/img/queueing_model_diagram.tex}
+\begin{figure}[h]
+    \centering
+    \input{chapters/03_queueing_model/img/queueing_model_diagram.tex}
+    \caption{A diagrammatic representation of the queueing network.
+    The threshold \(T\) only applies to type 2 individuals.
+    If the number of individuals in node 1 is greater than or equal to
+    \(T\), only individuals of type 1 are accepted (at a rate \(\lambda_1\))
+    and individuals of type 2 (arriving at a rate \(\lambda_2\)) are blocked in
+    node 2.}
+    \label{fig:diagram_of_queueing_system}
+\end{figure}
 
 The model consists of two types of individuals; type 1 and type 2.
-Type 1 individuals arrive instantly at waiting zone 1 and wait to receive their
+Type 1 individuals arrive instantly at node 1 and wait to receive their
 service.
-Type 2 individuals arrive at waiting zone 2 and wait there until they are
-allowed to move to waiting zone 1.
+Type 2 individuals arrive at node 2 and wait there until they are
+allowed to move to node 1.
 They are allowed to proceed only when the number of
-individuals in waiting zone 1 \textbf{and} in service is less than a
+individuals in node 1 \textbf{and} in service is less than a
 pre-determined threshold \(T\).
 When the number of individuals is equal to or exceeds this threshold, all
-type 2 individuals that arrive will stay \textit{blocked} in waiting zone 2
-until the number of people in waiting zone 1 falls below \(T\).
-This is shown diagrammatically in Figure \ref{fig:diagram_of_queueing_system}.
+type 2 individuals that arrive will stay \textit{blocked} in node 2
+until the number of people in node 1 falls below \(T\).
+This is shown diagrammatically in Figure~\ref{fig:diagram_of_queueing_system}.
 The parameters of the described queueing model are:
 
 \begin{itemize}
     \item \(\lambda_i\): The arrival rate of type \(i\) individuals where
     \(i\in\{1, 2\}\)
     \item \(\mu\): The service rate for individuals receiving service at
-    waiting zone 1
+    node 1
     \item \(C\): The number of servers
     \item \(T\): The threshold at which individuals of the second type are
     blocked
+    \item \(N\): The capacity of node 1 (i.e \(N=C + 
+    \text{(Queue capacity)}\))
+    \item \(M\): The capacity of node 2
 \end{itemize}
 
 In chapter ?
@@ -48,8 +61,8 @@ model~\cite{kemeny1976markov}.
 The states of the Markov chain are denoted by \((u,v)\) where:
 
 \begin{itemize}
-    \item \(u\) is the number of individuals blocked in waiting zone 2
-    \item \(v\) is the number of individuals either in waiting zone 1 or in the
+    \item \(u\) is the number of individuals blocked in node 2
+    \item \(v\) is the number of individuals either in node 1 or in the
     service centre
 \end{itemize}
 
@@ -65,14 +78,14 @@ be written as the disjoint union:
     S_2(T) =& \{(u, v)\in\mathbb{N}_0^2 \; | \; v \geq T \} \nonumber
 \end{align}
 
-\(S_1\) consists of the set of states where the number of individuals in waiting
-zone 1 is less than \(T\) (i.e. \(v < 0\)) and subsequently the number of
-individuals in waiting zone 2 is zero (i.e. \(u = 0\)).
+\(S_1\) consists of the set of states where the number of individuals in node
+is less than \(T\) (i.e. \(v < 0\)) and subsequently the number of
+individuals in node 2 is zero (i.e. \(u = 0\)).
 Similarly, \(S_2\) consists of the set of states where the number of individuals
-in waiting zone 1 is greater than or equal to \(T\) (i.e. \(v \geq T\)) and
-hence it is possible for individuals to be at waiting zone 2 (i.e.
+in node 1 is greater than or equal to \(T\) (i.e. \(v \geq T\)) and
+hence it is possible for individuals to be at node 2 (i.e.
 \(u \geq 0\)).
-This is illustrated diagrammatically in figure \ref{fig:general_markov_model}.
+This is illustrated diagrammatically in Figure~\ref{fig:general_markov_model}.
 
 Having defined the set of states of the Markov chain model, the generator
 matrix can also be obtained.
@@ -111,7 +124,7 @@ transition matrix will be zero.
 In order to speed up the computation of the transition matrix, instead of
 considering every possible pair of states in the state space a new function
 that maps a state to every possible destination state can be used.
-Function \(\mathcal{M}\) from equation \ref{eq:state_map_to_destination_states}
+Function \(\mathcal{M}\) from equation (\ref{eq:state_map_to_destination_states})
 takes a state \((u, v)\) and maps it to the set of
 all possible destination states that the system can go to when on that state.
 
@@ -129,32 +142,44 @@ all possible destination states that the system can go to when on that state.
 
 
 A visualisation of how the transition rates relate to the states of the model
-can be seen in the general Markov chain model shown in Figure
-\ref{fig:general_markov_model}.
+can be seen in the general Markov chain model shown in
+Figure~\ref{fig:general_markov_model}.
 
-\input{chapters/03_queueing_model/img/general_markov_model.tex}
+\begin{figure}[H]
+    \centering
+    \scalebox{.8}
+    {\input{chapters/03_queueing_model/img/general_markov_model.tex}}
+    \caption{General case of the Markov chain model} 
+    \label{fig:general_markov_model}
+\end{figure}
 
 
 In order to consider this model numerically an adjustment needs to be made.
 The problem defined above assumes no upper boundary to the number of individuals
-that can wait for service or for the ones that are blocked in waiting zone 2.
+that can wait for service or for the ones that are blocked in node 2.
 Therefore, a different state space \( \tilde S \) is constructed where
 \( \tilde S \subseteq S \) and there is a maximum allowed number of individuals
-\(N\) that can be in waiting zone 1 and a maximum allowed number of individuals
-\(M\) that can be blocked in waiting zone 2:
+\(N\) that can be in node 1 and a maximum allowed number of individuals
+\(M\) that can be blocked in node 2:
 
 \begin{equation}\label{eq:truncated_state_space}
     \tilde S = \left\{ (u, v) \in S\;| u \leq M, v\leq N \right\}
 \end{equation}
 
-The adjusted Markov chain model with states \(\tilde S\) can be seen in Figure
-\ref{fig:adjusted_markov_model}.
+The adjusted Markov chain model with states \(\tilde S\) can be seen in
+Figure~\ref{fig:adjusted_markov_model}.
 
-\input{chapters/03_queueing_model/img/general_adjusted_markov_model.tex}
-
+\begin{figure}[H]
+    \centering
+    \scalebox{.8}
+    {\input{chapters/03_queueing_model/img/general_adjusted_markov_model.tex}}
+    \caption{Adjusted case of the Markov chain model} 
+    \label{fig:adjusted_markov_model}
+\end{figure}
 
 
 \subsubsection{Steady state probability vector \(\pi\)}
+\label{sec:steady_state_probabilities}
 
 The generator matrix \( Q \) defined in (\ref{eq:markov_transition_rate}) can
 be used to get the probability vector \( \pi \) that contains the steady state
@@ -193,7 +218,7 @@ all approaches:
 
 Another method that can be used to get the steady state probability vector is
 to solve the differential equation 
-\ref{eq:steady_state_from_generator_matrix} numerically.
+(\ref{eq:steady_state_from_generator_matrix}) numerically.
 Two methods of solving the differential equation were considered.
 Both methods observe the value of \(\pi\) over time until it
 reaches the steady state based on some initial starting value \(\pi_0\):
@@ -325,7 +350,7 @@ array([0.17596013, 0.2639402 , 0.19795515, 0.14846636, 0.08660538,
 
 Another approach that is considered is the least squares method.
 As the problem becomes more complex (i.e. as the artificial parameters \(N\)
-and \(M\) defined in equation \ref{eq:truncated_state_space} increase)
+and \(M\) defined in equation (\ref{eq:truncated_state_space}) increase)
 the computational time required to solve it increases by a lot.
 Thus, one may obtain a good approximation of the steady state vector \( \pi \)
 by solving the following equation:
@@ -356,43 +381,119 @@ array([0.17596013, 0.2639402 , 0.19795515, 0.14846636, 0.08660538,
 Using vector \(\pi\) there are numerous performance measures of the model that
 can be calculated.
 The following equations utilise \(\pi\) to get performance measures on the
-average number of individuals in waiting zone 1 and in waiting zone 2:
+average number of individuals in node 1 and in node 2:
 
 \begin{itemize}
     \item Mean number of individuals in the entire system:
         \begin{equation}
             L_S = \sum_{i=1}^{|\pi|} \pi_i (u_i + v_i)
         \end{equation}
-    \item Mean number of individuals in waiting zone 1:
+    \item Mean number of individuals in node 1:
         \begin{equation}
             L_1 = \sum_{i=1}^{|\pi|} \pi_i v_i
         \end{equation}
-    \item Mean number of individuals in waiting zone 2:
+    \item Mean number of individuals in node 2:
         \begin{equation}
             L_2 = \sum_{i=1}^{|\pi|} \pi_i u_i
         \end{equation}
 \end{itemize}
 
+Using the set of all states and the steady state probabilities, the python
+implementation for these functions is relatively straightforward to get.
+
+\begin{lstlisting}[style=pystyle]
+>>> def get_mean_number_of_individuals_in_system(pi, states):
+...     """Gets the mean number of individuals in the system
+...     Parameters
+...     ----------
+...     pi : numpy.ndarray
+...         steady state vector
+...     states : list
+...         list of tuples that contains all states
+...     Returns
+...     -------
+...     float
+...         Mean number of individuals in the whole model
+...     """
+...     states = np.array(states)
+...     mean_inds_in_system = np.sum((states[:, 0] + states[:, 1]) * pi)
+...     return mean_inds_in_system
+>>>
+>>>
+>>> def get_mean_number_of_individuals_in_node_1(pi, states):
+...     """Mean number of individuals in node 1
+...     Parameters
+...     ----------
+...     pi : numpy.ndarray
+...         steady state vector
+...     states : list
+...         list of tuples that contains all states
+...     Returns
+...     -------
+...     float
+...         Mean number of individuals
+...     """
+...     states = np.array(states)
+...     mean_inds_in_node_1 = np.sum(states[:, 1] * pi)
+...     return mean_inds_in_node_1
+>>>
+>>>
+>>> def get_mean_number_of_individuals_in_node_2(pi, states):
+...     """Mean number of class 2 individuals blocked
+...     Parameters
+...     ----------
+...     pi : numpy.ndarray
+...         steady state vector
+...     states : list
+...         list of tuples that contains all states
+...     Returns
+...     -------
+...     float
+...         Mean number of blocked class 2 individuals
+...     """
+...     states = np.array(states)
+...     mean_blocked = np.sum(states[:, 0] * pi)
+...     return mean_blocked
+>>>
+>>>
+>>> all_states = abg.markov.build_states(
+...     threshold=3 ,
+...     system_capacity=4,
+...     buffer_capacity=2
+... )
+>>> pi = abg.markov.get_steady_state_algebraically(
+...     Q, algebraic_function=np.linalg.lstsq
+... )
+>>> round(get_mean_number_of_individuals_in_system(pi, all_states), 10)
+2.0872927227
+>>> round(get_mean_number_of_individuals_in_node_1(pi, all_states), 10)
+1.8187129478
+>>> round(get_mean_number_of_individuals_in_node_2(pi, all_states), 10)
+0.2685797749
+
+\end{lstlisting}
+
+
 Consequently, there are some additional performance measures of interest that
 are not as straightforward to calculate.
 Such performance measures are the mean waiting time in the system (for both
-type 1 and type 2 individuals), the mean time blocked in waiting zone 2 (only
+type 1 and type 2 individuals), the mean time blocked in node 2 (only
 valid for type 2 individuals) and the proportion of individuals that wait in
-waiting zone 1 within a predefined time target (for both types).
-
-\subsubsection{Waiting time}
-% TODO: Write waiting time subsection
-
-\subsubsection{Blocking time}
-% TODO: Write blocking time subsection
-
-\subsubsection{Proportion of individuals within target}
-% TODO: Write proportion of individuals within target subsection
+node 1 within a predefined time target (for both types).
+Under the scope of this study three approaches have been considered to calculate
+these performance measures; a recursive algorithm, a direct approach and
+a closed-form equation. 
+Furthermore, different formulas arise for type 1 individuals and different
+ones for type 2 individuals.
 
 
-\subsection{Numeric results and timings}
-% TODO: Write numeric results and timings section (compare DES with Markov)
+\input{chapters/03_queueing_model/02_waiting_time/main.tex}
 
+\input{chapters/03_queueing_model/03_blocking_time/main.tex}
+
+\input{chapters/03_queueing_model/04_proportion_of_individuals_within_time/main.tex}
+
+\input{chapters/03_queueing_model/05_numeric_results_and_timings/main.tex}
 
 \subsection{ED-EMS application}
 % TODO: Write ED-EMS application subsection

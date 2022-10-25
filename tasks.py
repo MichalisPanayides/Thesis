@@ -59,32 +59,14 @@ def proselint(c):
             "annotations.misc",
             "typography.symbols.ellipsis",
             "typography.symbols.sentence_spacing",
+            "lexical_illusions.misc",
+            "leonard.exclamation.30ppm",
+            "typography.symbols.curly_quotes",
+            "consistency.spelling",
         ]
         updated_errors = []
         for error in errors:
             if error[0] not in expected_errors:
-                updated_errors.append(error)
-        return updated_errors
-
-    def remove_specific_errors(errors):
-        """
-        Remove some very specific errors that are expected. The specific errors
-        are stored in a way such that:
-            specific_errors[i] = (error_name, error_line)
-
-        Known errors: 
-            - spelling consistency on line 53 for centre/center
-            - not using curly quotes in code block (for docstring)
-        """
-        specific_errors = [
-            ("consistency.spelling", 54),
-            ("typography.symbols.curly_quotes", 79),
-            ("typography.symbols.curly_quotes", 136),
-            ("typography.symbols.curly_quotes", 235),
-        ]
-        updated_errors = []
-        for error in errors:
-            if (error[0], error[2]) not in specific_errors:
                 updated_errors.append(error)
         return updated_errors
 
@@ -107,7 +89,6 @@ def proselint(c):
             text = "\n\n" + f.read()
             errors = plnt.tools.lint(text)
         errors = remove_expected_errors(errors)
-        errors = remove_specific_errors(errors)
         if errors:
             print(f"In {path} the following errors were found: ")
             for error in errors:
