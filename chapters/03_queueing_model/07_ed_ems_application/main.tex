@@ -1,0 +1,64 @@
+\subsection{ED-EMS application}
+
+The queueing network described in Section~\ref{sec:queueing-section} can be
+directly applied to a healthcare setting.
+The healthcare scenario that is of interest here is at the interface between
+Emergency Department (ED) staff and Emergency Medical Services (EMS) staff.
+All parameters described in Section~\ref{sec:queueing-section} can be mapped
+to some components of either the ED or the EMS.
+
+\begin{itemize}
+    \item \(\lambda_1 \rightarrow\) Type 1 individuals \(\rightarrow\)
+    Individuals arriving without an ambulance (or via an ambulance that cannot
+    be blocked)
+    \item \(\lambda_2 \rightarrow\) Type 2 individuals \(\rightarrow\)
+    Individuals arriving with an ambulance (that can be blocked)
+    \item \(\mu \rightarrow\) Service rate \(\rightarrow\) The service rate of
+    doctors and nurses at the hospital
+    \item \(C \rightarrow\) Number of servers \(\rightarrow\) The number of
+    beds in the hospital
+    \item \(T \rightarrow\) Threshold \(\rightarrow\) The number of patient that
+    need to be in the hospital to start blocking ambulances in the parking area.
+    \item \(N \rightarrow\) Node 1 capacity \(\rightarrow\) The overall hospital
+    capacity (i.e. the number of beds in the hospital + the queueing capacity)
+    \item \(M \rightarrow\) Node 2 capacity \(\rightarrow\) The parking capacity
+\end{itemize}
+
+In essence, type 1 individuals are now all patients that arrive at the ED via
+some other means of transportation rather than an ambulance.
+Type 2 individuals are now all patients that arrive at the ED via an ambulance.
+Note here that if an ambulance holds a patient that is classified as an
+emergency case, then the patient is classified as a type 1 Individuals.
+This essentially means that emergency ambulance patients cannot be blocked in
+the parking space.
+The threshold parameter \(T\) is now the amount of patients that need to be in
+the hospital waiting area (and in service) to start blocking ambulances in the
+parking area.
+Figure~\ref{fig:diagram_of_queueing_system_applied_to_ed_ems} shows the applied
+version of Figure~\ref{fig:diagram_of_queueing_system} that is the queueing
+network introduced in Section~\ref{sec:queueing-section}.
+
+\input{chapters/03_queueing_model/img/queueing_model_diagram_ed_ems.tex}
+
+The performance measures described in Section
+% TODO: reference performance measures section
+have an additional meaning under the context of this new application.
+The average number of individuals in Node 1 and Node 2 are now the average
+number of patients in the hospital and the average number of ambulances in the
+parking space.
+The mean waiting time of individuals described in Section
+% TODO: reference waiting time section
+is the average waiting time patients wait in Node 1 before they are seen by a
+doctor or nurse.
+Similarly, the mean blocking time from Section
+% TODO: reference blocking time section
+is the mean time ambulances stay blocked in the parking space before the
+individuals they carry are allowed to enter the hospital.
+Finally, the proportion of individuals whose waiting time is longer than a
+predefined target time, described in Section
+% TODO: reference proportion within time section
+is now the percentage of patients that wait longer than a predefined time
+before they are seen by a doctor or nurse.
+
+
+% TODO: Add a sentence about the blocking time and the NHS time
