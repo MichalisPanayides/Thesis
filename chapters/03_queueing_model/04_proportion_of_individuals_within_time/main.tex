@@ -831,18 +831,20 @@ can be calculated for a given Markov chain model and a given individual type.
 ...     ),
 ...     all_states,
 ... )
->>> get_proportion_of_individuals_within_time_target(
-...     all_states=all_states,
-...     pi=pi,
-...     class_type=0,
-...     mu=4,
-...     num_of_servers=1,
-...     threshold=2,
-...     system_capacity=3,
-...     buffer_capacity=4,
-...     target=1
+>>> round(
+...     get_proportion_of_individuals_within_time_target(
+...         all_states=all_states,
+...         pi=pi,
+...         class_type=0,
+...         mu=4,
+...         num_of_servers=1,
+...         threshold=2,
+...         system_capacity=3,
+...         buffer_capacity=4,
+...         target=1
+...     ), 10
 ... )
-0.9190401179321361
+0.9190401179
 
 \end{lstlisting}
 
