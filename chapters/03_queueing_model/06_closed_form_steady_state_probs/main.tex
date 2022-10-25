@@ -113,7 +113,7 @@ of the edges it contains:
 \]
 
 
-\textbf{Theorem: Markov chain tree theorem} \newline %\cite{broder1989generating} \newline
+\textbf{Theorem: Markov chain tree theorem}~\cite{broder1989generating} \newline
 \textit{Let M be an irreducible Markov chain on n states with stationary
 distribution \(\pi_1, \pi_2, \dots, \pi_n\).
 Let \(G_M\) be the directed graph associated with \(M\).
@@ -129,6 +129,13 @@ state \(u\) can be found by dividing the sum of the weights of all trees in
 Let us ignore the denominator of that fraction for now and focus only on the
 numerator denoted as \(\tilde{\pi}_i=\sum_{t \in T_i(G_M)} w(t)\)
 
+Another useful theorem that can be utilised is Kirchhoff's theorem that gives
+some useful insights on the number of spanning trees of a graph.
+
+\textbf{Theorem: Kirchhoff's theorem~\cite{chaiken1978matrix}:}
+\textit{The number of directed spanning trees rooted at a state \(i\) can be found
+by calculating the determinant of the Laplacian matrix \(Q\) of the directed graph
+and removing row \(i\) and column \(i\).}
 
 
 \paragraph{Spanning Trees rooted at \((0,0)\)}
@@ -365,9 +372,6 @@ and (\ref{eq:rows_conjecture_3}), the following equation holds:
     \tilde{\pi}_{(0,0)} = \mu^{(N+M)} (\mu + \lambda_2)^M
 \end{equation}
 
-This relationship has been verified experimentally for ... and the data set is
-archived at ...
-% TODO: Perform experiments to validate this
 A generalisation of equation~(\ref{eq:rows_conjecture_general}), where \(N \geq
 1\), is given in terms of an unknown function \(k(C,T,N)\) as:
 
@@ -379,7 +383,7 @@ Thus, having investigated the effect of adding rows (increasing \(M\)) the
 next thing to investigate is the effect of adding columns (increasing \(N\))
 and finding an expression for \(k(C,T,N)\).
 
-\paragraph{The effect of increasing \(N\) (Incomplete section)}
+\paragraph{The effect of increasing \(N\)}
 In this section we will consider a node 2 capacity of \(M=1\) and see the
 effect
 of modifying other parameters on \(k(C, T, N)\).
@@ -1011,9 +1015,8 @@ The permutations that correspond to each expression can be seen below:
 \end{align*}
 
 
-
-% \paragraph{Possibly useful theorem: Matrix-tree theorem for directed graphs
-% (Kirchhoff's theorem) \cite{chaiken1978matrix}: }
-% \textit{The number of directed spanning trees rooted at a state \(i\) can be found
-% by calculating the determinant of the Laplacian matrix \(Q\) of the directed graph
-% and removing row \(i\) and column \(i\).}
+Although this method is useful, currently this can be used to find only spanning
+trees that are rooted at state \((0,0)\) and for the case of \(C = 1\).
+In order to get the steady state probabilities, a more general approach that is
+generic to all states \((u,v)\) is needed.
+Further work on this specific topic will not be part of this research project.
