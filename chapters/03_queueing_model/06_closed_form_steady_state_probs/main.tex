@@ -3,6 +3,18 @@
 This section aims to explore alternative ways of calculating the steady state
 probabilities using the connection between Markov chains and graph
 theory.
+In mathematics a graph is a structure that consists of a set of vertices \(V\)
+and a set of edges \(E\) that connect the vertices together.
+% TODO: Add reference here 
+It can be assumed that a Markov chain model \(M\) can be translated as a
+weighted directed graph \(G_M = (V, E)\) where \(V=S\) from
+equation~(\ref{eq:definition_of_S_as_disjoint_union}) and \((v_i, v_j)\in E\) if
+and only if \(q_{v_i, v_j}>0\), where \(v_i, v_j \in V\).
+Furthermore, the weights are given by:
+
+\[
+    w(v_i, v_j) = q_{v_i, v_j}
+\]
 
 \paragraph{Parameters}
 As described in Section~\ref{sec:queueing-section} the parameters considered as
@@ -43,8 +55,6 @@ More specifically, the way these parameters are translated into the model are:
 \end{itemize}
 
 
-\paragraph{Example figure of Markov Model}
-
 \begin{figure}[H]
     \centering
     \scalebox{0.7}{
@@ -60,18 +70,7 @@ arm} of the model has a length of \(3\), \(N=5\) that indicates that the
 right-most states \((u,v)\) are of the form \((u,5)\) and \(M=2\) that
 equivalently shows that the bottom states are of the form \((2,v)\).
 
-\paragraph{A graph theoretic model underlying the Markov chain}
-
-An additional approach that one may consider to get the state probabilities is
-the graph theoretical approach for state probabilities.
-It can be assumed that a Markov chain model \(M\) can be translated as a
-weighted directed graph \(G_M = (V, E)\) where \(V=S\) from
-equation~(\ref{eq:definition_of_S_as_disjoint_union}) and \((v_i, v_j)\in E\) if
-and only if \(q_{v_i, v_j}>0\).
-Furthermore, the weights are given by:
-\[
-    w(v_i, v_j) = q_{v_i, v_j}
-\]
+\paragraph{Spanning trees}
 
 A \textit{directed spanning tree} of a directed graph is defined as a subset of
 the graph that visits all the vertices of the graph and does not include any
