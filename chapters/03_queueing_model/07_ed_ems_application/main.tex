@@ -1,4 +1,4 @@
-\subsection{ED-EMS application}
+\subsection{ED-EMS application}\label{sec:queueing_ems_es_application}
 
 The queueing network described in Section~\ref{sec:queueing-section} can be
 directly applied to a healthcare setting.
@@ -40,25 +40,19 @@ network introduced in Section~\ref{sec:queueing-section}.
 
 \input{chapters/03_queueing_model/img/queueing_model_diagram_ed_ems.tex}
 
-The performance measures described in Section
-% TODO: reference performance measures section
+The performance measures of the queueing system
 have an additional meaning under the context of this new application.
 The average number of individuals in Node 1 and Node 2 are now the average
 number of patients in the hospital and the average number of ambulances in the
 parking space.
-The mean waiting time of individuals described in Section
-% TODO: reference waiting time section
+The mean waiting time of individuals described in Section~\ref{sec:waiting_time}
 is the average waiting time patients wait in Node 1 before they are seen by a
 doctor or nurse.
-Similarly, the mean blocking time from Section
-% TODO: reference blocking time section
+Similarly, the mean blocking time from Section~\ref{sec:blocking_time}
 is the mean time ambulances stay blocked in the parking space before the
 individuals they carry are allowed to enter the hospital.
 Finally, the proportion of individuals whose waiting time is longer than a
-predefined target time, described in Section
-% TODO: reference proportion within time section
+predefined target time, described in
+Section~\ref{sec:proportion_of_individuals_within_time}
 is now the percentage of patients that wait longer than a predefined time
 before they are seen by a doctor or nurse.
-
-
-% TODO: Add a sentence about the blocking time and the NHS time
