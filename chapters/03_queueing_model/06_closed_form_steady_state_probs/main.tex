@@ -1,11 +1,13 @@
 \subsubsection{Closed-form approach}
 
-This section aims to investigate the connection between Markov chains and graph
-theory by exploring alternative ways of calculating the steady state
-probabilities and considering the problem from different perspectives.
+This section aims to explore alternative ways of calculating the steady state
+probabilities using the connection between Markov chains and graph
+theory.
 
 \paragraph{Parameters}
-The parameters considered as inputs are:
+As described in Section~\ref{sec:queueing-section} the parameters considered as
+inputs are:
+
 \begin{itemize}
     \item the number of servers \(C\),
     \item the threshold \(T\),
@@ -62,7 +64,7 @@ equivalently shows that the bottom states are of the form \((2,v)\).
 
 An additional approach that one may consider to get the state probabilities is
 the graph theoretical approach for state probabilities.
-Thus, it can be assumed that a Markov chain model \(M\) can be translated as a
+It can be assumed that a Markov chain model \(M\) can be translated as a
 weighted directed graph \(G_M = (V, E)\) where \(V=S\) from
 equation~(\ref{eq:definition_of_S_as_disjoint_union}) and \((v_i, v_j)\in E\) if
 and only if \(q_{v_i, v_j}>0\).
@@ -102,7 +104,7 @@ The graph points out a spanning tree that is rooted at vertex 3.
     \label{fig:example_spanning_tree}
 \end{figure}
 
-Additionally, let us denote the set of all spanning trees of \(G\) as \(T(G)\)
+Let us denote the set of all spanning trees of \(G\) as \(T(G)\)
 and the subset of \(T(G)\) that includes only the spanning trees that are rooted
 at vertex \(v\) as \(T_v(G)\).
 The weight of a spanning tree \(t\) can be defined as the product of the weights
@@ -436,7 +438,7 @@ of modifying other parameters on \(k(C, T, N)\).
 
 
 As explained in equation~(\ref{eq:rows_conjecture_general}) the expressions
-defined above can boil down to a general form equation of the form
+defined above can be reduced to a general form equation of the form
 \(\tilde{\pi}_{(0,0)} = \mu^{(N+M)} (k(C,T,N))^M\).
 The only thing missing is an expression for \(k(C,T,N)\).
 An initial attempt to get such an expression can be seen below:
@@ -623,8 +625,8 @@ model:
 
 It can be seen that there is a \(\mu^4\) term that is a common factor of all the
  terms.
-This term can be more generally calculated as \(\mu^{M+N}\) and by not worrying
-about all these edges that belong in \(S\) the problem can be slightly
+This term can be more generally calculated as \(\mu^{M+N}\) and by not
+considering all these edges that belong in \(S\) the problem can be slightly
 simplified.
 
 \begin{figure}[H]
