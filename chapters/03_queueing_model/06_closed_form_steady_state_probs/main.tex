@@ -41,6 +41,7 @@ In this case, the edges are expressed as \(e = (v_i, v_j, w)\) where \(v_i, v_j
     \label{fig:example_of_weighted_directed_graph}
 \end{figure}
 
+\paragraph{A graph theoretic model underlying the Markov chain}
 It can be assumed that a Markov chain model \(M\) can be translated as a
 weighted directed graph \(G_M = (V, E)\) where \(V=S\) from
 equation~(\ref{eq:definition_of_S_as_disjoint_union}) and \((v_i, v_j)\in E\) if
@@ -51,7 +52,6 @@ Furthermore, the weight of each edge is given by:
     w(v_i, v_j) = q_{v_i, v_j}
 \]
 
-\paragraph{Parameters}
 As described in Section~\ref{sec:queueing-section} the parameters considered as
 inputs are:
 
@@ -62,6 +62,8 @@ inputs are:
     \item the capacity of node 2 \(M\).
 \end{itemize}
 
+These are the parameters that directly affect the structure of the Markov chain
+as a graph.
 Additional parameters of the model are the type 1 individuals arrival rate,
 the type 2 individuals arrival rate and the service rate (\(\lambda_1,
 \lambda_2, \mu\)).
@@ -107,12 +109,12 @@ equivalently shows that the bottom states are of the form \((2,v)\).
 
 \paragraph{Spanning trees}
 
-A \textit{directed spanning tree} of a directed graph is defined as a subset of
-the graph that visits all the vertices of the graph and does not include any
-cycles.
+A \textit{spanning tree} is defined as a subset of the graph that visits all
+the vertices of the graph and does not include any
+cycles~\cite{bollobas1998modern}.
 Unlike undirected spanning trees, directed ones also have a root which means
-that a directed spanning tree that is rooted at a vertex \(v\) has to have a
-path from any other vertex to vertex \(v\).
+that a \textit{directed spanning tree} that is rooted at a vertex \(v\) has to
+have a path from any other vertex to vertex \(v\)~\cite{levine2011sandpile}.
 For example, consider the graph shown in Figure~\ref{fig:example_spanning_tree}.
 The graph points out a spanning tree that is rooted at vertex 3.
 
@@ -138,18 +140,18 @@ The graph points out a spanning tree that is rooted at vertex 3.
     \label{fig:example_spanning_tree}
 \end{figure}
 
-Let us denote the set of all spanning trees of \(G\) as \(T(G)\)
+Let us denote the set of all spanning trees of a graph \(G\) as \(T(G)\)
 and the subset of \(T(G)\) that includes only the spanning trees that are rooted
 at vertex \(v\) as \(T_v(G)\).
 The weight of a spanning tree \(t\) can be defined as the product of the weights
-of the edges it contains:
+of the edges it contains~\cite{williams2022combinatorics}:
 
 \[
     w(t)=\prod_{e \in t} w(e)
 \]
 
 
-\textbf{Theorem: Markov chain tree theorem}~\cite{broder1989generating} \newline
+\textbf{Theorem: Markov chain tree theorem}~\cite{broder1989generating}:\newline
 \textit{Let M be an irreducible Markov chain on n states with stationary
 distribution \(\pi_1, \pi_2, \dots, \pi_n\).
 Let \(G_M\) be the directed graph associated with \(M\).
@@ -163,12 +165,11 @@ Equation~\ref{markov-chain-tree-theorem} states that the probability of being at
 state \(u\) can be found by dividing the sum of the weights of all trees in
 \(T_u(G)\) by the sum of the weights of all tress in \(T(G)\).
 Let us ignore the denominator of that fraction for now and focus only on the
-numerator denoted as \(\tilde{\pi}_i=\sum_{t \in T_i(G_M)} w(t)\)
-
+numerator denoted as \(\tilde{\pi}_i=\sum_{t \in T_i(G_M)} w(t)\).
 Another useful theorem that can be utilised is Kirchhoff's theorem that gives
 some useful insights on the number of spanning trees of a graph.
 
-\textbf{Theorem: Kirchhoff's theorem~\cite{chaiken1978matrix}:}
+\textbf{Theorem: Kirchhoff's theorem}~\cite{chaiken1978matrix}:\newline
 \textit{The number of directed spanning trees rooted at a state \(i\) can be
 found by calculating the determinant of the Laplacian matrix \(Q\) of the
 directed graph and removing row \(i\) and column \(i\).}
