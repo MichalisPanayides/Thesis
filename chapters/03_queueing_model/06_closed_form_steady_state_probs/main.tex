@@ -3,14 +3,49 @@
 This section aims to explore alternative ways of calculating the steady state
 probabilities using the connection between Markov chains and graph
 theory.
-In mathematics a graph is a structure that consists of a set of vertices \(V\)
-and a set of edges \(E\) that connect the vertices together.
-% TODO: Add reference here 
+
+\paragraph{Graph Theory}
+In mathematics a graph \(G = (V, E)\) is a structure that consists of a set of
+vertices \(V = \{v_1, v_2, \dots, v_n\}\) and a set of edges \(E = \{e_1, e_2,
+\dots, e_m\}\) that connect the vertices together~\cite{bender2010lists}.
+Every edge is expressed as \(e = (v_i, v_j)\) where \(v_i, v_j \in V\).
+
+\begin{figure}[H]
+    \centering
+    \input{chapters/03_queueing_model/img/graph_theory_examples/graph.tex}
+    \caption{Example of a graph}
+    \label{fig:example_of_graph}
+\end{figure}
+
+An additional type of graph is a directed graph, where the edges are directed
+from one vertex to another.
+In this case, the edges are expressed as \(e = (v_i, v_j)\) where \(v_i, v_j 
+\in V\) and \((v_i, v_j) \neq (v_j, v_i)\)~\cite{balakrishnan2012textbook}.
+
+\begin{figure}[H]
+    \centering
+    \input{chapters/03_queueing_model/img/graph_theory_examples/directed_graph.tex}
+    \caption{Example of a graph}
+    \label{fig:example_of_directed_graph}
+\end{figure}
+
+Furthermore, a weighted graph is a graph where each edge has a weight attached
+to it~\cite{krukowski2021approximate}.
+In this case, the edges are expressed as \(e = (v_i, v_j, w)\) where \(v_i, v_j
+\in V\) and \(w \in \mathbb{R}\).
+
+\begin{figure}[H]
+    \centering
+    \input{chapters/03_queueing_model/img/graph_theory_examples/weighted_directed_graph.tex}
+    \caption{Example of a graph}
+    \label{fig:example_of_weighted_directed_graph}
+\end{figure}
+
 It can be assumed that a Markov chain model \(M\) can be translated as a
 weighted directed graph \(G_M = (V, E)\) where \(V=S\) from
 equation~(\ref{eq:definition_of_S_as_disjoint_union}) and \((v_i, v_j)\in E\) if
 and only if \(q_{v_i, v_j}>0\), where \(v_i, v_j \in V\).
-Furthermore, the weights are given by:
+Furthermore, the weight of each edge is given by:
 
 \[
     w(v_i, v_j) = q_{v_i, v_j}
@@ -134,9 +169,9 @@ Another useful theorem that can be utilised is Kirchhoff's theorem that gives
 some useful insights on the number of spanning trees of a graph.
 
 \textbf{Theorem: Kirchhoff's theorem~\cite{chaiken1978matrix}:}
-\textit{The number of directed spanning trees rooted at a state \(i\) can be found
-by calculating the determinant of the Laplacian matrix \(Q\) of the directed graph
-and removing row \(i\) and column \(i\).}
+\textit{The number of directed spanning trees rooted at a state \(i\) can be
+found by calculating the determinant of the Laplacian matrix \(Q\) of the
+directed graph and removing row \(i\) and column \(i\).}
 
 
 \paragraph{Spanning Trees rooted at \((0,0)\)}
