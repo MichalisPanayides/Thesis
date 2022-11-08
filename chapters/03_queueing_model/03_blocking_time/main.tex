@@ -126,16 +126,15 @@ and the equivalent equations are
 The equations considered here are only the ones that correspond to the blocking
 states.
 
-
 \begin{minipage}{0.45\textwidth}
     \begin{figure}[H]
         \scalebox{0.5}{\input{chapters/03_queueing_model/img/example_model_2242/main.tex}}
-        \caption{Example of Markov chain}
+        \caption{Example}
         \label{fig:example-algeb-blocking}
     \end{figure}
 \end{minipage}
 \begin{minipage}{0.5\textwidth}
-    \footnotesize
+    \scriptsize
     \begin{align}
         b(1,2) &= c_b(1,2) + p_o b(1,3) \label{eq:first_eq_of_blocking_example} \\
         b(1,3) &= c_b(1,3) + p_s b(1,2) + p_o b(1,4) \\
@@ -146,8 +145,7 @@ states.
     \end{align}
     \normalsize
 \end{minipage}
-
-
+\vspace{0.5cm}
 
 Additionally, the above equations can be transformed into a linear system of the
 form \(Zx=y\) where:

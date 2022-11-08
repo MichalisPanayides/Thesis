@@ -106,7 +106,8 @@ def alex(c):
     all_tex_files = list(pathlib.Path().glob("**/*.tex"))
     for file in all_tex_files:
         if str(file) not in exception_files:
-            c.run(f"alex {file}")
+            if "img" not in str(file):
+                c.run(f"alex {file}")
 
 
 @task
