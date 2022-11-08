@@ -134,8 +134,8 @@ but no waiting should take place in node 2, only blockage.
 Another specific feature of the particular model is that type 2 individuals
 need to stay blocked in node 2 whenever the number of individuals in node 1
 reaches a certain threshold \(T\).
-This part of the queueing network is not as straightforward to implement as the
-rest of the model.
+As opposed to the rest of the model, this portion of the queueing network
+requires more effort to build.
 \lstinline[style=pystyle]{Ciw} allows users to get more custom behaviour by
 creating their own node class that inherits from the original one.
 By inheriting the original \lstinline[style=pystyle]{ciw.Node} the general
@@ -297,8 +297,8 @@ running:
 
 Having run the simulation using \lstinline[style=pystyle]{ciw} all necessary
 performance measures can be calculated.
-All performance measure that are related to the duration of time are relatively
-straightforward to calculate.
+Calculating all performance measure that are related to the duration of time is
+not too difficult.
 The following code gets all waiting times, service times and blocking times for
 all individuals that have passed through the model.
 

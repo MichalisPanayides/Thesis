@@ -399,8 +399,8 @@ average number of individuals in node 1 and in node 2:
         \end{equation}
 \end{itemize}
 
-Using the set of all states and the steady state probabilities, the python
-implementation for these functions is relatively straightforward to get.
+The python code for these functions may be obtained quite quickly using the set
+of all states and the steady state probability.
 
 \begin{lstlisting}[style=pystyle]
 >>> def get_mean_number_of_individuals_in_system(pi, states):
@@ -476,7 +476,7 @@ implementation for these functions is relatively straightforward to get.
 
 
 Consequently, there are some additional performance measures of interest that
-are not as straightforward to calculate.
+are more complex to calculate.
 Such performance measures are the mean waiting time in the system (for both
 type 1 and type 2 individuals), the mean time blocked in node 2 (only
 valid for type 2 individuals) and the proportion of individuals that wait in
