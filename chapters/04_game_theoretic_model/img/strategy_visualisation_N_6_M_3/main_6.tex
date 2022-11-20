@@ -1,0 +1,30 @@
+\begin{tikzpicture}[-, node distance = 1cm, auto]
+\node[state] (u0v0) {(0,0)};
+\node[state, right=of u0v0] (u0v1) {(0,1)};
+\draw[->](u0v0) edge[bend left] node {\( \Lambda \)} (u0v1);
+\draw[->](u0v1) edge[bend left] node {\(\mu \)} (u0v0);
+\node[state, right=of u0v1] (u0v2) {(0,2)};
+\draw[->](u0v1) edge[bend left] node {\( \Lambda \)} (u0v2);
+\draw[->](u0v2) edge[bend left] node {\(\mu \)} (u0v1);
+\node[state, right=of u0v2] (u0v3) {(0,3)};
+\draw[->](u0v2) edge[bend left] node {\( \Lambda \)} (u0v3);
+\draw[->](u0v3) edge[bend left] node {\(\mu \)} (u0v2);
+\node[state, right=of u0v3] (u0v4) {(0,4)};
+\draw[->](u0v3) edge[bend left] node {\( \Lambda \)} (u0v4);
+\draw[->](u0v4) edge[bend left] node {\(\mu \)} (u0v3);
+\node[state, right=of u0v4] (u0v5) {(0,5)};
+\draw[->](u0v4) edge[bend left] node {\( \Lambda \)} (u0v5);
+\draw[->](u0v5) edge[bend left] node {\(\mu \)} (u0v4);
+\node[state, right=of u0v5] (u0v6) {(0,6)};
+\draw[->](u0v5) edge[bend left] node {\( \Lambda \)} (u0v6);
+\draw[->](u0v6) edge[bend left] node {\(\mu \)} (u0v5);
+\node[state, below=of u0v6] (u1v6) {(1,6)};
+\draw[->](u0v6) edge[bend left] node {\( \lambda_2 \)} (u1v6);
+\draw[->](u1v6) edge[bend left] node {\(\mu \)} (u0v6);
+\node[state, below=of u1v6] (u2v6) {(2,6)};
+\draw[->](u1v6) edge[bend left] node {\( \lambda_2 \)} (u2v6);
+\draw[->](u2v6) edge[bend left] node {\(\mu \)} (u1v6);
+\node[state, below=of u2v6] (u3v6) {(3,6)};
+\draw[->](u2v6) edge[bend left] node {\( \lambda_2 \)} (u3v6);
+\draw[->](u3v6) edge[bend left] node {\(\mu \)} (u2v6);
+\end{tikzpicture}
