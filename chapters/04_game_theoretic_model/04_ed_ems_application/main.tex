@@ -1,0 +1,44 @@
+\subsubsection{ED-EMS application}\label{sec:game_ems_es_application}
+
+The EMS has to decide how to distribute its patients among the two EDs so that
+the weighted combination of the ambulance blocking time and the percentage of
+lost ambulances is minimised.
+This can be illustrated by figure \ref{fig:diagram_of_game_theoretic_model}.
+The interaction between the two
+EDs is a normal form game that is then used to inform the decision of the EMS.
+Note that the formulated game here assumes that prior to making a choice the
+EMS knows the strategies that each ED is playing (figure
+\ref{fig:imperfect_info_game}).
+This corresponds to reacting to experienced delays.
+
+The queueing systems of the hospitals are designed in such a way where they can
+accept two types of individuals (section \ref{sec:queueing_section}).
+Each hospital may then choose to block type 2 individuals
+when the hospital reaches a certain capacity.
+The strategy sets for each hospital is the set
+\( \{T \in \mathbb{N} \;|\; 1 \leq T \leq N\} \) where \(N \in\{N_A, N_B\}\) are
+the total capacities of hospitals \(A\) and \(B\).
+We denote the chosen actions from the strategy set as \(T_A, T_B\) and call
+these \textit{threshold}s.
+
+Both hospitals follow a queueing model with two waiting spaces for
+individuals.
+The first waiting space (i.e. the waiting space of the hospital) is where the
+patients queue right before receiving
+their service and has a queue capacity of \( N - C \), where \(N\) is the total
+capacity of the hospital and \(C\) is the number of healthcare
+professionals able to see them.
+The second waiting space (i.e. the parking space for ambulances) is where
+ambulances, that are sent from the
+EMS distributor, stay until their patients are allowed to enter the hospital.
+The parking space has a capacity of \(M\) and no servers.
+This is shown diagrammatically in Figure~\ref{fig:diagram_of_queueing_system}.
+
+Note here that both types of individuals can become lost to the system.
+An individual allocated from the ambulance service becomes lost to the system
+whenever
+an arrival occurs and the parking space is at full capacity (\(M\)
+ambulances already parked).
+Similarly, type 1 individuals get lost whenever they arrive at the waiting
+space of the hospital and it is at full capacity (\(N - C\) individuals already
+waiting).
