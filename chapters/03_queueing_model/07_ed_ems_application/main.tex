@@ -13,24 +13,19 @@ to some components of either the ED or the EMS.
     be blocked)
     \item \(\lambda_2 \rightarrow\) Type 2 individuals \(\rightarrow\)
     Individuals arriving with an ambulance (that can be blocked)
-    \item \(\mu \rightarrow\) Service rate \(\rightarrow\) The service rate of
-    doctors and nurses at the hospital
+    \item \(\mu \rightarrow\) Service rate \(\rightarrow\) The service rate of a patient
     \item \(C \rightarrow\) Number of servers \(\rightarrow\) The number of
     beds in the hospital
-    \item \(T \rightarrow\) Threshold \(\rightarrow\) The number of patient that
+    \item \(T \rightarrow\) Threshold \(\rightarrow\) The number of patients that
     need to be in the hospital to start blocking ambulances in the parking area.
     \item \(N \rightarrow\) Node 1 capacity \(\rightarrow\) The overall hospital
-    capacity (i.e. the number of beds in the hospital + the queueing capacity)
+    capacity (i.e. the number of beds in the hospital plus the queueing capacity)
     \item \(M \rightarrow\) Node 2 capacity \(\rightarrow\) The parking capacity
 \end{itemize}
 
-In essence, type 1 individuals are now all patients that arrive at the ED via
+Type 1 individuals are now all patients that arrive at the ED via
 some other means of transportation rather than an ambulance.
-Type 2 individuals are now all patients that arrive at the ED via an ambulance.
-Note here that if an ambulance holds a patient that is classified as an
-emergency case, then the patient is classified as a type 1 Individuals.
-This essentially means that emergency ambulance patients cannot be blocked in
-the parking space.
+Type 2 individuals are now all patients that arrive at the ED via an ambulance whose condition allows them to be delayed in the parking lot.
 The threshold parameter \(T\) is now the amount of patients that need to be in
 the hospital waiting area (and in service) to start blocking ambulances in the
 parking area.
