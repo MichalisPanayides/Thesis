@@ -1,0 +1,1292 @@
+\subsubsection{Waiting time}\label{sec:waiting_time}
+Waiting time is the amount of time that individuals wait in node 1 before
+they start their service.
+For a given set of parameters there are three different performance measures
+around the mean waiting time that need to be considered.
+The mean waiting time of type 1 individuals, the mean waiting time of type 2
+individuals, and the overall mean waiting time.
+
+\paragraph{Recursive approach}\label{sec:recursive_waiting_time}
+
+The first approach to be considered is a recursive approach to getting the
+mean waiting time.
+To calculate the mean waiting time of type 1 individuals one must first
+identify the set of states \((u, v)\) where a wait can occur.
+For this particular Markov chain, these are all states that satisfy \(v > C\)
+i.e. all states where the number of individuals in the node 1 exceed
+the number of servers.
+The set of such states is defined as the \textit{waiting states} and can be
+denoted as a subset of all the states, where:
+
+\begin{equation} \label{eq:waiting_states}
+    S_w = \{(u, v) \in S \; | \; v > C \}
+\end{equation}
+
+Moreover, another element that needs to be considered is the expected waiting
+time spent in each state for type \(i\) individuals.
+In order to do so a variation of the Markov model has to be considered where
+arrivals are removed.
+Figure~\ref{fig:markov_variation_no_arrivals} shows this new Markov chain model.
+
+\begin{figure}[H]
+    \centering
+    \input{chapters/03_queueing_model/img/markov_model_variation_no_arrivals.tex}
+    \caption{Variation of Markov chain model where all arrivals are removed}
+    \label{fig:markov_variation_no_arrivals}
+\end{figure}
+
+For this particular Markov chain variation the expected waiting time spent at
+each state \((u,v)\) for type \(i\) individuals is denoted by \(c_w^i(u,v)\).
+From a type 1 individual's perspective, when they arrive at the system, no
+matter how many other individuals of either type arrive after them it will not
+affect their own waiting time.
+The desired waiting time by acquired by calculating the inverse of the sum of
+the out-flow rate of that state.
+Therefore by eliminating the arrival rates of both individuals, the waiting time
+at each state for type 1 individuals can be expressed as:
+
+\begin{equation}\label{eq:waiting_time_state_type_1}
+    c^{(1)}_w(u,v) =
+    \begin{cases}
+        0, & \textbf{if } u > 0 \textbf{ and } v = T \\
+        \frac{1}{\text{min}(v,C)\mu}, & \textbf{otherwise}
+    \end{cases}
+\end{equation}
+
+Note here that whenever any type 1 individual is at a state \((u,v)\) where
+\(u > 0\) and \(v = T\) (i.e. all states \((1,T), (2,T) \dots, (M,T)\)) the
+expected waiting time is set to \(0\).
+This is done to capture the trip thorough the Markov chain from the perspective
+of type 1 individuals.
+Meaning that individuals visit all states of the threshold column but only the
+one in the first row will return a non-zero waiting time.
+Additionally, in equation (\ref{eq:waiting_time_state_type_1}) the service rate
+\(\mu\) is multiplied by the minimum of \(v\) and \(C\) since, when the system
+is at a state \((u,v)\) where \(v \geq C\), the maximum out-flow service rate
+of \( C \mu \) is reached.
+
+
+Similarly from a type 2 individual's perspective the same logic holds.
+The only difference is that type 2 individuals cannot have a waiting time when
+they are blocked in node 2.
+From the Markov chain model's perspective, type 2 individuals cannot have a wait
+whenever they are at state \(u, v\) where \(u > 0\).
+Thus, the waiting time at each state for type 2 individuals can be expressed as:
+
+\begin{equation}\label{eq:waiting_time_state_type_2}
+    c^{(2)}_w(u,v) =
+    \begin{cases}
+        0, & \textbf{if } u > 0 \\
+        \frac{1}{\text{min}(v, C)\mu}, & \textbf{otherwise}
+    \end{cases}
+\end{equation}
+
+
+Thus using the set of waiting states defined in (\ref{eq:waiting_states}) and
+equations (\ref{eq:waiting_time_state_type_1}) and
+(\ref{eq:waiting_time_state_type_2}) the following recursive formula can be used
+to get the mean waiting time spent in each state.
+The formula goes through all states from right to left recursively and adds the
+total expected waiting time of all these states together until it reaches a
+state that is not in the set of waiting states.
+Thus, the expected waiting time of a type \(i\) individual when they arrive at
+state \( (u,v) \) is given by:
+
+\begin{equation} \label{eq:recursive_waiting_time_for_state}
+    w^{(i)}(u,v) =
+    \begin{cases}
+        0, \hspace{4.85cm} & \textbf{if } (u,v) \notin S_w \\
+        c^{(i)}_w(u,v) + w^{(i)}(u-1, v), & \textbf{if } u > 0 \textbf{ and } v = T \\
+        c^{(i)}_w(u,v) + w^{(i)}(u, v-1), & \textbf{otherwise}
+    \end{cases}
+\end{equation}
+
+Whenever the system is at state \((u,v)\) and an individual arrives, depending
+on the type of the individual, the system will move to a different state.
+The state that the Markov chain will transition to when a type \(i\) individual
+arrives is defined as the \textit{arriving state} \(\mathcal{A}_i(u,v)\).
+Using Figure~\ref{fig:adjusted_markov_model} as reference, an arrival of a type
+1 individual makes the system transition to the state on the right.
+Similarly an arrival of a type 2 individual makes the system transition to the
+right if the threshold hasn't been reached and transition down if the threshold
+has been reached.
+This can be expressed mathematically as:
+
+\begin{equation}\label{eq:arriving_state_type_1}
+    \mathcal{A}_1(u,v) = (u, v + 1)
+\end{equation}
+\begin{equation}\label{eq:arriving_state_type_2}
+    \mathcal{A}_2(u,v) =
+    \begin{cases}
+        (u, v + 1), & \text{if } v < T \\
+        (u + 1, v), & \text{if } v \geq T \\
+    \end{cases}
+\end{equation}
+
+Additionally, there are certain states in the model where arrivals cannot occur.
+A type 1 individual cannot arrive whenever the model is at any state \((u, N)\)
+for all \(u\), where \(N\) is the capacity of node 1.
+Therefore the set of all such states that an arrival may occur are defined as
+\textit{accepting states}.
+The set of accepting states for type 1 individuals is denoted as:
+
+\begin{equation}\label{eq:accepting_states_type_1}
+    S_A^{(1)} = \{(u, v) \in S \; | \; v < N \}
+\end{equation}
+
+Similarly, an arrival of a type 2 individual cannot occur whenever the model is
+at state \((M, v)\) for all \(v\), where \(M\) is the capacity of node 2.
+The set of accepting states for type 2 individuals is denoted as:
+
+\begin{equation}\label{eq:accepting_states_type_2}
+    S_A^{(2)} = \{(u, v) \in S \; | \; u < M \}
+\end{equation}
+
+
+
+Finally, the total mean waiting time can be calculated by summing over all
+expected waiting times of accepting states multiplied by the probability of
+being at that state.
+The different approaches that are used to get the state probabilities are
+described in Section~\ref{sec:steady_state_probabilities}.
+The mean waiting time in the system for type \(i\) individuals is given by:
+
+\begin{equation}\label{eq:recursive_waiting_time_for_type_i}
+    W^{(i)} = \frac{\sum_{(u,v) \in S_A^{(i)}} \pi_{(u,v)} w^{(i)}
+    (\mathcal{A}_i(u,v))}{\sum_{(u,v) \in S_A^{(i)}} \pi_{(u,v)}}
+\end{equation}
+
+Consequently, using both the mean waiting time for type 1 individuals
+\(W^{(1)}\) and the mean waiting time for type 2 individuals \(W^{(2)}\), the
+overall mean waiting time in the system is a linear combination of the 2.
+The overall waiting time can be then given by the following equation where
+\(\theta_1\) and \(\theta_2\) are the coefficients of the waiting time for each
+type of individual:
+
+\begin{equation}\label{eq:overall_waiting_time_coeff}
+    W = \theta_1 W^{(1)} + \theta_2 W^{(2)}
+\end{equation}
+
+The two coefficients represent the proportion of individuals of each type that
+traversed through the model.
+Theoretically, determining these percentages should be as quick as
+looking at the arrival rates of each type \(\lambda_1\) and \(\lambda_2\), but
+in practise if either node 1 or node 2 are full, some
+individuals may become lost to the system.
+Thus, one should account for the probability that an individual is lost to the
+system.
+This probability can be calculated by using the two sets of accepting
+states \(S_A^{(2)}\) and \(S_A^{(1)}\) defined earlier in
+(\ref{eq:accepting_states_type_1}) and (\ref{eq:accepting_states_type_2}).
+Let us define the probability that an individual of type \(i\) is not lost
+to the system as \(P(L'_i)\):
+
+\begin{equation*}
+    P(L'_1) = \sum_{(u,v) \, \in S_A^{(1)}} \pi(u,v) \hspace{2cm}
+    P(L'_2) = \sum_{(u,v) \, \in S_A^{(2)}} \pi(u,v)
+\end{equation*}
+
+
+Having defined these probabilities one may combine them with the arrival rates
+of each individual type in such a way to get the expected proportions of type 1
+and type 2 individuals in the model.
+
+\begin{equation}
+    \theta_1 = \frac{\lambda_1 P(L'_1)}{\lambda_2 P(L'_2) + \lambda_1 P(L'_1)},
+    \hspace{1.5cm}
+    \theta_2 = \frac{\lambda_2 P(L'_2)}{\lambda_2 P(L'_2) + \lambda_1 P(L'_1)}
+\end{equation}
+
+Thus, by using these values as the coefficient of equation
+(\ref{eq:overall_waiting_time_coeff})
+the resultant equation can be used to get the overall waiting time.
+
+\begin{equation}\label{eq:overall_waiting_time}
+    W = \frac{\lambda_1 P(L'_1)}{\lambda_2 P(L'_2) + \lambda_1 P(L'_1)} W^{(1)}
+    + \frac{\lambda_2 P(L'_2)}{\lambda_2 P(L'_2) + \lambda_1 P(L'_1)} W^{(2)}
+\end{equation}
+
+
+\subparagraph{Implementation}\label{sec:waiting_recursive_implementation}
+
+Implementing the recursive approach for the waiting time in python uses the
+same logical structure as described in Section~\ref{sec:recursive_waiting_time}.
+The first function needed is one that checks if a state belongs in the
+set of waiting states that corresponds to the set defined in
+(\ref{eq:waiting_states}).
+
+\begin{lstlisting}[style=pystyle]
+>>> def is_waiting_state(state, num_of_servers):
+...     """Checks if waiting occurs in the given state. In essence, all
+...     states (u,v) where v > C are considered waiting states.
+...     Parameters
+...     ----------
+...     state : tuple
+...         a tuples of the form (u,v)
+...     num_of_servers : int
+...         the number of servers = C
+...     Returns
+...     -------
+...     Boolean
+...         An indication of whether or not any wait occurs on the given
+...         state
+...     """
+...     return state[1] > num_of_servers
+>>>
+>>> is_waiting_state(state=(1, 4), num_of_servers=2)
+True
+
+\end{lstlisting}
+
+Similarly a function that calculates the expected wait in each state is needed
+that corresponds to equations (\ref{eq:waiting_time_state_type_1}) and
+(\ref{eq:waiting_time_state_type_2}).
+Note here that the following function takes the individuals type as an argument
+and thus only one function is needed for both expressions.
+
+\begin{lstlisting}[style=pystyle]
+>>> def expected_time_in_markov_state_ignoring_arrivals(
+...     state,
+...     class_type,
+...     num_of_servers,
+...     mu,
+...     threshold,
+... ):
+...     """Get the expected waiting time in a Markov state when ignoring any
+...     subsequent arrivals. When considering the waiting time of class 2
+...     individuals, and when these individuals are in a blocked state
+...     (v > 0) then by the definition of the problem the waiting time in
+...     that state is set to 0. Additionally, all states where u > 0 and
+...     v = T automatically get a waiting time of 0 because class 1
+...     individuals only pass one of the states of that column (only state
+...     (0,T) is not zero).
+... 
+...     Parameters
+...     ----------
+...     state : tuple
+...         a tuples of the form (u,v)
+...     class_type : int
+...         A string to distinguish between class 1(=0) and class 2(=1)
+...         individuals
+...     num_of_servers : int
+...         The number of servers = C
+...     mu : float
+...         The service rate = mu
+... 
+...     Returns
+...     -------
+...     float
+...         The expected waiting time in the given state
+...     """
+...     if state[0] > 0 and (state[1] == threshold or class_type == 1):
+...         return 0
+...     return 1 / (min(state[1], num_of_servers) * mu)
+>>>
+>>> expected_time_in_markov_state_ignoring_arrivals(
+...     state=(3, 4),
+...     class_type=0,
+...     num_of_servers=1,
+...     mu=4,
+...     threshold=2,
+... )
+0.25
+
+\end{lstlisting}
+
+The following block of code is the implementation of equation
+(\ref{eq:recursive_waiting_time_for_state}), where it returns the waiting time
+of an individual when they arrive at a given state until they leave that
+particular state.
+Note that this function uses both of the functions defined earlier.
+
+\begin{lstlisting}[style=pystyle]
+>>> def get_waiting_time_for_each_state_recursively(
+...     state,
+...     class_type,
+...     lambda_2,
+...     lambda_1,
+...     mu,
+...     num_of_servers,
+...     threshold,
+...     system_capacity,
+...     buffer_capacity,
+... ):
+...     """Performs a recursive algorithm to get the expected waiting time of
+...     individuals when they enter the model at a given state. Given an
+...     arriving state the algorithm moves down to all subsequent states
+...     until it reaches one that is not a waiting state.
+... 
+...     Class 1:
+...         - If (u,v) not a waiting state: return 0
+...         - Next state s_d = (0, v - 1)
+...         - w(u,v) = c(u,v) + w(s_d)
+... 
+...     Class 2:
+...         - If (u,v) not a waiting state: return 0
+...         - Next state:   s_n = (u-1, v),    if u >= 1 and v=T
+...                         s_n = (u, v - 1),  otherwise
+...         - w(u,v) = c(u,v) + w(s_n)
+... 
+...     Note: For all class 1 individuals the recursive formula acts in a
+...     linear manner meaning that an individual will have the same waiting
+...     time when arriving at any state of the same column e.g (2, 3) or
+...     (5, 3).
+... 
+...     Parameters
+...     ----------
+...     state : tuple
+...     class_type : int
+...     lambda_2 : float
+...     lambda_1 : float
+...     mu : float
+...     num_of_servers : int
+...     threshold : int
+...     system_capacity : int
+...     buffer_capacity : int
+... 
+...     Returns
+...     -------
+...     float
+...         The expected waiting time from the arriving state of an
+...         individual until service
+...     """
+...     if not is_waiting_state(state, num_of_servers):
+...         return 0
+...     if state[0] >= 1 and state[1] == threshold:
+...         next_state = (state[0] - 1, state[1])
+...     else:
+...         next_state = (state[0], state[1] - 1)
+... 
+...     wait = expected_time_in_markov_state_ignoring_arrivals(
+...         state=state,
+...         class_type=class_type,
+...         num_of_servers=num_of_servers,
+...         mu=mu,
+...         threshold=threshold,
+...     )
+...     wait += get_waiting_time_for_each_state_recursively(
+...         state=next_state,
+...         class_type=class_type,
+...         lambda_2=lambda_2,
+...         lambda_1=lambda_1,
+...         mu=mu,
+...         num_of_servers=num_of_servers,
+...         threshold=threshold,
+...         system_capacity=system_capacity,
+...         buffer_capacity=buffer_capacity,
+...     )
+...     return wait
+>>>
+>>> get_waiting_time_for_each_state_recursively(
+...     state=(3, 4),
+...     class_type=0,
+...     lambda_2=1,
+...     lambda_1=1,
+...     mu=4,
+...     num_of_servers=1,
+...     threshold=2,
+...     system_capacity=4,
+...     buffer_capacity=3,
+... )
+0.75
+
+\end{lstlisting}
+
+Additionally, before getting the mean waiting time for each type of individuals,
+a function for the set of accepting states described in
+(\ref{eq:accepting_states_type_1}) and (\ref{eq:accepting_states_type_1}) needs
+to be constructed.
+
+\begin{lstlisting}[style=pystyle]
+>>> def is_accepting_state(
+...     state, class_type, threshold, system_capacity, buffer_capacity
+... ):
+...     """
+...     Checks if a state given is an accepting state. Accepting states are
+...     defined as the states of the system where arrivals may occur. In
+...     essence these states are all states apart from the one when the system
+...     cannot accept additional arrivals. Because there are two types of
+...     arrivals though, the set of accepting states is different for class 1
+...     and class 2 individuals:
+... 
+...     Parameters
+...     ----------
+...     state : tuple
+...         a tuples of the form (u,v)
+...     class_type : int
+...         A string to distinguish between class 1 (=0) and class 2
+...         individuals (=1)
+...     system_capacity : int
+...         The capacity of the system (hospital) = N
+...     buffer_capacity : int
+...         The capacity of the buffer space = M
+... 
+...     Returns
+...     -------
+...     Boolean
+...         An indication of whether or not an arrival of the given type
+...         (class_type) can occur
+...     """
+...     if class_type == 1:
+...         condition = (
+...             (state[0] < buffer_capacity)
+...             if (threshold <= system_capacity)
+...             else (state[1] < system_capacity)
+...         )
+...     if class_type == 0:
+...         condition = state[1] < system_capacity
+...     return condition
+
+\end{lstlisting}
+
+The only thing left to do is to find the weighted average of the waiting times
+for all states using the steady state probabilities.
+The function following function corresponds to the expression for \(W^{(i)}\)
+defined in equation (\ref{eq:recursive_waiting_time_for_type_i}).
+
+\begin{lstlisting}[style=pystyle]
+>>> import ambulance_game as abg
+>>> import numpy as np
+>>> def mean_waiting_time_formula_using_recursive_approach(
+...     all_states,
+...     pi,
+...     class_type,
+...     lambda_2,
+...     lambda_1,
+...     mu,
+...     num_of_servers,
+...     threshold,
+...     system_capacity,
+...     buffer_capacity,
+...     **kwargs,
+... ):
+...     """
+...     Get the mean waiting time by using a recursive formula. 
+...     All w(u,v) terms are calculated recursively by going through
+...     the waiting times of all previous states.
+... 
+...     Parameters
+...     ----------
+...     all_states : list
+...     pi : array
+...     class_type : int
+...     lambda_2 : float
+...     lambda_1 : float
+...     mu : float
+...     num_of_servers : int
+...     threshold : int
+...     system_capacity : int
+...     buffer_capacity : int
+... 
+...     Returns
+...     -------
+...     float
+...     """
+...     mean_waiting_time = 0
+...     probability_of_accepting = 0
+...     for u, v in all_states:
+...         if is_accepting_state(
+...             state=(u, v),
+...             class_type=class_type,
+...             threshold=threshold,
+...             system_capacity=system_capacity,
+...             buffer_capacity=buffer_capacity,
+...         ):
+...             arriving_state = (u, v + 1)
+...             if class_type == 1 and v >= threshold:
+...                 arriving_state = (u + 1, v)
+... 
+...             current_state_wait = get_waiting_time_for_each_state_recursively(
+...                 state=arriving_state,
+...                 class_type=class_type,
+...                 lambda_2=lambda_2,
+...                 lambda_1=lambda_1,
+...                 mu=mu,
+...                 num_of_servers=num_of_servers,
+...                 threshold=threshold,
+...                 system_capacity=system_capacity,
+...                 buffer_capacity=buffer_capacity,
+...             )
+...             mean_waiting_time += current_state_wait * pi[u, v]
+...             probability_of_accepting += pi[u, v]
+...     return mean_waiting_time / probability_of_accepting
+>>>
+>>> all_states = abg.markov.build_states(
+...     threshold=2,
+...     system_capacity=4,
+...     buffer_capacity=3,
+... )
+>>> Q = abg.markov.get_transition_matrix(
+...     lambda_1=1,
+...     lambda_2=1,
+...     mu=4,
+...     num_of_servers=1,
+...     threshold=2,
+...     system_capacity=4,
+...     buffer_capacity=3
+... )
+>>> pi = abg.markov.get_markov_state_probabilities(
+...     abg.markov.get_steady_state_algebraically(
+...         Q, algebraic_function=np.linalg.solve
+...     ),
+...     all_states,
+... )
+>>> round(
+...     mean_waiting_time_formula_using_recursive_approach(
+...         all_states=all_states,
+...         pi=pi,
+...         class_type=0,
+...         lambda_2=1,
+...         lambda_1=1,
+...         mu=4,
+...         num_of_servers=1,
+...         threshold=2,
+...         system_capacity=4,
+...         buffer_capacity=3,
+...     ), 10
+... )
+0.192140129
+
+\end{lstlisting}
+
+Finally the overall waiting time for both individuals can be calculated by
+taking the weighted average of the waiting times for each type of individual
+as described in equation (\ref{eq:overall_waiting_time}).
+
+\begin{lstlisting}[style=pystyle]
+>>> def overall_waiting_time_formula(
+...     all_states,
+...     pi,
+...     lambda_2,
+...     lambda_1,
+...     mu,
+...     num_of_servers,
+...     threshold,
+...     system_capacity,
+...     buffer_capacity,
+...     waiting_formula,
+...     **kwargs,
+... ):
+...     """
+...     Gets the overall waiting time for all individuals by calculating both
+...     class 1 and class 2 waiting times. Thus, considering the probability
+...     that an individual is lost to the system (for both classes)
+...     calculates the overall waiting time.
+... 
+...     Parameters
+...     ----------
+...     all_states : list
+...     pi : array
+...     lambda_1 : float
+...     lambda_2 : float
+...     mu : float
+...     num_of_servers : int
+...     threshold : int
+...     system_capacity : int
+...     buffer_capacity : int
+...     waiting_formula : function
+... 
+...     Returns
+...     -------
+...     float
+...         The overall mean waiting time by combining class 1 and class 2
+...         individuals
+...     """
+...     mean_waiting_times_for_each_class = [
+...         waiting_formula(
+...             all_states=all_states,
+...             pi=pi,
+...             class_type=class_type,
+...             lambda_2=lambda_2,
+...             lambda_1=lambda_1,
+...             mu=mu,
+...             num_of_servers=num_of_servers,
+...             threshold=threshold,
+...             system_capacity=system_capacity,
+...             buffer_capacity=buffer_capacity,
+...         )
+...         for class_type in range(2)
+...     ]
+...     prob_accept = [
+...         np.sum(
+...             [
+...                 pi[state]
+...                 for state in all_states
+...                 if is_accepting_state(
+...                     state=state,
+...                     class_type=class_type,
+...                     threshold=threshold,
+...                     system_capacity=system_capacity,
+...                     buffer_capacity=buffer_capacity,
+...                 )
+...             ]
+...         )
+...         for class_type in range(2)
+...     ]
+...     class_rates = [
+...         prob_accept[class_type]
+...         / ((lambda_2 * prob_accept[1]) + (lambda_1 * prob_accept[0]))
+...         for class_type in range(2)
+...     ]
+...     class_rates[0] *= lambda_1
+...     class_rates[1] *= lambda_2
+...     mean_waiting_time = np.sum(
+...         [
+...             mean_waiting_times_for_each_class[class_type]
+...             * class_rates[class_type]
+...             for class_type in range(2)
+...         ]
+...     )
+...     return mean_waiting_time
+>>>
+>>> round(overall_waiting_time_formula(
+...     all_states=all_states,
+...     pi=pi,
+...     lambda_2=1,
+...     lambda_1=1,
+...     mu=4,
+...     num_of_servers=1,
+...     threshold=2,
+...     system_capacity=4,
+...     buffer_capacity=3,
+...     waiting_formula=mean_waiting_time_formula_using_recursive_approach,
+... ), 10)
+0.1572461886
+
+\end{lstlisting}
+
+
+\paragraph{Direct approach}\label{sec:direct_waiting_time}
+
+The direct approach uses similar concepts to the recursive approach of
+Section~\ref{sec:recursive_waiting_time}.
+Instead of using recursion, a linear system of the set of equations generated by
+equation (\ref{eq:recursive_waiting_time_for_state}) for every state \((u,v)\)
+is solved.
+The set of equations that need to be solved for individuals of type \(i\) are
+all \( w^{(i)}(u, v) \) for all possible states \((u,v) \in S\).
+
+
+\begin{equation*}
+    w^{(i)}(u,v) =
+    \begin{cases}
+        0, \hspace{4.85cm} & \textbf{if } (u,v) \notin S_w \\
+        c^{(i)}_w(u,v) + w^{(i)}(u-1, v), & \textbf{if } u > 0
+        \textbf{ and } v = T \\
+        c^{(i)}_w(u,v) + w^{(i)}(u, v-1), & \textbf{otherwise}
+    \end{cases}
+\end{equation*}
+
+Consider a relatively small model where \(C=1, T=2, N=3, M=1\).
+All possible equations \(w^{(i)}(u,v)\) are given by equations
+(\ref{eq:first_eq_of_waiting_example} - \ref{eq:last_eq_of_waiting_example}).
+
+\begin{minipage}{0.45\textwidth}
+    \begin{figure}[H]
+        \centering
+        \scalebox{0.65}{\input{chapters/03_queueing_model/img/example_model_1231/main.tex}}
+        \caption{Markov chain example}
+        \label{fig:example_algeb_waiting}
+    \end{figure}
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
+    \begin{align}
+        w^{(i)}(0,0) &= 0 \\
+        w^{(i)}(0,1) &= 0 \\
+        w^{(i)}(0,2) &= c^{(i)}_w(0,2) + w^{(i)}(0,1) \label{eq:first_eq_of_waiting_example} \\
+        w^{(i)}(0,3) &= c^{(i)}_w(0,3) + w^{(i)}(0,2) \\
+        w^{(i)}(1,2) &= c^{(i)}_w(1,2) + w^{(i)}(0,2) \\
+        w^{(i)}(1,3) &= c^{(i)}_w(1,3) + w^{(i)}(1,2) \label{eq:last_eq_of_waiting_example}
+    \end{align}
+\end{minipage}
+
+\vspace{0.5cm}
+
+Additionally, the above equations can be transformed into a linear system of
+the form \(Zx=y\) where:
+
+\begin{equation}\label{eq:example_direct_approach_waiting_time}
+    Z=
+    \begin{pmatrix}
+       -1 &  0 &  0 &  0 &  0 &  0 \\  %(0,0)
+        0 & -1 &  0 &  0 &  0 &  0 \\  %(0,1)
+        0 &  1 & -1 &  0 &  0 &  0 \\  %(0,2)
+        0 &  0 &  1 & -1 &  0 &  0 \\  %(0,3)
+        0 &  0 &  1 &  0 & -1 &  0 \\  %(1,2)
+        0 &  0 &  0 &  0 &  1 & -1 \\  %(1,3)
+    \end{pmatrix},
+    x=
+    \begin{pmatrix}
+        w^{(i)}(0,0) \\
+        w^{(i)}(0,1) \\
+        w^{(i)}(0,2) \\
+        w^{(i)}(0,3) \\
+        w^{(i)}(1,2) \\
+        w^{(i)}(1,3) \\
+    \end{pmatrix},
+    y=
+    \begin{pmatrix}
+        0 \\
+        0 \\
+        -c^{(i)}_w(0,2) \\
+        -c^{(i)}_w(0,3) \\
+        -c^{(i)}_w(1,2) \\
+        -c^{(i)}_w(1,3) \\
+    \end{pmatrix}
+\end{equation}
+
+A more generalised form of the equations in
+(\ref{eq:example_direct_approach_waiting_time}) can be given for any value of
+\(C,T,N,M\) by:
+
+\begin{align}
+    w^{(i)}(0, 0) &= 0 \label{eq:first_eq_of_waiting_general} \\
+    w^{(i)}(0, 1) &= c^{(i)}_w(0,1) + w^{(i)}(0,0) \\
+    w^{(i)}(0, 2) &= c^{(i)}_w(0,2) + w^{(i)}(0,1) \\
+    & \vdots \nonumber \\
+    w^{(i)}(0, T-1) &= c^{(i)}_w(0,T-1) + w^{(i)}(0,T-2) \\
+    w^{(i)}(0, T) &= c^{(i)}_w(0, T) + w^{(i)}(0, T - 1) \\
+    w^{(i)}(0, T + 1) =& c^{(i)}_w(0, T + 1) + w^{(i)}(0, T) \\
+    w^{(i)}(0, T + 2) =& c^{(i)}_w(0, T + 2) + w^{(i)}(0, T + 1) \\
+    & \vdots \nonumber \\
+    w^{(i)}(0, N) =& c^{(i)}_w(0, N) + w^{(i)}(0, N - 1) \\
+    w^{(i)}(1, T) =& c^{(i)}_w(1, T) + w^{(i)}(0, T) \\
+    w^{(i)}(1, T + 1) =& c^{(i)}_w(1, T + 1) + w^{(i)}(1, T) \\
+    & \vdots \nonumber \\
+    w^{(i)}(M, N) =& c^{(i)}_w(M, N) + w^{(i)}(M, N-1)
+    \label{eq:last_eq_of_waiting_general}
+\end{align}
+
+The equivalent matrix form of the linear system of equations
+(\ref{eq:first_eq_of_waiting_general} - \ref{eq:last_eq_of_waiting_general})
+is given by \(Zx=y\), where:
+
+\newcommand{\allthedots}{\vdots & \vdots & \vdots & \ddots & \vdots & \vdots &
+\vdots & \vdots & \ddots & \vdots & \vdots & \vdots & \ddots & \vdots}
+
+\footnotesize
+\begin{equation*}\label{eq:general_direct_approach_waiting_time}
+    Z =
+    \begin{pmatrix}
+        -1 &  0 &  0 & \dots &  0 &  0 &  0 &  0 & \dots &  0 &  0 &  0 & \dots &  0 \\    %(0, 0)
+         1 & -1 &  0 & \dots &  0 &  0 &  0 &  0 & \dots &  0 &  0 &  0 & \dots &  0 \\    %(0, 1)
+         0 &  1 & -1 & \dots &  0 &  0 &  0 &  0 & \dots &  0 &  0 &  0 & \dots &  0 \\    %(0, 2)
+         \allthedots \\
+         0 &  0 &  0 & \dots & -1 &  0 &  0 &  0 & \dots &  0 &  0 &  0 & \dots &  0 \\    %(0, T-1)
+         0 &  0 &  0 & \dots &  1 & -1 &  0 &  0 & \dots &  0 &  0 &  0 & \dots &  0 \\    %(0,T)
+         0 &  0 &  0 & \dots &  0 &  1 & -1 &  0 & \dots &  0 &  0 &  0 & \dots &  0 \\    %(0,T+1)
+         0 &  0 &  0 & \dots &  0 &  0 &  1 & -1 & \dots &  0 &  0 &  0 & \dots &  0 \\    %(0,T+2)
+         \allthedots \\
+         0 &  0 &  0 & \dots &  0 &  0 &  0 &  0 & \dots & -1 &  0 &  0 & \dots &  0 \\   %(0,N)
+         0 &  0 &  0 & \dots &  0 &  1 &  0 &  0 & \dots &  0 & -1 &  0 & \dots &  0 \\   %(1,T)
+         0 &  0 &  0 & \dots &  0 &  0 &  1 &  0 & \dots &  0 &  0 & -1 & \dots &  0 \\   %(1,T+1)
+         \allthedots \\
+         0 &  0 &  0 & \dots &  0 &  0 &  0 &  0 & \dots &  0 &  0 &  0 & \dots & -1 \\   %(M,N)
+    \end{pmatrix}
+\end{equation*}
+\normalsize
+
+\begin{equation}
+    x =
+    \begin{pmatrix}
+        w^{(i)}(0, 0) \\
+        w^{(i)}(0, 1) \\
+        w^{(i)}(0, 2) \\
+        \vdots \\
+        w^{(i)}(0, T-1) \\
+        w^{(i)}(0, T) \\
+        w^{(i)}(0, T + 1) \\
+        w^{(i)}(0, T + 2) \\
+        \vdots \\
+        w^{(i)}(0, N) \\
+        w^{(i)}(1, T) \\
+        w^{(i)}(1, T + 1) \\
+        \vdots \\
+        w^{(i)}(M, N) \\
+    \end{pmatrix},
+    y=
+    \begin{pmatrix}
+        0 \\ %new
+        -c^{(i)}_w(0,1) \\ %new
+        -c^{(i)}_w(0,2) \\ %new
+        \vdots \\
+        -c^{(i)}_w(0,T - 1) \\ %new
+        -c^{(i)}_w(0,T) \\ %new
+        -c^{(i)}_w(0,T+1) \\
+        -c^{(i)}_w(0,T+2) \\
+        \vdots \\
+        -c^{(i)}_w(0,N) \\
+        -c^{(i)}_w(1,T) \\
+        -c^{(i)}_w(1,T+1) \\
+        \vdots \\
+        -c^{(i)}_w(M,N) \\
+    \end{pmatrix}
+\end{equation}
+
+Thus, solving for \(x\) gets the values of all \(w^{(i)}(u,v)\) for all states
+\((u,v) \in S\).
+These values can then be used with equation
+(\ref{eq:recursive_waiting_time_for_type_i}) to compute the mean waiting time
+for type \(i\) individuals \(W^{(i)}\).
+Now, having \(W^{(1)}\) and \(W^{(2)}\), equation (\ref{eq:overall_waiting_time})
+can be utilised once more to compute the overall mean waiting time for both
+individual types.
+
+
+\subparagraph{Implementation}\label{sec:waiting_direct_implementation}
+
+Similar to the implementation of the recursive approach from
+Section~\ref{sec:waiting_recursive_implementation} the functions that correspond
+to equations (\ref{eq:waiting_states}), (\ref{eq:waiting_time_state_type_1}),
+(\ref{eq:waiting_time_state_type_2}), (\ref{eq:accepting_states_type_1}),
+(\ref{eq:accepting_states_type_2}) will be used again.
+For the implementation of the direct approach the aim is to construct matrix
+\(Z\) and vector \(y\) as described in Section
+\ref{sec:direct_waiting_time} in order to solve the system of linear
+equations described in (\ref{eq:general_direct_approach_waiting_time}).
+
+The following block of code Returns the values of one row of matrix \(Z\) that
+corresponds to the state \((u,v)\) and the value of vector \(y\) that
+correspond to the state \((u,v)\).
+
+\begin{lstlisting}[style=pystyle]
+>>> import itertools
+>>> def get_coefficients_row_of_array_for_state(
+...     state,
+...     class_type,
+...     mu,
+...     num_of_servers,
+...     threshold,
+...     system_capacity,
+...     buffer_capacity
+... ):
+...     """
+...     For direct approach: Constructs a row of the coefficients matrix.
+...     The row to be constructed corresponds to the waiting time equation
+...     for a given state (u,v)
+...     """
+...     lhs_coefficient_row = np.zeros(
+...         [buffer_capacity + 1, system_capacity + 1]
+...     )
+...     lhs_coefficient_row[state[0], state[1]] = -1
+...     for (u, v) in itertools.product(
+...         range(1, buffer_capacity + 1), range(threshold)
+...     ):
+...         lhs_coefficient_row[u, v] = np.NaN
+... 
+...     rhs_value = 0
+...     if is_waiting_state(state, num_of_servers):
+...         if state[0] >= 1 and state[1] == threshold:
+...             next_state = (state[0] - 1, state[1])
+...         else:
+...             next_state = (state[0], state[1] - 1)
+... 
+...         lhs_coefficient_row[next_state[0], next_state[1]] = 1
+...         rhs_value = -expected_time_in_markov_state_ignoring_arrivals(
+...             state=state,
+...             class_type=class_type,
+...             mu=mu,
+...             num_of_servers=num_of_servers,
+...             threshold=threshold,
+...         )
+...     vectorised_array = np.hstack(
+...         (
+...             lhs_coefficient_row[0, :threshold],
+...             lhs_coefficient_row[:, threshold:].flatten("F"),
+...         )
+...     )
+...     return vectorised_array, rhs_value
+>>>
+>>> get_coefficients_row_of_array_for_state(
+...     state=(2,3),
+...     class_type=0,
+...     mu=4,
+...     num_of_servers=1,
+...     threshold=2,
+...     system_capacity=3,
+...     buffer_capacity=2
+... )
+(array([ 0.,  0.,  0.,  0.,  1.,  0.,  0., -1.]), -0.25)
+
+\end{lstlisting}
+
+In the above code, the function returns a tuple with two elements; the row of
+matrix \(Z\) and the value of vector \(y\) that corresponds to state \((2,3)\).
+Using the function above, the matrix \(Z\) and vector \(y\) can be constructed
+by considering all states of the Markov chain.
+
+\begin{lstlisting}[style=pystyle]
+>>> def get_waiting_time_linear_system(
+...     class_type,
+...     mu,
+...     num_of_servers,
+...     threshold,
+...     system_capacity,
+...     buffer_capacity
+... ):
+...     """
+...     For direct approach: Obtain the linear system Z X = y by finding
+...     the array Z and the column vector y that are required. Here Z is
+...     denoted as "all_coefficients_array" and y as "constant_column".
+...     The function stacks the outputs of
+...     get_coefficients_row_of_array_for_state() for all states. In
+...     essence all outputs are stacked together to form a square matrix
+...     (|) and equivalently a column vector (y) that will be used to find
+...     X s.t. Z*X=y
+...     """
+...     all_coefficients_array = np.array([])
+...     all_states = abg.markov.build_states(
+...         threshold=threshold,
+...         system_capacity=system_capacity,
+...         buffer_capacity=buffer_capacity,
+...     )
+...     for state in all_states:
+...         lhs_vector, rhs_value = get_coefficients_row_of_array_for_state(
+...             state=state,
+...             class_type=class_type,
+...             mu=mu,
+...             num_of_servers=num_of_servers,
+...             threshold=threshold,
+...             system_capacity=system_capacity,
+...             buffer_capacity=buffer_capacity,
+...         )
+...         if len(all_coefficients_array) == 0:
+...             all_coefficients_array = [lhs_vector]
+...             constant_column = [rhs_value]
+...         else:
+...             all_coefficients_array = np.vstack(
+...                 [all_coefficients_array, lhs_vector]
+...             )
+...             constant_column.append(rhs_value)
+...     return all_coefficients_array, constant_column
+>>>
+>>> Z, y = get_waiting_time_linear_system(
+...     class_type=0,
+...     mu=4,
+...     num_of_servers=1,
+...     threshold=2,
+...     system_capacity=3,
+...     buffer_capacity=2
+... )
+>>> Z
+array([[-1.,  0.,  0.,  0.,  0.,  0.,  0.,  0.],
+       [ 0., -1.,  0.,  0.,  0.,  0.,  0.,  0.],
+       [ 0.,  1., -1.,  0.,  0.,  0.,  0.,  0.],
+       [ 0.,  0.,  1., -1.,  0.,  0.,  0.,  0.],
+       [ 0.,  0.,  0.,  1., -1.,  0.,  0.,  0.],
+       [ 0.,  0.,  1.,  0.,  0., -1.,  0.,  0.],
+       [ 0.,  0.,  0.,  1.,  0.,  0., -1.,  0.],
+       [ 0.,  0.,  0.,  0.,  1.,  0.,  0., -1.]])
+>>> y
+[0, 0, -0.25, 0, 0, -0.25, -0.25, -0.25]
+
+\end{lstlisting}
+
+The following piece of code solves the linear system \(Z X = y\) to obtain the
+vector \(X\) containing the waiting times for all states of the Markov chain.
+After solving the linear system for vector \(X\) it also converts the
+1-dimensional array into a 2-dimensional array where the entry at row \(u\) and
+column \(v\) corresponds to the expected waiting time that an individual will
+have to wait when arriving and the Markov chain is at state \((u,v)\).
+
+\begin{lstlisting}[style=pystyle]
+>>> def convert_solution_to_correct_array_format(
+...     array, all_states, system_capacity, buffer_capacity
+... ):
+...     """
+...     For direct approach: Convert the solution into a format that matches
+...     the state probabilities array. The given array is a one-dimensional
+...     array with the waiting times of each state
+...     """
+...     array_with_correct_shape = np.zeros(
+...         [buffer_capacity + 1, system_capacity + 1]
+...     )
+...     for index, (u, v) in enumerate(all_states):
+...         array_with_correct_shape[u, v] = array[index]
+...     return array_with_correct_shape
+>>>
+>>>
+>>> def get_waiting_times_of_all_states_using_direct_approach(
+...     class_type,
+...     all_states,
+...     mu,
+...     num_of_servers,
+...     threshold,
+...     system_capacity,
+...     buffer_capacity,
+... ):
+...     """
+...     For direct approach: Solve M*X = b using numpy.linalg.solve() where:
+...         M = The array containing the coefficients of all w(u,v) equations
+...         b = Vector of constants of equations
+...         X = All w(u,v) variables of the equations
+...     """
+...     M, b = get_waiting_time_linear_system(
+...         class_type=class_type,
+...         mu=mu,
+...         num_of_servers=num_of_servers,
+...         threshold=threshold,
+...         system_capacity=system_capacity,
+...         buffer_capacity=buffer_capacity,
+...     )
+...     state_waiting_times = np.linalg.solve(M, b)
+...     state_waiting_times = convert_solution_to_correct_array_format(
+...         array=state_waiting_times,
+...         all_states=all_states,
+...         system_capacity=system_capacity,
+...         buffer_capacity=buffer_capacity,
+...     )
+...     return state_waiting_times
+>>>
+>>> all_states = abg.markov.build_states(
+...     threshold=2,
+...     system_capacity=3,
+...     buffer_capacity=2,
+... )
+>>>
+>>> get_waiting_times_of_all_states_using_direct_approach(
+...     class_type=0,
+...     all_states=all_states,
+...     mu=4,
+...     num_of_servers=1,
+...     threshold=2,
+...     system_capacity=3,
+...     buffer_capacity=2
+... )
+array([[-0.  , -0.  ,  0.25,  0.5 ],
+       [ 0.  ,  0.  ,  0.25,  0.5 ],
+       [ 0.  ,  0.  ,  0.25,  0.5 ]])
+
+\end{lstlisting}
+
+Finally, similar to Section~\ref{sec:waiting_recursive_implementation}, using
+equation (\ref{eq:recursive_waiting_time_for_type_i}) the mean waiting time
+for either type of individuals can be calculated as follows:
+
+\begin{lstlisting}[style=pystyle] 
+>>> def mean_waiting_time_formula_using_direct_approach(
+...     all_states,
+...     pi,
+...     class_type,
+...     lambda_2,
+...     lambda_1,
+...     mu,
+...     num_of_servers,
+...     threshold,
+...     system_capacity,
+...     buffer_capacity,
+...     **kwargs,
+... ):
+...     """
+...     Get the mean waiting time by using a direct approach.
+...     """
+...     wait_times = get_waiting_times_of_all_states_using_direct_approach(
+...         class_type=class_type,
+...         all_states=all_states,
+...         mu=mu,
+...         num_of_servers=num_of_servers,
+...         threshold=threshold,
+...         system_capacity=system_capacity,
+...         buffer_capacity=buffer_capacity,
+...     )
+...     mean_waiting_time, prob_accept_class_2_ind = 0, 0
+...     for (u, v) in all_states:
+...         if is_accepting_state(
+...             state=(u, v),
+...             class_type=class_type,
+...             threshold=threshold,
+...             system_capacity=system_capacity,
+...             buffer_capacity=buffer_capacity,
+...         ):
+...             arriving_state = (u, v + 1)
+...             if class_type == 1 and v >= threshold:
+...                 arriving_state = (u + 1, v)
+...             mean_waiting_time += wait_times[arriving_state] * pi[u, v]
+...             prob_accept_class_2_ind += pi[u, v]
+... 
+...     return mean_waiting_time / prob_accept_class_2_ind
+>>>
+>>> all_states = abg.markov.build_states(
+...     threshold=2,
+...     system_capacity=4,
+...     buffer_capacity=3,
+... )
+>>> Q = abg.markov.get_transition_matrix(
+...     lambda_1=1,
+...     lambda_2=1,
+...     mu=4,
+...     num_of_servers=1,
+...     threshold=2,
+...     system_capacity=4,
+...     buffer_capacity=3
+... )
+>>> pi = abg.markov.get_markov_state_probabilities(
+...     abg.markov.get_steady_state_algebraically(
+...         Q, algebraic_function=np.linalg.solve
+...     ),
+...     all_states,
+... )
+>>> round(
+...     mean_waiting_time_formula_using_direct_approach(
+...         all_states=all_states,
+...         pi=pi,
+...         class_type=0,
+...         lambda_2=1,
+...         lambda_1=1,
+...         mu=4,
+...         num_of_servers=1,
+...         threshold=2,
+...         system_capacity=4,
+...         buffer_capacity=3,
+...     ), 10
+... )
+0.192140129
+
+\end{lstlisting}
+
+
+\paragraph{Closed-form approach}\label{sec:closed_form_waiting_time}
+
+The final approach for getting the mean waiting time is to use a closed-form
+approach.
+This approach is an immediate simplification of the recursive approach
+described in Section~\ref{sec:recursive_waiting_time}.
+
+\begin{equation} \label{eq:closed_form_waiting_type_1}
+    W^{(1)} = \frac{\sum_{\substack{(u,v) \, \in S_A^{(1)} \\ v \geq C}}
+    \frac{1}{C \mu} \times (v-C+1) \times \pi(u,v)}{\sum_{(u,v) \,
+    \in S_A^{(1)}} \pi(u,v)}
+\end{equation}
+
+The mean waiting time of type 2 individuals:
+
+\begin{equation}\label{eq:closed_form_waiting_type_2}
+    W^{(2)} = \frac{\sum_{\substack{(u,v) \, \in S_A^{(2)} \\ min(v,T) \geq C}}
+    \frac{1}{C \mu} \times (\min(v+1,T)-C) \times \pi(u,v)}{\sum_{(u,v) \,
+    \in S_A^{(2)}} \pi(u,v)}
+\end{equation}
+
+Having \(W^{(1)}\) and \(W^{(2)}\), equation (\ref{eq:overall_waiting_time}) can
+then be used to compute \(W\), the overall mean waiting time for both types.
+
+
+\subparagraph{Implementation}\label{sec:waiting_closed_form_implementation}
+
+The closed-form formula can be implemented in one function.
+The functions is broken down in two parts for the case of each individual type.
+
+\begin{lstlisting}[style=pystyle]
+>>> def mean_waiting_time_formula_using_closed_form_approach(
+...     all_states,
+...     pi,
+...     class_type,
+...     mu,
+...     num_of_servers,
+...     threshold,
+...     system_capacity,
+...     buffer_capacity,
+...     **kwargs,
+... ):
+...     """
+...     Get the mean waiting time by using a closed-form formula.
+...     """
+...     sojourn_time = 1 / (num_of_servers * mu)
+...     if class_type == 0:
+...         mean_waiting_time = np.sum(
+...             [
+...                 (state[1] - num_of_servers + 1) * pi[state]
+...                 * sojourn_time
+...                 for state in all_states
+...                 if is_accepting_state(
+...                     state=state,
+...                     class_type=class_type,
+...                     threshold=threshold,
+...                     system_capacity=system_capacity,
+...                     buffer_capacity=buffer_capacity,
+...                 )
+...                 and state[1] >= num_of_servers
+...             ]
+...         ) / np.sum(
+...             [
+...                 pi[state]
+...                 for state in all_states
+...                 if is_accepting_state(
+...                     state=state,
+...                     class_type=class_type,
+...                     threshold=threshold,
+...                     system_capacity=system_capacity,
+...                     buffer_capacity=buffer_capacity,
+...                 )
+...             ]
+...         )
+...
+...     if class_type == 1:
+...         mean_waiting_time = np.sum(
+...             [
+...                 (min(state[1] + 1, threshold) - num_of_servers)
+...                 * pi[state]
+...                 * sojourn_time
+...                 for state in all_states
+...                 if is_accepting_state(
+...                     state=state,
+...                     class_type=class_type,
+...                     threshold=threshold,
+...                     system_capacity=system_capacity,
+...                     buffer_capacity=buffer_capacity,
+...                 )
+...                 and min(state[1], threshold) >= num_of_servers
+...             ]
+...         ) / np.sum(
+...             [
+...                 pi[state]
+...                 for state in all_states
+...                 if is_accepting_state(
+...                     state=state,
+...                     class_type=class_type,
+...                     threshold=threshold,
+...                     system_capacity=system_capacity,
+...                     buffer_capacity=buffer_capacity,
+...                 )
+...             ]
+...         )
+...     return mean_waiting_time
+>>>
+>>> all_states = abg.markov.build_states(
+...     threshold=2,
+...     system_capacity=4,
+...     buffer_capacity=3,
+... )
+>>> Q = abg.markov.get_transition_matrix(
+...     lambda_1=1,
+...     lambda_2=1,
+...     mu=4,
+...     num_of_servers=1,
+...     threshold=2,
+...     system_capacity=4,
+...     buffer_capacity=3
+... )
+>>> pi = abg.markov.get_markov_state_probabilities(
+...     abg.markov.get_steady_state_algebraically(
+...         Q, algebraic_function=np.linalg.solve
+...     ),
+...     all_states,
+... )
+>>> round(
+...     mean_waiting_time_formula_using_closed_form_approach(
+...         all_states=all_states,
+...         pi=pi,
+...         class_type=0,
+...         mu=4,
+...         num_of_servers=1,
+...         threshold=2,
+...         system_capacity=4,
+...         buffer_capacity=3,
+...     ), 10
+... )
+0.192140129
+
+\end{lstlisting}
+
+A numeric comparison of the 3 approaches used to compute the mean waiting time
+can be found in Section 
+% TODO: reference numeric examples section

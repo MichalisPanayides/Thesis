@@ -1,0 +1,17 @@
+\begin{tikzpicture}
+    \node[state] (A) at (0,0) {A};
+    \node[state] (B) at (0,3) {B};
+    \node[state] (C) at (2.5,4) {C};
+    \node[state] (D) at (2.5,1) {D};
+    \node[state] (E) at (5,3) {E};
+
+    \draw[every loop]
+        (A) edge node {} (B)
+        (B) edge node {} (C)
+        (A) edge node {} (D)
+        (D) edge node {} (E)
+        (D) edge node {} (C)
+        (C) edge node {} (E)
+        (E) edge[bend left=60] node {} (A)
+    ;
+\end{tikzpicture}

@@ -53,26 +53,40 @@ def proselint(c):
 
     def remove_expected_errors(errors):
         """
-        Remove errors that were expected from the error list
+        Remove general errors that were expected from the error list
         """
-        expected_errors = (
+        expected_errors = [
             "annotations.misc",
-            "leonard.exclamation.30ppm",
             "typography.symbols.ellipsis",
             "typography.symbols.sentence_spacing",
-            "security.credit_card",
-        )
+            "lexical_illusions.misc",
+            "leonard.exclamation.30ppm",
+            "typography.symbols.curly_quotes",
+            "consistency.spelling",
+        ]
         updated_errors = []
         for error in errors:
             if error[0] not in expected_errors:
                 updated_errors.append(error)
         return updated_errors
 
+    def exclude_tex_files_for_imgs(file_paths):
+        """
+        Remove files that contain images (mainly tikz) from the list of files
+        to run proselint on
+        """
+        updated_files = []
+        for file_path in file_paths:
+            if "img" not in str(file_path):
+                updated_files.append(file_path)
+        return updated_files
+
     all_tex_files = list(pathlib.Path().glob("**/*.tex"))
+    all_tex_files_without_imgs = exclude_tex_files_for_imgs(all_tex_files)
     exit_codes = [0]
-    for path in all_tex_files:
+    for path in all_tex_files_without_imgs:
         with open(path, "r") as f:
-            text = f.read()
+            text = "\n\n" + f.read()
             errors = plnt.tools.lint(text)
         errors = remove_expected_errors(errors)
         if errors:
@@ -88,7 +102,30 @@ def alex(c):
     """
     Check for inconsiderate and insensitive writing of all .tex files
     """
+    exception_files = ["packages.tex"]
     all_tex_files = list(pathlib.Path().glob("**/*.tex"))
     for file in all_tex_files:
-        c.run(f"alex {file}")
+        if str(file) not in exception_files:
+            if "img" not in str(file):
+                c.run(f"alex {file}")
 
+
+@task
+def doctests(c):
+    """
+    Run doctests
+    """
+    c.run('python -m pytest --doctest-glob="*.tex"')
+
+
+@task
+def runall(c):
+    """
+    Run all tasks
+    """
+    print("Doctests:")
+    doctests(c)
+    print("\n\nAlex:")
+    alex(c)
+    print("\n\nProselint:")
+    proselint(c)

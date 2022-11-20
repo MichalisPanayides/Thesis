@@ -1,0 +1,15 @@
+\begin{tikzpicture}
+    \node[state] (A) at (0,0) {A};
+    \node[state] (B) at (0,3) {B};
+    \node[state] (C) at (2.5,4) {C};
+    \node[state] (D) at (2.5,1) {D};
+    \node[state] (E) at (5,3) {E};
+
+    \path (A) edge node {} (B);
+    \path (B) edge node {} (C);
+    \path (A) edge node {} (D);
+    \path (D) edge node {} (C);
+    \path (D) edge node {} (E);
+    \path (C) edge node {} (E);
+    \path (A) edge[bend right=60] node {} (E);
+\end{tikzpicture}

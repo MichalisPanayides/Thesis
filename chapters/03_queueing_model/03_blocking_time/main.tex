@@ -1,0 +1,307 @@
+\subsubsection{Blocking time}\label{sec:blocking_time}
+
+Unlike the waiting time in Section~\ref{sec:waiting_time}, 
+the blocking time is only calculated for type 2 individuals.
+That is because type 1 individuals cannot be blocked.
+Thus, one only needs to consider the pathway of type 2 individuals to get the
+mean blocking time of the system.
+
+For the waiting time formula described in equation 
+(\ref{eq:recursive_waiting_time_for_type_i}) in
+Section~\ref{sec:recursive_waiting_time}
+the expected waiting time for each state was considered by ignoring all
+arrivals.
+Here, the same approach is used but ignoring only arrivals of type 2
+individuals.
+That is because for the waiting time formula, once an individual enters
+node 1 (i.e. starts waiting) any individual arriving after them will
+not affect their pathway.
+That is not the case for the blocking time.
+When a type 2 individual is blocked, any type 1 individual that arrives will
+cause the blocked individual to stay blocked for more time.
+Therefore, unlike Figure~\ref{fig:markov_variation_no_arrivals}, type 1 arrivals
+are considered here.
+Once again a variation of the already existing Markov chain model described in
+Figure~\ref{fig:adjusted_markov_model} can be seen in
+Figure~\ref{fig:markov_variation_no_type_2_arrivals} where type 2 arrivals are
+ignored.
+
+\begin{figure}[ht]
+    \centering
+    \input{chapters/03_queueing_model/img/markov_model_variation_no_type_2_arrivals.tex}
+    \caption{Variation of Markov chain model where type 2 arrivals are removed}
+    \label{fig:markov_variation_no_type_2_arrivals}
+\end{figure}
+
+By the nature of this new Markov chain variation a similar recursive approach
+to the waiting time cannot be used here.
+Since both service completions and new arrivals can occur, the path of an
+individual from arrival to departure is not fixed.
+For example, for a particular Markov chain model with a threshold of \(T=2\),
+an individual arriving at state \((2, 3)\) may have multiple different pathways.
+Both of these are valid paths:
+\begin{itemize}
+    \item \((2, 3) \rightarrow (2, 2) \rightarrow (1, 2) \rightarrow (0, 2)\)
+    \item \((2, 3) \rightarrow (2, 4) \rightarrow (2, 3) \rightarrow (2, 2)
+    \rightarrow (1, 2) \rightarrow (0, 2)\)
+\end{itemize}
+
+Similar to equations (\ref{eq:waiting_time_state_type_1}) and
+(\ref{eq:waiting_time_state_type_2}) the expected time spent in each state here
+is denoted as:
+
+\begin{equation}\label{eq:blocking_time_state}
+    c_b(u,v) =
+    \begin{cases}
+        \frac{1}{\min(v,C) \mu}, & \text{if } v \leq C\\
+        \frac{1}{\min(v,C) \mu + \lambda_1}, & \text{otherwise}
+    \end{cases}
+\end{equation}
+
+In equation (\ref{eq:blocking_time_state}), both service completions and
+type 1 arrivals are considered.
+Thus, from a blocked individual's perspective whenever the system moves from one
+state \((u,v)\) to another state it can either:
+
+\begin{itemize}
+    \item be because of a service being completed: we will denote the
+    probability of this happening by \(p_s(u,v)\).
+    \item be because of an arrival of an individual of type 1: denoting such
+    probability by \(p_o(u,v)\).
+\end{itemize}
+
+These probabilities are given by:
+
+\begin{equation}\label{eq:blocking_time_probs}
+    p_s(u,v) = \frac{\min(v,C)\mu}{\lambda_1 + \min(v,C)\mu}, \qquad
+    p_o(u,v) = \frac{\lambda_1}{\lambda_1 + \min(v,C)\mu}
+\end{equation}
+
+
+
+
+The set of states where blocking can occur is defined as the \textit{blocking
+states} and consists of all states \((u,v)\) where \(u\) is non-zero.
+In essence, the set of blocking state \(S_b\) is defined as:
+
+\begin{equation}\label{eq:blocking_states}
+    S_b = \{(u,v) \in S \; | \; u > 0\}
+\end{equation}
+
+From Figure~\ref{fig:markov_variation_no_type_2_arrivals} the set \(S_b\)
+consists of all states below the first line of Markov chain.
+In addition, in order to not consider individuals that will be lost to the
+system, the set of accepting states needs to be taken into account.
+As defined in Section~\ref{sec:recursive_waiting_time}, the set of accepting
+states \(S_A^{(2)}\) is given by equation (\ref{eq:accepting_states_type_2}).
+
+Having defined \(c_b(u,v)\) and \(S_b\) a formula for the expected blocking time
+at each state can be given by:
+
+\small
+\begin{equation}\label{eq:expected_blocking_time_at_each_state}
+    b(u,v) =
+    \begin{cases}
+        0, & \textbf{if } (u,v) \notin S_b \\
+        c_b(u,v) + b(u - 1, v), & \textbf{if } v = N = T\\
+        c_b(u,v) + b(u, v-1), & \textbf{if } v = N \neq T \\
+        c_b(u,v) + p_s(u,v) b(u-1, v) + p_o(u,v) b(u, v+1), & \textbf{if } u > 0
+        \textbf{ and } v = T \\
+        c_b(u,v) + p_s(u,v) b(u, v-1) + p_o(u,v) b(u, v+1), & \textbf{otherwise} \\
+    \end{cases}
+\end{equation}
+\normalsize
+
+Unlike equation (\ref{eq:recursive_waiting_time_for_type_i}), equation
+(\ref{eq:expected_blocking_time_at_each_state}) cannot be solved recursively.
+Only a direct approach will be used to solve this equation.
+By enumerating all possible equations generated by
+(\ref{eq:expected_blocking_time_at_each_state}) for all states \((u,v)\) that
+belong in \(S_b\) a system of linear equations arises where the unknown
+variables are all the \(b(u,v)\) terms.
+For instance, let us consider a Markov model where \(C=2, T=3, N=6, M=2\).
+The Markov model is shown in Figure~\ref{fig:example_algeb_blocking}
+and the equivalent equations are
+(\ref{eq:first_eq_of_blocking_example} - \ref{eq:last_eq_of_blocking_example}).
+The equations considered here are only the ones that correspond to the blocking
+states.
+
+\begin{minipage}{0.45\textwidth}
+    \begin{figure}[H]
+        \scalebox{0.5}{\input{chapters/03_queueing_model/img/example_model_2242/main.tex}}
+        \caption{Example}
+        \label{fig:example_algeb_blocking}
+    \end{figure}
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
+    \scriptsize
+    \begin{align}
+        b(1,2) &= c_b(1,2) + p_o b(1,3) \label{eq:first_eq_of_blocking_example} \\
+        b(1,3) &= c_b(1,3) + p_s b(1,2) + p_o b(1,4) \\
+        b(1,4) &= c_b(1,4) + b(1,3) \\
+        b(2,2) &= c_b(2,2) + p_s b(1,2) + p_o b(2,3) \\
+        b(2,3) &= c_b(2,3) + p_s b(2,2) + p_o b(1,4) \\
+        b(2,4) &= c_b(2,4) + b(2,3)\label{eq:last_eq_of_blocking_example}
+    \end{align}
+    \normalsize
+\end{minipage}
+\vspace{0.5cm}
+
+Additionally, the above equations can be transformed into a linear system of the
+form \(Zx=y\) where:
+
+\begin{equation}\label{eq:example_direct_approach_blocking_time}
+    Z=
+    \begin{pmatrix}
+         -1 & p_o &   0 &   0 &   0 &   0 \\ %(1,2)
+        p_s &  -1 & p_o &   0 &   0 &   0 \\ %(1,3)
+          0 &   1 & - 1 &   0 &   0 &   0 \\ %(1,4)
+        p_s &   0 &   0 &  -1 & p_o &   0 \\ %(2,2)
+          0 &   0 &   0 & p_s &  -1 & p_o \\ %(2,3)
+          0 &   0 &   0 &   0 &   1 &  -1 \\ %(2,4)
+    \end{pmatrix},
+    x=
+    \begin{pmatrix}
+        b(1,2) \\
+        b(1,3) \\
+        b(1,4) \\
+        b(2,2) \\
+        b(2,3) \\
+        b(2,4) \\
+    \end{pmatrix},
+    y=
+    \begin{pmatrix}
+        -c_b(1,2) \\
+        -c_b(1,3) \\
+        -c_b(1,4) \\
+        -c_b(2,2) \\
+        -c_b(2,3) \\
+        -c_b(2,4) \\
+    \end{pmatrix}
+\end{equation}
+
+A more generalised form of the linear system of
+(\ref{eq:example_direct_approach_blocking_time}) can thus be given for any value
+of \(C,T,N,M\) by:
+
+\begin{align}
+    b(1,T) =& c_b(1, T) + p_o b(1, T + 1)
+    \label{eq:first_eq_of_blocking_general}\\
+    b(1,T + 1) =& c_b(1, T + 1) + p_s(1, T) + p_o b(1, T + 1) \\
+    b(1,T + 2) =& c_b(1, T + 2) + p_s(1, T + 1) + p_o b(1, T + 3) \\
+    & \vdots \\
+    b(1, N) =& c_b(1, N) + b(1, N - 1) \\
+    b(2, T) =& c_b(2, T) + p_s b(1, T) + p_o b(2, T + 1) \\
+    b(2, T + 1) =& c_b(2, T + 1) + p_s b(2, T) + p_o b(2, T + 2) \\
+    & \vdots \\
+    b(M, T) =& c_b(M, T) + b(M, T-1) \label{eq:last_eq_of_blocking_general}
+\end{align}
+
+The equivalent matrix form of the linear system of equations
+(\ref{eq:first_eq_of_blocking_general} - \ref{eq:last_eq_of_blocking_general})
+is given by \(Zx=y\), where:
+
+\newcommand{\secondallthedots}{\vdots & \vdots & \vdots & \ddots & \vdots & \vdots &
+\vdots & \vdots & \vdots & \ddots & \vdots & \vdots}
+
+\begin{equation}
+    Z =
+    \begin{pmatrix}
+        -1 & p_o & 0 & \dots & 0 & 0 & 0 & 0 & 0 & \dots & 0 & 0 \\ %(1,T)
+        p_s & -1 & p_o & \dots & 0 & 0 & 0 & 0 & 0 & \dots & 0 & 0 \\ %(1,T+1)
+        0 & p_s & -1 & \dots & 0 & 0 & 0 & 0 & 0 & \dots & 0 & 0 \\ %(1,T+2)
+        \secondallthedots \\
+        0 & 0 & 0 & \dots & 1 & -1 & 0 & 0 & 0 & \dots & 0 & 0 \\ %(1,N)
+        p_s & 0 & 0 & \dots & 0 & 0 & -1 & p_o & 0 & \dots & 0 & 0 \\ %(2,T)
+        0 & 0 & 0 & \dots & 0 & 0 & p_s & -1 & p_o & \dots & 0 & 0 \\ %(2,T+1)
+        \secondallthedots \\
+        0 & 0 & 0 & \dots & 0 & 0 & 0 & 0 & 0 & \dots & 1 & -1 \\ %(M,T)
+    \end{pmatrix},
+\end{equation}
+\begin{equation}\label{eq:general_direct_approach_blocking_time}
+    x =
+    \begin{pmatrix}
+        b(1,T) \\
+        b(1,T+1) \\
+        b(1,T+2) \\
+        \vdots \\
+        b(1,N) \\
+        b(2,T) \\
+        b(2,T+1) \\
+        \vdots \\
+        b(M,T) \\
+    \end{pmatrix},
+    y=
+    \begin{pmatrix}
+        -c_b(1,T) \\
+        -c_b(1,T+1) \\
+        -c_b(1,T+2) \\
+        \vdots \\
+        -c_b(1,N) \\
+        -c_b(2,T) \\
+        -c_b(2,T+1) \\
+        \vdots \\
+        -c_b(M,T) \\
+    \end{pmatrix}
+\end{equation}
+
+Thus, having calculated the mean blocking time \(b(u,v)\) for every blocking
+state individually, a similar formula to equation
+(\ref{eq:recursive_waiting_time_for_type_i}) can be derived.
+The resultant blocking time formula is given by:
+
+\begin{equation}\label{eq:blocking_time_formula}
+    B = \frac{\sum_{(u,v) \in S_A} \pi_{(u,v)} \; b(\mathcal{A}_2(u,v))}{
+        \sum_{(u,v) \in S_A}\pi_{(u,v)}}
+\end{equation}
+
+Note here that \(\pi_(u,v)\) is the steady state probability that the Markov
+chain model is at state \((u,v)\) described in
+Section~\ref{sec:steady_state_probabilities}.
+
+\paragraph{Implementation}\label{sec:implementation_blocking_time}
+
+The mean blocking time is only calculated using a direct approach
+similar to the one described in Section~\ref{sec:waiting_direct_implementation}.
+Since this implementation is the same as the waiting time one the the following
+codes shows only the usage of the function rather than the function itself.
+
+\begin{lstlisting}[style=pystyle]
+>>> import ambulance_game as abg
+>>> import numpy as np
+>>>
+>>> all_states = abg.markov.build_states(
+...     threshold=2,
+...     system_capacity=4,
+...     buffer_capacity=3,
+... )
+>>> Q = abg.markov.get_transition_matrix(
+...     lambda_1=1,
+...     lambda_2=1,
+...     mu=4,
+...     num_of_servers=1,
+...     threshold=2,
+...     system_capacity=4,
+...     buffer_capacity=3
+... )
+>>> pi = abg.markov.get_markov_state_probabilities(
+...     abg.markov.get_steady_state_algebraically(
+...         Q, algebraic_function=np.linalg.solve
+...     ),
+...     all_states,
+... )
+>>> round(
+...     abg.markov.mean_blocking_time_formula_using_direct_approach(
+...         all_states=all_states,
+...         pi=pi,
+...         lambda_1=1,
+...         mu=4,
+...         num_of_servers=1,
+...         threshold=2,
+...         system_capacity=4,
+...         buffer_capacity=3,
+...     ), 10
+... )
+0.1287843179
+
+\end{lstlisting}
