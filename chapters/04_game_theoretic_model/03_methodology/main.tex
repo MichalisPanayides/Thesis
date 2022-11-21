@@ -329,6 +329,8 @@ Note, that the outcome of the function corresponds to the point of the line in
 Figure~\ref{fig:brent_method_diffs} where \(p_A = 0.5\).
 
 \begin{lstlisting}[style=pystyle]
+>>> import numpy as np
+>>>
 >>> lambda_1_A = 2
 >>> mu_A = 2
 >>> num_of_servers_A = 3
@@ -346,7 +348,7 @@ Figure~\ref{fig:brent_method_diffs} where \(p_A = 0.5\).
 >>> alpha = 0.2
 >>> p_A = 0.5
 >>>
->>> get_mean_blocking_difference_using_markov(
+>>> np.round(get_mean_blocking_difference_using_markov(
 ...     prop_1=p_A,
 ...     lambda_2=lambda_2,
 ...     lambda_1_1=lambda_1_A,
@@ -362,8 +364,8 @@ Figure~\ref{fig:brent_method_diffs} where \(p_A = 0.5\).
 ...     buffer_capacity_1=buffer_capacity_A,
 ...     buffer_capacity_2=buffer_capacity_B,
 ...     alpha=alpha,
-... )
--0.10424302454312097
+... ), 8)
+-0.10424302
 
 \end{lstlisting}
 
@@ -499,7 +501,7 @@ Note that this is the value of \(p_A\) for which the line of
 Figure~\ref{fig:brent_method_diffs} crosses the \(x\)-axis.
 
 \begin{lstlisting}[style=pystyle]
->>> calculate_class_2_individuals_best_response(
+>>> np.round(calculate_class_2_individuals_best_response(
 ...     lambda_2=lambda_2,
 ...     lambda_1_1=lambda_1_A,
 ...     lambda_1_2=lambda_1_B,
@@ -514,8 +516,8 @@ Figure~\ref{fig:brent_method_diffs} crosses the \(x\)-axis.
 ...     buffer_capacity_1=buffer_capacity_A,
 ...     buffer_capacity_2=buffer_capacity_B,
 ...     alpha=alpha,
-... )
-0.5778494982926555
+... ), 8)
+0.5778495
 
 \end{lstlisting}
 
