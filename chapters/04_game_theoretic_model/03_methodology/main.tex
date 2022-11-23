@@ -634,7 +634,7 @@ and it can also be found in the routing matrix at the \(8^{th}\) row and
 \(10^{th}\) column (i.e. \(R_{8,10} = 0.58\)).
 
 
-\paragraph{Implementation}
+\paragraph{Implementation}\label{sec:implementation_distribution_service}
 
 The following function shows how the routing matrix can be calculated by using
 function~\lstinline[style=pystyle]{calculate_class_2_individuals_best_response}
@@ -876,4 +876,452 @@ increases, rather than decreasing, from \lstinline[style=pystyle]{xtol=1e-05}
 to \lstinline[style=pystyle]{xtol=0.0001}.
 
 
+
+\subsubsection{Queueing systems and normal form games}
+
+In subsection~\ref{sec:best_response_distribution_service} it is shown that
+given the strategies played by queueing systems \(A\) and \(B\) the best
+response of the distribution service can be found.
+Consider the routing matrix \(R\) defined in equation~(\ref{eq:routing_matrix}).
+
+\begin{equation*}
+    R =
+    \begin{pmatrix}
+        p_{1,1}^A & p_{1,2}^A & \dots & p_{1,N_B}^A \\
+        p_{2,1}^A & p_{2,2}^A & \dots & p_{2,N_B}^A \\
+        \vdots & \vdots & \ddots & \vdots \\
+        p_{N_A,1}^A & p_{N_A,2}^A & \dots & p_{N_A,N_B}^A \\
+    \end{pmatrix}
+\end{equation*}
+
+Every entry \(R_{i,j}\) of the routing matrix represents best response of
+the distribution service when \(T^A=i\) and \(T^B=j\).
+In other words, given \(T^A=i\) and \(T^B=j\), the distribution service's
+strategy that maximises its utility should be to route a proportion of
+\(p^A_{i,j}\) of the individuals to queueing system \(A\) and a proportion of
+\(1 - p^A_{i,j}\) individuals to queueing system \(B\).
+Assuming that for every pair of strategies \(T^A\) and \(T^B\) the best response
+of the distribution service is known to the queueing systems, then the
+formulation of the game can be simplified even more.
+In fact the imperfect information extensive form game defined in
+Section~\ref{sec:game_imperfect_information} can be now transformed into a
+2-player normal form game between the two queueing systems.
+From equation~(\ref{eq:obj_queueing_systems}) the utility of queueing system
+\(i\) when the pair of strategies \((T^A, T^B)\) is played, is defined as:
+
+\begin{equation}\label{eq:utility_queueing_systems}
+    U_{T_A, T_B}^i = 1 - \left( \hat{P} - P(W_i < t) \right)^2
+    \qquad i \in {A, B}
+\end{equation}
+
+\(U_{T_A, T_B}^A\) and \(U_{T_A, T_B}^B\) are essentially artificial metrics
+that queuing systems \(A\) and \(B\) aim to maximise.
+Essentially, by maximising equation~(\ref{eq:utility_queueing_systems}) for both
+queueing systems, the queueing systems are trying to minimise the difference
+between the proportion of individuals that are served within the target time
+\(t\) and the proportion target \(\hat{P}\).
+For example, given a proportion target \(\hat{P} = 0.9\) which means that
+90\% of the individuals should be served within the target time \(t\), and
+given that the proportion of individuals that are served within the target time
+is \(P(W_i < t) = 0.8\), then the utility of the queueing system \(i\) is
+given by \(U_{T_A, T_B}^i = 1 - (0.9 - 0.8)^2 = 0.99\).
+The payoff matrices of the game can be populated by these utilities for all
+possible pairs of strategies \((T^A, T^B)\).
+
+\begin{equation}\label{eq:payoff_matrices}
+    A =
+    \begin{pmatrix}
+        U_{1,1}^A & U_{1,2}^A & \dots & U_{1,N_B}^A \\
+        U_{2,1}^A & U_{2,2}^A & \dots & U_{2,N_B}^A \\
+        \vdots & \vdots & \ddots & \vdots \\
+        U_{N_A,1}^A & U_{N_A,2}^A & \dots & U_{N_A,N_B}^A \\
+    \end{pmatrix}, \,
+    B =
+    \begin{pmatrix}
+        U_{1,1}^B & U_{1,2}^B & \dots & U_{1,N_B}^B \\
+        U_{2,1}^B & U_{2,2}^B & \dots & U_{2,N_B}^B \\
+        \vdots & \vdots & \ddots & \vdots \\
+        U_{N_A,1}^B & U_{N_A,2}^B & \dots & U_{N_A,N_B}^B \\
+    \end{pmatrix}
+\end{equation}
+
+Matrix A consists of all possible utilities of queueing system \(A\), and
+matrix B consists of all possible utilities of queueing system \(B\).
+The game is now a 2-player normal form game with payoff matrices \(A\) and
+\(B\).
+
+
+\paragraph{Implementation}
+
+Consider an example of the described game with the following parameters:
+
+\begin{table}[H]
+    \caption{Distribution service parameters}
+    \begin{center}
+        \begin{tabular}{||c|c|c|c||}
+            \hline
+            \(\lambda_2\) & t & \(p_A\) & \(\alpha\) \\
+            \hline\hline
+            4 & 2 & 0.5 & 0.2 \\
+            \hline
+        \end{tabular}
+    \end{center}
+    \label{tab:implemetation_dist_service_parameters}
+\end{table}
+
+\begin{table}[H]
+    \caption{Queueing systems parameters}
+    \begin{center}
+        \begin{tabular}{||c|c|c|c|c|c||}
+            \hline
+            \(\lambda_1^A\) & \(\mu^A\) & \(C^A\) & \(N^A\) & \(M^A\) \\
+            \hline
+            2 & 3 & 2 & 7 & 6 \\
+            \hline
+        \end{tabular}
+
+        \vspace{0.5cm}
+        
+        \begin{tabular}{||c|c|c|c|c|c||}
+            \hline
+            \(\lambda_1^B\) & \(\mu^B\) & \(C^B\) & \(N^B\) & \(M^B\) \\
+            \hline
+            1 & 1 & 3 & 4 & 3 \\
+            \hline
+        \end{tabular}
+    \end{center}
+    \label{tab:implemetation_queueing_systems_parameters}
+\end{table}
+
+
+\begin{lstlisting}[style=pystyle]
+>>> lambda_2 = 4
+>>> target = 2
+>>> p_A = 0.5
+>>> alpha = 0.2
+>>> 
+>>> lambda_1_A = 2
+>>> mu_A = 3
+>>> num_of_servers_A = 2
+>>> system_capacity_A = 7
+>>> buffer_capacity_A = 6
+>>> 
+>>> lambda_1_B = 1
+>>> mu_B = 1
+>>> num_of_servers_B = 3
+>>> system_capacity_B = 4
+>>> buffer_capacity_B = 3
+
+\end{lstlisting}
+
+The first function to create is one that takes a pair of thresholds \(T^A=i,
+T^B=j\) and gets the best response of the distribution service \(p_A\).
+Then, using \(p_A\), finds the value of \(U_{i,j}^A\) and \(U_{i,j}^B\)
+and returns the tuple \((i, j, p_A, U_{i,j}^A, U_{i,j}^B)\).
+
+\begin{lstlisting}[style=pystyle]
+>>> import numpy as np
+>>> def get_individual_entries_of_matrices(
+...     lambda_2,
+...     lambda_1_1,
+...     lambda_1_2,
+...     mu_1,
+...     mu_2,
+...     num_of_servers_1,
+...     num_of_servers_2,
+...     threshold_1,
+...     threshold_2,
+...     system_capacity_1,
+...     system_capacity_2,
+...     buffer_capacity_1,
+...     buffer_capacity_2,
+...     alpha,
+...     target,
+...     p_hat=0.95,
+... ):
+...     """
+...     Gets the (i,j)th entry of the payoff matrices and the routing matrix
+...     where i=threshold_1 and j=threshold_2. 
+...
+...     Parameters
+...     ----------
+...     lambda_2 : float
+...     lambda_1_1 : float
+...     lambda_1_2 : float
+...     mu_1 : float
+...     mu_2 : float
+...     num_of_servers_1 : int
+...     num_of_servers_2 : int
+...     threshold_1 : int
+...     threshold_2 : int
+...     system_capacity_1 : int
+...     system_capacity_2 : int
+...     buffer_capacity_1 : int
+...     buffer_capacity_2 : int
+...     alpha : float
+...     target : float
+...
+...     Returns
+...     -------
+...     tuple
+...         A tuple of the form (i, j, R[i,j], A[i,j], B[i,j])
+...     """
+...     prop_to_hospital_1 = calculate_class_2_individuals_best_response(
+...         lambda_2=lambda_2,
+...         lambda_1_1=lambda_1_1,
+...         lambda_1_2=lambda_1_2,
+...         mu_1=mu_1,
+...         mu_2=mu_2,
+...         num_of_servers_1=num_of_servers_1,
+...         num_of_servers_2=num_of_servers_2,
+...         system_capacity_1=system_capacity_1,
+...         system_capacity_2=system_capacity_2,
+...         buffer_capacity_1=buffer_capacity_1,
+...         buffer_capacity_2=buffer_capacity_2,
+...         threshold_1=threshold_1,
+...         threshold_2=threshold_2,
+...         alpha=alpha,
+...     )
+...     prop_to_hospital_2 = 1 - prop_to_hospital_1
+... 
+...     proportion_within_target_1 = (
+...         abg.markov.proportion_within_target_using_markov_state_probabilities(
+...             lambda_2=lambda_2 * prop_to_hospital_1,
+...             lambda_1=lambda_1_1,
+...             mu=mu_1,
+...             num_of_servers=num_of_servers_1,
+...             threshold=threshold_1,
+...             system_capacity=system_capacity_1,
+...             buffer_capacity=buffer_capacity_1,
+...             class_type=None,
+...             target=target,
+...         )
+...     )
+...     proportion_within_target_2 = (
+...         abg.markov.proportion_within_target_using_markov_state_probabilities(
+...             lambda_2=lambda_2 * prop_to_hospital_2,
+...             lambda_1=lambda_1_2,
+...             mu=mu_2,
+...             num_of_servers=num_of_servers_2,
+...             threshold=threshold_2,
+...             system_capacity=system_capacity_2,
+...             buffer_capacity=buffer_capacity_2,
+...             class_type=None,
+...             target=target,
+...         )
+...     )
+...     utility_1 = 1 - (
+...         (np.nanmean(proportion_within_target_1) - p_hat) ** 2
+...     )
+...     utility_2 = 1 - (
+...         (np.nanmean(proportion_within_target_2) - p_hat) ** 2
+...     )
+... 
+...     return (
+...         threshold_1,    
+...         threshold_2,
+...         prop_to_hospital_1,
+...         utility_1,
+...         utility_2
+...     )
+
+\end{lstlisting}
+
+The function \lstinline[style=pystyle]{get_individual_entries_of_matrices} can
+now be used to get the \((i,j)^\text{th}\) entry of the routing matrix \(R\)
+payoff matrix \(A\) and payoff matrix \(B\).
+For example consider the case when \(T_A = 7\) and \(T_B = 4\).
+The equivalent values of \(R, A \text{ and } B\) on the \((7, 4)^\text{th}\)
+position can be calculated using:
+
+\begin{lstlisting}[style=pystyle]
+>>> _, _, p_A, U_A, U_B = np.round(get_individual_entries_of_matrices(
+...     lambda_2=lambda_2,
+...     lambda_1_1=lambda_1_A,
+...     lambda_1_2=lambda_1_B,
+...     mu_1=mu_A,
+...     mu_2=mu_B,
+...     num_of_servers_1=num_of_servers_A,
+...     num_of_servers_2=num_of_servers_B,
+...     threshold_1=7,
+...     threshold_2=4,
+...     system_capacity_1=system_capacity_A,
+...     system_capacity_2=system_capacity_B,
+...     buffer_capacity_1=buffer_capacity_A,
+...     buffer_capacity_2=buffer_capacity_B,
+...     alpha=alpha,
+...     target=1,
+...     p_hat=0.95
+... ), 8)
+>>> p_A
+0.80583153
+>>> U_A
+0.96146225
+>>> U_B
+0.87505776
+
+\end{lstlisting}
+
+The second step is to use the
+\lstinline[style=pystyle]{get_individual_entries_of_matrices} function to
+calculate the entries of the routing matrix \(R\), payoff matrix \(A\) and
+payoff matrix \(B\).
+Thus, by iterating over all possible values of \(T_A\) and \(T_B\), the
+routing matrix \(R\), payoff matrix \(A\) and payoff matrix \(B\) can be
+calculated.
+Note that in Section~\ref{sec:implementation_distribution_service} the
+\lstinline[style=pystyle]{get_routing_matrix} function was defined that returns
+the routing matrix \(R\).
+The function defined here gets all matrices in a much more computationally
+efficient way.
+
+\begin{lstlisting}[style=pystyle]
+>>> import itertools
+>>> def get_payoff_matrices(
+...     lambda_2,
+...     lambda_1_1,
+...     lambda_1_2,
+...     mu_1,
+...     mu_2,
+...     num_of_servers_1,
+...     num_of_servers_2,
+...     system_capacity_1,
+...     system_capacity_2,
+...     buffer_capacity_1,
+...     buffer_capacity_2,
+...     target,
+...     alternative_utility=False,
+...     alpha=0,
+... ):
+...     """
+...     The function uses the distribution array (that is the array that holds the
+...     optimal proportion of individuals to send to each hospital), to calculate
+...     the proportion of patients within time for every possible set of thresholds
+...     chosen by each system.
+...     Parameters
+...     ----------
+...     lambda_2 : float
+...     lambda_1_1 : float
+...     lambda_1_2 : float
+...     mu_1 : float
+...     mu_2 : float
+...     num_of_servers_1 : int
+...     num_of_servers_2 : int
+...     system_capacity_1 : int
+...     system_capacity_2 : int
+...     buffer_capacity_1 : int
+...     buffer_capacity_2 : int
+...     target : float
+...         The target time that individuals should be within
+...
+...     Returns
+...     -------
+...     numpy.array, numpy.array
+...         The payoff matrices of the game
+...     """
+...     utility_matrix_1 = np.zeros((system_capacity_1, system_capacity_2))
+...     utility_matrix_2 = np.zeros((system_capacity_1, system_capacity_2))
+...     routing_matrix = np.zeros((system_capacity_1, system_capacity_2))
+...     for threshold_1, threshold_2 in itertools.product(
+...         range(1, system_capacity_1 + 1), range(1, system_capacity_2 + 1)
+...     ):
+...         T_A, T_B, p_A, U_A, U_B = get_individual_entries_of_matrices(
+...             lambda_2=lambda_2,
+...             lambda_1_1=lambda_1_1,
+...             lambda_1_2=lambda_1_2,
+...             mu_1=mu_1,
+...             mu_2=mu_2,
+...             num_of_servers_1=num_of_servers_1,
+...             num_of_servers_2=num_of_servers_2,
+...             threshold_1=threshold_1,
+...             threshold_2=threshold_2,
+...             system_capacity_1=system_capacity_1,
+...             system_capacity_2=system_capacity_2,
+...             buffer_capacity_1=buffer_capacity_1,
+...             buffer_capacity_2=buffer_capacity_2,
+...             alpha=alpha,
+...             target=target,
+...         )
+...         utility_matrix_1[T_A - 1, T_B - 1] = U_A
+...         utility_matrix_2[T_A - 1, T_B - 1] = U_B
+...         routing_matrix[T_A - 1, T_B - 1] = p_A
+...
+...     return utility_matrix_1, utility_matrix_2, routing_matrix
+        
+\end{lstlisting}
+    
+The following piece of code gets matrices \(A\), \(B\) and \(R\) for the
+parameters of the example given above.
+
+\begin{lstlisting}[style=pystyle]
+>>> A, B, R = get_payoff_matrices(
+...     lambda_2=lambda_2,
+...     lambda_1_1=lambda_1_A,
+...     lambda_1_2=lambda_1_B,
+...     mu_1=mu_A,
+...     mu_2=mu_B,
+...     num_of_servers_1=num_of_servers_A,
+...     num_of_servers_2=num_of_servers_B,
+...     system_capacity_1=system_capacity_A,
+...     system_capacity_2=system_capacity_B,
+...     buffer_capacity_1=buffer_capacity_A,
+...     buffer_capacity_2=buffer_capacity_B,
+...     target=target,
+...     alpha=0,
+... )
+>>> A
+array([[0.99783349, 0.99783349, 0.99783349, 0.99783349],
+       [0.99791294, 0.997908  , 0.9978956 , 0.99788205],
+       [0.99818675, 0.99815898, 0.9980942 , 0.99803223],
+       [0.99858555, 0.99852554, 0.99838075, 0.99824713],
+       [0.99908345, 0.99899654, 0.99875599, 0.99853094],
+       [0.99953429, 0.99946954, 0.99917061, 0.99886562],
+       [0.99962588, 0.99962588, 0.99947103, 0.9991795 ]])
+>>> B
+array([[0.99199207, 0.99157153, 0.98986388, 0.98018693],
+       [0.99199207, 0.99176915, 0.99047978, 0.98403475],
+       [0.99199207, 0.99180175, 0.99065167, 0.98526931],
+       [0.99199207, 0.99183129, 0.99080081, 0.98623919],
+       [0.99199207, 0.99186433, 0.99095294, 0.98711709],
+       [0.99199207, 0.99192113, 0.99117199, 0.98816358],
+       [0.99199207, 0.99199207, 0.99166644, 0.9899607 ]])
+>>> R
+array([[0.92992288, 0.44649026, 0.23605342, 0.12099486],
+       [1.        , 0.8562699 , 0.62075404, 0.44170806],
+       [1.        , 0.88253463, 0.67740094, 0.51730643],
+       [1.        , 0.90410709, 0.72074724, 0.57415867],
+       [1.        , 0.92632326, 0.76116766, 0.62524083],
+       [1.        , 0.96104926, 0.81485397, 0.68749328],
+       [1.        , 1.        , 0.92669791, 0.80590018]])
+
+\end{lstlisting}
+
+The final thing to be done is to use the \lstinline[style=pystyle]{nashpy}
+library to build the game using the payoff matrices.
+
+\begin{lstlisting}[style=pystyle]
+>>> import nashpy as nash
+>>> game = nash.Game(A, B)
+>>> game
+Bi matrix game with payoff matrices:
+<BLANKLINE>
+Row player:
+[[0.99783349 0.99783349 0.99783349 0.99783349]
+ [0.99791294 0.997908   0.9978956  0.99788205]
+ [0.99818675 0.99815898 0.9980942  0.99803223]
+ [0.99858555 0.99852554 0.99838075 0.99824713]
+ [0.99908345 0.99899654 0.99875599 0.99853094]
+ [0.99953429 0.99946954 0.99917061 0.99886562]
+ [0.99962588 0.99962588 0.99947103 0.9991795 ]]
+<BLANKLINE>
+Column player:
+[[0.99199207 0.99157153 0.98986388 0.98018693]
+ [0.99199207 0.99176915 0.99047978 0.98403475]
+ [0.99199207 0.99180175 0.99065167 0.98526931]
+ [0.99199207 0.99183129 0.99080081 0.98623919]
+ [0.99199207 0.99186433 0.99095294 0.98711709]
+ [0.99199207 0.99192113 0.99117199 0.98816358]
+ [0.99199207 0.99199207 0.99166644 0.9899607 ]]
+
+\end{lstlisting}
 
