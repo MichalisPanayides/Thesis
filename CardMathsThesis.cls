@@ -39,7 +39,8 @@
 
 % you need an oxlogo.eps or oxlogo.pdf file as appropriate
 \def\logo{}
-% \includegraphics[width=45mm]{Cardifflogo.pdf}}
+% TODO: Somehow use this \includegraphics[width=45mm]{Cardifflogo.pdf}
+% inside \logo{} without breaking github actions 
 
 %
 % Define text area of page and margin offsets
@@ -65,30 +66,30 @@
        {\if@restonecol\twocolumn
        \else\newpage\thispagestyle{empty}\fi}
 
-%define title page layout
-% \renewcommand{\maketitle}{%
-% \begin{alwayssingle}
-%     \renewcommand{\footnotesize}{\small}
-%     \renewcommand{\footnoterule}{\relax}
-%     \thispagestyle{empty}
-%   \null\vfill
-%   \begin{center}
-%     { \Huge {\bfseries {\@title}} \par}
-% {\large \vspace*{35mm} {\logo \par} \vspace*{25mm}}
-%     {{\Large \@author} \par}
-% {\large \vspace*{1ex}
-%     {{\@college} \par}
-% \vspace*{1ex}
-%     {Cardiff University \par}
-% \vspace*{25mm}
-%     {{\submittedtext} \par}
-% \vspace*{1ex}
-%     {\it {\@degree} \par}
-% \vspace*{2ex}
-%     {\@degreedate}}
-%   \end{center}
-%   \null\vfill
-% \end{alwayssingle}}
+% define title page layout
+\renewcommand{\maketitle}{%
+\begin{alwayssingle}
+    \renewcommand{\footnotesize}{\small}
+    \renewcommand{\footnoterule}{\relax}
+    \thispagestyle{empty}
+  \null\vfill
+  \begin{center}
+    { \Huge {\bfseries {\@title}} \par}
+{\large \vspace*{35mm} {\logo \par} \vspace*{25mm}}
+    {{\Large \@author} \par}
+{\large \vspace*{1ex}
+    {{\@college} \par}
+\vspace*{1ex}
+    {Cardiff University \par}
+\vspace*{25mm}
+    {{\submittedtext} \par}
+\vspace*{1ex}
+    {\it {\@degree} \par}
+\vspace*{2ex}
+    {\@degreedate}}
+  \end{center}
+  \null\vfill
+\end{alwayssingle}}
 
 % DEDICATION
 %
