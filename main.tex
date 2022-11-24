@@ -1,24 +1,40 @@
-\documentclass{article}
+\documentclass[12pt]{CardMathsThesis}
 
 \input{packages.tex}
 \input{title.tex}
 
 \begin{document}
-    \maketitle
-    \tableofcontents
-    \newpage
+
+    \baselineskip=18pt plus1pt
+
+    \maketitle   
+    \vspace{-4em}
+
+    \input{Frontmatter/declarationStatements}
+    \input{Frontmatter/dedication}
+    \input{Frontmatter/acknowledgements}
+    \input{Frontmatter/abstract}
+
+
+    \begin{romanpages}
+        \tableofcontents            
+        \listoffigures              
+        \listoftables
+    \end{romanpages}  
+
+    \pagenumbering{arabic}
 
     \input{chapters/01_introduction/main.tex}
     \input{chapters/02_literature_review/main.tex}
     \input{chapters/03_queueing_model/main.tex}
-    \input{chapters/04_game_theoretic_model/main.tex}
+    % \input{chapters/04_game_theoretic_model/main.tex}
     \input{chapters/05_methodology/main.tex}
     \input{chapters/06_ems_ed_application/main.tex}
     \input{chapters/07_agent_based_extension/main.tex}
     \input{chapters/08_results/main.tex}
     \input{chapters/09_conclusion/main.tex}
     
-    \bibliographystyle{plain}
-    \bibliography{bibliography.bib}
+    % \bibliographystyle{plain}
+    % \bibliography{bibliography.bib}
 
 \end{document}
