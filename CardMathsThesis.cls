@@ -38,7 +38,7 @@
 
 
 % you need an oxlogo.eps or oxlogo.pdf file as appropriate
-\def\logo{\includegraphics[width=45mm]{Cardifflogo.pdf}}
+% \def\logo{\includegraphics[width=45mm]{Cardifflogo.pdf}}
 
 %
 % Define text area of page and margin offsets
@@ -73,7 +73,7 @@
   \null\vfill
   \begin{center}
     { \Huge {\bfseries {\@title}} \par}
-{\large \vspace*{35mm} {\logo \par} \vspace*{25mm}}
+% {\large \vspace*{35mm} {\logo \par} \vspace*{25mm}}
     {{\Large \@author} \par}
 {\large \vspace*{1ex}
     {{\@college} \par}
