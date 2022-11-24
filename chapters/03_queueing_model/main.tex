@@ -1,4 +1,4 @@
-\section{Queueing theoretic model}\label{sec:queueing_section}
+\chapter{Queueing theoretic model}\label{sec:queueing_section}
 
 One of the main outcomes of this research is the creation of a queueing network
 model that consists of two queueing nodes and accepts two types of individuals.
@@ -50,7 +50,7 @@ Emergency Departments (EDs) and the Emergency Medical Systems (EMS).
 \input{chapters/03_queueing_model/01_discrete_event_simulation/main.tex}
 
 
-\subsection{Markov chain model}
+\section{Markov chain model}
 
 A Markov chain is a stochastic model that is the primary analytical tool to
 study queues.
@@ -177,7 +177,7 @@ Figure~\ref{fig:adjusted_markov_model}.
 \end{figure}
 
 
-\subsubsection{Steady state probability vector \(\pi\)}
+\subsection{Steady state probability vector \(\pi\)}
 \label{sec:steady_state_probabilities}
 
 The generator matrix \( Q \) defined in (\ref{eq:markov_transition_rate}) can
@@ -213,7 +213,7 @@ all approaches:
 \end{center}
 
 
-\subsubsection{Numerical integration approach}
+\subsection{Numerical integration approach}
 
 Another method that can be used to get the steady state probability vector is
 to solve the differential equation 
@@ -300,7 +300,7 @@ array([0.17596012, 0.26394019, 0.19795515, 0.14846637, 0.08660539,
 \end{lstlisting}
 
 
-\subsubsection{Linear algebraic approach}
+\subsection{Linear algebraic approach}
 
 The steady state probability vector \( \pi \) can be obtained by solving the
 linear equation:
@@ -345,7 +345,7 @@ array([0.17596013, 0.2639402 , 0.19795515, 0.14846636, 0.08660538,
 \end{lstlisting}
 
 
-\subsubsection{Least squares approach}
+\subsection{Least squares approach}
 
 Another approach that is considered is the least squares method.
 As the problem becomes more complex (i.e. as the artificial parameters \(N\)
@@ -377,7 +377,7 @@ array([0.17596013, 0.2639402 , 0.19795515, 0.14846636, 0.08660538,
 \input{chapters/03_queueing_model/06_closed_form_steady_state_probs/main.tex}
 
 
-\subsection{Performance measures}
+\section{Performance measures}
 Using vector \(\pi\) there are numerous performance measures of the model that
 can be calculated.
 The following equations utilise \(\pi\) to get performance measures on the

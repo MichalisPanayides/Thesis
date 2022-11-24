@@ -1,4 +1,4 @@
-\subsubsection{Waiting time}\label{sec:waiting_time}
+\subsection{Waiting time}\label{sec:waiting_time}
 Waiting time is the amount of time that individuals wait in node 1 before
 they start their service.
 For a given set of parameters there are three different performance measures
@@ -6,7 +6,7 @@ around the mean waiting time that need to be considered.
 The mean waiting time of type 1 individuals, the mean waiting time of type 2
 individuals, and the overall mean waiting time.
 
-\paragraph{Recursive approach}\label{sec:recursive_waiting_time}
+\subsubsection{Recursive approach}\label{sec:recursive_waiting_time}
 
 The first approach to be considered is a recursive approach to getting the
 mean waiting time.
@@ -207,7 +207,7 @@ the resultant equation can be used to get the overall waiting time.
 \end{equation}
 
 
-\subparagraph{Implementation}\label{sec:waiting_recursive_implementation}
+\paragraph{Implementation}\label{sec:waiting_recursive_implementation}
 
 Implementing the recursive approach for the waiting time in python uses the
 same logical structure as described in Section~\ref{sec:recursive_waiting_time}.
@@ -656,7 +656,7 @@ as described in equation (\ref{eq:overall_waiting_time}).
 \end{lstlisting}
 
 
-\paragraph{Direct approach}\label{sec:direct_waiting_time}
+\subsubsection{Direct approach}\label{sec:direct_waiting_time}
 
 The direct approach uses similar concepts to the recursive approach of
 Section~\ref{sec:recursive_waiting_time}.
@@ -833,7 +833,7 @@ can be utilised once more to compute the overall mean waiting time for both
 individual types.
 
 
-\subparagraph{Implementation}\label{sec:waiting_direct_implementation}
+\paragraph{Implementation}\label{sec:waiting_direct_implementation}
 
 Similar to the implementation of the recursive approach from
 Section~\ref{sec:waiting_recursive_implementation} the functions that correspond
@@ -1145,7 +1145,7 @@ for either type of individuals can be calculated as follows:
 \end{lstlisting}
 
 
-\paragraph{Closed-form approach}\label{sec:closed_form_waiting_time}
+\subsubsection{Closed-form approach}\label{sec:closed_form_waiting_time}
 
 The final approach for getting the mean waiting time is to use a closed-form
 approach.
@@ -1170,7 +1170,7 @@ Having \(W^{(1)}\) and \(W^{(2)}\), equation (\ref{eq:overall_waiting_time}) can
 then be used to compute \(W\), the overall mean waiting time for both types.
 
 
-\subparagraph{Implementation}\label{sec:waiting_closed_form_implementation}
+\paragraph{Implementation}\label{sec:waiting_closed_form_implementation}
 
 The closed-form formula can be implemented in one function.
 The functions is broken down in two parts for the case of each individual type.

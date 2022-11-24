@@ -1,10 +1,10 @@
-\subsubsection{Closed-form approach}
+\subsection{Closed-form approach}
 
 This section aims to explore alternative ways of calculating the steady state
 probabilities using the connection between Markov chains and graph
 theory.
 
-\paragraph{Graph Theory}
+\subsubsection{Graph Theory}
 In mathematics a graph \(G = (V, E)\) is a structure that consists of a set of
 vertices \(V = \{v_1, v_2, \dots, v_n\}\) and a set of edges \(E = \{e_1, e_2,
 \dots, e_m\}\) that connect the vertices together~\cite{bender2010lists}.
@@ -41,7 +41,7 @@ In this case, the edges are expressed as \(e = (v_i, v_j, w)\) where \(v_i, v_j
     \label{fig:example_of_weighted_directed_graph}
 \end{figure}
 
-\paragraph{A graph theoretic model underlying the Markov chain}
+\subsubsection{A graph theoretic model underlying the Markov chain}
 It can be assumed that a Markov chain model \(M\) can be translated as a
 weighted directed graph \(G_M = (V, E)\) where \(V=S\) from
 equation~(\ref{eq:definition_of_S_as_disjoint_union}) and \((v_i, v_j)\in E\) if
@@ -107,7 +107,7 @@ arm} of the model has a length of \(3\), \(N=5\) that indicates that the
 right-most states \((u,v)\) are of the form \((u,5)\) and \(M=2\) that
 equivalently shows that the bottom states are of the form \((2,v)\).
 
-\paragraph{Spanning trees}
+\subsubsection{Spanning trees}
 
 A \textit{spanning tree} is defined as a subset of the graph that visits all
 the vertices of the graph and does not include any
@@ -175,7 +175,7 @@ found by calculating the determinant of the Laplacian matrix \(Q\) of the
 directed graph and removing row \(i\) and column \(i\).}
 
 
-\paragraph{Spanning Trees rooted at \((0,0)\)}
+\subsubsection{Spanning Trees rooted at \((0,0)\)}
 
 Let us now consider some examples of spanning trees that are rooted at
 \((0,0)\).
@@ -355,7 +355,7 @@ As well as this, the sum of all the weights of the spanning trees denoted by
     \tilde{\pi}_{(0,0)} = (\lambda_2)^2 \mu^4 + 2 \lambda_2 \mu^5 + \mu^6
 \end{equation*}
 
-\paragraph{Conjecture of adding rows}
+\subsubsection{Conjecture of adding rows}
 
 Let us consider three Markov models with the same number of servers \(C=1\),
 the same threshold \(T=1\), the same node 1 capacity \(N=2\) but
@@ -420,7 +420,7 @@ Thus, having investigated the effect of adding rows (increasing \(M\)) the
 next thing to investigate is the effect of adding columns (increasing \(N\))
 and finding an expression for \(k(C,T,N)\).
 
-\paragraph{The effect of increasing \(N\)}
+\subsubsection{The effect of increasing \(N\)}
 In this section we will consider a node 2 capacity of \(M=1\) and see the
 effect
 of modifying other parameters on \(k(C, T, N)\).
@@ -564,7 +564,7 @@ from the equations above:
 \end{align}
 \normalsize
 
-\paragraph{Unknown terms}
+\subsubsection{Unknown terms}
 
 The terms that are still unknown are the terms where \(p_1, p_2, p_3 \geq 2\).
 Here are some of these values with the corresponding values of the
@@ -585,7 +585,7 @@ Here are some of these values with the corresponding values of the
     \end{itemize}
 \end{multicols}
 
-\paragraph{DRL arrays}
+\subsubsection{DRL arrays}
 
 In this section a new combinatorial object is defined: DRL arrays.
 It will be shown that there is a bijection between DRL arrays and the spanning
@@ -780,7 +780,7 @@ them not valid.
     \end{itemize}
 \end{multicols}
 
-\paragraph{
+\subsubsection{
     Examples of mappings of directed spanning trees to permutation arrays}
 
 \begin{multicols}{2}
@@ -843,7 +843,7 @@ them not valid.
     \end{flalign*}
 \end{multicols}
 
-\paragraph{Closed-form formula for state probabilities}
+\subsubsection{Closed-form formula for state probabilities}
 A general formula for finding all such permutations can be found, where the
 inputs are \( p_1\), \(p_2\) and \(p_3\) that correspond to the number of \(D\),
 \(R\) and \(L\) respectively and the output would be the coefficient of the term
@@ -993,7 +993,7 @@ Here's the expression for each of these terms:
     & - E_L(p_1, p_2, p_3) - E_{RL}(p_1, p_2, p_3)
 \end{align*}
 
-\paragraph{Example of the permutation algorithm}
+\subsubsection{Example of the permutation algorithm}
 Consider the term \((\lambda_2) (\lambda_1) \mu^2\) and the above expressions.
 In order to get the coefficient of that term the permutation algorithm needs to
 be applied with an input of \(p_1=1, p_2=1, p_3=2\), i.e. 1 \(D\), 1 \(R\) and 2

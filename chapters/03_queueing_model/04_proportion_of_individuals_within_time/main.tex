@@ -1,4 +1,4 @@
-\subsubsection{Proportion of individuals within target}
+\subsection{Proportion of individuals within target}
 \label{sec:proportion_of_individuals_within_time}
 
 Another performance measure that needs to be taken into consideration is the
@@ -10,7 +10,7 @@ The complexity of such a task comes from the fact that different individuals
 arrive at different states of the Markov model.
 Consider the case when an arrival occurs when the model is at a specific state.
 
-\paragraph{Distribution of time at a specific state (with 1 server)}
+\subsubsection{Distribution of time at a specific state (with 1 server)}
 
 \begin{figure}[H]
     \centering
@@ -76,7 +76,7 @@ and goes straight to service (i.e. when there is no other individual waiting
 and there is an empty server).
 
 
-\paragraph{Distribution of time at a specific state (with multiple servers)}
+\subsubsection{Distribution of time at a specific state (with multiple servers)}
 
 \begin{figure}[H]
     \centering
@@ -186,7 +186,7 @@ Thus, perhaps a more simplified version of the above expressions can be derived
 that is specific to the case of two erlang distributed random variables.
 
 
-\paragraph{Specific CDF of hypoexponential distribution}
+\subsubsection{Specific CDF of hypoexponential distribution}
 Equations (\ref{eq:general_cdf_hypoexponential}) and
 (\ref{eq:linear_general_cdf_hypoexponential}) refers to the general CDF of the
 hypoexponential distribution where the size of the vector parameters can be of
@@ -242,7 +242,7 @@ The following subsection proves the following expression:
 
 
 
-\paragraph{Proof of specific hypoexponential distribution
+\subsubsection{Proof of specific hypoexponential distribution
 (eq. (\ref{eq:hypoexponential_expression_to_proof}))}
 
 This section aims to show that there exists a simplified expression of equation
@@ -380,7 +380,7 @@ Thus the proof is split into two parts, for \(k=1\) and \(k=2\).
     \end{enumerate}
 \end{itemize}
 
-\paragraph{Proportion within target for type 1 and type 2 individuals}
+\subsubsection{Proportion within target for type 1 and type 2 individuals}
 
 Given the two CDFs of the Erlang and Hypoexponential distributions (equations
 (\ref{eq:erlang_distribution_definition}) and
@@ -507,7 +507,7 @@ model.
 \end{equation}
 
 
-\paragraph{Overall proportion within target}
+\subsubsection{Overall proportion within target}
 
 The overall proportion of individuals for both type 1 and type 2 individuals
 is given by the equivalent formula of equations
@@ -528,7 +528,7 @@ to get the weighted sum of the two already existing probabilities.
 \end{equation}
 \normalsize
 
-\paragraph{Implementation}\label{sec:implementation_proportion_individuals}
+\subsubsection{Implementation}\label{sec:implementation_proportion_individuals}
 
 This section focuses on the implementation of all necessary equations to 
 calculate the proportion of individuals within target as described

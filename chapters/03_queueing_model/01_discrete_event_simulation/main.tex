@@ -1,4 +1,4 @@
-\subsection{Discrete Event Simulation}\label{sec:discrete_event_simulation}
+\section{Discrete Event Simulation}\label{sec:discrete_event_simulation}
 
 Discrete Event Simulation (DES) is a method for modelling the behaviour of
 real-world systems in which the system is made up of discrete events, each of
@@ -64,7 +64,7 @@ from node 2 to node 1.
 \end{equation}
 
 
-\subsubsection{Implementation}
+\subsection{Implementation}
 The python library \lstinline[style=pystyle]{ciw}~\cite{ciwpython, ciwarticle}
 was used to implement the DES model.
 The library treats queues as distinct nodes in the network where each node has
@@ -130,7 +130,7 @@ If the queue capacity was non-zero, individuals could also have a waiting time
 but no waiting should take place in node 2, only blockage.
 
 
-\subsubsection{Custom node class}
+\subsection{Custom node class}
 Another specific feature of the particular model is that type 2 individuals
 need to stay blocked in node 2 whenever the number of individuals in node 1
 reaches a certain threshold \(T\).
@@ -293,7 +293,7 @@ running:
 \end{lstlisting}
 
 
-\subsubsection{Performance Measures}
+\subsection{Performance Measures}
 
 Having run the simulation using \lstinline[style=pystyle]{ciw} all necessary
 performance measures can be calculated.
