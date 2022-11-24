@@ -1,4 +1,4 @@
-% Treat \paragraph as \subsubsubsection
+% Treat \paragraph as \subsubsubsection and \subparagraph as \subsubsubsubsection
 \setcounter{tocdepth}{3}
 \setcounter{secnumdepth}{5}
 \makeatletter
@@ -15,7 +15,41 @@
    {\normalfont\normalsize\bfseries}}
 \makeatother
 
-% Packages
+% Array geometries for binding adjustments
+\usepackage[left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm, twoside]{geometry}
+
+
+% Packages for correct thesis structure
+\usepackage[toc,page]{appendix}
+\usepackage[ddmmyyyy]{datetime}
+\usepackage{lipsum}
+
+\usepackage{hyperref}
+\usepackage[square, sort&compress, numbers]{natbib} %update for your ref style
+
+%hyperlinks in the document
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+
+%Add month to the front cover
+\newdateformat{monthyeardate}{\monthname[\THEMONTH] \THEYEAR}
+
+% My details
+\title{Workforce Behaviours in Healthcare systems}   
+\author{Michalis Panayides}            
+\college{School of Mathematics}  
+\degree{Doctor of Philosophy}
+\degreedate{\monthyeardate\today}
+
+
+
+
+% Other packages
 \usepackage{amsmath}
 \usepackage{mathtools}
 \usepackage{amsfonts}
