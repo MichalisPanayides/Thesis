@@ -1,4 +1,4 @@
-\subsection{Methodology}
+\section{Methodology}
 
 A big part of the methodology that is used to solve the game requires the use of
 backwards induction.
@@ -13,7 +13,7 @@ pairs of strategies that the two queueing systems can choose from, the game can
 be reduced to a two-player Normal form game.
 
 
-\subsubsection{Distribution service and Brent's method}
+\subsection{Distribution service and Brent's method}
 \label{sec:best_response_distribution_service}
 
 Form the distribution service's perspective all information are known and can be
@@ -91,7 +91,7 @@ equation~(\ref{eq:obj_distributor_2}) can by calculated in the following way:
 where \(O(p_A)\) is the objective function of the distribution service described
 in equation~(\ref{eq:obj_distributor_2}).
 
-\paragraph{Examples}\label{sec:brent_method_example}
+\subsubsection{Examples}\label{sec:brent_method_example}
 Consider a distribution service whose arrival rate of type 2 individuals is
 \(\lambda_2 = 4\) and the `importance'-parameter is \(\alpha = 0.2\).
 Additionally, let queueing system \(A\) and queueing system \(B\) have the
@@ -210,7 +210,7 @@ Since the differences of them don't pass through the x-axis within the interval
 Therefore, using equation~(\ref{eq:obj_distributor_implementation}) the
 distribution service's best response should be \(p_A = 1\).
 
-\paragraph{Implementation}
+\subsubsection{Implementation}
 
 The first part of the implementation of the distribution service's best
 response is to calculate the difference between the decision values of the two
@@ -522,7 +522,7 @@ Figure~\ref{fig:brent_method_diffs} crosses the \(x\)-axis.
 \end{lstlisting}
 
 
-\subsubsection{Routing Matrix}
+\subsection{Routing Matrix}
 
 Section~\ref{sec:brent_method_example} showed how Brent's method can be used to
 find the best response of the distribution service given the pair of strategies
@@ -569,7 +569,7 @@ Thus, the routing matrix \(R\) can be simplified to:
 \end{equation}
 
 
-\paragraph{Example}\label{sec:routing_matrix_example}
+\subsubsection{Example}\label{sec:routing_matrix_example}
 Using the same example as in Section~\ref{sec:brent_method_example}, the routing
 matrix can be calculated by finding the values of \(p_A\) and \(p_B\) for every
 possible pair of thresholds \((T_A, T_B)\).
@@ -634,7 +634,7 @@ and it can also be found in the routing matrix at the \(8^{th}\) row and
 \(10^{th}\) column (i.e. \(R_{8,10} = 0.58\)).
 
 
-\paragraph{Implementation}\label{sec:implementation_distribution_service}
+\subsubsection{Implementation}\label{sec:implementation_distribution_service}
 
 The following function shows how the routing matrix can be calculated by using
 function~\lstinline[style=pystyle]{calculate_class_2_individuals_best_response}
@@ -764,7 +764,7 @@ array([[0.58864276, 0.22335975, 0.15533059, 0.15265663, 0.15078926,
 \end{lstlisting}
 
 
-\paragraph{Brent's method - tolerance sensitivity analysis}
+\subsubsection{Brent's method - tolerance sensitivity analysis}
 \label{sec:brent_tolerance}
 
 The implementation of Brent's method is being done using the
@@ -877,7 +877,7 @@ to \lstinline[style=pystyle]{xtol=0.0001}.
 
 
 
-\subsubsection{Queueing systems and normal form games}
+\subsection{Queueing systems and normal form games}
 
 In subsection~\ref{sec:best_response_distribution_service} it is shown that
 given the strategies played by queueing systems \(A\) and \(B\) the best
@@ -951,7 +951,7 @@ The game is now a 2-player normal form game with payoff matrices \(A\) and
 \(B\).
 
 
-\paragraph{Implementation}
+\subsubsection{Implementation}
 
 Consider an example of the described game with the following parameters:
 
