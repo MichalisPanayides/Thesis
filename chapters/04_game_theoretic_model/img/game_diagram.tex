@@ -1,4 +1,5 @@
 \begin{minipage}{.3\textwidth}
+    \raggedright
     \begin{tikzpicture}
         \draw[ultra thick] (0.75,2) ellipse (0.8cm and 2.5cm);
         \node at (0.5, 5) {Distribution service};
@@ -20,6 +21,7 @@
     \end{tikzpicture}
 \end{minipage}
 \begin{minipage}{.65\textwidth}
+    \centering
     \begin{tikzpicture}[>=stealth, scale=0.6] %arrow type
         % Difference between the two queue diagrams
         
@@ -60,8 +62,6 @@
 
         % the arrows and labels (Node 2+2)
         \draw[->] (8.5,0.525) -- +(20pt,0);
-        \node[align=center] at (1cm,-2cm) {};
-        \node[align=center] at (6cm,-0.75cm) {};
 
         % Ambulance lines
         \draw[<-] (0,-0.75) -- +(-50pt,0) node[left] {\( p_A \lambda_2 \)};
@@ -107,8 +107,6 @@
 
         % the arrows and labels (Node 2+2)
         \draw[->] (8.5, \diff + 0.525cm) -- +(20pt,0);
-        \node[align=center] at (1cm,\diff-2cm) {};
-        \node[align=center] at (6cm,\diff-0.75cm) {};
 
         % Ambulance lines
         \draw[<-] (0, \diff - 0.75cm) -- +(-50pt,0) node[left]
