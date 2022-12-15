@@ -13,8 +13,8 @@ game~\cite{Maschler2013}.
 The three players are:
 
 \begin{itemize}
-    \item the decision makers of queueing system A
-    \item the decision makers of queueing system B
+    \item the decision makers of queueing system \(A\)
+    \item the decision makers of queueing system \(B\)
     \item a distribution service that distributes individuals to the two
     queueing systems
 \end{itemize}
@@ -24,10 +24,12 @@ The three players are:
     \input{chapters/04_game_theoretic_model/img/game_diagram.tex}
     \caption{A diagrammatic representation of the game theoretic model.
     Individuals arrive at the distribution service at a rate of \( \lambda_2 \)
-    and then a proportion of them are distributed to Queue A (\(p_A\)) and the
-    remaining proportion to Queue B (\(p_B\)) so that \(p_A + p_B = 1\).
-    The corresponding arrival rates of type 2 individuals to Queues A and B are
-    thus given by: \( p_A \lambda_2 \) and \( p_B \lambda_2 \).}
+    and then a proportion of them are distributed to Queueing system \(A\)
+    (\(p_A\)) and the remaining proportion to Queueing system \(B\) (\(p_B\))
+    so that \(p_A + p_B = 1\).
+    The corresponding arrival rates of type 2 individuals to Queueing systems
+    \(A\) and \(B\) are thus given by:
+    \( p_A \lambda_2 \) and \( p_B \lambda_2 \).}
     \label{fig:diagram_of_game_theoretic_model}
 \end{figure}
 
@@ -61,27 +63,29 @@ The parameters of the game theoretic model are:
 
 \subsection{Strategies}\label{sec:game_strategies}
 
-Each player is given a predetermined set of strategies to play.
+Each player is given a predetermined set of strategies from which to choose.
 The strategies of the two queueing systems are the range of thresholds that they
 can choose from.
-In essence the strategy space of queueing system A is the set of integers from
-1 to the capacity of node 1 in queueing system A (\(N_A\)), while the
-strategy space of queueing system B is the set of integers from 1 to the
-capacity of node 1 in queueing system B (\(N_B\)).
+In essence the strategy space of queueing system \(A\) is the set of integers
+from
+1 to the capacity of node 1 in queueing system \(A\) (\(N_A\)), while the
+strategy space of queueing system \(B\) is the set of integers from 1 to the
+capacity of node 1 in queueing system \(B\) (\(N_B\)).
 
 \begin{equation}\label{eq:game_strategy_space_queueing_systems}
     T_A \in \{1, 2, \ldots, N_A\} \quad \text{and} \quad
     T_B \in \{1, 2, \ldots, N_B\}
 \end{equation}
 
-In essence this means that for either queueing system  (A or B), every strategy
+In essence this means that for either queueing system  (\(A\) or \(B\)), every
+strategy
 choice generates a different queueing network of the form that is described in
 Section~\ref{sec:queueing_section}.
 In other words, different strategies are equivalent to different thresholds
 which is one of the core parameters of the queueing network.
-Consider queueing system A as one of the three players of the game theoretic
+Consider queueing system \(A\) as one of the three players of the game theoretic
 model with node 1 capacity of \(N_A = 6\) and node 2 capacity of \(M_A = 3\).
-The strategy space of queueing system A is then
+The strategy space of queueing system \(A\) is then
 \(T_A \in \{1, 2, 3, 4, 5, 6\}\).
 Every possible value of \(T_A\) corresponds to a different queueing network.
 Figures~\ref{fig:game_strategy_visualisation_N_6_M_3_first}
@@ -142,21 +146,20 @@ models that arise from such a strategy space.
 Each of these Markov chains generate unique performance measures, state
 probabilities and overall queueing network behaviour.
 By varying the threshold \(T_A\) from 1 to 6, the queueing network of queueing
-system A has a significant change in the mean waiting time and in the mean
+system \(A\) has a significant change in the mean waiting time and in the mean
 blocking time.
-As a matter of fact, as we increase the threshold the mean waiting time is
+As a matter of fact, as the threshold is increased the mean waiting time is
 non-increasing while the mean blocking time is non-decreasing.
-% TODO: The above sentence is correct but maybe needs some rewording.
-Having a low threshold means that queueing system A will block type 2
+Having a low threshold means that queueing system \(A\) will block type 2
 individuals more often and thus the mean blocking time will be higher and
 hence the mean waiting time will be lower.
-The same logic applies to queueing system B.
+The same logic applies to queueing system \(B\).
 
 The strategy space of the distribution service, which is the third player of the
 game is the range of all possible ways to distribute individuals to the two
 queueing systems.
-That is the proportions of individuals to send to queueing system A and the
-proportion of individuals to send to queueing system B (\(p_A, p_B\)).
+That is the proportions of individuals to send to queueing system \(A\) and the
+proportion of individuals to send to queueing system \(B\) (\(p_A, p_B\)).
 
 \begin{align}
     p_A \in & [0, 1] \quad \text{and} \quad p_B \in [0, 1] \nonumber \\
@@ -176,16 +179,17 @@ Similar to the strategy space of the queueing networks, the strategy space of
 the distribution service is also translated back into the queueing network.
 Different values of \(p_A\) and \(p_B\), directly affect the arrival rates of
 type 2 individuals to the two queueing systems.
-In fact the arrival rate of type 2 individuals to queueing system A is
-\(p_A \lambda_2\) and to queueing system B is \(p_B \lambda_2\).
+In fact the arrival rate of type 2 individuals to queueing system \(A\) is
+\(p_A \lambda_2\) and to queueing system \(B\) is \(p_B \lambda_2\).
 Thus by increasing \(p_A\) both the mean waiting time and the mean blocking time
-of queueing system A will increase but equivalently will decrease for queueing
-system B.
+of queueing system \(A\) will increase but equivalently will decrease for
+queueing system \(B\).
 
 
 \subsection{Payoffs}
 
-Consider the three players of the game; queueing system A, queueing system B and
+Consider the three players of the game; queueing system \(A\), queueing system
+\(B\) and
 the distribution service.
 Apart from a strategy space each player also has some objective that they would
 want to either minimise or maximise.
@@ -267,7 +271,7 @@ Thus, its objective is to minimise the blocked time of the individuals
 (\(B_A\) and \(B_B\)) that they send to queueing systems \(A\) and \(B\).
 
 Apart from the time being blocked, an additional aspect that may affect the
-decision of the distribution service is the probability that an individuals
+decision of the distribution service is the probability that an individual
 becomes lost to a queueing system.
 A type 2 individual can become lost to a queueing system if they arrive in a
 queueing system and node 2 is at its maximum capacity \(M\).
@@ -292,13 +296,14 @@ That penalty is given by:
 
 Equation (\ref{eq:obj_distributor_penalty}) can be used to capture a mixture
 between the two objectives \(L_i\) and \(B_i\) where \(i \in \{A, B\}\).
-Here, \(\alpha\) represents the ``importance''-parameter of each objective,
+Here, \(\alpha\) represents the ``weight'' of each
+objective~\cite{gunantara2018review},
 where a high \(\alpha\) indicates a higher weight on the proportion of lost
 individuals and a smaller \(\alpha\) a higher weight on the time blocked.
-% TODO: Is importance parameter a good name?
 In fact, the best response of the distribution service can be found by equating
-the penalty of sending \(p_A\) individuals to queueing system A and the penalty
-of sending \(p_B\) individuals to queueing system B (where is \(p_B = 1-p_A\)).
+the penalty of sending \(p_A\) individuals to queueing system \(A\) and the
+penalty
+of sending \(p_B\) individuals to queueing system \(B\) (where \(p_B = 1-p_A\)).
 
 \begin{equation}\label{eq:obj_distributor_1}
     \alpha L_A(p_A) + (1 - \alpha) B_A(p_A) =
@@ -307,9 +312,10 @@ of sending \(p_B\) individuals to queueing system B (where is \(p_B = 1-p_A\)).
 
 There are some cases where the best response of the distribution service is
 to distribute all individuals to one of the two queueing systems.
-For example, if queueing system A has a low threshold and queueing system B
+For example, if queueing system \(A\) has a low threshold and queueing system
+\(B\)
 has a high threshold, then the distribution service's best response may be to
-send all individuals to queueing system B.
+send all individuals to queueing system \(B\).
 Thus equation~\ref{eq:obj_distributor_1} can be modified to be:
 
 \begin{equation*}
@@ -353,18 +359,18 @@ following game tree:
 
 The game tree is a representation of all possible sequences of decisions that
 can be made by the players.
-Initially, queueing system A chooses which threshold \(T_A\) to play out of
+Initially, queueing system \(A\) chooses which threshold \(T_A\) to play out of
 \(N_A\) possible choices.
-Then, queueing system B chooses its own threshold \(Q_B\) without knowing the
-threshold chosen by queueing system A.
+Then, queueing system \(B\) chooses its own threshold \(Q_B\) without knowing
+the threshold chosen by queueing system \(A\).
 Note here that it doesn't matter which queueing system chooses its threshold
 first since the other queueing system will always choose its threshold
 independently of the first queueing system's choice.
 Afterwards, the distribution service chooses the proportion of individuals to
-send to queueing system A, from the continuous strategy space of \(0 \leq p_A
-\leq 1\).
+send to queueing system \(A\), from the continuous strategy space of
+\(0 \leq p_A \leq 1\).
 The distribution service has all the information about the state that the game
 is at when it's choosing the value of \(p_A\).
 Thus, the distribution service's choice of \(p_A\) is based on the thresholds
 chosen by the queueing systems.
-Finally, the game ends and the payoffs are calculated.
+The payoffs for all players are then calculated.

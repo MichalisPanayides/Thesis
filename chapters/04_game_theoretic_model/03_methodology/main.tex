@@ -7,34 +7,39 @@ terminal nodes and working backwards to the root node~\cite{watson2002strategy}.
 The terminal nodes from Figure~\ref{fig:imperfect_info_game} are the nodes that
 are connected to the choice of the distribution service.
 In essence, by working backwards from the choice of the distribution service
-and then to the choices of the queueing systems the game can be solved.
+and then to the choices of the queueing systems, which happen simultaneously,
+the game can be solved.
 Furthermore, by finding the distribution's service response for all possible
 pairs of strategies that the two queueing systems can choose from, the game can
 be reduced to a two-player Normal form game.
 
 
-\subsection{Distribution service and Brent's method}
+\subsection{Distribution service and Brent's algorithm}
 \label{sec:best_response_distribution_service}
 
-Form the distribution service's perspective all information are known and can be
+Form the distribution service's perspective all information is known and can be
 used to find the best possible strategy to maximise their payoff.
 In fact, having the two strategy choices of the two queueing systems the
 distribution service can find the optimal strategy that satisfies
 equation~(\ref{eq:obj_distributor_2}).
 Consider the pair of strategies \((T_A^*, T_B^*)\) that correspond to a possible
-strategy choice of queueing system A and queueing system B.
+strategy choice of queueing system \(A\) and queueing system \(B\).
 The distribution service can then find the best strategy by solving
 equation~(\ref{eq:obj_distributor_2}) for \(T_A = T_A^*\) and \(T_B = T_B^*\).
-This can be done by using Brent's method~\cite{brent_method}.
+The particular numerical algorithm used for this is Brent's
+algorithm~\cite{brent_method}.
 
-Brent's method is a root-finding algorithm which combines the bisection
-method~\cite{corliss1977root}., the secant method~\cite{secantmethod} and
+Brent's algorithm is a root-finding algorithm which combines the bisection
+method~\cite{corliss1977root}, the secant method~\cite{secantmethod} and
 inverse quadratic interpolation~\cite{epperson2021introduction}.
 The algorithm is used to find the root \(x^*\) of a function \(f(x)\) from
 within the interval \([a, b]\) such that \(f(a) < f(x^*) < f(b)\).
+One of the requirements for Brent's algorithm is \(f(a)f(b) < 0\).
+In other words the function must change sign within the interval \([a, b]\).
+
 Consider equation (\ref{eq:obj_distributor_2}).
 Under the assumption that \(O(p_A; T_A, T_B)\) is either non-increasing or
-non-decreasing in \(p_A\), the root can be found by using Brent's method
+non-decreasing in \(p_A\), the root can be found by using Brent's algorithm
 for \(p_A \in [0, 1]\).
 
 \begin{equation*}
@@ -42,11 +47,10 @@ for \(p_A \in [0, 1]\).
     \alpha L_B(1 - p_A) - (1 - \alpha)B_B(1 - p_A)
 \end{equation*}
 
-One of the requirements for Brent's method is \(f(a)f(b) < 0\).
-In other words the function must change sign within the interval \([a, b]\).
 For this particular scenario, the function \(f(p_A)\) needs to have a different
-sign for \(f(p_A = 0)\) and \(f(p_A = 1)\).
-In case \(f(a)f(b) \geq 0\), brent's algorithm cannot be used.
+sign for \(f(p_A = 0)\) and \(f(p_A = 1)\) so that \(f(a)f(b) < 0\) is
+satisfied.
+In the case \(f(a)f(b) \geq 0\), Brent's algorithm cannot be used.
 Instead, the value of \(p_A\) becomes:
 
 \begin{equation}\label{eq:obj_distributor_no_brent_method}
@@ -60,23 +64,26 @@ The first case of equation~(\ref{eq:obj_distributor_no_brent_method})
 corresponds to the event where both \(f(0)\) and \(f(1)\) are negative.
 Therefore, for all values of \(p_A \in [0, 1]\) the objective function is
 negative, which means that:
+
 \[
     \alpha L_A(p_A) + (1 - \alpha) B_A(p_A) <
     \alpha L_B(p_B) - (1 - \alpha) B_B(p_B), \quad \text{for all } p_A \in [0,1]
 \]
 
 Thus, the distribution service's best response would be to send all individuals
-to queueing system A (\(p_A=1, p_B=0\)).
+to queueing system \(A\) (\(p_A=1, p_B=0\)).
 Similarly, the second case of
 equation~(\ref{eq:obj_distributor_no_brent_method}) corresponds to the event
 where for all values of \(p_A \in [0, 1]\) the objective function is
 positive, which means that:
+
 \[
     \alpha L_A(p_A) + (1 - \alpha) B_A(p_A) >
     \alpha L_B(p_B) - (1 - \alpha) B_B(p_B), \quad \text{for all } p_A \in [0,1]
 \]
+
 Equivalently, this indicates that the distribution service's best response
-would be to send all individuals to queueing system B (\(p_A=0, p_B=1\)).
+would be to send all individuals to queueing system \(B\) (\(p_A=0, p_B=1\)).
 Therefore, the methodology that is used to find the best \(p_A\) that satisfies
 equation~(\ref{eq:obj_distributor_2}) can by calculated in the following way:
 
@@ -84,7 +91,7 @@ equation~(\ref{eq:obj_distributor_2}) can by calculated in the following way:
     p_A = \begin{cases}
         1, & \text{if } O(0) < 0 \text{ and } O(1) < 0 \\
         0, & \text{if } O(0) > 0 \text{ and } O(1) > 0 \\
-        \text{Use Brent's method}, & \text{if } O(0)O(1) < 0
+        \text{Use Brent's algorithm}, & \text{if } O(0)O(1) < 0
     \end{cases}
 \end{equation}
 
@@ -93,7 +100,7 @@ in equation~(\ref{eq:obj_distributor_2}).
 
 \subsubsection{Examples}\label{sec:brent_method_example}
 Consider a distribution service whose arrival rate of type 2 individuals is
-\(\lambda_2 = 4\) and the `importance'-parameter is \(\alpha = 0.2\).
+\(\lambda_2 = 4\) and the `weight' is \(\alpha = 0.2\).
 Additionally, let queueing system \(A\) and queueing system \(B\) have the
 following parameters:
 
@@ -123,25 +130,25 @@ best response for this particular example.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/img/brents_method/brent_method_example.pdf}
-    \caption{Decision values for queueing system A and queueing system B}
+    \caption{Decision values for queueing system \(A\) and queueing system \(B\)}
     \label{fig:brent_method_example}
 \end{figure}
 
-In order to apply Brent's method to the current example the differences between
-the two decision values need to be calculated.
+In order to apply Brent's algorithm to the current example the differences
+between the two decision values need to be calculated.
 Figure~\ref{fig:brent_method_diffs} shows that the value of \(p_A\) that the
 distribution service should pick is where the function crosses the \(x\)-axis.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/img/brents_method/brent_method_diffs.pdf}
-    \caption{Brent's method on the differences}
+    \caption{Brent's algorithm on the differences}
     \label{fig:brent_method_diffs}
 \end{figure}
 
 In fact, the value of \(p_A\) that the distribution service should pick, for
 this particular example, is \(p_A = 0.58\).
-That is the point in which the line of the difference between the two decision
+That is the point at which the line of the difference between the two decision
 values crosses the \(x\)-axis.
 
 Consider now the same parameters as in the previous example, for different
@@ -199,14 +206,14 @@ correspond to the two queueing systems of the new example.
     \centering
     \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/img/brents_method/brent_method_special_case.pdf}
     \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/img/brents_method/brent_method_special_case_diffs.pdf}
-    \caption{Decision values for queueing system A and queueing system B}
+    \caption{Decision values for queueing system \(A\) and queueing system \(B\)}
     \label{fig:brent_method_special_case}
 \end{figure}
 
 It can be observed that for all values of \(p_A\) the decision value of queueing
 system \(A\) is less than the decision value of queueing system \(B\).
 Since the differences of them don't pass through the x-axis within the interval
-\([0,1]\), Brent's method cannot be used since \(f(0)f(1) < 0\).
+\([0,1]\), Brent's algorithm cannot be used since \(f(0)f(1) < 0\).
 Therefore, using equation~(\ref{eq:obj_distributor_implementation}) the
 distribution service's best response should be \(p_A = 1\).
 
@@ -371,7 +378,7 @@ Figure~\ref{fig:brent_method_diffs} where \(p_A = 0.5\).
 
 In addition function
 \lstinline[style=pystyle]{calculate_class_2_individuals_best_response} uses
-an implementation of Brent's method, implemented by the
+an implementation of Brent's algorithm, implemented by the
 \lstinline[style=pystyle]{scipy} library, to find the point at which the
 difference between the two decision values is set to 0.
 
@@ -491,7 +498,7 @@ difference between the two decision values is set to 0.
 
 \end{lstlisting}
 
-The next piece of code uses
+The next piece of code uses the
 function~\lstinline[style=pystyle]{calculate_class_2_individuals_best_response}
 to find the optimal split of class 2 individuals between the two queueing
 systems.
@@ -524,7 +531,7 @@ Figure~\ref{fig:brent_method_diffs} crosses the \(x\)-axis.
 
 \subsection{Routing Matrix}
 
-Section~\ref{sec:brent_method_example} showed how Brent's method can be used to
+Section~\ref{sec:brent_method_example} showed how Brent's algorithm can be used to
 find the best response of the distribution service given the pair of strategies
 played by the queueing systems \((T_A, T_B)\).
 In order to properly solve the game, best response of the distribution service
@@ -574,7 +581,7 @@ Using the same example as in Section~\ref{sec:brent_method_example}, the routing
 matrix can be calculated by finding the values of \(p_A\) and \(p_B\) for every
 possible pair of thresholds \((T_A, T_B)\).
 The arrival rate of type 2 individuals is arrival rate of type 2 individuals is
-\(\lambda_2 = 4\) and the `importance'-parameter is \(\alpha = 0.2\).
+\(\lambda_2 = 4\) and the `weight' is \(\alpha = 0.2\).
 The remaining parameters that relate to the two queueing systems are as follows:
 
 \begin{multicols}{2}
@@ -764,10 +771,10 @@ array([[0.58864276, 0.22335975, 0.15533059, 0.15265663, 0.15078926,
 \end{lstlisting}
 
 
-\subsubsection{Brent's method - tolerance sensitivity analysis}
+\subsubsection{Brent's algorithm - tolerance sensitivity analysis}
 \label{sec:brent_tolerance}
 
-The implementation of Brent's method is being done using the
+The implementation of Brent's algorithm is being done using the
 function~\lstinline[style=pystyle]{brentq}
 from~\lstinline[style=pystyle]{SciPy}.
 The function receives two essential arguments; another function for
@@ -802,13 +809,13 @@ tolerance (atol) and relative tolerance (rtol) parameters, the function returns
     |a - b| \leq (\text{atol} + \text{rtol} \times |b|)
 \end{equation}
 
-These tolerance parameters are the once used by Brent's method to determine
+These tolerance parameters are the once used by Brent's algorithm to determine
 if the root has been found.
 In the remainder of this subsection the effect of the absolute tolerance
 parameter \lstinline[style=pystyle]{xtol} will be analysed.
 To determine the effect of the absolute tolerance parameters on the accuracy and
-computation time of Brent's method, the method was ran for different set of
-parameters and different values of the absolute tolerance parameter.
+computation time of Brent's algorithm, the algorithm was ran for different set
+of parameters and different values of the absolute tolerance parameter.
 The two parameter sets that were used for these experiments are:
 
 \begin{center}
@@ -826,7 +833,7 @@ The two parameter sets that were used for these experiments are:
     \end{tabular}
 \end{center}
     
-Note the system capacity of queueing system A varies for both parameter sets.
+Note the system capacity of queueing system \(A\) varies for both parameter sets.
 For every value of \(N_A\) Brent's algorithm was run for different values of
 the absolute tolerance parameter \lstinline[style=pystyle]{xtol}.
 The values of the absolute tolerance parameter that were used are:
@@ -841,7 +848,7 @@ times and the computation time was recorded for each run.
     \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/img/brents_method/tolerance/tolerance_violinplots_1.pdf}
     \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/img/brents_method/tolerance/tolerance_violinplots_2.pdf}
     \caption{
-        Violinplots of the duration of Brent's method for different values of
+        Violinplots of the duration of Brent's algorithm for different values of
         \(N_A\).
     }
     \label{fig:tolerance_violinplots}
@@ -858,7 +865,7 @@ Note that the violinplots include all values of the tolerance parameters
     \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/img/brents_method/tolerance/tolerance_lineplots_1.pdf}
     \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/img/brents_method/tolerance/tolerance_lineplots_2.pdf}
     \caption{
-        Line plots of the duration of Brent's method for different values of
+        Line plots of the duration of Brent's algorithm for different values of
         \(N_A\) over different values of the absolute tolerance parameter xtol.
     }
     \label{fig:tolerance_lineplots}
@@ -945,8 +952,8 @@ possible pairs of strategies \((T^A, T^B)\).
     \end{pmatrix}
 \end{equation}
 
-Matrix A consists of all possible utilities of queueing system \(A\), and
-matrix B consists of all possible utilities of queueing system \(B\).
+Matrix \(A\) consists of all possible utilities of queueing system \(A\), and
+matrix \(B\) consists of all possible utilities of queueing system \(B\).
 The game is now a 2-player normal form game with payoff matrices \(A\) and
 \(B\).
 
