@@ -1,7 +1,7 @@
 \section{Different forms of games}\label{sec:game_theory_intro}
 
 In game theory there are several different forms of games.
-In this section we will outline only the ones necessary for the formulation
+This section outlines only the ones necessary for the formulation
 of the scenario studied in this research project.
 The first one is normal form games the second one is perfect information
 extensive form games and the third one is extensive form games with imperfect
@@ -188,15 +188,14 @@ algorithm and the support enumeration algorithm.
 \subsubsection{Lemke-Howson Algorithm}
 
 The Lemke-Howson algorithm is a method that can be used to find a Nash
-equilibrium of a 2-player normal form game.
+equilibrium of a 2-player normal form game~\cite{LemkeHowson}.
 Note that the algorithm is only applicable to 2-player normal form games and
-the algorithm outputs just one Nash equilibrium.
-The Lemke-Howson algorithm uses the concept of support enumeration described in
-% TODO: cite Nisan, Noam, et al., eds. Algorithmic game theory. Vol. 1. Cambridge: Cambridge University Press, 2007.
+the algorithm outputs only one Nash equilibrium.
+The Lemke-Howson algorithm uses the concept of support enumeration described
+in~\cite{nisan2007}
 that is used to find all pairs of best responses for a given game.
-For a non-degenerate 2-player game the Lemke-Howson algorithm performs the
-following steps:
-% TODO: cite Lemke, Carlton E., and Joseph T. Howson, Jr. "Equilibrium points of bimatrix games." Journal of the Society for Industrial and Applied Mathematics 12.2 (1964): 413-423.
+For a non-degenerate 2-player game~\cite{degenerategames} the Lemke-Howson
+algorithm performs the following steps:
 
 \begin{enumerate}
     \item Obtain the best response polytopes \(P\) and \(Q\).
@@ -291,15 +290,11 @@ That is, the players should play each strategy with equal probability.
 Another algorithm that can be used to find the Nash equilibrium of a 2-player
 normal form game is the support enumeration algorithm.
 The support enumeration algorithm can be used to find all Nash equilibria of a
-non-degenerate 2-player normal form game by using all possible pairs of support
-of a game.
-% TODO: cite non-degenerate
-% TODO: cite support
+non-degenerate 2-player normal form game~\cite{degenerategames} by using all
+possible pairs of support of a game~\cite{myerson1997game}.
 The following steps are performed by the support enumeration algorithm and
 return all pairs of best responses in a game with payoff matrices \(A\) and
-\(B\):
-% TODO: cite support enumeration
-% https://ieeexplore.ieee.org/abstract/document/6747409
+\(B\)~\cite{supportenumeration}:
 
 \begin{enumerate}
     \item For all possible pairs of support \((M_x, N_y)\) of the mixed
@@ -380,17 +375,30 @@ probability \(\frac{1}{4}\) and action \(S_2\) with probability
 Nash equilibria is a theoretical measure which can be inconsistent with
 intuitive notions about what should be the outcome of a
 game~\cite{myerson1978refinements}.
-In order to overcome this problem, evolutionary stable strategies (ESS)
-have been introduced~\cite{nowak1993evolutionary}.
+The concept of Nash equilibria is not always applicable to real-world
+situations.
+There are scenarios where a game has multiple Nash equilibria, but not all
+of them can be reached by allowing the players to repeatedly play the game.
+Evolutionary stable strategies (ESS) is a subsequent general concept that can
+be more applicable to real-world situations~\cite{nowak1993evolutionary}.
+Consider a population that consists of all possible strategies of a player and
+stronger strategies can invade weaker ones strategies and replace them in this
+population~\cite{smith1972game, smith1973logic}.
+A strategy is an ESS if no other strategy can replace it or invade it from the
+population of all strategies.
+Note that all strategies that are ESS are also Nash equilibrium.
 Learning algorithms can be used to reach certain ESS of a game.
-Note that all ESS that arise from learning algorithms are also Nash
-equilibria.
-% TODO: ESS paragrpah, definition, etc.
+The benefit of using learning algorithms and ESS, instead of calculating
+the Nash equilibria, is that not only is it a more powerful concept of
+equilibrium, but also the decision journey of the players can be observed.
+Thus, players' decisions at each time step can be observed and the learning
+process can be visualised.
+There are numerous leaning algorithms that can be used to find ESS of a game.
+In this subsection an overview of some of them will be given.
 
 \subsubsection{Fictitious play}
-One such learning algorithm is called Fictitious play.
-% TODO: cite fictitious play (George W. Brown)
-% TODO: cite Fudenberg 1998
+One such learning algorithm is called Fictitious play~\cite{brownfictitiousplay,
+fudenberg1998theory}.
 The fictitious play algorithm is a sequential learning algorithm that is
 based on the assumption that the players are rational and have perfect
 information about the game.
@@ -441,10 +449,10 @@ algorithm and how the players converge to a Nash equilibrium.
 
 
 \subsubsection{Stochastic fictitious play}s
-Another similar learning algorithm is called stochastic fictitious play.
-% TODO: cite Hofbauer 2002, Fudenberg 1998
+Another similar learning algorithm is called stochastic fictitious
+play~\cite{hofbauerstochasticfictitous, fudenberg1998theory}.
 Stochastic fictitious play is a variation of the fictitious play algorithm
-where a stochastic pertubation \(\epsilon_i\) is added to each expected payoff
+where a stochastic perturbation \(\epsilon_i\) is added to each expected payoff
 where \(\epsilon_i \in [0, \bar{\epsilon}]\) where \(\bar{\epsilon}\) is a
 parameter needed for the algorithm.
 
@@ -477,7 +485,7 @@ The outcome indicates that the stochastic fictitious play algorithm converges
 to the following strategy: \(\sigma^1 = (\frac{2}{3}, 0, \frac{1}{3})\) and
 \(\sigma^2 = (\frac{3}{4}, \frac{1}{4}, 0)\).
 This is the outcome of the last iteration of the stochastic fictitious play
-which is also very similar to the fictitious play outcome.
+which is also similar to the fictitious play outcome.
 Figure~\ref{fig:stochastic_fictitious_play} shows all iterations of the
 stochastic fictitious play algorithm and how the players converge to a Nash
 equilibrium.
@@ -494,13 +502,11 @@ equilibrium.
 \subsubsection{Asymmetric replicator dynamics}
 
 The learning algorithm that will be used most in this thesis is asymmetric
-replicator dynamics.
-% TODO: cite Elvio, Accinelli and Carrera, Edgar. 2011. Evolutionarily Stable Strategies and Replicator Dynamics in Asymmetric Two-Population Games. 10.1007/978-3-642-11456-4_3.
+replicator dynamics~\cite{accinelli2011evolutionarily}.
 Replicator dynamics is a learning algorithm that is used to express the
-evolutionary dynamics of a population of players.
-% TODO: cite Komarova, Natalia L. “Replicator–mutator equation, universality property and population dynamics of learning.” Journal of theoretical biology 230.2 (2004): 227-239.
-Conider a large population of some agents, also known as replicators.
-Different types of such replicators meet and interact with each other.
+evolutionary dynamics of a population of players~\cite{komarova2004replicator}.
+Consider a large population of some agents, also known as replicators.
+Different types of such replicators meet and interact.
 Each such interaction generates a certain payoff for each type of the
 replicators.
 This payoff is often referred to as the fitness of the replicator.
@@ -509,7 +515,7 @@ players.
 
 Consider two types of individuals, \(A\) and \(B\), each with their own set of
 strategies, \(S^A\) and \(S^B\).
-Different strategies from \(S^A\) are assiigned among the population of type
+Different strategies from \(S^A\) are assigned among the population of type
 \(A\) and different strategies from \(S^B\) are assigned among the population
 of type \(B\).
 Individuals of type \(A\) are randomly paired with individuals of type \(B\)
@@ -589,7 +595,7 @@ have in fact not reached a steady state.
 It can be seen that strategies player 1 alternates between strategy \(s_1\) and
 \(s_3\) while player 2 alternates between strategy \(s_1\) and \(s_2\).
 This game cannot reach a steady state given the uniform initial distribution of
-the stratgies.
+the strategies.
 Consider a different game where the steady strategy choice can be reached.
 
 \begin{lstlisting}[style=pystyle]
