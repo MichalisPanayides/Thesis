@@ -63,6 +63,7 @@ def proselint(c):
             "leonard.exclamation.30ppm",
             "typography.symbols.curly_quotes",
             "consistency.spelling",
+            "typography.symbols.copyright",
         ]
         updated_errors = []
         for error in errors:
