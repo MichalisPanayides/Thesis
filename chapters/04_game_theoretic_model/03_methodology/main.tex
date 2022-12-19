@@ -529,7 +529,7 @@ Figure~\ref{fig:brent_method_diffs} crosses the \(x\)-axis.
 \end{lstlisting}
 
 
-\subsection{Routing Matrix}
+\subsection{Routing Matrix}\label{sec:routing_matrix}
 
 Section~\ref{sec:brent_method_example} showed how Brent's algorithm can be used to
 find the best response of the distribution service given the pair of strategies
@@ -885,6 +885,7 @@ to \lstinline[style=pystyle]{xtol=0.0001}.
 
 
 \subsection{Queueing systems and normal form games}
+\label{sec:queueing_systems_and_normal_form_games}
 
 In subsection~\ref{sec:best_response_distribution_service} it is shown that
 given the strategies played by queueing systems \(A\) and \(B\) the best
@@ -1332,3 +1333,12 @@ Column player:
 
 \end{lstlisting}
 
+
+
+\subsection{Solving the game}\label{sec:game_solving}
+
+For a 2-player game once the two payoff matrices have been calculated
+the game can be solved using the methods described in this section.
+There are two concepts that will be used to analyse the behavioural patterns
+of the players in the game; the Nash equilibrium and Evolutionary Stable
+Strategies.
