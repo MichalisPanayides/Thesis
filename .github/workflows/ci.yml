@@ -7,7 +7,7 @@ jobs:
     defaults:
       run:
         shell: bash -l {0}
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -35,9 +35,6 @@ jobs:
 
       - name: Test PDF compiles
         run: inv compile
-
-      - name: Test spellcheck
-        run: inv spellcheck
 
       - name: Run proselint
         run: inv proselint
