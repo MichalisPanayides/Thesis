@@ -11,6 +11,12 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-  
+
+      - name: Install conda and activate environment
+        uses: conda-incubator/setup-miniconda@v2.0.0
+        with:
+          environment-file: ./environment.yml
+          activate-environment: thesis_env
+
       - name: Test spellcheck
         run: inv spellcheck
