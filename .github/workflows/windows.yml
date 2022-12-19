@@ -1,0 +1,36 @@
+name: Windows CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    defaults:
+      run:
+        shell: bash -l {0}
+    runs-on: windows-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+  
+      - name: Install node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.17.5'
+          npm-version: '6.14.14'
+
+      - name: Install conda and activate environment
+        uses: conda-incubator/setup-miniconda@v2.0.0
+        with:
+          environment-file: ./environment.yml
+          activate-environment: thesis_env
+
+      - name: Run proselint
+        run: inv proselint
+
+      - name: Install and run alex checker for inconsiderate / insensitive writing
+        run: |
+          npm install alex --global
+          inv alex
+
+      - name: Run doctests
+        run: inv doctests
