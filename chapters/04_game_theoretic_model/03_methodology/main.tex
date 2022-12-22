@@ -1339,9 +1339,258 @@ Column player:
 
 
 \subsection{Solving the game}\label{sec:game_solving}
+% TODO: This subsection needs to be reviewed
 
+This section describes how everything introduced in this chapter so far can be
+put together to get numerical results of the 3-player game between two queueing
+systems and the individual distribution service.
+Having formulated the game (Section~\ref{sec:game_formulation}) and obtained
+the payoff matrices for the two players
+(Section~\ref{sec:queueing_systems_and_normal_form_games}) the strategies of
+the players can now be investigated.
 For a 2-player game once the two payoff matrices have been calculated
-the game can be solved using the methods described in this section.
-There are two concepts that will be used to analyse the behavioural patterns
-of the players in the game; the Nash equilibrium and Evolutionary Stable
-Strategies.
+the game can be solved using the methods described in
+Section~\ref{sec:game_theory_intro}.
+More specifically, the concept of Nash equilibrium described in
+Section~\ref{sec:game_intro_nash_equilibrium} and the concept of Evolutionary
+Stable Strategies described in Section~\ref{sec:game_intro_learning_algorithms}
+will be used to analyse the behaviour of the players in the game.
+
+Consider a game between queueing systems \(A\) and \(B\) and a distribution
+service \(D\) with the following parameters.
+
+\begin{table}[H]
+    \caption{Distribution service parameters}
+    \begin{center}
+        \begin{tabular}{||c|c|c|c||}
+            \hline
+            \(\lambda_2\) & t & \(\hat{P}\) & \(\alpha\) \\
+            \hline\hline
+            1 & 1 & 0.8 & 0.5 \\
+            \hline
+        \end{tabular}
+    \end{center}
+    \label{tab:solving_game_dist_service_parameters}
+\end{table}
+
+\begin{table}[H]
+    \caption{Queueing systems parameters}
+    \begin{center}
+        \begin{tabular}{||c|c|c|c|c|c||}
+            \hline
+            \(\lambda_1^A\) & \(\mu^A\) & \(C^A\) & \(N^A\) & \(M^A\) \\
+            \hline
+            1 & 2 & 1 & 2 & 2 \\
+            \hline
+        \end{tabular}
+
+        \vspace{0.5cm}
+        
+        \begin{tabular}{||c|c|c|c|c|c||}
+            \hline
+            \(\lambda_1^B\) & \(\mu^B\) & \(C^B\) & \(N^B\) & \(M^B\) \\
+            \hline
+            1 & 3 & 1 & 2 & 2 \\
+            \hline
+        \end{tabular}
+    \end{center}
+    \label{tab:solving_game_queueing_systems_parameters}
+\end{table}
+
+\begin{lstlisting}[style=pystyle]
+>>> lambda_2 = 1
+>>> target = 1
+>>> p_hat = 0.8
+>>> alpha = 0.5
+
+>>> lambda_1_A = 1
+>>> mu_A = 2
+>>> num_of_servers_A = 1
+>>> system_capacity_A = 2
+>>> buffer_capacity_A = 2
+    
+>>> lambda_1_B = 1
+>>> mu_B = 3
+>>> num_of_servers_B = 1
+>>> system_capacity_B = 2
+>>> buffer_capacity_B = 2
+
+\end{lstlisting}
+
+Note that these are two small queueing systems with a maximum capacity of \(2\).
+In other words, since both systems have a capacity of \(2\), their possible
+strategies is to either choose a threshold of \(T_i = 1\) or \(T_i = 2\) where
+\(i \in \{A, B\}\).
+In other words the queueing systems could start blocking type \(2\) individuals
+either when there is \(1\) individual in node 1 or when there are \(2\)
+individuals.
+See Figure~\ref{fig:diagram_of_game_theoretic_model} for a visual representation
+of the game.
+In fact, in this example, the only difference between the two queueing systems
+is that queueing system \(A\) has a lower service rate than queueing system
+\(B\).
+
+As shown in Section~\ref{sec:queueing_systems_and_normal_form_games} the payoff
+matrices for the two players can be obtained using the function
+\lstinline[style=pystyle]{get_payoff_matrices}.
+Every function that described in this section is also implemented in the
+\lstinline[style=pystyle]{ambulance_game} python library that was created for
+this project.
+A detailed description of the library can be found in Section.
+% TODO: reference ambulance_game section {sec:ambulance_game_library}.
+The following code shows how the payoff matrices can be obtained using the
+\lstinline[style=pystyle]{ambulance_game} library.
+
+\begin{lstlisting}[style=pystyle]
+>>> import ambulance_game as abg
+>>> A, B, R = abg.game.get_payoff_matrices(
+...     lambda_2=lambda_2,
+...     lambda_1_1=lambda_1_A,
+...     lambda_1_2=lambda_1_B,
+...     mu_1=mu_A,
+...     mu_2=mu_B,
+...     num_of_servers_1=num_of_servers_A,
+...     num_of_servers_2=num_of_servers_B,
+...     system_capacity_1=system_capacity_A,
+...     system_capacity_2=system_capacity_B,
+...     buffer_capacity_1=buffer_capacity_A,
+...     buffer_capacity_2=buffer_capacity_B,
+...     target=target,
+...     alpha=alpha,
+...     p_hat=p_hat,
+... )
+>>> game = nash.Game(A, B)
+>>> game
+Bi matrix game with payoff matrices:
+<BLANKLINE>
+Row player:
+[[0.99934675 0.99934675]
+ [0.99282972 0.99828249]]
+<BLANKLINE>
+Column player:
+[[0.98725977 0.99408002]
+ [0.98725977 0.99312791]]
+
+\end{lstlisting}
+
+Having the payoff matrices, the Nash Equilibrium can be obtained using the
+support enumeration algorithm or the Lemke-Howson algorithm implemented in the
+\lstinline[style=pystyle]{nashpy} library.
+See Section~\ref{sec:game_intro_nash_equilibrium} for more details on these
+algorithms.
+
+\begin{lstlisting}[style=pystyle]
+>>> tuple(game.support_enumeration())
+((array([1., 0.]), array([0., 1.])),)
+>>> tuple(game.lemke_howson(initial_dropped_label=0))
+(array([1., 0.]), array([0., 1.]))
+
+\end{lstlisting}
+
+Both algorithms return the same set of star, which is for queueing system
+\(A\) to always choose a threshold of \(T_A = 1\) and for queueing system
+\(B\) to always choose a threshold of \(T_B = 2\).
+This means, that queueing system \(A\) will block type \(2\) individuals when
+there is \(1\) individual in node 1 and queueing system \(B\) will block type
+\(2\) individuals only when node \(1\) is at maximum capacity.
+
+In addition, the learning algorithms described in
+Section~\ref{sec:game_intro_learning_algorithms} can be used to obtain
+Evolutionary Stable Strategies (ESS) for the game.
+The following code runs the fictitious play algorithm for \(100\) iterations
+and returns the number of times each strategy was played.
+
+\begin{lstlisting}[style=pystyle]
+>>> np.random.seed(5)
+>>> play_counts = tuple(game.fictitious_play(iterations=100))
+>>> play_counts[-1]
+[array([99.,  1.]), array([ 1., 99.])]
+
+\end{lstlisting}
+
+It can be seen that the Nash equilibrium set of strategies found by the
+support enumeration algorithm and the Lemke-Howson algorithm is also reached
+here.
+In fact, using learning algorithms, not only can one find a Nash equilibrium,
+but also visualise how the players of the game reach it.
+Figure~\ref{fig:solving_game_fictitious_example} shows how the players evolve
+their strategies over time.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.49\textwidth]{chapters/04_game_theoretic_model/img/numeric_results/fictitious_play_A.pdf}
+    \includegraphics[width=0.49\textwidth]{chapters/04_game_theoretic_model/img/numeric_results/fictitious_play_B.pdf}
+    \caption{Fictitious play algorithm on both players' strategies.}
+    \label{fig:solving_game_fictitious_example}
+\end{figure}
+
+Similarly, the stochastic fictitious play algorithm is ran for \(1000\)
+iterations.
+The following code shows how the number of times each strategy was played and
+the distribution of strategies over time.
+
+\begin{lstlisting}[style=pystyle]
+>>> np.random.seed(0)
+>>> play_counts_and_distributions = tuple(
+...     game.stochastic_fictitious_play(iterations=1000)
+... )
+>>> plays, dist = play_counts_and_distributions[-1]
+>>> plays
+[array([509., 491.]), array([512., 488.])]
+>>> dist
+[array([0.51785058, 0.48214942]), array([0.47022964, 0.52977036])]
+
+\end{lstlisting}
+
+The results are not similar to the case of the fictitious play algorithm.
+In fact the stochastic fictitious play algorithm does not converge to a Nash
+equilibrium.
+Instead, the algorithm converges to a mixed strategy equilibrium where both
+players have a probability of playing each strategy.
+This might be due to the choice of parameters of the algorithm \(\eta\) and
+\(\bar{\epsilon}\)or the fact that the values of the payoff matrices are
+smaller than the algorithm can handle.
+% TODO: Is this true?
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.49\textwidth]{chapters/04_game_theoretic_model/img/numeric_results/stochastic_fictitious_play_A.pdf}
+    \includegraphics[width=0.49\textwidth]{chapters/04_game_theoretic_model/img/numeric_results/stochastic_fictitious_play_B.pdf}
+    \caption{Stochastic fictitious play algorithm on both players' strategies.}
+    \label{fig:solving_game_stochastic_fictitious_example}
+\end{figure}
+
+Finally, the last algorithm to be ran is the asymmetric replicator dynamics
+algorithm.
+This algorithm is ran for \(10000\) timepoints and the final strategies of
+both players are calculated.
+
+\begin{lstlisting}[style=pystyle]
+>>> xs, ys = game.asymmetric_replicator_dynamics(
+...     timepoints=np.linspace(0, 10000, 100)    
+... )
+>>> np.round(xs[-1], 4)
+array([1., 0.])
+>>> np.round(ys[-1], 4)
+array([0., 1.])
+
+\end{lstlisting}
+
+The resulted set of strategies are a Nash equilibrium.
+Similar to the fictitious play algorithm, the asymmetric replicator dynamics
+algorithm can be used to visualise how the players of the game reach a Nash
+equilibrium.
+Figure~\ref{fig:solving_game_asymmetric_replicator_example} shows how the
+players evolve their strategies over time.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.49\textwidth]{chapters/04_game_theoretic_model/img/numeric_results/asymmetric_replicator_dynamics_A.pdf}
+    \includegraphics[width=0.49\textwidth]{chapters/04_game_theoretic_model/img/numeric_results/asymmetric_replicator_dynamics_B.pdf}
+    \caption{Asymmetric replicator dynamics on both players' strategies.}
+    \label{fig:solving_game_asymmetric_replicator_example}
+\end{figure}
+
+The asymmetric replicator dynamics algorithm is the learning algorithm that
+will be used in the following sections to study the effect of the parameters
+of the game on the strategies of the players.
