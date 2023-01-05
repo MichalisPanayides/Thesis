@@ -3,7 +3,8 @@ name: Windows CI
 on: [push, pull_request]
 
 jobs:
-  build:
+  windows_build:
+    name: Windows CI
     defaults:
       run:
         shell: bash -l {0}
