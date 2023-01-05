@@ -52,16 +52,16 @@ A python script was ran that iterates over different values of the parameters.
 Overall, \(5160404\) different sets of parameters were used.
 For each parameter set, the script solves the game and stores the resulting
 entries of the matrices \((A, B, R)\) as well as the parameters used to generate
-them in subdirectory of the \lstinline{data} directory.
+them in sub-directory of the \lstinline{data} directory.
 All parameter values of each parameter set, along with the corresponding values
 of \(A, B\) and \(R\), are mapped to a unique fixed-size hash value which is
-used as the name of the subdirectory for that parameter set.
+used as the name of the sub-directory for that parameter set.
 The hash function that is used for this operation is the MD5 message-digest
 algorithm~\cite{rivest1992md5}.
 
-Having the name of the subdirectory for the current parameter set, the resulting
-matrices are stored in a compressed \lstinline{.npz} file in that
-subdirectory.
+Having the name of the sub-directory for the current parameter set, the
+resulting matrices are stored in a compressed \lstinline{.npz} file in that
+sub-directory.
 The \lstinline{.npz} file format is a zipped archive of files
 named after the variables they contain, which are stored using numpy's
 \lstinline[style=pystyle]{savez_compressed} function~\cite{2020NumPy-Array}.
@@ -70,7 +70,7 @@ The \lstinline{.npz} files can be loaded using numpy's
 In addition, to the \lstinline{.npz} file, a
 \lstinline{README.md} file containing general instructions and a
 \lstinline{.csv} file containing the value of each parameter is
-also stored in each subdirectory.
+also stored in each sub-directory.
 The following code snippet shows an example of how the data are stored and
 loaded using numpy.
 
@@ -87,14 +87,15 @@ array([10, 11, 12, 13, 14, 15, 16, 17, 18, 19])
 
 \end{lstlisting}
 
-Apart from every subdirectory containing the data for a specific parameter set,
-there is also a subdirectory named \lstinline{_parameters}.
-This subdirectory contains a \lstinline{.csv} file containing the
-values of all parameters used in the experiments along with their corresponding hash values.
-This file can be used to map the hash values of the subdirectories to the
+Apart from every sub-directory containing the data for a specific parameter set,
+there is also a sub-directory named \lstinline{_parameters}.
+This sub-directory contains a \lstinline{.csv} file containing the
+values of all parameters used in the experiments along with their corresponding
+hash values.
+This file can be used to map the hash values of the sub-directories to the
 corresponding parameter values.
 Consider the first \(5\) entries of the \lstinline{.csv} file
-from the \lstinline{_parameters} subdirectory and the first
+from the \lstinline{_parameters} sub-directory and the first
 \(5\) directories in the \lstinline{data} directory.
 
 \begin{table}[H]
@@ -117,7 +118,7 @@ from the \lstinline{_parameters} subdirectory and the first
     \label{tab:parameters_csv}
 \end{table}
 
-The corresponding subdirectories of the \lstinline{data}
+The corresponding sub-directories of the \lstinline{data}
 directory are shown in the tree structure in Figure~\ref{fig:data_directory}:
 
 \begin{figure}[H]
@@ -148,8 +149,8 @@ directory are shown in the tree structure in Figure~\ref{fig:data_directory}:
     \label{fig:data_directory}
 \end{figure}
     
-The \lstinline{main.csv} file in each subdirectory contains the values of the
-parameters used to generate the data in that subdirectory.
+The \lstinline{main.csv} file in each sub-directory contains the values of the
+parameters used to generate the data in that sub-directory.
 The \lstinline{main.npz} file contains the compressed entries of the matrices
 \(A, B\) and \(R\).
 The complete dataset is archived using \url{www.zenodo.org} and can be found
