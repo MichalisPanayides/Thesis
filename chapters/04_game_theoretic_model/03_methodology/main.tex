@@ -531,9 +531,9 @@ Figure~\ref{fig:brent_method_diffs} crosses the \(x\)-axis.
 
 \subsection{Routing Matrix}\label{sec:routing_matrix}
 
-Section~\ref{sec:brent_method_example} showed how Brent's algorithm can be used to
-find the best response of the distribution service given the pair of strategies
-played by the queueing systems \((T_A, T_B)\).
+Section~\ref{sec:brent_method_example} showed how Brent's algorithm can be used
+to find the best response of the distribution service given the pair of
+strategies played by the queueing systems \((T_A, T_B)\).
 In order to properly solve the game, best response of the distribution service
 needs to be calculated for every possible pair of strategies.
 In essence, one needs to find the values of \(p_A\) and \(p_B\) that correspond
@@ -1203,10 +1203,10 @@ efficient way.
 ...     alternative_utility=False,
 ... ):
 ...     """
-...     The function uses the distribution array (that is the array that holds the
-...     optimal proportion of individuals to send to each hospital), to calculate
-...     the proportion of patients within time for every possible set of thresholds
-...     chosen by each system.
+...     The function uses the distribution array (that is the array that holds
+...     the optimal proportion of individuals to send to each hospital), to
+...     calculate the proportion of patients within time for every possible set
+...     of thresholds chosen by each system.
 ...     Parameters
 ...     ----------
 ...     lambda_2 : float
@@ -1493,10 +1493,12 @@ This means, that queueing system \(A\) will block type \(2\) individuals when
 there is \(1\) individual in node 1 and queueing system \(B\) will block type
 \(2\) individuals only when node \(1\) is at maximum capacity.
 
-As the sizes of the queueing systems considered grow the strategy spaces will as well. This can increase the complexity of finding equilibria.
-In addition, equilibria might not necessarily emerge, thus the learning algorithms described in
-Section~\ref{sec:game_intro_learning_algorithms} can be used to obtain
-Evolutionary Stable Strategies (ESS) for the game.
+As the sizes of the queueing systems considered grow the strategy spaces will
+as well.
+This can increase the complexity of finding equilibria.
+In addition, equilibria might not necessarily emerge, thus the learning
+algorithms described in Section~\ref{sec:game_intro_learning_algorithms} can be
+used to obtain Evolutionary Stable Strategies (ESS) for the game.
 The following code runs the fictitious play algorithm for \(100\) iterations
 and returns the number of times each strategy was played.
 
@@ -1548,9 +1550,8 @@ equilibrium.
 Instead, the algorithm converges to a mixed strategy equilibrium where both
 players have a probability of playing each strategy.
 This might be due to the choice of parameters of the algorithm \(\eta\) and
-\(\bar{\epsilon}\)or the fact that the values of the payoff matrices are
+\(\bar{\epsilon}\) or the fact that the values of the payoff matrices are
 smaller than the algorithm can handle.
-% TODO: Is this true?
 
 \begin{figure}[H]
     \centering
