@@ -1339,7 +1339,6 @@ Column player:
 
 
 \subsection{Solving the game}\label{sec:game_solving}
-% TODO: This subsection needs to be reviewed
 
 This section describes how everything introduced in this chapter so far can be
 put together to get numerical results of the 3-player game between two queueing
@@ -1419,14 +1418,14 @@ service \(D\) with the following parameters.
 
 Note that these are two small queueing systems with a maximum capacity of \(2\).
 In other words, since both systems have a capacity of \(2\), their possible
-strategies is to either choose a threshold of \(T_i = 1\) or \(T_i = 2\) where
+strategies are to either choose a threshold of \(T_i = 1\) or \(T_i = 2\) where
 \(i \in \{A, B\}\).
 In other words the queueing systems could start blocking type \(2\) individuals
 either when there is \(1\) individual in node 1 or when there are \(2\)
 individuals.
 See Figure~\ref{fig:diagram_of_game_theoretic_model} for a visual representation
 of the game.
-In fact, in this example, the only difference between the two queueing systems
+In this example, the only difference between the two queueing systems
 is that queueing system \(A\) has a lower service rate than queueing system
 \(B\).
 
@@ -1487,14 +1486,15 @@ algorithms.
 
 \end{lstlisting}
 
-Both algorithms return the same set of star, which is for queueing system
+Both algorithms return the same set of equilibria, which is for queueing system
 \(A\) to always choose a threshold of \(T_A = 1\) and for queueing system
 \(B\) to always choose a threshold of \(T_B = 2\).
 This means, that queueing system \(A\) will block type \(2\) individuals when
 there is \(1\) individual in node 1 and queueing system \(B\) will block type
 \(2\) individuals only when node \(1\) is at maximum capacity.
 
-In addition, the learning algorithms described in
+As the sizes of the queueing systems considered grow the strategy spaces will as well. This can increase the complexity of finding equilibria.
+In addition, equilibria might not necessarily emerge, thus the learning algorithms described in
 Section~\ref{sec:game_intro_learning_algorithms} can be used to obtain
 Evolutionary Stable Strategies (ESS) for the game.
 The following code runs the fictitious play algorithm for \(100\) iterations
@@ -1511,7 +1511,7 @@ and returns the number of times each strategy was played.
 It can be seen that the Nash equilibrium set of strategies found by the
 support enumeration algorithm and the Lemke-Howson algorithm is also reached
 here.
-In fact, using learning algorithms, not only can one find a Nash equilibrium,
+Using learning algorithms, not only can one find a Nash equilibrium,
 but also visualise how the players of the game reach it.
 Figure~\ref{fig:solving_game_fictitious_example} shows how the players evolve
 their strategies over time.
