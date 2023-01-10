@@ -1,0 +1,1597 @@
+\section{Methodology}\label{sec:game_methodology}
+
+A big part of the methodology that is used to solve the game requires the use of
+backwards induction.
+Backwards induction is a method that is used to solve a game by starting at the
+terminal nodes and working backwards to the root node~\cite{watson2002strategy}.
+The terminal nodes from Figure~\ref{fig:imperfect_info_game} are the nodes that
+are connected to the choice of the distribution service.
+In essence, by working backwards from the choice of the distribution service
+and then to the choices of the queueing systems, which happen simultaneously,
+the game can be solved.
+Furthermore, by finding the distribution's service response for all possible
+pairs of strategies that the two queueing systems can choose from, the game can
+be reduced to a two-player Normal form game.
+
+
+\subsection{Distribution service and Brent's algorithm}
+\label{sec:best_response_distribution_service}
+
+Form the distribution service's perspective all information is known and can be
+used to find the best possible strategy to maximise their payoff.
+In fact, having the two strategy choices of the two queueing systems the
+distribution service can find the optimal strategy that satisfies
+equation~(\ref{eq:obj_distributor_2}).
+Consider the pair of strategies \((T_A^*, T_B^*)\) that correspond to a possible
+strategy choice of queueing system \(A\) and queueing system \(B\).
+The distribution service can then find the best strategy by solving
+equation~(\ref{eq:obj_distributor_2}) for \(T_A = T_A^*\) and \(T_B = T_B^*\).
+The particular numerical algorithm used for this is Brent's
+algorithm~\cite{brent_method}.
+
+Brent's algorithm is a root-finding algorithm which combines the bisection
+method~\cite{corliss1977root}, the secant method~\cite{secantmethod} and
+inverse quadratic interpolation~\cite{epperson2021introduction}.
+The algorithm is used to find the root \(x^*\) of a function \(f(x)\) from
+within the interval \([a, b]\) such that \(f(a) < f(x^*) < f(b)\).
+One of the requirements for Brent's algorithm is \(f(a)f(b) < 0\).
+In other words the function must change sign within the interval \([a, b]\).
+
+Consider equation (\ref{eq:obj_distributor_2}).
+Under the assumption that \(O(p_A; T_A, T_B)\) is either non-increasing or
+non-decreasing in \(p_A\), the root can be found by using Brent's algorithm
+for \(p_A \in [0, 1]\).
+
+\begin{equation*}
+    O(p_A; T_A, T_B) = \alpha L_A(p_A) + (1 - \alpha) B_A(p_A) -
+    \alpha L_B(1 - p_A) - (1 - \alpha)B_B(1 - p_A)
+\end{equation*}
+
+For this particular scenario, the function \(f(p_A)\) needs to have a different
+sign for \(f(p_A = 0)\) and \(f(p_A = 1)\) so that \(f(a)f(b) < 0\) is
+satisfied.
+In the case \(f(a)f(b) \geq 0\), Brent's algorithm cannot be used.
+Instead, the value of \(p_A\) becomes:
+
+\begin{equation}\label{eq:obj_distributor_no_brent_method}
+    p_A = \begin{cases}
+        1 & \text{if } f(0) < 0 \text{ and } f(1) < 0 \\
+        0 & \text{if } f(0) > 0 \text{ and } f(1) > 0
+    \end{cases}
+\end{equation}
+
+The first case of equation~(\ref{eq:obj_distributor_no_brent_method})
+corresponds to the event where both \(f(0)\) and \(f(1)\) are negative.
+Therefore, for all values of \(p_A \in [0, 1]\) the objective function is
+negative, which means that:
+
+\[
+    \alpha L_A(p_A) + (1 - \alpha) B_A(p_A) <
+    \alpha L_B(p_B) - (1 - \alpha) B_B(p_B), \quad \text{for all } p_A \in [0,1]
+\]
+
+Thus, the distribution service's best response would be to send all individuals
+to queueing system \(A\) (\(p_A=1, p_B=0\)).
+Similarly, the second case of
+equation~(\ref{eq:obj_distributor_no_brent_method}) corresponds to the event
+where for all values of \(p_A \in [0, 1]\) the objective function is
+positive, which means that:
+
+\[
+    \alpha L_A(p_A) + (1 - \alpha) B_A(p_A) >
+    \alpha L_B(p_B) - (1 - \alpha) B_B(p_B), \quad \text{for all } p_A \in [0,1]
+\]
+
+Equivalently, this indicates that the distribution service's best response
+would be to send all individuals to queueing system \(B\) (\(p_A=0, p_B=1\)).
+Therefore, the methodology that is used to find the best \(p_A\) that satisfies
+equation~(\ref{eq:obj_distributor_2}) can by calculated in the following way:
+
+\begin{equation}\label{eq:obj_distributor_implementation}
+    p_A = \begin{cases}
+        1, & \text{if } O(0) < 0 \text{ and } O(1) < 0 \\
+        0, & \text{if } O(0) > 0 \text{ and } O(1) > 0 \\
+        \text{Use Brent's algorithm}, & \text{if } O(0)O(1) < 0
+    \end{cases}
+\end{equation}
+
+where \(O(p_A)\) is the objective function of the distribution service described
+in equation~(\ref{eq:obj_distributor_2}).
+
+\subsubsection{Examples}\label{sec:brent_method_example}
+Consider a distribution service whose arrival rate of type 2 individuals is
+\(\lambda_2 = 4\) and the `weight' is \(\alpha = 0.2\).
+Additionally, let queueing system \(A\) and queueing system \(B\) have the
+following parameters:
+
+\begin{multicols}{2}
+    \begin{itemize}
+        \item \(\lambda_1^A = 2\)
+        \item \(\mu^A = 3\)
+        \item \(C^A = 3\)
+        \item \(T^A = 8\)
+        \item \(N^A = 15\)
+        \item \(M^A = 10\)
+        \item \(\lambda_1^B = 1\)
+        \item \(\mu^B = 1\)
+        \item \(C^B = 3\)
+        \item \(T^B = 10\)
+        \item \(N^B = 10\)
+        \item \(M^B = 5\)
+    \end{itemize}
+\end{multicols}
+
+The distribution service's best response for this particular example can be
+found at the intersection of the two decision values of the two queueing
+systems over \(p_A\).
+Figure~\ref{fig:brent_method_example} illustrates the distribution service's
+best response for this particular example.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/img/brents_method/brent_method_example.pdf}
+    \caption{Decision values for queueing system \(A\) and queueing system \(B\)}
+    \label{fig:brent_method_example}
+\end{figure}
+
+In order to apply Brent's algorithm to the current example the differences
+between the two decision values need to be calculated.
+Figure~\ref{fig:brent_method_diffs} shows that the value of \(p_A\) that the
+distribution service should pick is where the function crosses the \(x\)-axis.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/img/brents_method/brent_method_diffs.pdf}
+    \caption{Brent's algorithm on the differences}
+    \label{fig:brent_method_diffs}
+\end{figure}
+
+In fact, the value of \(p_A\) that the distribution service should pick, for
+this particular example, is \(p_A = 0.58\).
+That is the point at which the line of the difference between the two decision
+values crosses the \(x\)-axis.
+
+Consider now the same parameters as in the previous example, for different
+values of the service rate of queueing system \(A\), \(\mu^A =
+\{1,1.5,2,2.5,3\}\).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/img/brents_method/brent_method_example_mu_A_1.0.pdf}
+    \caption{\(\mu^A = 1\)}
+    \label{fig:brent_method_example_mu_A_1}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/img/brents_method/brent_method_example_mu_A_1.5.pdf}
+    \caption{\(\mu^A = 1.5\)}
+    \label{fig:brent_method_example_mu_A_2}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/img/brents_method/brent_method_example_mu_A_2.0.pdf}
+    \caption{\(\mu^A = 2\)}
+    \label{fig:brent_method_example_mu_A_3}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/img/brents_method/brent_method_example_mu_A_2.5.pdf}
+    \caption{\(\mu^A = 2.5\)}
+    \label{fig:brent_method_example_mu_A_4}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/img/brents_method/brent_method_example_mu_A_3.0.pdf}
+    \caption{\(\mu^A = 3\)}
+    \label{fig:brent_method_example_mu_A_5}
+\end{figure}
+
+It can be seen from Figures~\ref{fig:brent_method_example_mu_A_1} -
+\ref{fig:brent_method_example_mu_A_5} that as the service rate of queueing
+system \(A\) increases, the intersection point of the two decision values moves
+from \(p_A=0\) towards \(p_A=1\).
+
+In addition consider a different example with the same parameters as before
+but by increasing the threshold of queueing system \(A\) from \(T^A = 8\) to
+\(T^A = 10\) and decreasing the threshold of queueing system \(B\) from
+\(T^B = 10\) to \(T^B = 2\).
+Figure~\ref{fig:brent_method_special_case} shows the decision values that
+correspond to the two queueing systems of the new example.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/img/brents_method/brent_method_special_case.pdf}
+    \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/img/brents_method/brent_method_special_case_diffs.pdf}
+    \caption{Decision values for queueing system \(A\) and queueing system \(B\)}
+    \label{fig:brent_method_special_case}
+\end{figure}
+
+It can be observed that for all values of \(p_A\) the decision value of queueing
+system \(A\) is less than the decision value of queueing system \(B\).
+Since the differences of them don't pass through the x-axis within the interval
+\([0,1]\), Brent's algorithm cannot be used since \(f(0)f(1) < 0\).
+Therefore, using equation~(\ref{eq:obj_distributor_implementation}) the
+distribution service's best response should be \(p_A = 1\).
+
+\subsubsection{Implementation}
+
+The first part of the implementation of the distribution service's best
+response is to calculate the difference between the decision values of the two
+queueing systems.
+Function \lstinline[style=pystyle]{get_mean_blocking_difference_using_markov}
+is the python implementation of the first part of
+equation~(\ref{eq:obj_distributor_2}).
+
+\begin{lstlisting}[style=pystyle]
+>>> import ambulance_game as abg
+>>> def get_mean_blocking_difference_using_markov(
+...     prop_1,
+...     lambda_2,
+...     lambda_1_1,
+...     lambda_1_2,
+...     mu_1,
+...     mu_2,
+...     num_of_servers_1,
+...     num_of_servers_2,
+...     threshold_1,
+...     threshold_2,
+...     system_capacity_1,
+...     system_capacity_2,
+...     buffer_capacity_1,
+...     buffer_capacity_2,
+...     alpha=0,
+... ):
+...     """
+...     Get a weighted mean blocking difference between two systems. This
+...     function is to be used as a routing function to find the point at
+...     which it is set to 0. This function calculates:
+...         - a*(1 - P(A_1)) + (1 - a)*B_1
+...         - a*(1 - P(A_2)) + (1 - a)*B_2
+...     and returns their difference.
+...     Parameters
+...     ----------
+...     prop_1 : float
+...         The proportion of class 2 individuals to distribute to the first
+...         system
+...     lambda_2 : float
+...         The overall arrival rate of class 2 individuals for both systems
+...     lambda_1_1 : float
+...         The arrival rate of class 1 individuals in the first system
+...     lambda_1_2 : float
+...         The arrival rate of class 1 individuals in the second system
+...     mu_1 : float
+...     mu_2 : float
+...     num_of_servers_1 : int
+...     num_of_servers_2 : int
+...     threshold_1 : int
+...     threshold_2 : int
+...     system_capacity_1 : int
+...     system_capacity_2 : int
+...     buffer_capacity_1 : int
+...     buffer_capacity_2 : int
+...     Returns
+...     -------
+...     float
+...         The weighted mean difference between the decision values of the
+...         two systems
+...     """
+...     lambda_2_1 = prop_1 * lambda_2
+...     lambda_2_2 = (1 - prop_1) * lambda_2
+...
+...     mean_blocking_time_1 = abg.markov.get_mean_blocking_time_using_markov_state_probabilities(
+...         lambda_2=lambda_2_1,
+...         lambda_1=lambda_1_1,
+...         mu=mu_1,
+...         num_of_servers=num_of_servers_1,
+...         threshold=threshold_1,
+...         system_capacity=system_capacity_1,
+...         buffer_capacity=buffer_capacity_1,
+...     )
+...     mean_blocking_time_2 = abg.markov.get_mean_blocking_time_using_markov_state_probabilities(
+...         lambda_2=lambda_2_2,
+...         lambda_1=lambda_1_2,
+...         mu=mu_2,
+...         num_of_servers=num_of_servers_2,
+...         threshold=threshold_2,
+...         system_capacity=system_capacity_2,
+...         buffer_capacity=buffer_capacity_2,
+...     )
+...     prob_accept_1 = abg.markov.get_accepting_proportion_of_class_2_individuals(
+...         lambda_1=lambda_1_1,
+...         lambda_2=lambda_2_1,
+...         mu=mu_1,
+...         num_of_servers=num_of_servers_1,
+...         threshold=threshold_1,
+...         system_capacity=system_capacity_1,
+...         buffer_capacity=buffer_capacity_1,
+...     )
+...     prob_accept_2 = abg.markov.get_accepting_proportion_of_class_2_individuals(
+...         lambda_1=lambda_1_2,
+...         lambda_2=lambda_2_2,
+...         mu=mu_2,
+...         num_of_servers=num_of_servers_2,
+...         threshold=threshold_2,
+...         system_capacity=system_capacity_2,
+...         buffer_capacity=buffer_capacity_2,
+...     )
+...
+...     decision_value_1 = (
+...         alpha * (1 - prob_accept_1) + (1 - alpha) * mean_blocking_time_1
+...     )
+...     decision_value_2 = (
+...         alpha * (1 - prob_accept_2) + (1 - alpha) * mean_blocking_time_2
+...     )
+...     return decision_value_1 - decision_value_2
+
+\end{lstlisting}
+
+Using the same example as in section~\ref{sec:brent_method_example} the
+differences between the two decision values can be calculated using the next
+code snippet.
+Note, that the outcome of the function corresponds to the point of the line in
+Figure~\ref{fig:brent_method_diffs} where \(p_A = 0.5\).
+
+\begin{lstlisting}[style=pystyle]
+>>> import numpy as np
+>>>
+>>> lambda_1_A = 2
+>>> mu_A = 2
+>>> num_of_servers_A = 3
+>>> threshold_A = 8
+>>> system_capacity_A = 15
+>>> buffer_capacity_A = 10
+>>> lambda_1_B = 1
+>>> mu_B = 1
+>>> num_of_servers_B = 3
+>>> threshold_B = 10
+>>> system_capacity_B = 10
+>>> buffer_capacity_B = 5
+>>>
+>>> lambda_2 = 4
+>>> alpha = 0.2
+>>> p_A = 0.5
+>>>
+>>> np.round(get_mean_blocking_difference_using_markov(
+...     prop_1=p_A,
+...     lambda_2=lambda_2,
+...     lambda_1_1=lambda_1_A,
+...     lambda_1_2=lambda_1_B,
+...     mu_1=mu_A,
+...     mu_2=mu_B,
+...     num_of_servers_1=num_of_servers_A,
+...     num_of_servers_2=num_of_servers_B,
+...     threshold_1=threshold_A,
+...     threshold_2=threshold_B,
+...     system_capacity_1=system_capacity_A,
+...     system_capacity_2=system_capacity_B,
+...     buffer_capacity_1=buffer_capacity_A,
+...     buffer_capacity_2=buffer_capacity_B,
+...     alpha=alpha,
+... ), 8)
+-0.10424302
+
+\end{lstlisting}
+
+In addition function
+\lstinline[style=pystyle]{calculate_class_2_individuals_best_response} uses
+an implementation of Brent's algorithm, implemented by the
+\lstinline[style=pystyle]{scipy} library, to find the point at which the
+difference between the two decision values is set to 0.
+
+\begin{lstlisting}[style=pystyle]
+>>> import scipy.optimize
+>>> def calculate_class_2_individuals_best_response(
+...     lambda_2,
+...     lambda_1_1,
+...     lambda_1_2,
+...     mu_1,
+...     mu_2,
+...     num_of_servers_1,
+...     num_of_servers_2,
+...     threshold_1,
+...     threshold_2,
+...     system_capacity_1,
+...     system_capacity_2,
+...     buffer_capacity_1,
+...     buffer_capacity_2,
+...     lower_bound=0.01,
+...     upper_bound=0.99,
+...     alpha=0,
+...     xtol=1e-04,
+...     rtol=8.9e-16,
+... ):
+...     """
+...     Obtains the optimal distribution of class 2 individuals such that the
+...     blocking times in the two systems are identical and thus minimised.
+...     The brentq function is used which is an algorithm created to find the
+...     root of a function that combines root bracketing, bisection, and
+...     inverse quadratic interpolation. In this specific example the root to
+...     be found is the difference between the blocking times of two systems.
+...     In essence the brentq algorithm attempts to find the value of prop_1
+...     where the difference is zero.
+...
+...     Parameters
+...     ----------
+...     lower_bound : float, optional
+...         The lower bound of p_1, by default 0.01
+...     upper_bound : float, optional
+...         The upper bound of p_1, by default 0.99
+...     routing_function : function, optional
+...         The function to find the root of
+...     Returns
+...     -------
+...     float
+...         The value of p_1 such that routing_function = 0
+...     """
+...
+...     routing_function = get_mean_blocking_difference_using_markov
+...     check_1 = routing_function(
+...         prop_1=lower_bound,
+...         lambda_2=lambda_2,
+...         lambda_1_1=lambda_1_1,
+...         lambda_1_2=lambda_1_2,
+...         mu_1=mu_1,
+...         mu_2=mu_2,
+...         num_of_servers_1=num_of_servers_1,
+...         num_of_servers_2=num_of_servers_2,
+...         threshold_1=threshold_1,
+...         threshold_2=threshold_2,
+...         system_capacity_1=system_capacity_1,
+...         system_capacity_2=system_capacity_2,
+...         buffer_capacity_1=buffer_capacity_1,
+...         buffer_capacity_2=buffer_capacity_2,
+...         alpha=alpha,
+...     )
+...     check_2 = routing_function(
+...         prop_1=upper_bound,
+...         lambda_2=lambda_2,
+...         lambda_1_1=lambda_1_1,
+...         lambda_1_2=lambda_1_2,
+...         mu_1=mu_1,
+...         mu_2=mu_2,
+...         num_of_servers_1=num_of_servers_1,
+...         num_of_servers_2=num_of_servers_2,
+...         threshold_1=threshold_1,
+...         threshold_2=threshold_2,
+...         system_capacity_1=system_capacity_1,
+...         system_capacity_2=system_capacity_2,
+...         buffer_capacity_1=buffer_capacity_1,
+...         buffer_capacity_2=buffer_capacity_2,
+...         alpha=alpha,
+...     )
+...
+...     if check_1 >= 0 and check_2 >= 0:
+...         return 0
+...     if check_1 <= 0 and check_2 <= 0:
+...         return 1
+...
+...     brentq_arguments = (
+...         lambda_2,
+...         lambda_1_1,
+...         lambda_1_2,
+...         mu_1,
+...         mu_2,
+...         num_of_servers_1,
+...         num_of_servers_2,
+...         threshold_1,
+...         threshold_2,
+...         system_capacity_1,
+...         system_capacity_2,
+...         buffer_capacity_1,
+...         buffer_capacity_2,
+...         alpha,
+...     )
+...
+...     optimal_split = scipy.optimize.brentq(
+...         routing_function,
+...         a=lower_bound,
+...         b=upper_bound,
+...         args=brentq_arguments,
+...         xtol=xtol,
+...         rtol=rtol,
+...     )
+...     return optimal_split
+
+\end{lstlisting}
+
+The next piece of code uses the
+function~\lstinline[style=pystyle]{calculate_class_2_individuals_best_response}
+to find the optimal split of class 2 individuals between the two queueing
+systems.
+The same set of parameters are used as in the example in
+Section~\ref{sec:brent_method_example}.
+Note that this is the value of \(p_A\) for which the line of
+Figure~\ref{fig:brent_method_diffs} crosses the \(x\)-axis.
+
+\begin{lstlisting}[style=pystyle]
+>>> np.round(calculate_class_2_individuals_best_response(
+...     lambda_2=lambda_2,
+...     lambda_1_1=lambda_1_A,
+...     lambda_1_2=lambda_1_B,
+...     mu_1=mu_A,
+...     mu_2=mu_B,
+...     num_of_servers_1=num_of_servers_A,
+...     num_of_servers_2=num_of_servers_B,
+...     threshold_1=threshold_A,
+...     threshold_2=threshold_B,
+...     system_capacity_1=system_capacity_A,
+...     system_capacity_2=system_capacity_B,
+...     buffer_capacity_1=buffer_capacity_A,
+...     buffer_capacity_2=buffer_capacity_B,
+...     alpha=alpha,
+... ), 8)
+0.5778495
+
+\end{lstlisting}
+
+
+\subsection{Routing Matrix}\label{sec:routing_matrix}
+
+Section~\ref{sec:brent_method_example} showed how Brent's algorithm can be used
+to find the best response of the distribution service given the pair of
+strategies played by the queueing systems \((T_A, T_B)\).
+In order to properly solve the game, best response of the distribution service
+needs to be calculated for every possible pair of strategies.
+In essence, one needs to find the values of \(p_A\) and \(p_B\) that correspond
+to every pair of \((T_A, T_B)\), and then use these values to construct the
+routing matrix.
+The routing matrix holds the values \((p_A, p_B)\) which are the proportion
+of type 2 individuals to send to queueing systems \(A\) and \(B\).
+Each pair \((p_A, p_B)\) can be calculated using
+equation~(\ref{eq:obj_distributor_penalty}), as shown in
+Section~\ref{sec:brent_method_example}, for all possible pairs of thresholds.
+Thus, the routing matrix is a \(N_A \times N_B\) matrix, where \(N_A\) and
+\(N_B\) are the capacities of Node 1 for queueing systems \(A\) and \(B\),
+respectively.
+
+\begin{equation}\label{eq:routing_matrix}
+    R =
+    \begin{pmatrix}
+        (p_{1,1}^A, p_{1,1}^B) & (p_{1,2}^A, p_{1,2}^B) & \dots &
+        (p_{1,N_B}^A, p_{1,N_B}^B) \\
+        (p_{2,1}^A, p_{2,1}^B) & (p_{2,2}^A, p_{2,2}^B) & \dots &
+        (p_{2,N_B}^A, p_{2,N_B}^B) \\
+        \vdots & \vdots & \ddots & \vdots \\
+        (p_{N_A,1}^A, p_{N_A,1}^B) & (p_{N_A,2}^A, p_{N_A,2}^B) & \dots &
+        (p_{N_A,N_B}^A, p_{N_A,N_B}^B) \\
+    \end{pmatrix}
+\end{equation}
+
+Note that since \(p_{i,j}^A + p_{i,j}^B = 1\) the routing matrix needs only to
+store one of the two values; either \(p_{i,j}^A\) or \(p_{i,j}^B\).
+Thus, the routing matrix \(R\) can be simplified to:
+
+\begin{equation}\label{eq:routing_matrix_simplified}
+    R =
+    \begin{pmatrix}
+        p_{1,1}^A & p_{1,2}^A & \dots & p_{1,N_B}^A \\
+        p_{2,1}^A & p_{2,2}^A & \dots & p_{2,N_B}^A \\
+        \vdots & \vdots & \ddots & \vdots \\
+        p_{N_A,1}^A & p_{N_A,2}^A & \dots & p_{N_A,N_B}^A \\
+    \end{pmatrix}
+\end{equation}
+
+
+\subsubsection{Example}\label{sec:routing_matrix_example}
+Using the same example as in Section~\ref{sec:brent_method_example}, the routing
+matrix can be calculated by finding the values of \(p_A\) and \(p_B\) for every
+possible pair of thresholds \((T_A, T_B)\).
+The arrival rate of type 2 individuals is arrival rate of type 2 individuals is
+\(\lambda_2 = 4\) and the `weight' is \(\alpha = 0.2\).
+The remaining parameters that relate to the two queueing systems are as follows:
+
+\begin{multicols}{2}
+    \begin{itemize}
+        \item \(\lambda_1^A = 2\)
+        \item \(\mu^A = 3\)
+        \item \(C^A = 3\)
+        \item \(N^A = 15\)
+        \item \(M^A = 10\)
+        \item \(\lambda_1^B = 1\)
+        \item \(\mu^B = 1\)
+        \item \(C^B = 3\)
+        \item \(N^B = 10\)
+        \item \(M^B = 5\)
+    \end{itemize}
+\end{multicols}
+
+Note that the thresholds are not defined for the routing matrix since they are
+not constants.
+In fact the thresholds can take values from 1 to \(N_i\) for each queueing
+system.
+Thus, \(T^A \in \{1, 2, \dots, 15\}\) and \(T^B \in \{1, 2, \dots, 10\}\).
+The routing matrix is then going to be a \(15 \times 10\) matrix where each
+entry \(i, j\) consists of the best response of the distribution service when
+\(Q_A\) plays a strategy of \(T_A=i\) and \(Q_B\) plays a strategy of \(T_B=j\).
+
+
+\begin{equation*}
+    R =
+    \begin{pmatrix}
+        0.59 & 0.22 & 0.16 & 0.15 & 0.15 & 0.15 & 0.15 & 0.14 & 0.13 & 0.06 \\
+        0.94 & 0.67 & 0.51 & 0.49 & 0.47 & 0.46 & 0.45 & 0.44 & 0.41 & 0.31 \\
+        1.00 & 0.85 & 0.71 & 0.67 & 0.64 & 0.62 & 0.60 & 0.57 & 0.54 & 0.45 \\
+        1.00 & 0.86 & 0.74 & 0.70 & 0.67 & 0.64 & 0.62 & 0.60 & 0.57 & 0.48 \\
+        1.00 & 0.88 & 0.76 & 0.72 & 0.69 & 0.67 & 0.64 & 0.62 & 0.59 & 0.51 \\
+        1.00 & 0.89 & 0.78 & 0.74 & 0.71 & 0.68 & 0.66 & 0.64 & 0.61 & 0.54 \\
+        1.00 & 0.90 & 0.79 & 0.75 & 0.72 & 0.70 & 0.68 & 0.66 & 0.63 & 0.56 \\
+        1.00 & 0.91 & 0.81 & 0.77 & 0.74 & 0.71 & 0.69 & 0.67 & 0.64 & 0.58 \\
+        1.00 & 0.91 & 0.82 & 0.78 & 0.75 & 0.73 & 0.71 & 0.68 & 0.66 & 0.59 \\
+        1.00 & 0.92 & 0.83 & 0.80 & 0.76 & 0.74 & 0.72 & 0.70 & 0.67 & 0.61 \\
+        1.00 & 0.93 & 0.84 & 0.80 & 0.77 & 0.75 & 0.73 & 0.71 & 0.68 & 0.62 \\
+        1.00 & 0.93 & 0.85 & 0.81 & 0.78 & 0.76 & 0.74 & 0.72 & 0.69 & 0.64 \\
+        1.00 & 0.95 & 0.87 & 0.83 & 0.80 & 0.78 & 0.75 & 0.73 & 0.71 & 0.65 \\
+        1.00 & 0.98 & 0.90 & 0.86 & 0.83 & 0.80 & 0.78 & 0.76 & 0.73 & 0.68 \\
+        1.00 & 1.00 & 0.99 & 0.94 & 0.90 & 0.87 & 0.84 & 0.82 & 0.79 & 0.74
+    \end{pmatrix}    
+\end{equation*}
+
+Note that the entries of the routing matrix correspond to different pairs of
+thresholds \((T_A, T_B)\).
+In other words, the entry \(R_{i,j}\) corresponds to the pair \((T_A=i,T_B=j)\).
+For example, consider the example discussed in
+Section~\ref{sec:brent_method_example} that had the same set of parameters with
+thresholds \(T_A=8, T_B=10\).
+The best response of the distribution service is calculated to be \(p_A=0.58\)
+and it can also be found in the routing matrix at the \(8^{th}\) row and
+\(10^{th}\) column (i.e. \(R_{8,10} = 0.58\)).
+
+
+\subsubsection{Implementation}\label{sec:implementation_distribution_service}
+
+The following function shows how the routing matrix can be calculated by using
+function~\lstinline[style=pystyle]{calculate_class_2_individuals_best_response}
+for every possible pair of thresholds.
+
+\begin{lstlisting}[style=pystyle]
+>>> import itertools
+>>> import numpy as np
+>>> def get_routing_matrix(
+...    lambda_2,
+...    lambda_1_1,
+...    lambda_1_2,
+...    mu_1,
+...    mu_2,
+...    num_of_servers_1,
+...    num_of_servers_2,
+...    system_capacity_1,
+...    system_capacity_2,
+...    buffer_capacity_1,
+...    buffer_capacity_2,
+...    alpha=0,
+... ):
+...    """
+...    Get the optimal distribution matrix that consists of the proportion of
+...    individuals to be distributed to each hospital for all possible
+...    combinations of thresholds of the two hospitals (T_1, T_2). For every
+...    set of thresholds, the function fills the entries of the matrix using
+...    the proportion of individuals to distribute to hospital 1.
+...
+...    Parameters
+...    ----------
+...    lambda_2 : float
+...    lambda_1_1 : float
+...    lambda_1_2 : float
+...    mu_1 : float
+...    mu_2 : float
+...    num_of_servers_1 : int
+...    num_of_servers_2 : int
+...    system_capacity_1 : int
+...    system_capacity_2 : int
+...    buffer_capacity_1 : int
+...    buffer_capacity_2 : int
+...    routing_function : function, optional
+...        The function to use to get the optimal distribution of patients
+...    Returns
+...    -------
+...    numpy array
+...        The matrix with proportions of all possible combinations of
+...        threshold
+...    """
+...    routing_matrix = np.zeros((system_capacity_1, system_capacity_2))
+...    for threshold_1, threshold_2 in itertools.product(
+...        range(1, system_capacity_1 + 1), range(1, system_capacity_2 + 1)
+...    ):
+...        opt = calculate_class_2_individuals_best_response(
+...            lambda_2=lambda_2,
+...            lambda_1_1=lambda_1_1,
+...            lambda_1_2=lambda_1_2,
+...            mu_1=mu_1,
+...            mu_2=mu_2,
+...            num_of_servers_1=num_of_servers_1,
+...            num_of_servers_2=num_of_servers_2,
+...            system_capacity_1=system_capacity_1,
+...            system_capacity_2=system_capacity_2,
+...            buffer_capacity_1=buffer_capacity_1,
+...            buffer_capacity_2=buffer_capacity_2,
+...            threshold_1=threshold_1,
+...            threshold_2=threshold_2,
+...            alpha=alpha,
+...        )
+...        routing_matrix[threshold_1 - 1, threshold_2 - 1] = opt
+...    return routing_matrix
+
+\end{lstlisting}
+
+\begin{sloppypar}
+Using the same set of parameters as in the example discussed in
+Section~\ref{sec:routing_matrix_example}, the routing matrix can be calculated.
+\end{sloppypar}
+
+\begin{lstlisting}[style=pystyle]
+>>> get_routing_matrix(
+...    lambda_2=lambda_2,
+...    lambda_1_1=lambda_1_A,
+...    lambda_1_2=lambda_1_B,
+...    mu_1=mu_A,
+...    mu_2=mu_B,
+...    num_of_servers_1=num_of_servers_A,
+...    num_of_servers_2=num_of_servers_B,
+...    system_capacity_1=system_capacity_A,
+...    system_capacity_2=system_capacity_B,
+...    buffer_capacity_1=buffer_capacity_A,
+...    buffer_capacity_2=buffer_capacity_B,
+...    alpha=alpha,
+... )
+array([[0.58864276, 0.22335975, 0.15533059, 0.15265663, 0.15078926,
+        0.14922469, 0.14719237, 0.14271416, 0.12874758, 0.06396441],
+       [0.93574605, 0.67443129, 0.51051637, 0.48986689, 0.474517  ,
+        0.46234589, 0.45136222, 0.43786699, 0.41004722, 0.31135186],
+       [1.        , 0.84928478, 0.70944125, 0.66945048, 0.63960878,
+        0.61601954, 0.59573161, 0.5746382 , 0.54157719, 0.44625113],
+       [1.        , 0.86430904, 0.73661752, 0.69683427, 0.66686909,
+        0.64296716, 0.62233703, 0.6011736 , 0.56942852, 0.48372486],
+       [1.        , 0.8769602 , 0.75856893, 0.71911699, 0.68913141,
+        0.66505568, 0.64416384, 0.62297243, 0.59220666, 0.51352681],
+       [1.        , 0.88782106, 0.77691989, 0.73780511, 0.7078792 ,
+        0.68366777, 0.66270079, 0.64146588, 0.61149112, 0.5382421 ],
+       [1.        , 0.89728669, 0.79261746, 0.75382586, 0.72401867,
+        0.69978202, 0.6787237 , 0.65751624, 0.6282157 , 0.55939581],
+       [1.        , 0.90564353, 0.80614796, 0.7677999 , 0.73815484,
+        0.71398819, 0.69284969, 0.67167208, 0.64301254, 0.5778495 ],
+       [1.        , 0.91312427, 0.81813225, 0.78016576, 0.75073204,
+        0.72662301, 0.70549771, 0.68440782, 0.65624748, 0.59425681],
+       [1.        , 0.91997634, 0.82894698, 0.79141059, 0.76218245,
+        0.73812947, 0.71705972, 0.69606716, 0.66837977, 0.60914055],
+       [1.        , 0.92662384, 0.83917256, 0.80200443, 0.77297551,
+        0.74903033, 0.7279936 , 0.70708275, 0.67987751, 0.62310053],
+       [1.        , 0.93417364, 0.85009707, 0.81320876, 0.7843084 ,
+        0.7604156 , 0.73937585, 0.7185154 , 0.69171265, 0.63719748],
+       [1.        , 0.94615952, 0.8654791 , 0.82845358, 0.79936661,
+        0.77525057, 0.75399993, 0.73296783, 0.70639403, 0.65395543],
+       [1.        , 0.97522952, 0.89772397, 0.85877431, 0.82812693,
+        0.80267354, 0.78024478, 0.75829045, 0.73124439, 0.68050787],
+       [1.        , 1.        , 0.98966703, 0.94066708, 0.90265479,
+        0.87136701, 0.84412235, 0.81814844, 0.78822172, 0.73774973]])
+
+\end{lstlisting}
+
+
+\subsubsection{Brent's algorithm - tolerance sensitivity analysis}
+\label{sec:brent_tolerance}
+
+The implementation of Brent's algorithm is being done using the
+function~\lstinline[style=pystyle]{brentq}
+from~\lstinline[style=pystyle]{SciPy}.
+The function receives two essential arguments; another function for
+which to find the root of, and the interval in which the root is located.
+In addition to these two arguments, the function also receives two optional
+arguments; \lstinline[style=pystyle]{xtol} and
+\lstinline[style=pystyle]{rtol}~\cite{2020SciPy-NMeth}.
+These two parameters are the ones that define the tolerance of the algorithm.
+In other words, the smaller the tolerance parameters are, the more accurate
+the result will be.
+However, the smaller the tolerance parameters are, the more iterations will
+be needed to find the root.
+Therefore, the tolerance parameters are a trade-off between accuracy and
+computation time.
+
+The documentation of the~\lstinline[style=pystyle]{brentq} function states
+that the default values of the tolerance parameters are
+\lstinline[style=pystyle]{xtol=2e-12} and
+\lstinline[style=pystyle]{rtol=8.881784197001252e-16}.
+Within the the~\lstinline[style=pystyle]{brentq} function these two parameters
+are used to ensure that
+\lstinline[style=pystyle]{allclose(x, x0, atol=xtol, rtol=rtol) = True}.
+Function \lstinline[style=pystyle]{allclose} is implemented by the
+\lstinline[style=pystyle]{numpy} library~\cite{2020NumPy-Array}.
+and checks if two arrays are element-wise similar given a certain tolerance.
+The way the internal mechanisms of the~\lstinline[style=pystyle]{allclose}
+function work is that given two values \(a\) and \(b\), with some absolute
+tolerance (atol) and relative tolerance (rtol) parameters, the function returns
+\lstinline[style=pystyle]{True} if:
+
+\begin{equation}
+    |a - b| \leq (\text{atol} + \text{rtol} \times |b|)
+\end{equation}
+
+These tolerance parameters are the once used by Brent's algorithm to determine
+if the root has been found.
+In the remainder of this subsection the effect of the absolute tolerance
+parameter \lstinline[style=pystyle]{xtol} will be analysed.
+To determine the effect of the absolute tolerance parameters on the accuracy and
+computation time of Brent's algorithm, the algorithm was ran for different set
+of parameters and different values of the absolute tolerance parameter.
+The two parameter sets that were used for these experiments are:
+
+\begin{center}
+    \small
+    \begin{tabular}{||c|c|c|c|c|c|c|c|c|c|c|c|c||}
+        \hline
+        \(\lambda_2\) & \(\lambda_1^A\) & \(\lambda_1^B\) & \(T^A\) & \(T^B\) &
+        \(\mu^A\) & \(\mu^B\) & \(C^A\) & \(C^B\) & \(N^A\) & \(N^B\) & \(M^A\) &
+        \(M^B\) \\
+        \hline\hline
+        4 & 3 & 3 & 4 & 5 & 4 & 3 & 2 & 3 & [8,25] & 8 & 8 & 8 \\
+        \hline
+        5 & 2 & 2 & 7 & 10 & 3 & 2 & 3 & 4 & [7,24] & 15 & 10 & 10 \\
+        \hline
+    \end{tabular}
+\end{center}
+    
+Note the system capacity of queueing system \(A\) varies for both parameter sets.
+For every value of \(N_A\) Brent's algorithm was run for different values of
+the absolute tolerance parameter \lstinline[style=pystyle]{xtol}.
+The values of the absolute tolerance parameter that were used are:
+\lstinline[style=pystyle]
+{xtol = [1e-10, 1e-9, 1e-8, 1e-7, 1e-6, 1e-5, 0.0001, 0.001, 0.01, 0.1]}.
+For each value of the absolute tolerance parameter, the algorithm was run 200
+times and the computation time was recorded for each run.
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/img/brents_method/tolerance/tolerance_violinplots_1.pdf}
+    \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/img/brents_method/tolerance/tolerance_violinplots_2.pdf}
+    \caption{
+        Violinplots of the duration of Brent's algorithm for different values of
+        \(N_A\).
+    }
+    \label{fig:tolerance_violinplots}
+\end{figure}
+
+It can be seen that for both parameter sets in
+Figure~\ref{fig:tolerance_violinplots} the duration of the algorithm is
+increasing as \(N^A\) increases.
+Note that the violinplots include all values of the tolerance parameters
+\lstinline[style=pystyle]{xtol} that were used.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/img/brents_method/tolerance/tolerance_lineplots_1.pdf}
+    \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/img/brents_method/tolerance/tolerance_lineplots_2.pdf}
+    \caption{
+        Line plots of the duration of Brent's algorithm for different values of
+        \(N_A\) over different values of the absolute tolerance parameter xtol.
+    }
+    \label{fig:tolerance_lineplots}
+\end{figure}
+
+The plots of Figure~\ref{fig:tolerance_lineplots} show for each value of \(N^A\)
+how the duration of the algorithm changes as the absolute tolerance parameter
+\lstinline[style=pystyle]{xtol} increases.
+It can be seen that for both parameter sets the duration of the algorithm
+on most cases the computational time decreases as the tolerance parameter
+increases.
+There are some cases that do not follow this trend though.
+For example, for parameter set 1 when \(N^A=20\), the duration of the algorithm
+increases, rather than decreasing, from \lstinline[style=pystyle]{xtol=1e-05}
+to \lstinline[style=pystyle]{xtol=0.0001}.
+
+
+
+\subsection{Queueing systems and normal form games}
+\label{sec:queueing_systems_and_normal_form_games}
+
+In subsection~\ref{sec:best_response_distribution_service} it is shown that
+given the strategies played by queueing systems \(A\) and \(B\) the best
+response of the distribution service can be found.
+Consider the routing matrix \(R\) defined in equation~(\ref{eq:routing_matrix}).
+
+\begin{equation*}
+    R =
+    \begin{pmatrix}
+        p_{1,1}^A & p_{1,2}^A & \dots & p_{1,N_B}^A \\
+        p_{2,1}^A & p_{2,2}^A & \dots & p_{2,N_B}^A \\
+        \vdots & \vdots & \ddots & \vdots \\
+        p_{N_A,1}^A & p_{N_A,2}^A & \dots & p_{N_A,N_B}^A \\
+    \end{pmatrix}
+\end{equation*}
+
+Every entry \(R_{i,j}\) of the routing matrix represents best response of
+the distribution service when \(T^A=i\) and \(T^B=j\).
+In other words, given \(T^A=i\) and \(T^B=j\), the distribution service's
+strategy that maximises its utility should be to route a proportion of
+\(p^A_{i,j}\) of the individuals to queueing system \(A\) and a proportion of
+\(1 - p^A_{i,j}\) individuals to queueing system \(B\).
+Assuming that for every pair of strategies \(T^A\) and \(T^B\) the best response
+of the distribution service is known to the queueing systems, then the
+formulation of the game can be simplified even more.
+In fact the imperfect information extensive form game defined in
+Section~\ref{sec:game_imperfect_information} can be now transformed into a
+2-player normal form game between the two queueing systems.
+From equation~(\ref{eq:obj_queueing_systems}) the utility of queueing system
+\(i\) when the pair of strategies \((T^A, T^B)\) is played, is defined as:
+
+\begin{equation}\label{eq:utility_queueing_systems}
+    U_{T_A, T_B}^i = 1 - \left( \hat{P} - P(W_i < t) \right)^2
+    \qquad i \in {A, B}
+\end{equation}
+
+\(U_{T_A, T_B}^A\) and \(U_{T_A, T_B}^B\) are essentially artificial metrics
+that queuing systems \(A\) and \(B\) aim to maximise.
+Essentially, by maximising equation~(\ref{eq:utility_queueing_systems}) for both
+queueing systems, the queueing systems are trying to minimise the difference
+between the proportion of individuals that are served within the target time
+\(t\) and the proportion target \(\hat{P}\).
+For example, given a proportion target \(\hat{P} = 0.9\) which means that
+90\% of the individuals should be served within the target time \(t\), and
+given that the proportion of individuals that are served within the target time
+is \(P(W_i < t) = 0.8\), then the utility of the queueing system \(i\) is
+given by \(U_{T_A, T_B}^i = 1 - (0.9 - 0.8)^2 = 0.99\).
+The payoff matrices of the game can be populated by these utilities for all
+possible pairs of strategies \((T^A, T^B)\).
+
+\begin{equation}\label{eq:payoff_matrices}
+    A =
+    \begin{pmatrix}
+        U_{1,1}^A & U_{1,2}^A & \dots & U_{1,N_B}^A \\
+        U_{2,1}^A & U_{2,2}^A & \dots & U_{2,N_B}^A \\
+        \vdots & \vdots & \ddots & \vdots \\
+        U_{N_A,1}^A & U_{N_A,2}^A & \dots & U_{N_A,N_B}^A \\
+    \end{pmatrix}, \,
+    B =
+    \begin{pmatrix}
+        U_{1,1}^B & U_{1,2}^B & \dots & U_{1,N_B}^B \\
+        U_{2,1}^B & U_{2,2}^B & \dots & U_{2,N_B}^B \\
+        \vdots & \vdots & \ddots & \vdots \\
+        U_{N_A,1}^B & U_{N_A,2}^B & \dots & U_{N_A,N_B}^B \\
+    \end{pmatrix}
+\end{equation}
+
+Matrix \(A\) consists of all possible utilities of queueing system \(A\), and
+matrix \(B\) consists of all possible utilities of queueing system \(B\).
+The game is now a 2-player normal form game with payoff matrices \(A\) and
+\(B\).
+
+
+\subsubsection{Implementation}
+
+Consider an example of the described game with the following parameters:
+
+\begin{table}[H]
+    \caption{Distribution service parameters}
+    \begin{center}
+        \begin{tabular}{||c|c|c|c||}
+            \hline
+            \(\lambda_2\) & t & \footnotesize{\(\hat{P}\)} & \(\alpha\) \\
+            \hline\hline
+            4 & 1 & 0.95 & 0.2 \\
+            \hline
+        \end{tabular}
+    \end{center}
+    \label{tab:implemetation_dist_service_parameters}
+\end{table}
+
+\begin{table}[H]
+    \caption{Queueing systems parameters}
+    \begin{center}
+        \begin{tabular}{||c|c|c|c|c|c||}
+            \hline
+            \(\lambda_1^A\) & \(\mu^A\) & \(C^A\) & \(N^A\) & \(M^A\) \\
+            \hline
+            2 & 3 & 2 & 7 & 6 \\
+            \hline
+        \end{tabular}
+
+        \vspace{0.5cm}
+        
+        \begin{tabular}{||c|c|c|c|c|c||}
+            \hline
+            \(\lambda_1^B\) & \(\mu^B\) & \(C^B\) & \(N^B\) & \(M^B\) \\
+            \hline
+            1 & 1 & 3 & 4 & 3 \\
+            \hline
+        \end{tabular}
+    \end{center}
+    \label{tab:implemetation_queueing_systems_parameters}
+\end{table}
+
+
+\begin{lstlisting}[style=pystyle]
+>>> lambda_2 = 4
+>>> target = 1
+>>> p_hat = 0.95
+>>> alpha = 0.2
+>>> 
+>>> lambda_1_A = 2
+>>> mu_A = 3
+>>> num_of_servers_A = 2
+>>> system_capacity_A = 7
+>>> buffer_capacity_A = 6
+>>> 
+>>> lambda_1_B = 1
+>>> mu_B = 1
+>>> num_of_servers_B = 3
+>>> system_capacity_B = 4
+>>> buffer_capacity_B = 3
+
+\end{lstlisting}
+
+The first function to create is one that takes a pair of thresholds \(T^A=i,
+T^B=j\) and gets the best response of the distribution service \(p_A\).
+Then, using \(p_A\), finds the value of \(U_{i,j}^A\) and \(U_{i,j}^B\)
+and returns the tuple \((i, j, p_A, U_{i,j}^A, U_{i,j}^B)\).
+
+\begin{lstlisting}[style=pystyle]
+>>> import numpy as np
+>>> def get_individual_entries_of_matrices(
+...     lambda_2,
+...     lambda_1_1,
+...     lambda_1_2,
+...     mu_1,
+...     mu_2,
+...     num_of_servers_1,
+...     num_of_servers_2,
+...     threshold_1,
+...     threshold_2,
+...     system_capacity_1,
+...     system_capacity_2,
+...     buffer_capacity_1,
+...     buffer_capacity_2,
+...     alpha,
+...     target,
+...     p_hat,
+... ):
+...     """
+...     Gets the (i,j)th entry of the payoff matrices and the routing matrix
+...     where i=threshold_1 and j=threshold_2. 
+...
+...     Parameters
+...     ----------
+...     lambda_2 : float
+...     lambda_1_1 : float
+...     lambda_1_2 : float
+...     mu_1 : float
+...     mu_2 : float
+...     num_of_servers_1 : int
+...     num_of_servers_2 : int
+...     threshold_1 : int
+...     threshold_2 : int
+...     system_capacity_1 : int
+...     system_capacity_2 : int
+...     buffer_capacity_1 : int
+...     buffer_capacity_2 : int
+...     alpha : float
+...     target : float
+...
+...     Returns
+...     -------
+...     tuple
+...         A tuple of the form (i, j, R[i,j], A[i,j], B[i,j])
+...     """
+...     prop_to_hospital_1 = calculate_class_2_individuals_best_response(
+...         lambda_2=lambda_2,
+...         lambda_1_1=lambda_1_1,
+...         lambda_1_2=lambda_1_2,
+...         mu_1=mu_1,
+...         mu_2=mu_2,
+...         num_of_servers_1=num_of_servers_1,
+...         num_of_servers_2=num_of_servers_2,
+...         system_capacity_1=system_capacity_1,
+...         system_capacity_2=system_capacity_2,
+...         buffer_capacity_1=buffer_capacity_1,
+...         buffer_capacity_2=buffer_capacity_2,
+...         threshold_1=threshold_1,
+...         threshold_2=threshold_2,
+...         alpha=alpha,
+...     )
+...     prop_to_hospital_2 = 1 - prop_to_hospital_1
+... 
+...     proportion_within_target_1 = (
+...         abg.markov.proportion_within_target_using_markov_state_probabilities(
+...             lambda_2=lambda_2 * prop_to_hospital_1,
+...             lambda_1=lambda_1_1,
+...             mu=mu_1,
+...             num_of_servers=num_of_servers_1,
+...             threshold=threshold_1,
+...             system_capacity=system_capacity_1,
+...             buffer_capacity=buffer_capacity_1,
+...             class_type=None,
+...             target=target,
+...         )
+...     )
+...     proportion_within_target_2 = (
+...         abg.markov.proportion_within_target_using_markov_state_probabilities(
+...             lambda_2=lambda_2 * prop_to_hospital_2,
+...             lambda_1=lambda_1_2,
+...             mu=mu_2,
+...             num_of_servers=num_of_servers_2,
+...             threshold=threshold_2,
+...             system_capacity=system_capacity_2,
+...             buffer_capacity=buffer_capacity_2,
+...             class_type=None,
+...             target=target,
+...         )
+...     )
+...     utility_1 = 1 - (
+...         (np.nanmean(proportion_within_target_1) - p_hat) ** 2
+...     )
+...     utility_2 = 1 - (
+...         (np.nanmean(proportion_within_target_2) - p_hat) ** 2
+...     )
+... 
+...     return (
+...         threshold_1,    
+...         threshold_2,
+...         prop_to_hospital_1,
+...         utility_1,
+...         utility_2
+...     )
+
+\end{lstlisting}
+
+The function \lstinline[style=pystyle]{get_individual_entries_of_matrices} can
+now be used to get the \((i,j)^\text{th}\) entry of the routing matrix \(R\)
+payoff matrix \(A\) and payoff matrix \(B\).
+For example consider the case when \(T_A = 7\) and \(T_B = 4\).
+The equivalent values of \(R, A \text{ and } B\) on the \((7, 4)^\text{th}\)
+position can be calculated using:
+
+\begin{lstlisting}[style=pystyle]
+>>> _, _, p_A, U_A, U_B = np.round(get_individual_entries_of_matrices(
+...     lambda_2=lambda_2,
+...     lambda_1_1=lambda_1_A,
+...     lambda_1_2=lambda_1_B,
+...     mu_1=mu_A,
+...     mu_2=mu_B,
+...     num_of_servers_1=num_of_servers_A,
+...     num_of_servers_2=num_of_servers_B,
+...     threshold_1=7,
+...     threshold_2=4,
+...     system_capacity_1=system_capacity_A,
+...     system_capacity_2=system_capacity_B,
+...     buffer_capacity_1=buffer_capacity_A,
+...     buffer_capacity_2=buffer_capacity_B,
+...     alpha=alpha,
+...     target=target,
+...     p_hat=p_hat
+... ), 8)
+>>> p_A
+0.80583153
+>>> U_A
+0.96146225
+>>> U_B
+0.87505776
+
+\end{lstlisting}
+
+The second step is to use the
+\lstinline[style=pystyle]{get_individual_entries_of_matrices} function to
+calculate the entries of the routing matrix \(R\), payoff matrix \(A\) and
+payoff matrix \(B\).
+Thus, by iterating over all possible values of \(T_A\) and \(T_B\), the
+routing matrix \(R\), payoff matrix \(A\) and payoff matrix \(B\) can be
+calculated.
+Note that in Section~\ref{sec:implementation_distribution_service} the
+\lstinline[style=pystyle]{get_routing_matrix} function was defined that returns
+the routing matrix \(R\).
+The function defined here gets all matrices in a much more computationally
+efficient way.
+
+\begin{lstlisting}[style=pystyle]
+>>> import itertools
+>>> def get_payoff_matrices(
+...     lambda_2,
+...     lambda_1_1,
+...     lambda_1_2,
+...     mu_1,
+...     mu_2,
+...     num_of_servers_1,
+...     num_of_servers_2,
+...     system_capacity_1,
+...     system_capacity_2,
+...     buffer_capacity_1,
+...     buffer_capacity_2,
+...     target,
+...     alpha,
+...     p_hat,
+...     alternative_utility=False,
+... ):
+...     """
+...     The function uses the distribution array (that is the array that holds
+...     the optimal proportion of individuals to send to each hospital), to
+...     calculate the proportion of patients within time for every possible set
+...     of thresholds chosen by each system.
+...     Parameters
+...     ----------
+...     lambda_2 : float
+...     lambda_1_1 : float
+...     lambda_1_2 : float
+...     mu_1 : float
+...     mu_2 : float
+...     num_of_servers_1 : int
+...     num_of_servers_2 : int
+...     system_capacity_1 : int
+...     system_capacity_2 : int
+...     buffer_capacity_1 : int
+...     buffer_capacity_2 : int
+...     target : float
+...         The target time that individuals should be within
+...
+...     Returns
+...     -------
+...     numpy.array, numpy.array
+...         The payoff matrices of the game
+...     """
+...     utility_matrix_1 = np.zeros((system_capacity_1, system_capacity_2))
+...     utility_matrix_2 = np.zeros((system_capacity_1, system_capacity_2))
+...     routing_matrix = np.zeros((system_capacity_1, system_capacity_2))
+...     for threshold_1, threshold_2 in itertools.product(
+...         range(1, system_capacity_1 + 1), range(1, system_capacity_2 + 1)
+...     ):
+...         T_A, T_B, p_A, U_A, U_B = get_individual_entries_of_matrices(
+...             lambda_2=lambda_2,
+...             lambda_1_1=lambda_1_1,
+...             lambda_1_2=lambda_1_2,
+...             mu_1=mu_1,
+...             mu_2=mu_2,
+...             num_of_servers_1=num_of_servers_1,
+...             num_of_servers_2=num_of_servers_2,
+...             threshold_1=threshold_1,
+...             threshold_2=threshold_2,
+...             system_capacity_1=system_capacity_1,
+...             system_capacity_2=system_capacity_2,
+...             buffer_capacity_1=buffer_capacity_1,
+...             buffer_capacity_2=buffer_capacity_2,
+...             alpha=alpha,
+...             target=target,
+...             p_hat=p_hat,
+...         )
+...         utility_matrix_1[T_A - 1, T_B - 1] = U_A
+...         utility_matrix_2[T_A - 1, T_B - 1] = U_B
+...         routing_matrix[T_A - 1, T_B - 1] = p_A
+...
+...     return utility_matrix_1, utility_matrix_2, routing_matrix
+        
+\end{lstlisting}
+    
+The following piece of code gets matrices \(A\), \(B\) and \(R\) for the
+parameters of the example given above.
+
+\begin{lstlisting}[style=pystyle]
+>>> A, B, R = get_payoff_matrices(
+...     lambda_2=lambda_2,
+...     lambda_1_1=lambda_1_A,
+...     lambda_1_2=lambda_1_B,
+...     mu_1=mu_A,
+...     mu_2=mu_B,
+...     num_of_servers_1=num_of_servers_A,
+...     num_of_servers_2=num_of_servers_B,
+...     system_capacity_1=system_capacity_A,
+...     system_capacity_2=system_capacity_B,
+...     buffer_capacity_1=buffer_capacity_A,
+...     buffer_capacity_2=buffer_capacity_B,
+...     target=target,
+...     alpha=alpha,
+...     p_hat=p_hat,
+... )
+>>> A
+array([[0.9997736 , 0.9997736 , 0.9997736 , 0.9997736 ],
+       [0.99918651, 0.99923556, 0.99934362, 0.99945211],
+       [0.99406363, 0.99485147, 0.99635215, 0.99753246],
+       [0.9797136 , 0.9828782 , 0.98884481, 0.99308839],
+       [0.95263545, 0.9599928 , 0.97510779, 0.98528894],
+       [0.92089495, 0.92932621, 0.95614727, 0.97424141],
+       [0.92414307, 0.92414307, 0.94021899, 0.96146225]])
+>>> B
+array([[0.89253416, 0.88888203, 0.87438695, 0.79835823],
+       [0.89253416, 0.89054246, 0.8796009 , 0.82819449],
+       [0.89253416, 0.89081835, 0.8809942 , 0.837463  ],
+       [0.89253416, 0.89107223, 0.88222127, 0.84490465],
+       [0.89253416, 0.89136098, 0.88349414, 0.85178752],
+       [0.89253416, 0.89186314, 0.8853596 , 0.86018873],
+       [0.89253416, 0.89253416, 0.88964749, 0.87505776]])
+>>> R
+array([[0.92344478, 0.4632574 , 0.25667497, 0.14225553],
+       [1.        , 0.85220313, 0.62624741, 0.45231728],
+       [1.        , 0.87813784, 0.67951058, 0.52328851],
+       [1.        , 0.89972766, 0.72107423, 0.57760157],
+       [1.        , 0.92227658, 0.76050588, 0.62710433],
+       [1.        , 0.95776622, 0.81369017, 0.68824209],
+       [1.        , 1.        , 0.92566552, 0.80583153]])
+
+\end{lstlisting}
+
+The final thing to be done is to use the \lstinline[style=pystyle]{nashpy}
+library to build the game using the payoff matrices.
+
+\begin{lstlisting}[style=pystyle]
+>>> import nashpy as nash
+>>> game = nash.Game(A, B)
+>>> game
+Bi matrix game with payoff matrices:
+<BLANKLINE>
+Row player:
+[[0.9997736  0.9997736  0.9997736  0.9997736 ]
+ [0.99918651 0.99923556 0.99934362 0.99945211]
+ [0.99406363 0.99485147 0.99635215 0.99753246]
+ [0.9797136  0.9828782  0.98884481 0.99308839]
+ [0.95263545 0.9599928  0.97510779 0.98528894]
+ [0.92089495 0.92932621 0.95614727 0.97424141]
+ [0.92414307 0.92414307 0.94021899 0.96146225]]
+<BLANKLINE>
+Column player:
+[[0.89253416 0.88888203 0.87438695 0.79835823]
+ [0.89253416 0.89054246 0.8796009  0.82819449]
+ [0.89253416 0.89081835 0.8809942  0.837463  ]
+ [0.89253416 0.89107223 0.88222127 0.84490465]
+ [0.89253416 0.89136098 0.88349414 0.85178752]
+ [0.89253416 0.89186314 0.8853596  0.86018873]
+ [0.89253416 0.89253416 0.88964749 0.87505776]]
+
+\end{lstlisting}
+
+
+
+\subsection{Solving the game}\label{sec:game_solving}
+
+This section describes how everything introduced in this chapter so far can be
+put together to get numerical results of the 3-player game between two queueing
+systems and the individual distribution service.
+Having formulated the game (Section~\ref{sec:game_formulation}) and obtained
+the payoff matrices for the two players
+(Section~\ref{sec:queueing_systems_and_normal_form_games}) the strategies of
+the players can now be investigated.
+For a 2-player game once the two payoff matrices have been calculated
+the game can be solved using the methods described in
+Section~\ref{sec:game_theory_intro}.
+More specifically, the concept of Nash equilibrium described in
+Section~\ref{sec:game_intro_nash_equilibrium} and the concept of Evolutionary
+Stable Strategies described in Section~\ref{sec:game_intro_learning_algorithms}
+will be used to analyse the behaviour of the players in the game.
+
+Consider a game between queueing systems \(A\) and \(B\) and a distribution
+service \(D\) with the following parameters.
+
+\begin{table}[H]
+    \caption{Distribution service parameters}
+    \begin{center}
+        \begin{tabular}{||c|c|c|c||}
+            \hline
+            \(\lambda_2\) & t & \(\hat{P}\) & \(\alpha\) \\
+            \hline\hline
+            1 & 1 & 0.8 & 0.5 \\
+            \hline
+        \end{tabular}
+    \end{center}
+    \label{tab:solving_game_dist_service_parameters}
+\end{table}
+
+\begin{table}[H]
+    \caption{Queueing systems parameters}
+    \begin{center}
+        \begin{tabular}{||c|c|c|c|c|c||}
+            \hline
+            \(\lambda_1^A\) & \(\mu^A\) & \(C^A\) & \(N^A\) & \(M^A\) \\
+            \hline
+            1 & 2 & 1 & 2 & 2 \\
+            \hline
+        \end{tabular}
+
+        \vspace{0.5cm}
+        
+        \begin{tabular}{||c|c|c|c|c|c||}
+            \hline
+            \(\lambda_1^B\) & \(\mu^B\) & \(C^B\) & \(N^B\) & \(M^B\) \\
+            \hline
+            1 & 3 & 1 & 2 & 2 \\
+            \hline
+        \end{tabular}
+    \end{center}
+    \label{tab:solving_game_queueing_systems_parameters}
+\end{table}
+
+\begin{lstlisting}[style=pystyle]
+>>> lambda_2 = 1
+>>> target = 1
+>>> p_hat = 0.8
+>>> alpha = 0.5
+
+>>> lambda_1_A = 1
+>>> mu_A = 2
+>>> num_of_servers_A = 1
+>>> system_capacity_A = 2
+>>> buffer_capacity_A = 2
+    
+>>> lambda_1_B = 1
+>>> mu_B = 3
+>>> num_of_servers_B = 1
+>>> system_capacity_B = 2
+>>> buffer_capacity_B = 2
+
+\end{lstlisting}
+
+Note that these are two small queueing systems with a maximum capacity of \(2\).
+In other words, since both systems have a capacity of \(2\), their possible
+strategies are to either choose a threshold of \(T_i = 1\) or \(T_i = 2\) where
+\(i \in \{A, B\}\).
+In other words the queueing systems could start blocking type \(2\) individuals
+either when there is \(1\) individual in node 1 or when there are \(2\)
+individuals.
+See Figure~\ref{fig:diagram_of_game_theoretic_model} for a visual representation
+of the game.
+In this example, the only difference between the two queueing systems
+is that queueing system \(A\) has a lower service rate than queueing system
+\(B\).
+
+As shown in Section~\ref{sec:queueing_systems_and_normal_form_games} the payoff
+matrices for the two players can be obtained using the function
+\lstinline[style=pystyle]{get_payoff_matrices}.
+Every function that described in this section is also implemented in the
+\lstinline[style=pystyle]{ambulance_game} python library that was created for
+this project.
+A detailed description of the library can be found in Section.
+% TODO: reference ambulance_game section {sec:ambulance_game_library}.
+The following code shows how the payoff matrices can be obtained using the
+\lstinline[style=pystyle]{ambulance_game} library.
+
+\begin{lstlisting}[style=pystyle]
+>>> import ambulance_game as abg
+>>> A, B, R = abg.game.get_payoff_matrices(
+...     lambda_2=lambda_2,
+...     lambda_1_1=lambda_1_A,
+...     lambda_1_2=lambda_1_B,
+...     mu_1=mu_A,
+...     mu_2=mu_B,
+...     num_of_servers_1=num_of_servers_A,
+...     num_of_servers_2=num_of_servers_B,
+...     system_capacity_1=system_capacity_A,
+...     system_capacity_2=system_capacity_B,
+...     buffer_capacity_1=buffer_capacity_A,
+...     buffer_capacity_2=buffer_capacity_B,
+...     target=target,
+...     alpha=alpha,
+...     p_hat=p_hat,
+... )
+>>> game = nash.Game(A, B)
+>>> game
+Bi matrix game with payoff matrices:
+<BLANKLINE>
+Row player:
+[[0.99934675 0.99934675]
+ [0.99282972 0.99828249]]
+<BLANKLINE>
+Column player:
+[[0.98725977 0.99408002]
+ [0.98725977 0.99312791]]
+
+\end{lstlisting}
+
+Having the payoff matrices, the Nash Equilibrium can be obtained using the
+support enumeration algorithm or the Lemke-Howson algorithm implemented in the
+\lstinline[style=pystyle]{nashpy} library.
+See Section~\ref{sec:game_intro_nash_equilibrium} for more details on these
+algorithms.
+
+\begin{lstlisting}[style=pystyle]
+>>> tuple(game.support_enumeration())
+((array([1., 0.]), array([0., 1.])),)
+>>> tuple(game.lemke_howson(initial_dropped_label=0))
+(array([1., 0.]), array([0., 1.]))
+
+\end{lstlisting}
+
+Both algorithms return the same set of equilibria, which is for queueing system
+\(A\) to always choose a threshold of \(T_A = 1\) and for queueing system
+\(B\) to always choose a threshold of \(T_B = 2\).
+This means, that queueing system \(A\) will block type \(2\) individuals when
+there is \(1\) individual in node 1 and queueing system \(B\) will block type
+\(2\) individuals only when node \(1\) is at maximum capacity.
+
+As the sizes of the queueing systems considered grow the strategy spaces will
+as well.
+This can increase the complexity of finding equilibria.
+In addition, equilibria might not necessarily emerge, thus the learning
+algorithms described in Section~\ref{sec:game_intro_learning_algorithms} can be
+used to obtain Evolutionary Stable Strategies (ESS) for the game.
+The following code runs the fictitious play algorithm for \(100\) iterations
+and returns the number of times each strategy was played.
+
+\begin{lstlisting}[style=pystyle]
+>>> np.random.seed(5)
+>>> play_counts = tuple(game.fictitious_play(iterations=100))
+>>> play_counts[-1]
+[array([99.,  1.]), array([ 1., 99.])]
+
+\end{lstlisting}
+
+It can be seen that the Nash equilibrium set of strategies found by the
+support enumeration algorithm and the Lemke-Howson algorithm is also reached
+here.
+Using learning algorithms, not only can one find a Nash equilibrium,
+but also visualise how the players of the game reach it.
+Figure~\ref{fig:solving_game_fictitious_example} shows how the players evolve
+their strategies over time.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.49\textwidth]{chapters/04_game_theoretic_model/img/numeric_results/fictitious_play_A.pdf}
+    \includegraphics[width=0.49\textwidth]{chapters/04_game_theoretic_model/img/numeric_results/fictitious_play_B.pdf}
+    \caption{Fictitious play algorithm on both players' strategies.}
+    \label{fig:solving_game_fictitious_example}
+\end{figure}
+
+Similarly, the stochastic fictitious play algorithm is ran for \(1000\)
+iterations.
+The following code shows how the number of times each strategy was played and
+the distribution of strategies over time.
+
+\begin{lstlisting}[style=pystyle]
+>>> np.random.seed(0)
+>>> play_counts_and_distributions = tuple(
+...     game.stochastic_fictitious_play(iterations=1000)
+... )
+>>> plays, dist = play_counts_and_distributions[-1]
+>>> plays
+[array([509., 491.]), array([512., 488.])]
+>>> dist
+[array([0.51785058, 0.48214942]), array([0.47022964, 0.52977036])]
+
+\end{lstlisting}
+
+The results are not similar to the case of the fictitious play algorithm.
+In fact the stochastic fictitious play algorithm does not converge to a Nash
+equilibrium.
+Instead, the algorithm converges to a mixed strategy equilibrium where both
+players have a probability of playing each strategy.
+This might be due to the choice of parameters of the algorithm \(\eta\) and
+\(\bar{\epsilon}\) or the fact that the values of the payoff matrices are
+smaller than the algorithm can handle.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.49\textwidth]{chapters/04_game_theoretic_model/img/numeric_results/stochastic_fictitious_play_A.pdf}
+    \includegraphics[width=0.49\textwidth]{chapters/04_game_theoretic_model/img/numeric_results/stochastic_fictitious_play_B.pdf}
+    \caption{Stochastic fictitious play algorithm on both players' strategies.}
+    \label{fig:solving_game_stochastic_fictitious_example}
+\end{figure}
+
+Finally, the last algorithm to be ran is the asymmetric replicator dynamics
+algorithm.
+This algorithm is ran for \(10000\) timepoints and the final strategies of
+both players are calculated.
+
+\begin{lstlisting}[style=pystyle]
+>>> xs, ys = game.asymmetric_replicator_dynamics(
+...     timepoints=np.linspace(0, 10000, 100)    
+... )
+>>> np.round(xs[-1], 4)
+array([1., 0.])
+>>> np.round(ys[-1], 4)
+array([0., 1.])
+
+\end{lstlisting}
+
+The resulted set of strategies are a Nash equilibrium.
+Similar to the fictitious play algorithm, the asymmetric replicator dynamics
+algorithm can be used to visualise how the players of the game reach a Nash
+equilibrium.
+Figure~\ref{fig:solving_game_asymmetric_replicator_example} shows how the
+players evolve their strategies over time.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.49\textwidth]{chapters/04_game_theoretic_model/img/numeric_results/asymmetric_replicator_dynamics_A.pdf}
+    \includegraphics[width=0.49\textwidth]{chapters/04_game_theoretic_model/img/numeric_results/asymmetric_replicator_dynamics_B.pdf}
+    \caption{Asymmetric replicator dynamics on both players' strategies.}
+    \label{fig:solving_game_asymmetric_replicator_example}
+\end{figure}
+
+The asymmetric replicator dynamics algorithm is the learning algorithm that
+will be used in the following sections to study the effect of the parameters
+of the game on the strategies of the players.

@@ -1,5 +1,5 @@
 % Treat \paragraph as \subsubsubsection and \subparagraph as \subsubsubsubsection
-\setcounter{tocdepth}{3}
+\setcounter{tocdepth}{2}
 \setcounter{secnumdepth}{5}
 \makeatletter
 \renewcommand{\paragraph}{\@startsection{paragraph}{4}{0ex}%
@@ -40,13 +40,15 @@
 \newdateformat{monthyeardate}{\monthname[\THEMONTH] \THEYEAR}
 
 % My details
-\title{Workforce Behaviours in Healthcare systems}   
-\author{Michalis Panayides}            
-\college{School of Mathematics}  
+\title{Workforce Behaviours in Healthcare systems}
+\author{Michalis Panayides}
+\college{School of Mathematics}
 \degree{Doctor of Philosophy}
 \degreedate{\monthyeardate\today}
 
 
+% Packages for thesis structure
+\newtheorem{definition}{Definition}
 
 
 % Other packages
@@ -59,6 +61,8 @@
 \usepackage{listings}
 \usepackage{multicol}
 \usepackage{cancel}
+\usepackage{caption}
+\usepackage{diagbox}
 
 \setcounter{MaxMatrixCols}{20}
 

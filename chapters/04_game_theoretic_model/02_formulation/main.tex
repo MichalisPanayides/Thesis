@@ -1,0 +1,376 @@
+\section{Formulation}\label{sec:game_formulation}
+
+In order to formulate the game theoretic model one needs to define the players
+of the game, the strategies of each player and the payoffs of each pair of
+strategy being played.
+
+\subsection{Players and parameters}
+
+The problem studied is a 3-player extensive form game that consists of three
+players.
+This will later be reduced to a 2-player standard normal form
+game~\cite{Maschler2013}.
+The three players are:
+
+\begin{itemize}
+    \item the decision makers of queueing system \(A\)
+    \item the decision makers of queueing system \(B\)
+    \item a distribution service that distributes individuals to the two
+    queueing systems
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \input{chapters/04_game_theoretic_model/img/game_diagram.tex}
+    \caption{A diagrammatic representation of the game theoretic model.
+    Individuals arrive at the distribution service at a rate of \( \lambda_2 \)
+    and then a proportion of them are distributed to Queueing system \(A\)
+    (\(p_A\)) and the remaining proportion to Queueing system \(B\) (\(p_B\))
+    so that \(p_A + p_B = 1\).
+    The corresponding arrival rates of type 2 individuals to Queueing systems
+    \(A\) and \(B\) are thus given by:
+    \( p_A \lambda_2 \) and \( p_B \lambda_2 \).}
+    \label{fig:diagram_of_game_theoretic_model}
+\end{figure}
+
+Each player has their own objective which they aim to optimise.
+More specifically, the queueing systems' objective is captured by an upper bound
+of the time that a fixed proportion of individuals spend in the system,
+while the distribution service aims to minimise the time that its individuals
+stay blocked at each queueing system's node 2.
+These objectives are more formally defined in Section~\ref{sec:game_strategies}.
+The parameters of the game theoretic model are:
+
+\begin{itemize}
+    \item \(\lambda_2\): The arrival rate of type 2 individuals arriving at the
+    distribution service that need to be distributed to the queueing systems
+    \item \(\lambda_{1_i}\): The arrival rate of type 1 individuals to queueing
+    system \(i\in\{A, B\}\)
+    \item \(\mu_i\): The service rate of individuals at queueing system
+    \(i\in\{A, B\}\)
+    \item \(C_i\): The number of servers in queueing system \(i\in\{A, B\}\)
+    \item \(T_i\): The strategy that queueing system \(i\in\{A, B\} \) chooses
+    to play which corresponds to the threshold at which they start blocking
+    type 2 individuals at node 2.
+    \item \(N_i\): The total capacity of node 1 in queueing system
+    \(i\in\{A, B\}\)
+    \item \(M_i\): The total capacity of node 2 in queueing system
+    \(i\in\{A, B\}\)
+    \item \(t\): The time target for both queueing systems
+    \item \(\alpha \in [0, 1]\) : Weighted average of blocking time and
+    lost individuals (defined in equation~(\ref{eq:obj_distributor_penalty}))
+\end{itemize}
+
+\subsection{Strategies}\label{sec:game_strategies}
+
+Each player is given a predetermined set of strategies from which to choose.
+The strategies of the two queueing systems are the range of thresholds that they
+can choose from.
+In essence the strategy space of queueing system \(A\) is the set of integers
+from
+1 to the capacity of node 1 in queueing system \(A\) (\(N_A\)), while the
+strategy space of queueing system \(B\) is the set of integers from 1 to the
+capacity of node 1 in queueing system \(B\) (\(N_B\)).
+
+\begin{equation}\label{eq:game_strategy_space_queueing_systems}
+    T_A \in \{1, 2, \ldots, N_A\} \quad \text{and} \quad
+    T_B \in \{1, 2, \ldots, N_B\}
+\end{equation}
+
+In essence this means that for either queueing system  (\(A\) or \(B\)), every
+strategy
+choice generates a different queueing network of the form that is described in
+Section~\ref{sec:queueing_section}.
+In other words, different strategies are equivalent to different thresholds
+which is one of the core parameters of the queueing network.
+Consider queueing system \(A\) as one of the three players of the game theoretic
+model with node 1 capacity of \(N_A = 6\) and node 2 capacity of \(M_A = 3\).
+The strategy space of queueing system \(A\) is then
+\(T_A \in \{1, 2, 3, 4, 5, 6\}\).
+Every possible value of \(T_A\) corresponds to a different queueing network.
+Figures~\ref{fig:game_strategy_visualisation_N_6_M_3_first}
+-~\ref{fig:game_strategy_visualisation_N_6_M_3_last} show all possible Markov chain
+models that arise from such a strategy space.
+
+\begin{figure}[H]
+    \centering
+    \scalebox{0.8}{
+        \input{chapters/04_game_theoretic_model/img/strategy_visualisation_N_6_M_3/main_1.tex}
+    }
+    \caption{\(T_A = 1\)}
+    \label{fig:game_strategy_visualisation_N_6_M_3_first}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \scalebox{0.8}{
+        \input{chapters/04_game_theoretic_model/img/strategy_visualisation_N_6_M_3/main_2.tex}
+    }
+    \caption{\(T_A = 2\)}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \scalebox{0.8}{
+        \input{chapters/04_game_theoretic_model/img/strategy_visualisation_N_6_M_3/main_3.tex}
+    }
+    \caption{\(T_A = 3\)}
+\end{figure}
+
+
+\begin{figure}[H]
+    \centering
+    \scalebox{0.8}{
+        \input{chapters/04_game_theoretic_model/img/strategy_visualisation_N_6_M_3/main_4.tex}
+    }
+    \caption{\(T_A = 4\)}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \scalebox{0.8}{
+        \input{chapters/04_game_theoretic_model/img/strategy_visualisation_N_6_M_3/main_5.tex}
+    }
+    \caption{\(T_A = 5\)}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \scalebox{0.8}{
+        \input{chapters/04_game_theoretic_model/img/strategy_visualisation_N_6_M_3/main_6.tex}
+    }
+    \caption{\(T_A = 6\)}
+    \label{fig:game_strategy_visualisation_N_6_M_3_last}
+\end{figure}
+
+Each of these Markov chains generate unique performance measures, state
+probabilities and overall queueing network behaviour.
+By varying the threshold \(T_A\) from 1 to 6, the queueing network of queueing
+system \(A\) has a significant change in the mean waiting time and in the mean
+blocking time.
+As a matter of fact, as the threshold is increased the mean waiting time is
+non-increasing while the mean blocking time is non-decreasing.
+Having a low threshold means that queueing system \(A\) will block type 2
+individuals more often and thus the mean blocking time will be higher and
+hence the mean waiting time will be lower.
+The same logic applies to queueing system \(B\).
+
+The strategy space of the distribution service, which is the third player of the
+game is the range of all possible ways to distribute individuals to the two
+queueing systems.
+That is the proportions of individuals to send to queueing system \(A\) and the
+proportion of individuals to send to queueing system \(B\) (\(p_A, p_B\)).
+
+\begin{align}
+    p_A \in & [0, 1] \quad \text{and} \quad p_B \in [0, 1] \nonumber \\
+    \text{such that} & \quad p_A + p_B = 1, p_A, p_B > 0
+    \label{eq:game_strategy_space_distribution_service_full}
+\end{align}
+
+Since \(p_B\) is dependent on \(p_A\) and vice versa,
+equation~\ref{eq:game_strategy_space_distribution_service_full} can be further
+simplified so that the strategy space is defined solely by \(p_A\).
+
+\begin{equation}\label{eq:game_strategy_space_distribution_service_simplified}
+    p_A \in [0, 1] \quad \text{and} \quad p_B = 1 - p_A
+\end{equation}
+
+Similar to the strategy space of the queueing networks, the strategy space of
+the distribution service is also translated back into the queueing network.
+Different values of \(p_A\) and \(p_B\), directly affect the arrival rates of
+type 2 individuals to the two queueing systems.
+In fact the arrival rate of type 2 individuals to queueing system \(A\) is
+\(p_A \lambda_2\) and to queueing system \(B\) is \(p_B \lambda_2\).
+Thus by increasing \(p_A\) both the mean waiting time and the mean blocking time
+of queueing system \(A\) will increase but equivalently will decrease for
+queueing system \(B\).
+
+
+\subsection{Payoffs}
+
+Consider the three players of the game; queueing system \(A\), queueing system
+\(B\) and
+the distribution service.
+Apart from a strategy space each player also has some objective that they would
+want to either minimise or maximise.
+
+\begin{figure}[H]
+    \input{chapters/04_game_theoretic_model/img/game_diagram_objectives.tex}
+    \caption{A diagrammatic representation of the game theoretic model as shown
+    in Figure~\ref{fig:diagram_of_game_theoretic_model} listing the performance
+    measures that correspond to each player's utilities.}
+    \label{fig:diagram_of_game_theoretic_model_objectives}
+\end{figure}
+
+
+The payoffs of the players are directly related to the performance measures of
+the queueing networks.
+More specifically the utilities of the queueing systems focus on the proportion
+of individuals whose waiting time and service time falls within a predefined
+time target, where this is defined in
+Section~\ref{sec:proportion_of_individuals_within_time}.
+Similarly the utilities of the distribution service focus on the blocking time
+of the queueing systems defined in Section~\ref{sec:blocking_time}.
+
+Consider the queueing system players first.
+The objective of either queueing system should be to pick a threshold so that
+their own mean waiting time is minimised.
+
+\begin{equation}\label{eq:game_theoretic_alternative_objective_queueing_system_A}
+    \arg \min_{T_i} \quad \mathbb{E}[W_i] \quad i \in {A, B}
+\end{equation}
+
+The mean waiting time is defined in Section~\ref{sec:waiting_time} as the
+average time that an individual spends in node 1.
+Although this might seem like a sensible objective at first glance, it is not
+necessarily a realistic one.
+By using the utility function of
+equation~(\ref{eq:game_theoretic_alternative_objective_queueing_system_A})
+the queueing systems best response will always be to pick strategy of \(T=1\).
+A threshold of \(T=1\) will always result in the lowest mean waiting time
+since it will prevent type 2 individuals from entering node 1 as long as there
+is at least one individual in node 1.
+Depending on the number of available servers this might be true for other values
+of \(T\) as well.
+For example if there is one available server in node 1, then a threshold of
+\(T=1\) will always result in a mean waiting time of zero for type 2
+individuals.
+That is because type 2 individuals can only enter node 1 if there is nobody
+else in node 1, which means that there will always be a free server for type 2
+individuals.
+Similarly if there are two available servers in node 1, then a threshold of
+either \(T=1\) or \(T=2\) will also result in a mean waiting time of zero for
+type 2 individuals.
+
+Therefore a more sophisticated objective that doesn't force the queueing systems
+to pick the lowest threshold is also considered.
+The new objective function is defined as:
+
+\begin{equation}\label{eq:obj_queueing_systems}
+    \arg \max_{T_i} \quad 1 - \left( \hat{P} - P(W_i < t) \right)^2
+    \qquad i \in {A, B}
+\end{equation}
+
+where \(W\) is the waiting time of a potential individual, \(t\) is the time
+target and \(\hat{P}\) is the percentage target of individuals that need to be
+within that target.
+In other words, their aim is to find the threshold that minimises the
+difference between the probability \(P(W_i < t)\) and the percentage goal,
+or maximise its negation.
+
+The third player, the distribution service, has its own choices to make and
+its own goals to satisfy.
+The strategy set of the third player is a proportion \(0 \leq p_A \leq 1\)
+that corresponds to the proportion of individuals to send to queueing system A
+(defined in
+equation~(\ref{eq:game_strategy_space_distribution_service_simplified})).
+The choice of \(p_A\) and \(p_B\), are based on minimising any potential
+blockages that may occur, given the pair of thresholds chosen by the two
+queueing systems.
+Thus, its objective is to minimise the blocked time of the individuals
+(\(B_A\) and \(B_B\)) that they send to queueing systems \(A\) and \(B\).
+
+Apart from the time being blocked, an additional aspect that may affect the
+decision of the distribution service is the probability that an individual
+becomes lost to a queueing system.
+A type 2 individual can become lost to a queueing system if they arrive in a
+queueing system and node 2 is at its maximum capacity \(M\).
+Therefore, the probability that an individual is lost to queueing system \(i\)
+is given by \(L_i\) where \(i \in \{A, B\}\):
+
+\begin{equation}\label{eq:probability_lost}
+    L_i = \sum_{\substack{(u, v) \in S \\ u = M}} \pi_{(u, v)}
+\end{equation}
+
+where \(S\) is the set of all states in queueing system \(i\), \(M\) is the
+maximum capacity of node 2 and \(\pi_{(u, v)}\) is the probability of being in
+state \((u, v)\) (as defined in Section~\ref{sec:queueing_section}).
+
+For each queueing system, there is a penalty of sending a proportion of \(p_i\)
+individuals to that queueing system.
+That penalty is given by:
+
+\begin{equation}\label{eq:obj_distributor_penalty}
+    \alpha L_i(p_i) + (1 - \alpha) B_i(p_i), \quad i \in {A, B}
+\end{equation}
+
+Equation (\ref{eq:obj_distributor_penalty}) can be used to capture a mixture
+between the two objectives \(L_i\) and \(B_i\) where \(i \in \{A, B\}\).
+Here, \(\alpha\) represents the ``weight'' of each
+objective~\cite{gunantara2018review},
+where a high \(\alpha\) indicates a higher weight on the proportion of lost
+individuals and a smaller \(\alpha\) a higher weight on the time blocked.
+In fact, the best response of the distribution service can be found by equating
+the penalty of sending \(p_A\) individuals to queueing system \(A\) and the
+penalty
+of sending \(p_B\) individuals to queueing system \(B\) (where \(p_B = 1-p_A\)).
+
+\begin{equation}\label{eq:obj_distributor_1}
+    \alpha L_A(p_A) + (1 - \alpha) B_A(p_A) =
+    \alpha L_B(p_B) + (1 - \alpha) B_B(p_B)
+\end{equation}
+
+There are some cases where the best response of the distribution service is
+to distribute all individuals to one of the two queueing systems.
+For example, if queueing system \(A\) has a low threshold and queueing system
+\(B\)
+has a high threshold, then the distribution service's best response may be to
+send all individuals to queueing system \(B\).
+Thus equation~\ref{eq:obj_distributor_1} can be modified to be:
+
+\begin{equation*}
+    O(p_A; T_A, T_B) = \alpha L_A(p_A) + (1 - \alpha) B_A(p_A) -
+    \alpha L_B(1 - p_A) - (1 - \alpha)B_B(1 - p_A)
+\end{equation*}
+\begin{equation}\label{eq:obj_distributor_2}
+    \arg \min_{p_A} |O(p_A; T_A, T_B)|
+\end{equation}
+
+
+The choice of \(p_A\) and \(p_B\) rely solely on
+equation~(\ref{eq:obj_distributor_2}).
+Note that the current system is modelled using unobservable queues which is not
+necessarily an unrealistic approach~\cite{unobservablequeue}.
+Another approach would be to allow the distribution service to observe the
+state of each queueing system before sending each individual to either of them
+and making a decision based on that state.
+There are several other factors that can affect the routing of the
+individuals that are outside the scope of this paper.
+For example the distance from the distribution service to each queueing system
+or even the priority level of each individual may be a significant factor that
+affects the distribution service's decision.
+
+
+
+\subsection{Imperfect information extensive form game}
+
+The game can be modelled as an imperfect information extensive form game as
+described in Section~\ref{sec:game_imperfect_information}.
+The strategies and payoffs of all players can be put together to form the
+following game tree:
+
+\begin{figure}[H]
+    \centering
+    \input{chapters/04_game_theoretic_model/img/imperfect_info_game_diagram.tex}
+    \caption{Imperfect information extensive form game between the distribution
+    service and the 2 queueing systems}
+    \label{fig:imperfect_info_game}
+\end{figure}
+
+The game tree is a representation of all possible sequences of decisions that
+can be made by the players.
+Initially, queueing system \(A\) chooses which threshold \(T_A\) to play out of
+\(N_A\) possible choices.
+Then, queueing system \(B\) chooses its own threshold \(Q_B\) without knowing
+the threshold chosen by queueing system \(A\).
+Note here that it doesn't matter which queueing system chooses its threshold
+first since the other queueing system will always choose its threshold
+independently of the first queueing system's choice.
+Afterwards, the distribution service chooses the proportion of individuals to
+send to queueing system \(A\), from the continuous strategy space of
+\(0 \leq p_A \leq 1\).
+The distribution service has all the information about the state that the game
+is at when it's choosing the value of \(p_A\).
+Thus, the distribution service's choice of \(p_A\) is based on the thresholds
+chosen by the queueing systems.
+The payoffs for all players are then calculated.

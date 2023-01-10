@@ -3,11 +3,10 @@
 \input{packages.tex}
 
 \begin{document}
-
     \baselineskip=18pt plus1pt
 
     \maketitle
-    TODO: This is missing a logo here
+    % TODO: This is missing a logo here
     \vspace{-4em}
 
     \input{Frontmatter/declarationStatements}
@@ -17,10 +16,10 @@
 
 
     \begin{romanpages}
-        \tableofcontents            
-        \listoffigures              
+        \tableofcontents
+        \listoffigures
         \listoftables
-    \end{romanpages}  
+    \end{romanpages}
 
     \pagenumbering{arabic}
 
@@ -28,12 +27,13 @@
     \input{chapters/02_literature_review/main.tex}
     \input{chapters/03_queueing_model/main.tex}
     \input{chapters/04_game_theoretic_model/main.tex}
+    % \input{chapters/05_numerical_results/main.tex}
     \input{chapters/05_methodology/main.tex}
     \input{chapters/06_ems_ed_application/main.tex}
     \input{chapters/07_agent_based_extension/main.tex}
     \input{chapters/08_results/main.tex}
     \input{chapters/09_conclusion/main.tex}
-    
+
     \bibliographystyle{plain}
     \bibliography{bibliography.bib}
 
