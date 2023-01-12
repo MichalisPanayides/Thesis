@@ -25,6 +25,9 @@ jobs:
           environment-file: ./environment.yml
           activate-environment: thesis_env
 
+      - name: Run doctests
+        run: inv doctests
+
       - name: Run proselint
         run: inv proselint
 
@@ -32,6 +35,3 @@ jobs:
         run: |
           npm install alex --global
           inv alex
-
-      - name: Run doctests
-        run: inv doctests
