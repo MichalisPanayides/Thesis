@@ -4,12 +4,12 @@ This section aims to analyse the generated dataset and investigate how
 gaming can affect the performance measures of the two hospitals.
 In addition, under this gaming framework, this section aims to research how
 players (i.e. hospitals) can be incentivised in such a way so that they can be
-motivated to play a more cooperative game against the EMS provider.
+motivated to play a more cooperative game with the EMS provider.
 
 
 \subsection{Example 1}
 
-Consider the following game:
+Consider the game defined by the following parameters:
 
 \begin{multicols}{3}
     \begin{itemize}
@@ -36,6 +36,7 @@ Consider the following game:
 
 The set of possible actions to choose from for player 1 and player 2 is the
 set of thresholds that the EDs can choose from: 
+
 \begin{equation}
     T^A \in [1, 10], \quad T^B \in [1, 10]
 \end{equation}
@@ -132,15 +133,16 @@ Nash equilibrium is found:
     \sigma^B = (0, 0, 0, 0, 0, 0, 0, 0, 0, 1)
 \end{equation}
 
-For this example, the only Nash equilibrium of the game is achieved when both 
+For this example, there exists a Nash equilibrium of the game where both 
 players choose a threshold of \( T^A = 10, T^B = 10 \) at all times.
 This means that the two players' best response to each other is to only block
 ambulances when hospitals reach their maximum capacity.
+
 The same conclusion can be obtained using a learning algorithm as well.
 Asymmetric replicator dynamics is also used here, not only to confirm the same
 previous result but also to show that the particular strategy is an ESS (see
 Section~\ref{sec:game_intro_learning_algorithms}) and to observe how the
-strategies of these two players evolve to reach the particular strategy.
+strategies of these two players evolve to reach the particular equilibrium.
 Figure~\ref{fig:asymmetric_replicator_dynamics_example_1} shows the results
 of the asymmetric replicator dynamics algorithm for this example.
 
@@ -326,9 +328,10 @@ Recall that the relative traffic intensity of an \(M|M|c\) queue is given by
 the number of servers and \(\mu\) is the service rate.
 The relative traffic intensity is a metric that measures how congested a queue
 is, based on the inflow and outflow of individuals in the queue.
-When \(\rho < 1\) there are more individuals leaving the queue than entering
-the queue and when \(\rho > 1\) there are more individuals entering the queue
-than leaving the queue~\cite{almeida2018note}.
+When \(\rho < 1\) the rate at which individuals leave the queue is larger than the rate at which
+individuals enter
+the queue and when \(\rho > 1\) the rate at which individuals enter the queue is larger
+than that of those leaving the queue~\cite{almeida2018note}.
 
 In this example, without solving the game, the relative traffic intensity of
 each hospital cannot be calculated since the arrival rate of type 2 patients
@@ -443,8 +446,9 @@ Consider now the concept of the Price of Anarchy
 (\(PoA\))~\cite{roughgarden2005selfish}.
 \(PoA\) is a measure in game theory that is used to quantify the efficiency of
 the outcome of a game when players behave in a selfish way.
+Examples of using this measure in a healthcare setting include~\cite{} %  TODO Reference a few of my papers and others
 More specifically, the \(PoA\) measures the ratio between the worst possible
-outcome of a game and the best possible outcome of the game.
+equilibria outcome of a game (so that no players have an incentive to deviate) and the best possible centrally controlled outcome of the game (the best possible collective situation).
 The \(PoA\) of a game is defined as:
 
 \begin{equation}\label{eq:poa_definition}
@@ -457,13 +461,12 @@ measure the efficiency of when the players play strategy \(s\).
 The \(PoA\) is a measure that is used to describe the overall efficiency of the
 game, rather the independent efficiency of each player.
 
-For the purpose of this study a new concept is introduced that considers the
+For the purpose of this study a measure is introduced that considers the
 ratio between each hospital's best achievable blocking time and the one that is
 being played.
-This new concept is defined as the compartmentalised price of anarchy of the
+This is defined as the compartmentalised price of anarchy of the
 players of the game and is defined as \(PoA_i(s)\) where \(i \in \{A, B\}\) and
 \(s \in S\) is the strategy played by player \(i\).
-The aim of this new measure is to quantify how inefficient a strategy can be.
 The compartmentalised price of anarchy is defined as:
 
 \begin{equation}\label{eq:compartmentalised_poa_definition}
@@ -800,5 +803,3 @@ a greater reduction in the blocking time, these results indicate that when
 that is not possible or not desirable, incentivisation can be used to
 achieve a similar effect.
 
-% TODO: Should there be more examples? Are these enough? Maybe investigate
-%       some more examples with different parameter sets.
