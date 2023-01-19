@@ -328,10 +328,10 @@ Recall that the relative traffic intensity of an \(M|M|c\) queue is given by
 the number of servers and \(\mu\) is the service rate.
 The relative traffic intensity is a metric that measures how congested a queue
 is, based on the inflow and outflow of individuals in the queue.
-When \(\rho < 1\) the rate at which individuals leave the queue is larger than the rate at which
-individuals enter
-the queue and when \(\rho > 1\) the rate at which individuals enter the queue is larger
-than that of those leaving the queue~\cite{almeida2018note}.
+When \(\rho < 1\) the rate at which individuals leave the queue is larger than
+the rate at which individuals enter
+the queue and when \(\rho > 1\) the rate at which individuals enter the queue is
+larger than that of those leaving the queue~\cite{almeida2018note}.
 
 In this example, without solving the game, the relative traffic intensity of
 each hospital cannot be calculated since the arrival rate of type 2 patients
@@ -446,9 +446,13 @@ Consider now the concept of the Price of Anarchy
 (\(PoA\))~\cite{roughgarden2005selfish}.
 \(PoA\) is a measure in game theory that is used to quantify the efficiency of
 the outcome of a game when players behave in a selfish way.
-Examples of using this measure in a healthcare setting include~\cite{} %  TODO Reference a few of my papers and others
+Examples of using this measure in a healthcare setting
+include~\cite{knight_public_services, knight_overview_patient_flow,
+nicolaides2013price}.
 More specifically, the \(PoA\) measures the ratio between the worst possible
-equilibria outcome of a game (so that no players have an incentive to deviate) and the best possible centrally controlled outcome of the game (the best possible collective situation).
+equilibria outcome of a game (so that no players have an incentive to deviate)
+and the best possible centrally controlled outcome of the game (the best
+possible collective situation).
 The \(PoA\) of a game is defined as:
 
 \begin{equation}\label{eq:poa_definition}
@@ -483,7 +487,8 @@ Figure~\ref{fig:asymmetric_replicator_dynamics_example_2}.
 One may plot the compartmentalised \(PoA\) of each player alongside the outcome
 of the learning algorithm.
 Figure~\ref{fig:compartmentalised_poa_example_2} shows the asymmetric replicator
-dynamics run of the game along with the compartmentalised \(PoA\) of each player.
+dynamics run of the game along with the compartmentalised \(PoA\) of each
+player.
 
 \begin{figure}[H]
     \centering
@@ -605,6 +610,7 @@ the players decreases, which is exactly what happens in this case.
 Although this is an interesting outcome, it is not a sensible one.
 Increasing the arrival rate of an already flooded system does not make the
 system more efficient.
+This is similar to the findings of~\cite{knight_measuring_poa}.
 
 A more appropriate way to increase the efficiency of the system is to increase
 the number of staff \(C\).
