@@ -3,7 +3,8 @@ name: Ubuntu CI
 on: [push, pull_request]
 
 jobs:
-  build:
+  ubuntu_build:
+    name: Ubuntu CI
     defaults:
       run:
         shell: bash -l {0}
