@@ -138,8 +138,8 @@ queueing system.
 ...     buffer_capacity=buffer_capacity,
 ...     runtime=runtime,
 ... )
->>> wait = np.mean([w.waiting_time for w in Q.get_all_records()])
->>> np.round(wait, 8)
+>>> mean_waiting_time = np.mean([w.waiting_time for w in Q.get_all_records()])
+>>> np.round(mean_waiting_time, 8)
 0.06028274
 
 \end{lstlisting}
