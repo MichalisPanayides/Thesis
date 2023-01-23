@@ -1,1 +1,218 @@
 \section{State and server-dependent model}
+
+In addition, the final variation of the queueing model is one that is both
+state and server-dependent.
+That is, for each server and for each state there is a different service rate.
+In other words, each server can have a different service rate for every
+possible scenario that the system can be in.
+
+The new service rate \(\mu\) that will be used in this scenario is defined as
+a combination of equations~(\ref{eq:state_dependent_service_rate})
+and~(\ref{eq:server_dependent_service_rate}) where:
+
+\begin{equation}\label{eq:state_server_dependent_service_rate}
+    \mu =
+    \begin{cases}
+        \mu_{1, (0,0)}, & \text{for server } 1 \text{ if } (u, v) = (0, 0) \\
+        \mu_{1, (0,1)}, & \text{for server } 1 \text{ if } (u, v) = (0, 1) \\
+        \quad \vdots & \qquad \qquad \vdots \\
+        \mu_{1, (N,M)}, & \text{for server } 1 \text{ if } (u, v) = (M, N) \\
+        \mu_{2, (0,0)}, & \text{for server } 2 \text{ if } (u, v) = (0, 0) \\
+        \mu_{2, (0,1)}, & \text{for server } 1 \text{ if } (u, v) = (0, 1) \\
+        \quad \vdots & \qquad \qquad \vdots \\
+        \mu_{2, (N,M)}, & \text{for server } 2 \text{ if } (u, v) = (M, N) \\
+        \quad \vdots & \qquad \qquad \vdots \\
+        \mu_{C, (0,0)}, & \text{for server } C \text{ if } (u, v) = (0, 0) \\
+        \mu_{C, (0,1)}, & \text{for server } C \text{ if } (u, v) = (0, 1) \\
+        \quad \vdots & \qquad \qquad \vdots \\
+        \mu_{C, (N,M)}, & \text{for server } C \text{ if } (u, v) = (M, N)
+    \end{cases}
+\end{equation}
+
+Consider an example where the number of servers is set to \(C = 2\), the
+threshold is set to \(T = 1\), node 1 capacity is \(N = 3\) and node 2 capacity
+is \(M = 1\).
+For this particular example the possible values that \(\mu\) can take shown
+by equation~(\ref{eq:state_server_dependent_service_rate_example}).
+
+\begin{equation}\label{eq:state_server_dependent_service_rate_example}
+    \mu =
+    \begin{cases}
+        \mu_{1, (0,0)}, & \text{for server } 1 \text{ if } (u, v) = (0, 0) \\
+        \mu_{1, (0,1)}, & \text{for server } 1 \text{ if } (u, v) = (0, 1) \\
+        \mu_{1, (0,2)}, & \text{for server } 1 \text{ if } (u, v) = (0, 2) \\
+        \mu_{1, (0,3)}, & \text{for server } 1 \text{ if } (u, v) = (0, 3) \\
+        \mu_{1, (1,0)}, & \text{for server } 1 \text{ if } (u, v) = (1, 0) \\
+        \mu_{1, (1,1)}, & \text{for server } 1 \text{ if } (u, v) = (1, 1) \\
+        \mu_{1, (1,2)}, & \text{for server } 1 \text{ if } (u, v) = (1, 2) \\
+        \mu_{1, (1,3)}, & \text{for server } 1 \text{ if } (u, v) = (1, 3) \\
+        \mu_{2, (0,0)}, & \text{for server } 2 \text{ if } (u, v) = (0, 0) \\
+        \mu_{2, (0,1)}, & \text{for server } 2 \text{ if } (u, v) = (0, 1) \\
+        \mu_{2, (0,2)}, & \text{for server } 2 \text{ if } (u, v) = (0, 2) \\
+        \mu_{2, (0,3)}, & \text{for server } 2 \text{ if } (u, v) = (0, 3) \\
+        \mu_{2, (1,0)}, & \text{for server } 2 \text{ if } (u, v) = (1, 0) \\
+        \mu_{2, (1,1)}, & \text{for server } 2 \text{ if } (u, v) = (1, 1) \\
+        \mu_{2, (1,2)}, & \text{for server } 2 \text{ if } (u, v) = (1, 2) \\
+        \mu_{2, (1,3)}, & \text{for server } 2 \text{ if } (u, v) = (1, 3)
+    \end{cases}
+\end{equation}
+
+
+\subsection{Implementation}
+
+The implementation of the state and server-dependent model is simply the
+combination of the state-dependent and server-dependent models' implementation.
+Once again the implementation is done using the python library \(\texttt{ciw}\)
+library.
+The distribution for the state and server-dependent model is defined as a
+class that inherits from the \texttt{ciw}'s class
+\texttt{ciw.dists.Distribution}.
+Note that as opposed to the classes defined earlier an additional method id
+defined in this class.
+Method \texttt{update\_server\_attributes} adds additional attributes to the
+server objects to allow for further analysis of each server's performance.
+
+\begin{lstlisting}[style=pystyle]
+>>> import random
+>>> import ciw
+>>> class StateServerDependentExponential(
+...     ciw.dists.Distribution
+... ):
+...     def __init__(self, rates):
+...         self.simulation = None
+...         self.rates = rates
+... 
+...     def sample(self, t=None, ind=None):
+...         """
+...         This method is used to sample the service time for an individual based
+...         on the current state and the server that the individual is assigned to.
+...         The following steps are being executed:
+...             1. Find the server
+...             2. Find the state
+...             3. Check if the state is valid. Note that there are some cases where
+...                 the visited state is not valid. These are the cases where the
+...                 state `(u, T-1)` is visited where `u > 0`. This is meant to be
+...                 an unreachable state. In such case remap the state to `(u+1, T)`
+...             4. Get the service rate for that server and state
+...             5. Sample the service time
+...             6. Update any possible attributes for the server
+...         """
+...         server = ind.server.id_number
+...         state = (
+...             len(ind.simulation.nodes[1].individuals[0]),
+...             len(ind.simulation.nodes[2].individuals[0]),
+...         )
+...         is_invalid_state = state[0] > 0 and state[1] < ind.simulation.threshold
+...         if is_invalid_state:
+...             state = (state[0] - 1, state[1] + 1)
+...         rate = self.rates[server][state]
+...         service_time = random.expovariate(rate)
+...         self.update_server_attributes(ind, service_time)
+...         return service_time
+... 
+...     def update_server_attributes(self, ind, service_time):
+...         """
+...         Updates the server's attributes
+...         """
+...         if hasattr(ind.server, "served_inds"):
+...             ind.server.served_inds.append(self.simulation.current_time)
+...         else:
+...             ind.server.served_inds = [self.simulation.current_time]
+... 
+...         if hasattr(ind.server, "service_times"):
+...             ind.server.service_times.append(service_time)
+...         else:
+...             ind.server.service_times = [service_time]
+
+\end{lstlisting}
+
+Now consider an example where the number of servers is set to \(C = 2\), the
+threshold is set to \(T = 1\), node 1 capacity is \(N = 3\) and node 2 capacity
+is \(M = 1\).
+Let the service rates be defined in such a way where:
+
+\begin{enumerate}
+    \item Server 1's service rate is \(0.5\) whenever there are less than two
+    individuals in the entire system, otherwise the service rate is \(1\).
+    \item Server 2's service rate is \(0.7\) whenever there are less than three
+    individuals in the entire system, otherwise the service rate is \(1.5\).
+\end{enumerate}
+
+The following code snippet shows how to define the model and run the simulation
+for \(1000\) time units.
+
+\begin{lstlisting}[style=pystyle]
+>>> import ambulance_game as abg
+>>> import numpy as np
+>>>
+>>> lambda_1 = 1
+>>> lambda_2 = 1
+>>> num_of_servers = 2
+>>> threshold = 1
+>>> system_capacity = 3
+>>> buffer_capacity = 1
+>>> runtime = 1000
+>>> seed_num = 0
+>>> 
+>>> all_states = abg.markov.build_states(
+...     threshold=threshold,
+...     system_capacity=system_capacity,
+...     buffer_capacity=buffer_capacity
+... )
+>>> mu = {k: {} for k in range(1, num_of_servers + 1)}
+>>> mu[1] = {(u, v): 0.5 if u + v < 2 else 1 for u, v in all_states}
+>>> mu[2] = {(u, v): 0.7 if u + v < 3 else 1.5 for u, v in all_states}
+>>>
+>>> Q = abg.simulation.simulate_model(
+...     lambda_1=lambda_1,
+...     lambda_2=lambda_2,
+...     mu=mu,
+...     num_of_servers=num_of_servers,
+...     threshold=threshold,
+...     seed_num=seed_num,
+...     system_capacity=system_capacity,
+...     buffer_capacity=buffer_capacity,
+...     runtime=runtime,
+... )
+>>> for srv, mean_service_time in enumerate([
+...     np.round(np.mean(s.service_times), 8)
+...     for s in Q.nodes[2].servers
+... ]):
+...     print(f"Server {srv + 1}:", mean_service_time)
+Server 1: 1.79718861
+Server 2: 0.87253758
+
+\end{lstlisting}
+
+Note that, in the implementation above the individuals are paired with a server
+in an ``unfair'' way since the default behaviour of \texttt{ciw} does not
+focus on the fairness of server allocation.
+Server 1 is always assigned an individual if they are free, while Server 2 is
+only assigned an individual if Server 1 is busy.
+For the purposes of this project though, it is important to have a more
+``fair'' allocation of individuals to servers.
+This can be done by using the server\_priority\_function argument of the
+\texttt{simulate\_model} function.
+
+\begin{lstlisting}[style=pystyle]
+>>> Q = abg.simulation.simulate_model(
+...     lambda_1=lambda_1,
+...     lambda_2=lambda_2,
+...     mu=mu,
+...     num_of_servers=num_of_servers,
+...     threshold=threshold,
+...     seed_num=seed_num,
+...     system_capacity=system_capacity,
+...     buffer_capacity=buffer_capacity,
+...     runtime=runtime,
+...     server_priority_function=lambda srv, ind: random.random()
+... )
+>>> for srv, mean_service_time in enumerate([
+...     np.round(np.mean(s.service_times), 8)
+...     for s in Q.nodes[2].servers
+... ]):
+...     print(f"Server {srv + 1}:", mean_service_time)
+Server 1: 1.31071177
+Server 2: 1.02142722
+
+\end{lstlisting}

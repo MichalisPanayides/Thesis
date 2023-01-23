@@ -9,15 +9,15 @@ the queueing model described in Section~\ref{sec:discrete_event_simulation}.
 
 The new service rate \(\mu\) that is used here is defined as follows:
 
-\begin{equation*}
+\begin{equation}\label{eq:state_dependent_service_rate}
     \mu =
     \begin{cases}
         \mu_{(0,0)}, & \text{if } (u, v) = (0, 0) \\
         \mu_{(0,1)}, & \text{if } (u, v) = (0, 1) \\
-        \vdots & \vdots \\
+        \quad \vdots & \qquad \quad \vdots \\
         \mu_{(N,M)}, & \text{if } (u, v) = (M, N)
     \end{cases}
-\end{equation*}
+\end{equation}
 
 Although the state-dependent variation of the queueing system was implemented
 only on the DES version of the queue, for visualisation purposes, the Markov
@@ -63,6 +63,8 @@ Figure~\ref{fig:state_dependent_markov_example}.
 
 The state-dependent variation of the queueing system was implemented using the
 python library \texttt{ciw}~\cite{ciwpython}.
+All the code used to implement the state-dependent variation of the queueing
+system is available on GitHub~\cite{github}.
 The \texttt{ciw} library is structured in a way that allows the user to create
 their own class for the service time distribution.
 This class must inherit from the \texttt{ciw.dists.Distribution} class and
