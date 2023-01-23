@@ -70,23 +70,24 @@
 % Specifications for python environment
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{backcolor}{rgb}{0.95,0.95,0.92}
-\definecolor{keywordcolor1}{RGB}{9, 119, 39}
+\definecolor{keywordcolor1}{RGB}{37, 150, 190}
 \definecolor{keywordcolor2}{RGB}{198, 98, 18}
 \definecolor{keywordcolor3}{RGB}{18, 135, 180}
-\definecolor{keywordcolor4}{RGB}{255, 0 255}
+\definecolor{keywordcolor4}{RGB}{162, 21, 159}
+% \definecolor[keywordcolor5]{RGB}{37, 150, 190}
 \lstdefinestyle{pystyle}{
     language=Python,
     basicstyle=\ttfamily\scriptsize,
     backgroundcolor=\color{backcolor},
     commentstyle=\color{codegreen},
-    keywords=[1]{import, as},
+    keywords=[1]{len, hasattr, print, range},
     keywordstyle=[1]\bfseries\color{keywordcolor1},
     alsoletter={>>>, ...},
     keywords=[2]{>>> , ... },
     keywordstyle=[2]\color{keywordcolor2},
-    keywords=[3]{ambulance_game, abg, numpy, np, scipy, sci, ciw},
+    keywords=[3]{ambulance_game, abg, numpy, np, scipy, sci, ciw, random, nashpy, nash},
     keywordstyle=[3]\bfseries\color{keywordcolor3},
-    keywords=[4]{for, in, def, and, or, not, True, False},
+    keywords=[4]{for, in, class, def, and, or, not, True, False, if, else, pass, return, is, self, as, import},
     keywordstyle=[4]\bfseries\color{keywordcolor4},
     breaklines=true,
     captionpos=b,
