@@ -60,7 +60,7 @@ by equation~(\ref{eq:state_server_dependent_service_rate_example}).
 
 \subsection{Implementation}
 
-The implementation of the state and server-dependent model is simply the
+The implementation of the state and server-dependent model is the
 combination of the state-dependent and server-dependent models' implementation.
 Once again the implementation is done using the python library \(\texttt{ciw}\)
 library.
@@ -86,7 +86,7 @@ server objects to allow for further analysis of each server's performance.
 ...         """
 ...         This method is used to sample the service time for an individual based
 ...         on the current state and the server that the individual is assigned to.
-...         The following steps are being executed:
+...         The following steps are being taken:
 ...             1. Find the server
 ...             2. Find the state
 ...             3. Check if the state is valid. Note that there are some cases where
