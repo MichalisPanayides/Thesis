@@ -1,4 +1,4 @@
-\section{State and server-dependent model}
+\section{State and server-dependent model}\label{sec:state_server_dependent_model}
 
 In addition, the final variation of the queueing model is one that is both
 state and server-dependent.
@@ -216,3 +216,170 @@ Server 1: 1.31071177
 Server 2: 1.02142722
 
 \end{lstlisting}
+
+
+\subsection{Game theoretic model}
+
+In fact the state and server dependent model can be used in the game theoretic
+model described from Section~\ref{sec:game_theoretic_model}.
+Although, since the state and server dependent model variant of the queueing
+theoretic model is only implemented using Discrete Event Simulation (DES) it is
+not possible to use the Markov chain model here.
+Thus, the implementation of the game was modified so that it can be used with
+the DES model as well.
+% TODO: Mention implementation - either referecne GitHub repo or have a chapter that explains the code.
+At its core the only metric that is needed from the Markov model are the
+performance measures of the queue (blocking time and proportion of individuals
+within target) which can also be obtained using the DES model.
+Consequently, the payoff matrices can be calculated using these performance
+measures.
+
+Something that needs to be taken into consideration here is whether the results
+of the game are the same when using the DES model and the Markov chain model.
+In fact using the DES approach several other parameters are introduced that
+can affect the results of the game.
+Such parameters are the runtime, the warm up time and the cooldown time of the
+simulation.
+The one that is of most interest here is the runtime.
+
+Consider a game with the following parameters:
+
+\begin{multicols}{3}
+    \begin{itemize}
+        \item \( \lambda_1^{(1)} = 2 \)
+        \item \( \mu^{(1)} = 2 \)
+        \item \( C^{(1)} = 2 \)
+        \item \( N^{(1)} = 6 \)
+        \item \( M^{(1)} = 2 \)
+
+        \columnbreak
+        \item \( \lambda_1^{(2)} = 2 \)
+        \item \( \mu^{(2)} = 2 \)
+        \item \( C^{(2)} = 2 \)
+        \item \( N^{(2)} = 6 \)
+        \item \( M^{(2)} = 2 \)
+
+        \columnbreak
+        \item \( \lambda_2 = 2 \)
+        \item \( t = 2 \)
+        \item \( \alpha = 0.2 \)
+        \item \( \hat{P} = 0.95 \)
+    \end{itemize}    
+\end{multicols}
+
+For the complete notation of the parameters see
+Section~\ref{sec:game_players_and_parameters}.
+% TODO: Maybe reference list of notations here instead of this section.
+Figure~\ref{fig:game_des_markov_baseline} shows the asymmetric replicator
+dynamics run of the game when the payoff matrices are calculated using the
+Markov chain model.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/06_agent_based_extension/Bin/game_model_with_des/game_markov_baseline.pdf}
+    \caption{Asymmetric replicator dynamics algorithm run on the game obtained
+    from the Markov chain model.}
+    \label{fig:game_des_markov_baseline}
+\end{figure}
+
+It can be seen that both player end up playing strategy \(s_3\) which is the
+choosing a threshold of \((T^{(1)} = 3, T^{(2)} = 3)\).
+Figures~\ref{fig:game_des_runtime_300}, \ref{fig:game_des_runtime_500} and
+\ref{fig:game_des_runtime_1000} show the asymmetric replicator dynamics run of
+the game when the payoff matrices are calculated using the DES model with
+different runtimes.
+More specifically, the runtime of the DES model is set to \(300\), \(500\) and
+\(1000\) time units respectively.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/06_agent_based_extension/Bin/game_model_with_des/game_simulation_300.pdf}
+    \caption{Asymmetric replicator dynamics algorithm run on the game obtained
+    from the DES model using a runtime of \(300\) time units.}
+    \label{fig:game_des_runtime_300}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/06_agent_based_extension/Bin/game_model_with_des/game_simulation_500.pdf}
+    \caption{Asymmetric replicator dynamics algorithm run on the game obtained
+    from the DES model using a runtime of \(500\) time units.}
+    \label{fig:game_des_runtime_500}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/06_agent_based_extension/Bin/game_model_with_des/game_simulation_1000.pdf}
+    \caption{Asymmetric replicator dynamics algorithm run on the game obtained
+    from the DES model using a runtime of \(1000\) time units.}
+    \label{fig:game_des_runtime_1000}
+\end{figure}
+
+By observing the asymmetric replicator dynamics run of the game with the DES
+model when using different runtimes, it can be noticed that the results from
+using a runtime of \(300\) time units and a runtime of \(500\) time units are
+different from the ones obtained using the Markov chain model.
+However, the resultant strategies from using a runtime of \(1000\) time units
+are the same as the ones obtained using the Markov chain model.
+This is due to the fact that the runtime of the DES model needs to be long
+enough for the simulation to reach a steady state.
+For this particular example, it seems that a runtime of \(1000\) time units is
+good enough.
+
+
+Having found a reasonable runtime for the DES model, the state and server
+dependent distribution of the service rate can be used in the game theoretic
+model.
+Consider a small change to the parameter values defined earlier, where the
+service rate is now state and server dependent.
+Let the service rate for queueing system \(1\) be \(\mu^{(1)} = 6\) only for
+server \(1\) if there are \(4\) or more individuals individuals in the system
+and \(\mu^{(1)} = 2\) otherwise.
+Additionally, let the service rate for queueing system \(2\) be
+\(\mu^{(2)} = 8\) only for server \(1\) if there are \(3\) or more
+individuals in node 1 and \(\mu^{(2)} = 2\) otherwise.
+In other words the service rate is now defined as:
+
+\begin{align}
+    \mu_1 =
+    \begin{cases}
+        6, & \text{if server id \(= 1\) and } u_1 + v_1 \geq 4 \\
+        2, & \text{otherwise}
+    \end{cases} \\
+    \mu_2 =
+    \begin{cases}
+        8, & \text{if server id \(= 1\) and } u_1 \geq 3 \\
+        2, & \text{otherwise}
+    \end{cases}
+\end{align}
+
+The game theoretic model is then run using the DES model with a runtime of
+\(3000\) time units.
+Figure~\ref{fig:game_server_state_dependen_example} shows the asymmetric
+replicator dynamics run of the game when the payoff matrices are calculated
+using the DES model with this new service rate distribution.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{chapters/06_agent_based_extension/Bin/game_model_with_des/game_server_state_dependent_3000.pdf}
+    \caption{Asymmetric replicator dynamics algorithm run on the game obtained
+    from the DES model using a runtime of \(3000\) time units and a state and
+    server dependent service rate.}
+    \label{fig:game_server_state_dependen_example}
+\end{figure}
+
+It can be seen that the outcome of the game is different than before.
+Player \(1\) chooses to play strategy \(s_5\) and player \(2\) also ends up
+playing strategy \(s_5\).
+That corresponds to choosing a threshold of \(T^{(1)} = 5\) and a threshold of
+\(T^{(2)} = 5\).
+The change in the service distribution made server \(1\) of queueing system
+\(1\) and server \(1\) of queueing system \(2\) work faster when their
+corresponding system was getting busier.
+This change in the service rate distribution made the queueing systems
+increase their thresholds in the game, and thus block less type \(2\)
+individuals at node \(1\).
+Refer to Figure~\ref{fig:diagram_of_queueing_system} for a visual
+representation of the types of individuals and the nodes of the queueing
+systems. 
+
