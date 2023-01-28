@@ -107,6 +107,7 @@ words = {
     "LHS",
     "linkcolor",
     "linspace",
+    "lognormal",
     "lsoda",
     "markov",
     "Markovian",
