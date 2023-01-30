@@ -73,23 +73,23 @@ utility functions.
 Some examples of utility functions that could be used are the following:
 
 \begin{align}
-    U_k^1 &= e \, I_s^{(k)} + (1 - e) \, (R - B^{(k)})
+    U_k^{(1)} &= e \, I_s^{(k)} + (1 - e) \, (R - B^{(k)})
     \label{eq:utility_1} \\
-    U_k^2 &= e \, \frac{I_s^{(k)}}{I_s} + (1 - e) \, \frac{R - B^{(k)}}{R}
+    U_k^{(2)} &= e \, \frac{I_s^{(k)}}{I_s} + (1 - e) \, \frac{R - B^{(k)}}{R}
     \label{eq:utility_2} \\
-    U_k^3 &= e \, \bar{m}^{(k)} + (1 - e) \, (R - B^{(k)})
+    U_k^{(3)} &= e \, \bar{m}^{(k)} + (1 - e) \, (R - B^{(k)})
     \label{eq:utility_3} \\
-    U_k^4 &= e \, \frac{1}{\bar{m}^{(k)}} + (1 - e) \, (R - B^{(k)})
+    U_k^{(4)} &= e \, \frac{1}{\bar{m}^{(k)}} + (1 - e) \, (R - B^{(k)})
     \label{eq:utility_4} \\
-    U_k^5 &= e \, \frac{I_s^{(k)}}{I_s} + (1 - e) \, \bar{m}^{(k)}
+    U_k^{(5)} &= e \, \frac{I_s^{(k)}}{I_s} + (1 - e) \, \bar{m}^{(k)}
     \label{eq:utility_5} \\ 
-    U_k^6 &= e \, \frac{I_s^{(k)}}{I} + (1 - e) \, \frac{1}{\bar{m}^{(k)}}
+    U_k^{(6)} &= e \, \frac{I_s^{(k)}}{I} + (1 - e) \, \frac{1}{\bar{m}^{(k)}}
     \label{eq:utility_6} \\
-    U_k^7 &= e \, \frac{I_s}{I} + (1 - e) \, \frac{R - B^{(k)}}{R}
+    U_k^{(7)} &= e \, \frac{I_s}{I} + (1 - e) \, \frac{R - B^{(k)}}{R}
     \label{eq:utility_7} \\
 \end{align}
 
-where \(U_k^i\) is utility \(i\) of server \(k\) and \(e\) is a parameter that
+where \(U_k^{(i)}\) is utility \(i\) of server \(k\) and \(e\) is a parameter that
 can be used to weight the importance of each measure.
 For example, \(e = 0.5\) would mean that the two measures are equally important
 for the agent.
@@ -235,7 +235,7 @@ Tables~\ref{tab:case_study_utility_1_all_servers}~-~\ref{tab:case_study_utility_
 show the utility functions for each server for different values of \(e\).
 
 \begin{table}[H]
-    \caption{Utility function \(1\) (\(U_k^1\)) for the \(4\) servers and
+    \caption{Utility function \(1\) (\(U_k^{(1)}\)) for the \(4\) servers and
     different values of \(e\)}
     \label{tab:case_study_utility_1_all_servers}
     \begin{adjustbox}{width=\columnwidth,center}
@@ -259,7 +259,7 @@ show the utility functions for each server for different values of \(e\).
 \end{table}
 
 \begin{table}[H]
-    \caption{Utility function \(2\) (\(U_k^2\)) for the \(4\) servers and
+    \caption{Utility function \(2\) (\(U_k^{(2)}\)) for the \(4\) servers and
     different values of \(e\)}
     \label{tab:case_study_utility_2_all_servers}
     \begin{adjustbox}{width=\columnwidth,center}
@@ -283,7 +283,7 @@ show the utility functions for each server for different values of \(e\).
 \end{table}
 
 \begin{table}[H]
-    \caption{Utility function \(3\) (\(U_k^3\)) for the \(4\) servers and
+    \caption{Utility function \(3\) (\(U_k^{(3)}\)) for the \(4\) servers and
     different values of \(e\)}
     \label{tab:case_study_utility_3_all_servers}
     \begin{adjustbox}{width=\columnwidth,center}
@@ -307,7 +307,7 @@ show the utility functions for each server for different values of \(e\).
 \end{table}
 
 \begin{table}[H]
-    \caption{Utility function \(4\) (\(U_k^4\)) for the \(4\) servers and
+    \caption{Utility function \(4\) (\(U_k^{(4)}\)) for the \(4\) servers and
     different values of \(e\)}
     \label{tab:case_study_utility_4_all_servers}
     \begin{adjustbox}{width=\columnwidth,center}
@@ -331,7 +331,7 @@ show the utility functions for each server for different values of \(e\).
 \end{table}
 
 \begin{table}[H]
-    \caption{Utility function \(5\) (\(U_k^5\)) for the \(4\) servers and
+    \caption{Utility function \(5\) (\(U_k^{(5)}\)) for the \(4\) servers and
     different values of \(e\)}
     \label{tab:case_study_utility_5_all_servers}
     \begin{adjustbox}{width=\columnwidth,center}
@@ -355,7 +355,7 @@ show the utility functions for each server for different values of \(e\).
 \end{table}
 
 \begin{table}[H]
-    \caption{Utility function \(6\) (\(U_k^6\)) for the \(4\) servers and
+    \caption{Utility function \(6\) (\(U_k^{(6)}\)) for the \(4\) servers and
     different values of \(e\)}
     \label{tab:case_study_utility_6_all_servers}
     \begin{adjustbox}{width=\columnwidth,center}
@@ -379,7 +379,7 @@ show the utility functions for each server for different values of \(e\).
 \end{table}
 
 \begin{table}[H]
-    \caption{Utility function \(7\) (\(U_k^7\)) for the \(4\) servers and
+    \caption{Utility function \(7\) (\(U_k^{(7)}\)) for the \(4\) servers and
     different values of \(e\)}
     \label{tab:case_study_utility_7_all_servers}
     \begin{adjustbox}{width=\columnwidth,center}

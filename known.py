@@ -158,6 +158,7 @@ words = {
     "srv",
     "StateDependentExponential",
     "StateServerDependentExponential",
+    "stochasticity",
     "th",
     "timepoints",
     "TODO",
