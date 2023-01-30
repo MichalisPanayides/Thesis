@@ -227,7 +227,7 @@ theoretic model is only implemented using Discrete Event Simulation (DES) it is
 not possible to use the Markov chain model here.
 Thus, the implementation of the game was modified so that it can be used with
 the DES model as well.
-% TODO: Mention implementation - either referecne GitHub repo or have a chapter that explains the code.
+More details on the code can be found in appendix~\ref{appendix:ambulance_game}.
 At its core the only metric that is needed from the Markov model are the
 performance measures of the queue (blocking time and proportion of individuals
 within target) which can also be obtained using the DES model.
@@ -267,9 +267,8 @@ Consider a game with the following parameters:
     \end{itemize}    
 \end{multicols}
 
-For the complete notation of the parameters see
+For a complete description of parameter notations see
 Section~\ref{sec:game_players_and_parameters}.
-% TODO: Maybe reference list of notations here instead of this section.
 Figure~\ref{fig:game_des_markov_baseline} shows the asymmetric replicator
 dynamics run of the game when the payoff matrices are calculated using the
 Markov chain model.
