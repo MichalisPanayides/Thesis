@@ -1,6 +1,519 @@
 \chapter{Literature review}
+\label{sec:lit_review}
 
-\section{EMS/ED OR models}
-\section{Game theory in Healthcare}
+\section{Introduction}\label{sec:lit_review_intro}
+
+Chapter~\ref{sec:introduction} introduced the problem of congestion in
+emergency departments (EDs) and the need for a model that can be used to
+understand the impact of different policies on the system.
+This chapter provides a review of the current relevant literature in the field
+of queueing theory and game theory as well as the combination of the two and
+their application to healthcare systems.
+This is achieved by partitioning the literature in five different sections each
+reviewing a different aspect of research.
+The literature review is structured in the following way:
+
+\begin{itemize}
+    \item Section~\ref{sec:lit_review_OR_healthcare} provides a review of the
+        literature of the techniques used in this thesis along with their
+        application to healthcare systems.
+        This includes Markov chain models and simulation models.
+    \item Section~\ref{sec:lit_review_game_and_queueing_theory} provides a
+        review of the literature on the combination of game theory and queueing
+        theory.
+    \item Section~\ref{sec:lit_review_game_theory_in_healthcare} gives an
+        overview of some examples of game theoretic models applied in
+        healthcare systems.
+    \item Section~\ref{sec:lit_review_behavioural_modelling} discusses the
+        general literature on behavioural modelling and some of its
+        applications.
+\end{itemize}
+
+While the literature review is not exhaustive, it provides a good overview of
+the field of queueing theory and game theory as well as their application to
+healthcare systems.
+This literature review builds on the literature review provided
+in~\cite{panayides2023game}.
+
+
+\section{Operational Research models and Healthcare}
+\label{sec:lit_review_OR_healthcare}
+
+This section aims to provide a review of Operational Research (OR) techniques
+and some applications to healthcare systems.
+Operational Research is a discipline that consists of numerous mathematical
+tools and techniques that can be used to solve problems in a variety of
+fields.
+Some of these fields are healthcare, transportation, logistics, manufacturing,
+finance and many more.
+
+\subsection{History of Operational Research}
+
+The history of OR can be traced back to the 1940s during Would War II when the
+US Army Air Corps (USAAF) started to use OR techniques to optimise the use of
+their aircraft.
+At the time, many strategic problems were too complicated to solve by any one
+person or a single discipline.
+Scientists and mathematicians from different fields were brought together to
+solve problems such as finding the best strategies of air defence, minimising
+losses from submarines and radar deployment.
+These teams were called \textit{Operational Research teams} or
+\textit{Operations Research teams} and the collection of techniques that they
+used were later used to form the discipline of
+OR~\cite{ravindran2008operations}.
+
+After the war, the discipline of OR started to grow and spread to other
+industries and fields.
+Universities started advancing the field by developing new techniques and
+methods and later started to offer undergraduate and postgraduate courses on it.
+Additionally, the introduction of electronic computers allowed OR techniques to
+be used in more complex problems~\cite{ravindran2008operations}.
+The first formal definition of OR was given by the British Operational
+Research Society:
+
+\begin{quotation}
+    ``Operational research is the application of the methods of science to
+    complex problems arising in the direction and management of large systems of
+    men, machines, materials and money in industry, business, government, and
+    defence.
+    The distinctive approach is to develop a scientific model of the system,
+    incorporating measurement of factors such as chance and risk, with which to
+    predict and compare the outcomes of alternative decisions, strategies or
+    controls.
+    Th purpose is to help management determine its policy and actions
+    scientifically''~\cite{or_for_multi_organizations}.
+\end{quotation}
+
+
+There are numerous methods and techniques that form the discipline of OR.
+Some of the most common ones are mathematical programming, queueing theory,
+game theory, decision theory, data mining and statistical analysis.
+The main OR techniques that are used in this thesis are queueing theoretic
+models and game theoretic models.
+A more detailed review of the literature on game theoretic models applied to
+healthcare systems is provided in
+Section~\ref{sec:lit_review_game_theory_in_healthcare}.
+
+
+\subsection{Operational Research models in Healthcare}
+
+This section provides a review of the literature on some of the OR models used
+in queueing theory; namely Markov chains and discrete event simulation models.
+The following papers are examples of OR models being used in healthcare
+systems.
+
+Markov chains were originally developed by Andrey Markov in 1906.
+The Russian mathematician is known for their work in probability theory,
+analysis and number theory.
+Markov chains were originally developed to model the distribution of vowels and
+consonants in Pushkin's poem \textit{Eugeny Onegin}~\cite{pushkin2003eugene}.
+Markov extended the weak law of large numbers and the central limit theorem to
+certain sequences of dependent random variables that were then known as
+Markov chains~\cite{Markov_life_and_work}.
+
+Markov chains are a mathematical tool that can be used to model a system and
+how it evolves over time.
+A markov chain is a stochastic model that consists of a set of states and a
+transition probability matrix that describes the probability of moving from one
+state to another.
+The following papers are examples of Markov chains being used in healthcare
+systems.
+
+Even specifically in healthcare systems, Markov chains can be used to model a
+range of different scenarios.
+For example in~\cite{McClean2006256} a Markov reward model is developed for a
+healthcare system to model the movement of patients between hospital states
+where patients arrive at a constant rate.
+An additional Markov model is also developed to determine patient numbers and
+costs at any time where arrivals are taken from a waiting list and a fixed
+growth of arrivals that is slowly declining to zero is introduced in the
+waiting list.
+The model is then applied to geriatric patients to determine costs over time.
+In~\cite{Hamdani2015} a Markov chain model is created to analyse the elderly
+people flow in the French Healthcare system (FHS) and model their pathway in
+hospital.
+The model is then applied to a French Hospital to understand the dynamics of
+elderly patients flow.
+The authors in~\cite{Gosavi2020399} present a Markov-chain model to analyse
+the progression of opioid addiction in order to develop treatments.
+The Markov chain model is used to predict the proportion of patients in a
+given stage of intervention.
+In addition, in~\cite{Liao2021} a Markov Decision Process (MDP) framework on
+Discrete time Markov chain (DTMC) is developed to optimise medical equipment
+repair and replacement decisions.
+The model is used to determine the optimal repair and replacement decision
+based on the product life cycle and failure status.
+The authors in~\cite{Liao2021} also use a dataset of \(24,516\) repair and
+maintenance records that reveal that the most common failure reasons and the
+most economically viable repair options.
+In~\cite{vile2017queueing} the optimal staffing problem is addressed for a
+non-preemptive priority queue with two customer classes and a time-dependent
+arrival rate.
+The authors use a mixed discrete-continuous time Markov chains (MDCTMCs) to
+evaluate the behaviour of the system and generate the minimum staffing levels
+required.
+The applications of interest here were systems were the customers can be
+categorised into priority classes, such as emergency departments and call
+centres.
+
+
+Another queueing theory technique that has been traditionally utilised to
+represent healthcare systems is Discrete Event Simulation (DES).
+DES is a technique that is used to model the behaviour of a system by
+representing it as a set of events that occur over time.
+More details on DES can be found in Section~\ref{sec:discrete_event_simulation}.
+
+The authors of~\cite{Standfield2014165} compare Markov modelling with
+DES to assess if any of the two may change some healthcare resource allocation
+decisions.
+The authors compare the two approaches in a systematic review and state that
+DES is suitable for modelling systems with limited resources and are able
+to better capture complexity and uncertainty in the system along with the
+ability to capture individual patient histories.
+On the other hand, some disadvantages of DES over Markov modelling is that
+it is computationally more expensive, requires more data and is more
+difficult to validate.
+The authors conclude that DES may be preferred over Markov modelling when
+individual patient history is an important driver of future events.
+In~\cite{williams2020discrete} the authors use a discrete event simulation
+model to determine the optimal number of critical care beds required for a
+hospital.
+Discrete event simulation is utilised to help resource planning and simulate
+different what-if scenarios.
+The authors in~\cite{Duguay2007311} use a discrete event simulation model to
+model the emergency department of a hospital in Canada.
+The aim of the paper was to reduce patient waiting times, improve the overall
+service delivery and system throughput.
+Additionally, the authors in~\cite{Getsios2010411} use a discrete event
+simulation model to predict the progression of Alzheimer's disease through
+correlated changes in cognition, behavioural disturbance and function.
+Individuals in the models are assigned unique demographic and clinical
+characteristics and were the severity of the disease was tracked throughout.
+The simulation results suggest that donepezil leads to health benefits and cost
+savings for patients with mild to moderate Alzheimer's disease and is even
+more beneficial when patients are in the mild stages of the disease.
+
+
+
 \section{Game theory and Queueing theory}
-\section{Behavioural modelling}
+\label{sec:lit_review_game_and_queueing_theory}
+
+A number of papers have been published that touch upon the use of 
+queueing models together with game theoretic concepts.
+In~\cite{FirmCompetition} the authors study a simultaneous price competition 
+between two firms that are modelled as two distinct queueing systems with a 
+fixed capacity and a combined arrival rate.
+They calculate the Nash equilibrium both for identical and heterogeneous firms
+and show that for the former a pure Nash equilibrium always exist and for the 
+latter a unique equilibrium exists where only one firm operates.
+The authors have also extended their model in~\cite{FirmCompetition2} by 
+allowing the players (firms) to choose capacities. 
+A main result from this paper was that when both firms operate independently as
+a monopoly, the equilibria are socially optimal, but this is not the case when
+the firms operate together.
+Another extension of~\cite{FirmCompetition} was introduced 
+in~\cite{FirmCompetitionExtension} where a long-run version of the competition 
+was considered that also had capacity as a decision variable.
+An additional paper that focuses on competition is~\cite{fan2009short} where
+the authors created a competition between two sellers where seller 1 supplies 
+a product instantly and seller 2 is modelled as a make-to-order M/M/1 queue.
+The game that is played requires the two sellers to make a choice on the price 
+of the product and then seller 2 to set a capacity that guarantees a maximum 
+expected delay.
+In our work, while giving some consideration to equilibrium behaviour,
+similar to the work of~\cite{FirmCompetition, FirmCompetition2}, emergent
+behaviour is more precisely addressed by considering learning algorithms like
+asymmetric replicator dynamics~\cite{fudenberg1998theory}.
+More details on learning algorithms can be found in
+Section~\ref{sec:game_intro_learning_algorithms}.
+
+Another specific part of our research, as described later in the paper, is the 
+construction of a queueing system with a tandem buffer and a single service
+centre.
+There are several examples from literature that touch upon queueing models
+with tandem queues.
+In~\cite{d2015pure} the authors explore threshold joining strategies in a 
+Markov model that has two tandem queues.
+Another example is the one described in~\cite{burnetas2013customer}
+where they investigated a network of multiple tandem queues where customers 
+decide which queue to attend before joining.
+Similarly, in~\cite{bacsar2002stackelberg} the authors examine a network of 
+\(N\) tandem M/M/1 queues and with multi-type customers. 
+The customers in this paper react to a price \(p\) by picking demand rates that 
+maximise utility.
+In~\cite{veltman2005equilibrium} a profit maximisation problem is studied that
+has two servers; an M/M/1 queue and a parking service providing complementary 
+service while the customer is in the first service. 
+The providers gain a reward when customers complete both services and no reward 
+when they finish one of them.
+One of the main conclusions of this study is that by increasing the general 
+demand both providers lower their prices to compensate for the increase in wait.
+The problem was later extended by~\cite{sun2009equilibrium} where they 
+considered arrivals of batches that can share the parking service.
+Finally,~\cite{afeche2007decentralized} examines a tandem network of two M/M/1 
+queues that are ran by two different profit-maximising service providers.
+The network receives three types of customers; those requiring both services, 
+customers requiring the first service and customers requiring the second
+service.
+The authors showed that optimal prices also maximise social utility and that
+removing two types of customers that don't need both services leads to higher 
+profit and lower demand rate.
+In our work, the concepts described in~\cite{d2015pure, burnetas2013customer,
+bacsar2002stackelberg} are extended by introducing a threshold parameter that 
+determines when individuals can progress from one queue to the other.
+
+Additionally, in~\cite{hagtvedt2009cooperative} the authors explore combining
+queueing theory, agent-based simulation and game theory to study the impact of
+ambulance diversion.
+They consider overcrowded emergency departments (ED) and the use of ambulance
+diversion (AD) during which a hospital is not accepting patients by ambulance.
+The formulated games are analysed to explore the potential of cooperation
+in this setting.
+The authors conclude that in such a setting cooperation is not something that
+emerges naturally in the presence of strategic behaviour and propose a
+centralised form of ambulance routing.
+The lack of cooperation in healthcare settings is something that will be
+further explored in the work of this thesis.
+In particular Section~\ref{sec:game_theoretic_model} will describe a game
+that is formulated to study the impact of ambulance blockage outside the
+emergency department.
+In~\cite{cachon2007obtaining} the authors study a queueing model in which two
+strategic servers may choose their own capacities and service rates where
+the faster a server works, the more cost it incurs.
+The buyer chooses to allocate demand based on the performance of the servers
+where faster servers are allocated more demand.
+The authors investigate the trade-off between efficiency and incentives and
+find that it is possible to design an allocation policy that is both efficient
+and can also incentivise the servers to work quickly.
+This paper shares some similarities with the work of this thesis.
+In particular, this thesis formulates a game to investigate the trade-off
+between ambulance blockage and overall efficiency of the ED which is a similar
+concept to the one described in~\cite{cachon2007obtaining}.
+In~\cite{kalai1992optimal} the authors study the behaviour of vendors in
+competition.
+Similar to the work of~\cite{cachon2007obtaining}, the authors consider a
+queueing model where servers choose their own service rates at a cost.
+The servers are also rewarded for each customer that they serve and
+based on that cost a two-player game between the two servers is formulated.
+
+
+
+\section{Game theory in Healthcare}
+\label{sec:lit_review_game_theory_in_healthcare}
+
+In this section a review of the literature is provided that is relevant to the
+game theoretic models used in healthcare systems.
+Game theory is a mathematical tool that is used to model strategic interactions
+between players in a system.
+The players are assumed to be rational and make decisions based on their own
+self-interest and the information they have about the other players' decisions
+and the system's state.
+A more formal definition of the game theory concepts used in this thesis is
+given in Section~\ref{sec:game_theory_intro}.
+
+In the above models, the players are attempting to increase their share of 
+individuals choosing to queue.
+In public healthcare type settings, this is not 
+necessarily the case. 
+Rational usage of public services will not necessarily lead to a socially
+optimal outcome.
+Rather, the overall service needs to be considered as players aim to minimise
+their experienced congestion.
+In~\cite{sadat2015can} a healthcare application was studied where patients 
+could choose between two hospitals, where a utility function is derived that is
+based on patients' perceived quality of life.
+In~\cite{knight_public_services} the authors place the individuals' choices
+between different public services  within the formulation of routing games and
+measure inefficiencies using a 
+concept known as the price of anarchy (PoA)~\cite{koutsoupias1999worst}.
+They show that the price of anarchy increases with worth of service and that is
+low for systems with insufficient capacities.
+In~\cite{TwoTierHealthcareSystem} a two-tier healthcare system with a capacity
+constrained is studied where patients can choose between two systems to receive
+their service.
+The first system is labelled as the free system (public government-funded
+hospital) which offers service without seeking any profit and the second one is
+the toll system (private hospital) that aims to maximise its own profit.
+The authors, also compare the two-tier system with its one-tier equivalent,
+where only the free system exists.
+In~\cite{knight_measuring_poa} a normal form game is built that is informed by a 
+two-dimensional Markov chain in order to model interactions between critical
+care units.
+In~\cite{EfficiencyQualityTradeOff} a queueing-game-theoretical model is
+introduced where there are two types of service providers; a high quality
+high-congested hospital and a low quality low-congested hospital.
+The authors study a two-stage Stackelberg game where the government is the
+\textit{leader} and the arriving patients are the \textit{followers}.
+In~\cite{deo2011centralized} the authors study the network effect of ambulance 
+diversion by proposing a non-cooperative game between two EDs that are modelled
+as a queueing network.
+Each ED's objective is to minimise its own waiting time and chooses a diversion
+threshold based on the patients it has.
+In equilibrium both EDs choose to divert ambulances in order to avoid getting
+arrivals from the other ED.
+In this thesis this concept is extended by allowing the ambulance service to 
+decide how to distribute its patients among the two EDs.
+The players of the game are both the hospitals and the customers of the
+hospitals, as opposed to the previous models which are one or the other.
+Thus, the novelty of our work is combining both these aspects.
+
+
+
+\section{Behavioural Operational Research}
+\label{sec:lit_review_behavioural_modelling}
+
+Behavioural OR is a sensitive discipline and is subject to the individual
+studying it.
+That means that it is interpreted differently from some researchers than
+others~\cite{hacking1983representing}.
+
+\subsection{Agent-based modelling}
+When a modeller looks into implementing behaviour into a certain model,
+agent-based modelling is one of the most commonly used techniques.
+Agent-based modelling is a micro-abstracted modelling technique that is
+capable of modelling complex systems that are composed of many interacting
+agents~\cite{greasley2016behavior, jackson2017agent}.
+It is also capable of dealing with both deterministic and stochastic
+problems.
+
+In such models each simulated item is considered an agent.
+An agent represents a person within a group of interest and is modelled in such
+a way that it has its own perception of the system and the environment in
+general.
+Therefore, these autonomous agents may be able to make decisions based on their
+own memory and experience.
+Additionally they can, not only interact with the environment, but they can
+also interact among themselves individually (or with the whole population) and
+make certain choices based on these interactions.
+Essentially in every time step all agents observe the environment and choose to
+move based on that observation.
+Some traditional examples of agent-based models are segregation models,
+predator-prey models, and forest fire models~\cite{jackson2017agent}.
+
+
+\subsection{Agent-based modelling and healthcare}
+
+There are numerous examples of simulation models that have been used in
+literature to model healthcare systems but only a few of them are agent-based
+models.
+As stated in~\cite{EscuderoMarin20111239} healthcare systems are based on human
+interactions which is what makes them so complex.
+Agent-based simulation modelling is capable of capturing both human intention
+and human interaction which is why it makes it one of the most suitable
+candidate for modelling such healthcare systems.
+This section provides a brief overview of the literature around agent-based
+models applied to healthcare.
+
+The authors of~\cite{hagtvedt2009cooperative}, that was also mentioned in
+Section~\ref{sec:lit_review_game_and_queueing_theory}, also make use of
+agent-based modelling to model the setting of ambulance diversion. 
+They used an agent-based model to provide insights into how spatial structure,
+number of hospitals and different policies contribute to cooperation in
+avoiding ambulance diversion.
+In essence, the agent based model was used to assess whether partial diversion
+of ambulances would be be a viable option for the ambulance service where it
+was shown at the end that it was not.
+Furthermore, the authors of~\cite{Giesen2009} also make use of agent-based
+modelling to model the different queuing strategies in the youth health care
+setting.
+The agent-based simulation model is parameterised with actual market data and
+different queuing strategies are investigated.
+The model is structured to incorporate additional complexities that a queueing
+theoretic model would fail to capture and thus, the model is able to provide
+insights on the queueing strategy decision that would not be possible
+otherwise.
+
+In~\cite{Stainsby2009536} the authors make use of agent-based simulation to
+model the setting of hospital emergency departments.
+The paper describes the system analysis and the preliminary model that was
+developed for the simulation these emergency departments along with the
+advantages of using agent-based modelling.
+The authors claim that agent-based models could be a better fit to model
+situations where the human aspect is important.
+The human element is part of the system and thus, it should be included in the
+model to describe the fundamental concepts of the system.
+The authors of~\cite{Bilge2006699} the authors present two ongoing projects of
+agent-based models that are applied to the healthcare setting.
+The first discussed project is an agent-based simulation model that is used to
+model the long term monitoring of Chronic Obstructive Pulmonary Disease (COPD)
+which is a major public health problem.
+The second project is applying agent-based simulation to visualise and explore
+informal social networks amongst staff at the Akdeniz University Hospital.
+
+
+
+
+\subsection{Reinforcement learning}
+
+Reinforcement learning is a machine learning technique that is used to
+train agents to make decisions in an uncertain environment.
+Reinforcement learning is formulated in such a way that the agent may choose
+between a set of policies and aims to maximise the expected reward.
+The agent is able to learn from its own experience and is able to make
+decisions based on the reward it receives.
+There are numerous applications of reinforcement learning in the literature
+and it is used in many different fields such as robotics, finance, and
+gaming~\cite{sutton2018reinforcement}.
+This Section provides a brief overview of the literature around reinforcement
+learning.
+
+In~\cite{Iizuka20001075} the authors combine agent-based modelling with
+reinforcement learning to model the setting of price negotiations.
+The authors study the ability of agents to perform price negotiations and
+propose a new model that is based on the ability of agents to distinguish
+between different words.
+The words correspond to the agent's demand and the agents use these words to
+negotiate.
+A reinforcement learning algorithm is used to train the agents to distinguish
+between the words and use them to negotiate.
+At the end it is shown that these words become meaningful in the process of
+negotiations and certain strategies are learned by the reinforcement learning
+algorithm.
+In~\cite{Zou20047} the authors combine agent-based modelling with reinforcement
+learning to model the electricity market.
+An agent-based simulation model is developed to compare market characteristics
+of different pricing methods.
+The authors use reinforcement learning to train the generators to improve their
+bidding strategies in a repeated bidding game where generators aim to maximise
+their profit.
+The authors in~\cite{Tellidou2006228} also make use of reinforcement learning
+in the power market setting.
+Specifically, they use Q-learning to train the suppliers' bidding strategies
+based on maximising their profit and their utilisation rate.
+Through Q-learning's exploitation and exploration trade-off the suppliers are
+able to learn the most profitable action to take under different market
+conditions.
+At the end of the paper the authors discuss the outcomes of four test cases
+with three suppliers under different demand values.
+
+In~\cite{Takadama200326} the authors compare three different learning mechanisms
+in a multi-agent based simulation and analyse the results in a bargaining game.
+The authors used reinforcement learning to validate and verify the results of
+the simulation.
+The results show that the learning mechanisms that enable agents to acquire
+their rational behaviours differ according to the knowledge representation of
+the agents.
+A similar idea is extended in~\cite{Takadama2007156} where a multi-agent based
+simulation is introduced to explore agents who can reproduce human-like
+behaviours in the repeated bargaining game.
+The authors compare results Roth's learning agents and Q-learning agents in the
+sequential bargaining game.
+The authors conclude that reinforcement learning agents cannot learn consistent
+behaviours in the repeated bargaining game while Q-learning agents can learn
+such behaviour but cannot reproduce the decreasing trend found in subject
+experiments.
+The concepts from~\cite{Takadama200326,Takadama2007156} are extended
+in~\cite{Takadama2008} where the authors explore agents that can reproduce
+human-like behaviours and human-like thinking in the sequential bargaining
+game.
+The authors compare the results of Q-learning agents with different action
+selection mechanisms and conclude that only Q-learning agents with Boltzmann
+distribution selection can reproduce both human-like behaviours and thinking.
+
+Although agent-based modelling has been somewhat used in the literature to
+model healthcare systems, this has not been the case for reinforcement
+learning.
+In this thesis reinforcement learning is used to train the servers of a
+queueing system to pick their service rates in order to maximise their
+utility.
+
