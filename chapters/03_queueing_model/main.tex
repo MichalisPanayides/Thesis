@@ -94,7 +94,7 @@ Every entry \( Q_{ij} = Q_{(u_i, v_i),(u_j, v_j)} \) represents the rate from
 state \( i = (u_i, v_i) \) to state \( j = (u_j , v_j) \) for all
 \( (u_i, v_i), (u_j, v_j) \in S \).
 The entries of \(Q\) can be calculated using the state-mapping function
-described in equation (\ref{eq:markov_transition_rate}).
+described in equation~\eqref{eq:markov_transition_rate}.
 Here \(\Lambda\) denotes the overall arrival rate in the model for
 both types of individuals (i.e. \(\Lambda = \lambda_1 + \lambda_2\)).
 
@@ -123,7 +123,8 @@ transition matrix will be zero.
 In order to speed up the computation of the transition matrix, instead of
 considering every possible pair of states in the state space a new function
 that maps a state to every possible destination state can be used.
-Function \(\mathcal{M}\) from equation (\ref{eq:state_map_to_destination_states})
+Function \(\mathcal{M}\) from
+equation~\eqref{eq:state_map_to_destination_states}
 takes a state \((u, v)\) and maps it to the set of
 all possible destination states that the system can go to when on that state.
 
@@ -180,7 +181,7 @@ Figure~\ref{fig:adjusted_markov_model}.
 \subsection{Steady state probability vector}
 \label{sec:steady_state_probabilities}
 
-The generator matrix \( Q \) defined in (\ref{eq:markov_transition_rate}) can
+The generator matrix \( Q \) defined in~\eqref{eq:markov_transition_rate} can
 be used to get the probability vector \( \pi \) that contains the steady state
 probabilities of the Markov chain model.
 The vector \( \pi \) is commonly used to study stochastic systems and it's main
@@ -216,8 +217,8 @@ all approaches:
 \subsection{Numerical integration approach}
 
 Another method that can be used to get the steady state probability vector is
-to solve the differential equation 
-(\ref{eq:steady_state_from_generator_matrix}) numerically.
+to solve the differential equation~\eqref{eq:steady_state_from_generator_matrix}
+numerically.
 Two methods of solving the differential equation were considered.
 Both methods observe the value of \(\pi\) over time until it
 reaches the steady state based on some initial starting value \(\pi_0\):
@@ -265,8 +266,8 @@ array([0.17596013, 0.2639402 , 0.19795515, 0.14846636, 0.08660538,
 
 
 The second approach uses the explicit Runge-Kutta integration method of order 5
-by controlling the error assuming accuracy of order 4
-\cite{solve_ivp_rk45_method, runge_kutta_formulas}.
+by controlling the error assuming accuracy of order
+4~\cite{solve_ivp_rk45_method, runge_kutta_formulas}.
 The general recursive formula for the explicit family of Runge-Kutta methods is
 given by:
 
@@ -330,7 +331,7 @@ a permutation matrix, \(L\) is a unit lower triangular matrix, and \(U\) is
 an upper triangular matrix~\cite{strang2006linear}.
 The factored form of \(Q^T\) can then be used to solve the system.
 This was implemented using \textit{numpy.linalg.solve} from the
-python library \textit{numpy} \cite{2020NumPy-Array} \cite{lapack99}.
+python library \textit{numpy}~\cite{2020NumPy-Array, lapack99}.
 
 
 \begin{lstlisting}[style=pystyle]
@@ -349,7 +350,7 @@ array([0.17596013, 0.2639402 , 0.19795515, 0.14846636, 0.08660538,
 
 Another approach that is considered is the least squares method.
 As the problem becomes more complex (i.e. as the artificial parameters \(N\)
-and \(M\) defined in equation (\ref{eq:truncated_state_space}) increase)
+and \(M\) defined in equation~\eqref{eq:truncated_state_space} increase)
 the computational time required to solve it increases by a lot.
 Thus, one may obtain a good approximation of the steady state vector \( \pi \)
 by solving the following equation:

@@ -21,11 +21,11 @@ Form the distribution service's perspective all information is known and can be
 used to find the best possible strategy to maximise their payoff.
 In fact, having the two strategy choices of the two queueing systems the
 distribution service can find the optimal strategy that satisfies
-equation~(\ref{eq:obj_distributor_2}).
+equation~\eqref{eq:obj_distributor_2}.
 Consider the pair of strategies \((T_A^*, T_B^*)\) that correspond to a possible
 strategy choice of queueing system \(A\) and queueing system \(B\).
 The distribution service can then find the best strategy by solving
-equation~(\ref{eq:obj_distributor_2}) for \(T_A = T_A^*\) and \(T_B = T_B^*\).
+equation~\eqref{eq:obj_distributor_2} for \(T_A = T_A^*\) and \(T_B = T_B^*\).
 The particular numerical algorithm used for this is Brent's
 algorithm~\cite{brent_method}.
 
@@ -37,7 +37,7 @@ within the interval \([a, b]\) such that \(f(a) < f(x^*) < f(b)\).
 One of the requirements for Brent's algorithm is \(f(a)f(b) < 0\).
 In other words the function must change sign within the interval \([a, b]\).
 
-Consider equation (\ref{eq:obj_distributor_2}).
+Consider equation~\eqref{eq:obj_distributor_2}.
 Under the assumption that \(O(p_A; T_A, T_B)\) is either non-increasing or
 non-decreasing in \(p_A\), the root can be found by using Brent's algorithm
 for \(p_A \in [0, 1]\).
@@ -60,7 +60,7 @@ Instead, the value of \(p_A\) becomes:
     \end{cases}
 \end{equation}
 
-The first case of equation~(\ref{eq:obj_distributor_no_brent_method})
+The first case of equation~\eqref{eq:obj_distributor_no_brent_method}
 corresponds to the event where both \(f(0)\) and \(f(1)\) are negative.
 Therefore, for all values of \(p_A \in [0, 1]\) the objective function is
 negative, which means that:
@@ -73,7 +73,7 @@ negative, which means that:
 Thus, the distribution service's best response would be to send all individuals
 to queueing system \(A\) (\(p_A=1, p_B=0\)).
 Similarly, the second case of
-equation~(\ref{eq:obj_distributor_no_brent_method}) corresponds to the event
+equation~\eqref{eq:obj_distributor_no_brent_method} corresponds to the event
 where for all values of \(p_A \in [0, 1]\) the objective function is
 positive, which means that:
 
@@ -85,7 +85,7 @@ positive, which means that:
 Equivalently, this indicates that the distribution service's best response
 would be to send all individuals to queueing system \(B\) (\(p_A=0, p_B=1\)).
 Therefore, the methodology that is used to find the best \(p_A\) that satisfies
-equation~(\ref{eq:obj_distributor_2}) can by calculated in the following way:
+equation~\eqref{eq:obj_distributor_2} can by calculated in the following way:
 
 \begin{equation}\label{eq:obj_distributor_implementation}
     p_A = \begin{cases}
@@ -96,7 +96,7 @@ equation~(\ref{eq:obj_distributor_2}) can by calculated in the following way:
 \end{equation}
 
 where \(O(p_A)\) is the objective function of the distribution service described
-in equation~(\ref{eq:obj_distributor_2}).
+in equation~\eqref{eq:obj_distributor_2}.
 
 \subsubsection{Examples}\label{sec:brent_method_example}
 Consider a distribution service whose arrival rate of type 2 individuals is
@@ -214,7 +214,7 @@ It can be observed that for all values of \(p_A\) the decision value of queueing
 system \(A\) is less than the decision value of queueing system \(B\).
 Since the differences of them don't pass through the x-axis within the interval
 \([0,1]\), Brent's algorithm cannot be used since \(f(0)f(1) < 0\).
-Therefore, using equation~(\ref{eq:obj_distributor_implementation}) the
+Therefore, using equation~\eqref{eq:obj_distributor_implementation} the
 distribution service's best response should be \(p_A = 1\).
 
 \subsubsection{Implementation}
@@ -224,7 +224,7 @@ response is to calculate the difference between the decision values of the two
 queueing systems.
 Function \lstinline[style=pystyle]{get_mean_blocking_difference_using_markov}
 is the python implementation of the first part of
-equation~(\ref{eq:obj_distributor_2}).
+equation~\eqref{eq:obj_distributor_2}.
 
 \begin{lstlisting}[style=pystyle]
 >>> import ambulance_game as abg
@@ -542,7 +542,7 @@ routing matrix.
 The routing matrix holds the values \((p_A, p_B)\) which are the proportion
 of type 2 individuals to send to queueing systems \(A\) and \(B\).
 Each pair \((p_A, p_B)\) can be calculated using
-equation~(\ref{eq:obj_distributor_penalty}), as shown in
+equation~\eqref{eq:obj_distributor_penalty}, as shown in
 Section~\ref{sec:brent_method_example}, for all possible pairs of thresholds.
 Thus, the routing matrix is a \(N_A \times N_B\) matrix, where \(N_A\) and
 \(N_B\) are the capacities of Node 1 for queueing systems \(A\) and \(B\),
@@ -890,7 +890,7 @@ to \lstinline[style=pystyle]{xtol=0.0001}.
 In subsection~\ref{sec:best_response_distribution_service} it is shown that
 given the strategies played by queueing systems \(A\) and \(B\) the best
 response of the distribution service can be found.
-Consider the routing matrix \(R\) defined in equation~(\ref{eq:routing_matrix}).
+Consider the routing matrix \(R\) defined in equation~\eqref{eq:routing_matrix}.
 
 \begin{equation*}
     R =
@@ -914,7 +914,7 @@ formulation of the game can be simplified even more.
 In fact the imperfect information extensive form game defined in
 Section~\ref{sec:game_imperfect_information} can be now transformed into a
 2-player normal form game between the two queueing systems.
-From equation~(\ref{eq:obj_queueing_systems}) the utility of queueing system
+From equation~\eqref{eq:obj_queueing_systems} the utility of queueing system
 \(i\) when the pair of strategies \((T^A, T^B)\) is played, is defined as:
 
 \begin{equation}\label{eq:utility_queueing_systems}
@@ -924,7 +924,7 @@ From equation~(\ref{eq:obj_queueing_systems}) the utility of queueing system
 
 \(U_{T_A, T_B}^A\) and \(U_{T_A, T_B}^B\) are essentially artificial metrics
 that queuing systems \(A\) and \(B\) aim to maximise.
-Essentially, by maximising equation~(\ref{eq:utility_queueing_systems}) for both
+Essentially, by maximising equation~\eqref{eq:utility_queueing_systems} for both
 queueing systems, the queueing systems are trying to minimise the difference
 between the proportion of individuals that are served within the target time
 \(t\) and the proportion target \(\hat{P}\).

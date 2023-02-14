@@ -44,7 +44,7 @@ In this case, the edges are expressed as \(e = (v_i, v_j, w)\) where \(v_i, v_j
 \subsubsection{A graph theoretic model underlying the Markov chain}
 It can be assumed that a Markov chain model \(M\) can be translated as a
 weighted directed graph \(G_M = (V, E)\) where \(V=S\) from
-equation~(\ref{eq:definition_of_S_as_disjoint_union}) and \((v_i, v_j)\in E\) if
+equation~\eqref{eq:definition_of_S_as_disjoint_union} and \((v_i, v_j)\in E\) if
 and only if \(q_{v_i, v_j}>0\), where \(v_i, v_j \in V\).
 Furthermore, the weight of each edge is given by:
 
@@ -76,7 +76,7 @@ More specifically, the way these parameters are translated into the model are:
     \begin{equation*}
         w_{(v_i, v_j)} = q_{v_i, v_j}
     \end{equation*}
-    where \(q_{i,j}\) is defined in equation~(\ref{eq:markov_transition_rate}).
+    where \(q_{i,j}\) is defined in equation~\eqref{eq:markov_transition_rate}.
     Thus, the coefficients of the service rate have a lower bound of \(1\) and
     an upper bound of \(C\).
     \item \textbf{Threshold (\(T\)):} Determines the length of the left
@@ -402,14 +402,14 @@ The corresponding values of \(\tilde{\pi}_{(0,0)}\) of the three systems are:
     &= \mu^5 (\mu + \lambda_2) ^ 3 \label{eq:rows_conjecture_3}
 \end{align}
 
-Note that in equations~(\ref{eq:rows_conjecture_1}),(\ref{eq:rows_conjecture_2})
-and (\ref{eq:rows_conjecture_3}), the following equation holds:
+Note that in equations~\eqref{eq:rows_conjecture_1},\eqref{eq:rows_conjecture_2}
+and~\eqref{eq:rows_conjecture_3}, the following equation holds:
 
 \begin{equation}\label{eq:rows_conjecture_general}
     \tilde{\pi}_{(0,0)} = \mu^{(N+M)} (\mu + \lambda_2)^M
 \end{equation}
 
-A generalisation of equation~(\ref{eq:rows_conjecture_general}), where \(N \geq
+A generalisation of equation~\eqref{eq:rows_conjecture_general}, where \(N \geq
 1\), is given in terms of an unknown function \(k(C,T,N)\) as:
 
 \begin{equation}
@@ -472,7 +472,7 @@ of modifying other parameters on \(k(C, T, N)\).
 \end{align}
 
 
-As explained in equation~(\ref{eq:rows_conjecture_general}) the expressions
+As explained in equation~\eqref{eq:rows_conjecture_general} the expressions
 defined above can be reduced to a general form equation of the form
 \(\tilde{\pi}_{(0,0)} = \mu^{(N+M)} (k(C,T,N))^M\).
 The only thing missing is an expression for \(k(C,T,N)\).
@@ -486,7 +486,7 @@ An initial attempt to get such an expression can be seen below:
     (\lambda_2)^{p_1} (\lambda_1)^{p_2} \mu^{C-p_1-p_2-1}
 \end{align}
 
-In equation~(\ref{eq:columns_conjecture_general}) the coefficient function
+In equation~\eqref{eq:columns_conjecture_general} the coefficient function
 \(R(p_1,p_2,p_3)\) is introduced were takes as arguments the powers of
 \(\lambda_2, \lambda_1 \text{ and } \mu\).
 Note here that \(p_3\), the power of \(\mu\), is defined as \(p_3=C-p_1-p_2-1\)
@@ -527,30 +527,30 @@ from the equations above:
 \tiny
 \begin{multicols}{2}
     \begin{itemize}
-        \item (\ref{eq:00_rate_1131}) \( \Rightarrow (\lambda_2)^2\):
+        \item \eqref{eq:00_rate_1131} \( \Rightarrow (\lambda_2)^2\):
         \(R(2,0,0) = \binom{2+0}{0} = 1\)
-        \item (\ref{eq:00_rate_1131}) \( \Rightarrow \lambda_2 \lambda_1\):
+        \item \eqref{eq:00_rate_1131} \( \Rightarrow \lambda_2 \lambda_1\):
         \(R(1,1,0) = \binom{1+1-1}{1} = 1\)
-        \item (\ref{eq:00_rate_1131}) \( \Rightarrow 2 \lambda_2 \mu\):
+        \item \eqref{eq:00_rate_1131} \( \Rightarrow 2 \lambda_2 \mu\):
         \(R(1,0,1) = \binom{1+1}{1} = 2\)
-        \item (\ref{eq:00_rate_1131}) \( \Rightarrow \mu^2\): \(R(0,0,2) = 1\)
-        \item (\ref{eq:00_rate_1141}) \( \Rightarrow 2(\lambda_2)^2 \lambda_1\):
+        \item \eqref{eq:00_rate_1131} \( \Rightarrow \mu^2\): \(R(0,0,2) = 1\)
+        \item \eqref{eq:00_rate_1141} \( \Rightarrow 2(\lambda_2)^2 \lambda_1\):
         \(R(2,1,0) = \binom{2+1-1}{1} = 2\)
-        \item (\ref{eq:00_rate_1141}) \( \Rightarrow 3(\lambda_2)^2 \mu\):
+        \item \eqref{eq:00_rate_1141} \( \Rightarrow 3(\lambda_2)^2 \mu\):
         \(R(2,0,1) = \binom{2+1}{1} = 3\)
-        \item (\ref{eq:00_rate_1141}) \( \Rightarrow 3 \lambda_2 \mu^2\):
+        \item \eqref{eq:00_rate_1141} \( \Rightarrow 3 \lambda_2 \mu^2\):
         \(R(1,0,2) = \binom{1+2}{2} = 3\)
-        \item (\ref{eq:00_rate_1151}) \( \Rightarrow 3 (\lambda_2)^3
+        \item \eqref{eq:00_rate_1151} \( \Rightarrow 3 (\lambda_2)^3
         \lambda_1\): \(R(3,1,0) = \binom{3+1-1}{1} = 3\)
-        \item (\ref{eq:00_rate_1151}) \( \Rightarrow 3 (\lambda_2)^2
+        \item \eqref{eq:00_rate_1151} \( \Rightarrow 3 (\lambda_2)^2
         (\lambda_1)^2 \): \(R(2,2,0) = \binom{3}{2} = 3\)
-        \item (\ref{eq:00_rate_1151}) \( \Rightarrow 6 (\lambda_2)^2 \mu ^ 2\):
+        \item \eqref{eq:00_rate_1151} \( \Rightarrow 6 (\lambda_2)^2 \mu ^ 2\):
         \(R(2,0,2) = \binom{2+2}{2} = 6\)
     \end{itemize}
 \end{multicols}
 
 \begin{itemize}
-    \item (\ref{eq:00_rate_1151}) \( \Rightarrow 6 (\lambda_2)^2 \lambda_1 \mu\):
+    \item \eqref{eq:00_rate_1151} \( \Rightarrow 6 (\lambda_2)^2 \lambda_1 \mu\):
     \(R(2,1,1) = \binom{2+1+1}{2} + 1\binom{2+1}{1+1} - \binom{2+1}{1} =
     6 + 3 - 3 = 6\)
 \end{itemize}
@@ -848,8 +848,8 @@ A general formula for finding all such permutations can be found, where the
 inputs are \( p_1\), \(p_2\) and \(p_3\) that correspond to the number of \(D\),
 \(R\) and \(L\) respectively and the output would be the coefficient of the term
 \((\lambda_2)^{p_1} (\lambda_1)^{p_2} \mu^{p_3}\).
-For instance, by applying such a formula to the example in equation
-(\ref{eq:pi_00_rate_example}), the desired output should be:
+For instance, by applying such a formula to the example in
+equation~\eqref{eq:pi_00_rate_example}, the desired output should be:
 
 \begin{itemize}
     \item \((\lambda_2)^2 \hspace{0.9cm} \rightarrow \hspace{0.9cm}
@@ -867,10 +867,10 @@ For instance, by applying such a formula to the example in equation
 \end{itemize}
 
 Thus, given all possible and valid combinations of powers among \(\lambda_2,
-\lambda_1 \text{ and } \mu\) (i.e. \(p_1,p_2,p_3\)) generated by equation
-(\ref{eq:columns_conjecture_general}), an alternative and improved form of the
-value of \(R(p_1, p_2, p_3)\) described in
-equation~(\ref{eq:coefficient_function}) is given by:
+\lambda_1 \text{ and } \mu\) (i.e. \(p_1,p_2,p_3\)) generated by
+equation~\eqref{eq:columns_conjecture_general}, an alternative and improved form
+of the value of \(R(p_1, p_2, p_3)\) described in
+equation~\eqref{eq:coefficient_function} is given by:
 
 \begin{align}\label{eq:permutation formula}
     R(p_1, p_2, p_3) = T(p_1, p_2, p_3) & - E_R(p_1, p_2, p_3)

@@ -28,7 +28,7 @@ approaches for different values of \(N\) and \(M\).
     }
     \label{fig:waiting_time_accuracy_over_N}
 \end{figure}
-    
+
 \begin{figure}[H]
     \includegraphics[width=\textwidth]{chapters/03_queueing_model/img/numeric_results_and_timings/waiting_time_formulas_comparison/waiting_time_over_M.pdf}
     \caption{Waiting times of the three waiting time approaches for different
@@ -43,8 +43,8 @@ time of the three approaches is the main factor that determines which
 approach will be used.
 Note that the right plots of Figures~\ref{fig:waiting_time_accuracy_over_N} and
 \ref{fig:waiting_time_accuracy_over_M} have a y-axis scale of \(10^{-16}\).
-Figures~\ref{fig:waiting_time_algorithm_duration_over_N}, 
-\ref{fig:waiting_time_algorithm_duration_over_M} and 
+Figures~\ref{fig:waiting_time_algorithm_duration_over_N},
+\ref{fig:waiting_time_algorithm_duration_over_M} and
 \ref{fig:waiting_time_algorithm_duration_over_N_and_M} show the computation
 time needed to calculate the waiting time for different values of \(N\) and
 \(M\).
@@ -75,7 +75,7 @@ The direct approach is the slowest approach, which makes sense since it requires
 solving a system of linear equations.
 The recursive approach and the closed form approach give similar durations,
 although the recursive approach seems to be more linear in nature than the
-closed form method. 
+closed form method.
 
 
 \subsection{Accuracy of steady state probability calculations}
@@ -106,7 +106,7 @@ The rest of the parameters have the following values:
         \item \(T\) = 5
         \item \(N\) = 20
         \item \(M\) = 20
-    \end{itemize}    
+    \end{itemize}
 \end{multicols}
 
 
@@ -238,12 +238,12 @@ then the corresponding performance measure.
     \centering
     \caption{Relative timings of the simulation and Markov chain model}
     \begin{tabular}{c|cc|ccc}
-        & \multicolumn{2}{c}{\textbf{Simulation}} & 
+        & \multicolumn{2}{c}{\textbf{Simulation}} &
         \multicolumn{3}{c}{\textbf{Markov chain}} \\
-        \textbf{Value of} & \textbf{Single} & \textbf{100} & 
-        \textbf{Waiting} & \textbf{Blocking} & 
+        \textbf{Value of} & \textbf{Single} & \textbf{100} &
+        \textbf{Waiting} & \textbf{Blocking} &
         \textbf{Proportion} \\
-        \textbf{\textit{N} and \textit{M}} & \textbf{trial} & \textbf{trials} & 
+        \textbf{\textit{N} and \textit{M}} & \textbf{trial} & \textbf{trials} &
         \textbf{formula} & \textbf{formula} & \textbf{formula} \\
         \hline
         \(10\) & 1 & 144.3 & 0.015  & 0.014  & 0.014 \\
@@ -261,7 +261,7 @@ then the corresponding performance measure.
 After some investigation it was found that a huge proportion of the duration of
 time needed to get the performance measures using the Markov chain approach is
 due to the creation of the generator matrix defined in
-equation~(\ref{eq:markov_transition_rate}).
+equation~\eqref{eq:markov_transition_rate}.
 For example, for \(N = M = 50\) the state space of the Markov chain consists
 of approximately \(2500\) states (depending on the value of \(T\)).
 Thus, the generator matrix, that consists of the rates from each state to every
@@ -269,12 +269,12 @@ other state, has approximately \(2500^2 = 6250000\) entries.
 For larger values of \(N\) and \(M\), the creation of this matrix is the most
 time consuming part of the Markov chain approach, even though most entries in
 the matrix are zero.
-By using equation~(\ref{eq:state_map_to_destination_states}), the set of states
+By using equation~\eqref{eq:state_map_to_destination_states}, the set of states
 with a non-zero rate can be used to fill out the generator matrix.
 Thus, instead of iterating over the set states twice, the generator matrix can
 be filled out by iterating over the states only once and using
 \(\mathcal{M}(u,v)\) defined in
-equation~(\ref{eq:state_map_to_destination_states}).
+equation~\eqref{eq:state_map_to_destination_states}.
 Table~\ref{tab:truncation_effect_timings_new} shows how the relative timings
 of the different approaches change when using this smarter approach.
 
@@ -285,12 +285,12 @@ of the different approaches change when using this smarter approach.
     \caption{Relative timings of the simulation and Markov chain model using
     the smarter approach}
     \begin{tabular}{c|cc|ccc}
-        & \multicolumn{2}{c}{\textbf{Simulation}} & 
+        & \multicolumn{2}{c}{\textbf{Simulation}} &
         \multicolumn{3}{c}{\textbf{Markov chain}} \\
-        \textbf{Value of} & \textbf{Single} & \textbf{100} & 
-        \textbf{Waiting} & \textbf{Blocking} & 
+        \textbf{Value of} & \textbf{Single} & \textbf{100} &
+        \textbf{Waiting} & \textbf{Blocking} &
         \textbf{Proportion} \\
-        \textbf{\textit{N} and \textit{M}} & \textbf{trial} & \textbf{trials} & 
+        \textbf{\textit{N} and \textit{M}} & \textbf{trial} & \textbf{trials} &
         \textbf{formula} & \textbf{formula} & \textbf{formula} \\
         \hline
         \(10\) & 1 & 119.2 & 0.000415 & 0.000146 & 0.000274 \\
@@ -308,7 +308,7 @@ of the different approaches change when using this smarter approach.
 Overall, it can be seen that using the Markov chain approach is much faster than
 simulating the system.
 Although, by choosing a larger value of \(N\) and \(M\) the computation time of
-the Markov chain model increases while the simulation time stays relatively 
+the Markov chain model increases while the simulation time stays relatively
 similar.
 
 \subsection{Truncation effect on performance measures}
@@ -322,12 +322,12 @@ Figures~\ref{fig:markov_vs_des_waiting_time_comparison_overall},
 \ref{fig:markov_vs_des_blocking_time_comparison_overall} and
 \ref{fig:markov_vs_des_proportion_within_time_comparison_overall}.
 
-Figures~\ref{fig:markov_vs_des_waiting_time_comparison_overall}, 
+Figures~\ref{fig:markov_vs_des_waiting_time_comparison_overall},
 \ref{fig:markov_vs_des_waiting_time_comparison_type_1}
-and~\ref{fig:markov_vs_des_waiting_time_comparison_type_2} show a 
+and~\ref{fig:markov_vs_des_waiting_time_comparison_type_2} show a
 comparison between the calculated mean waiting time using Markov chains and the
-simulated waiting time using discrete event simulation over a range of values of 
-\(\lambda_2\) (details of the discrete event simulation model can be found in 
+simulated waiting time using discrete event simulation over a range of values of
+\(\lambda_2\) (details of the discrete event simulation model can be found in
 Section~\ref{sec:discrete_event_simulation}).
 
 \begin{itemize}
@@ -371,14 +371,14 @@ Section~\ref{sec:discrete_event_simulation}).
 \end{figure}
 
 In detail, Figure~\ref{fig:markov_vs_des_waiting_time_comparison_overall} shows
-the calculated mean waiting time using the Markov chain, using a truncated 
+the calculated mean waiting time using the Markov chain, using a truncated
 simulation and using a simulation with infinite capacity (without the artificial
 parameters \(N\) and \(M\)).
-Each plot corresponds to different values of \(N\) and \(M\) and is run over 
+Each plot corresponds to different values of \(N\) and \(M\) and is run over
 different values of \(\lambda_2\).
 The untruncated simulation values are the same at all three graphs since
 the effect of truncation does not apply to it.
-The waiting times generated by the truncated simulation match the ones generated 
+The waiting times generated by the truncated simulation match the ones generated
 by the Markov chains model.
 Note that this comparison includes both type 1 and type 2 individuals.
 Additionally Figures~\ref{fig:markov_vs_des_waiting_time_comparison_type_1}
@@ -399,7 +399,7 @@ Note that the blocking time can only be calculated for type 2 individuals.
 \begin{figure}[H]
     \includegraphics[width=\textwidth]{chapters/03_queueing_model/img/numeric_results_and_timings/truncation_effect/blocking_time_type_2.pdf}
     \caption{
-        Comparison of mean waiting time between values obtained from the Markov 
+        Comparison of mean waiting time between values obtained from the Markov
         chain formula, values obtained from the truncated simulation and values
         obtained from the untruncated simulation.
     }
@@ -460,7 +460,7 @@ higher values of \(\lambda_2\).
 Using higher values of \(\lambda_2\) results in a more congested system
 where servers may not be able to serve as fast as individuals arrive.
 The parameters used for
-Figures~\ref{fig:markov_vs_des_waiting_time_comparison_overall_2} 
+Figures~\ref{fig:markov_vs_des_waiting_time_comparison_overall_2}
 -~\ref{fig:markov_vs_des_proportion_within_time_comparison_type_2_2} are:
 
 \begin{itemize}
@@ -507,7 +507,7 @@ Figures~\ref{fig:markov_vs_des_waiting_time_comparison_overall_2}
 \begin{figure}[H]
     \includegraphics[width=\textwidth]{chapters/03_queueing_model/img/numeric_results_and_timings/truncation_effect_2/blocking_time_type_2.pdf}
     \caption{
-        Comparison of mean waiting time between values obtained from the Markov 
+        Comparison of mean waiting time between values obtained from the Markov
         chain formula, values obtained from the truncated simulation and values
         obtained from the untruncated simulation.
     }

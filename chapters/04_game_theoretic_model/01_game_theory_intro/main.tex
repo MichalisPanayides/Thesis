@@ -59,7 +59,7 @@ In this game, player 1 can choose to either \textit{Cooperate} (C) or
 \end{table}
 
 An alternative way to represent the Prisoner's Dilemma game is by using the
-payoff matrices in~(\ref{eq:prisoners_dilemma}).
+payoff matrices in~\eqref{eq:prisoners_dilemma}.
 The payoff matrix \(A\) shows the payoffs for player 1 and the payoff matrix
 \(B\) shows the payoffs for player 2.
 \begin{align}
@@ -137,7 +137,7 @@ Consider the pig and piglet game where there are two players, the pig and the
 piglet and two strategies each, to \textit{Push} (P) a lever or
 \textit{Don't push} it (D).
 The payoff matrices \(A\) and \(B\) for this game are shown
-in~(\ref{eq:pig_piglet_payoff}).
+in~\eqref{eq:pig_piglet_payoff}.
 \begin{align}
     & \quad P \; D \nonumber \\
     A =
@@ -212,7 +212,7 @@ The Lemke-Howson algorithm is implemented using the
 \lstinline[style=pystyle]{nashpy} python library~\cite{thenashpyproject}.
 The following code snippet shows how to use the Lemke-Howson algorithm to find
 the Nash equilibrium of the pig and piglet game described in
-equation~(\ref{eq:pig_piglet_payoff}).
+equation~\eqref{eq:pig_piglet_payoff}.
 
 \begin{lstlisting}[style=pystyle]
 >>> import nashpy as nash
@@ -233,7 +233,7 @@ The outcome indicates that the Nash equilibrium of the pig and piglet game is
 That is, the pig should always push the lever and the piglet should never push
 the lever.
 Consider the game of Rock-Paper-Scissors now where the payoff matrices are
-shown in~(\ref{eq:rock_paper_scissors_payoff}).
+shown in~\eqref{eq:rock_paper_scissors_payoff}.
 \begin{align}
     & \quad \ R \quad \ P \quad \ S \nonumber \\
     A =
@@ -310,7 +310,7 @@ return all pairs of best responses in a game with payoff matrices \(A\) and
 The support enumeration algorithm is implemented using the
 \lstinline[style=pystyle]{nashpy} python library~\cite{thenashpyproject}.
 Consider the payoff matrices for the game of coordination shown
-in~(\ref{eq:coordination_payoff}), where the two players would prefer to
+in~\eqref{eq:coordination_payoff}, where the two players would prefer to
 perform the same action if possible, but player 1 has a slight preference
 for action \(S_1\) and player 2 has a slight preference for action \(S_2\).
 \begin{align}
@@ -549,7 +549,7 @@ Asymmetric replicator dynamics is implemented by using the python
 The following code snippet shows how to use the asymmetric replicator dynamics
 algorithm to find the Nash equilibrium of a two-player game.
 Consider the rock-paper-scissors game defined by the matrices
-in~(\ref{eq:rock_paper_scissors_payoff}).
+in~\eqref{eq:rock_paper_scissors_payoff}.
 
 \begin{lstlisting}[style=pystyle]
 >>> A = np.array([
@@ -716,7 +716,7 @@ and hence their own position on the tree.
 The final nodes of the tree represent the outcome of the game.
 This game can also be represented by a normal form game since both players end
 up being completely unaware of the actions taken by the other player.
-The payoff matrices in~(\ref{eq:imperfect_to_normal_form}) show the normal form
+The payoff matrices in~\eqref{eq:imperfect_to_normal_form} show the normal form
 game representation of the imperfect information extensive form game shown in
 Figure~\ref{fig:imperfect_extensive_form_game}.
 \begin{align}\label{eq:imperfect_to_normal_form}

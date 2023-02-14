@@ -58,7 +58,7 @@ The parameters of the game theoretic model are:
     \(i\in\{A, B\}\)
     \item \(t\): The time target for both queueing systems
     \item \(\alpha \in [0, 1]\) : Weighted average of blocking time and
-    lost individuals (defined in equation~(\ref{eq:obj_distributor_penalty}))
+    lost individuals (defined in equation~\eqref{eq:obj_distributor_penalty})
 \end{itemize}
 
 \subsection{Strategies}\label{sec:game_strategies}
@@ -168,7 +168,7 @@ proportion of individuals to send to queueing system \(B\) (\(p_A, p_B\)).
 \end{align}
 
 Since \(p_B\) is dependent on \(p_A\) and vice versa,
-equation~\ref{eq:game_strategy_space_distribution_service_full} can be further
+equation~\eqref{eq:game_strategy_space_distribution_service_full} can be further
 simplified so that the strategy space is defined solely by \(p_A\).
 
 \begin{equation}\label{eq:game_strategy_space_distribution_service_simplified}
@@ -225,7 +225,7 @@ average time that an individual spends in node 1.
 Although this might seem like a sensible objective at first glance, it is not
 necessarily a realistic one.
 By using the utility function of
-equation~(\ref{eq:game_theoretic_alternative_objective_queueing_system_A})
+equation~\eqref{eq:game_theoretic_alternative_objective_queueing_system_A}
 the queueing systems best response will always be to pick strategy of \(T=1\).
 A threshold of \(T=1\) will always result in the lowest mean waiting time
 since it will prevent type 2 individuals from entering node 1 as long as there
@@ -263,7 +263,7 @@ its own goals to satisfy.
 The strategy set of the third player is a proportion \(0 \leq p_A \leq 1\)
 that corresponds to the proportion of individuals to send to queueing system A
 (defined in
-equation~(\ref{eq:game_strategy_space_distribution_service_simplified})).
+equation~\eqref{eq:game_strategy_space_distribution_service_simplified}).
 The choice of \(p_A\) and \(p_B\), are based on minimising any potential
 blockages that may occur, given the pair of thresholds chosen by the two
 queueing systems.
@@ -294,7 +294,7 @@ That penalty is given by:
     \alpha L_i(p_i) + (1 - \alpha) B_i(p_i), \quad i \in {A, B}
 \end{equation}
 
-Equation (\ref{eq:obj_distributor_penalty}) can be used to capture a mixture
+Equation~\eqref{eq:obj_distributor_penalty} can be used to capture a mixture
 between the two objectives \(L_i\) and \(B_i\) where \(i \in \{A, B\}\).
 Here, \(\alpha\) represents the ``weight'' of each
 objective~\cite{gunantara2018review},
@@ -316,7 +316,7 @@ For example, if queueing system \(A\) has a low threshold and queueing system
 \(B\)
 has a high threshold, then the distribution service's best response may be to
 send all individuals to queueing system \(B\).
-Thus equation~\ref{eq:obj_distributor_1} can be modified to be:
+Thus equation~\eqref{eq:obj_distributor_1} can be modified to be:
 
 \begin{equation*}
     O(p_A; T_A, T_B) = \alpha L_A(p_A) + (1 - \alpha) B_A(p_A) -
@@ -328,7 +328,7 @@ Thus equation~\ref{eq:obj_distributor_1} can be modified to be:
 
 
 The choice of \(p_A\) and \(p_B\) rely solely on
-equation~(\ref{eq:obj_distributor_2}).
+equation~\eqref{eq:obj_distributor_2}.
 Note that the current system is modelled using unobservable queues which is not
 necessarily an unrealistic approach~\cite{unobservablequeue}.
 Another approach would be to allow the distribution service to observe the
