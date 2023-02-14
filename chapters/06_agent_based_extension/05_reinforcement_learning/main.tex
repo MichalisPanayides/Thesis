@@ -5,15 +5,15 @@ how the agents can interact with the environment.
 The next step is to describe how the agents can learn from their interactions.
 A reinforcement learning algorithm is described in this section where the agents
 update their service rates based on the utilities they receive from the
-queueing system.
+queueing system~\cite{kaelbling1996, liu2019, ayesta2022}.
 The concepts described in Section~\ref{sec:queueing_section} and
 Section~\ref{sec:agent_based_model} are incorporated in the reinforcement
 learning algorithm so that the agents decide how fast they should serve the
 customers in order to maximise their own utility.
 
-The reinforcement learning algorithm is a policy iteration algorithm where
-the agents update their service rates based on the utilities they receive
-from the queueing system.
+The reinforcement learning algorithm is a policy iteration
+algorithm~\cite{mahadevan1996average} where the agents update their service
+rates based on the utilities they receive from the queueing system.
 The service rates will be referred to as the policy in this section.
 A policy is a set of service rates for every server for each possible state
 they can be in.
@@ -438,7 +438,7 @@ rates of \(\lambda_1 = 0.5\) and \(\lambda_2 = 1\).
 In this subsection the reinforcement learning algorithm is run with the same
 parameters, but the arrival rates are changed during the run.
 The total runtime of the reinforcement learning algorithm is 5000 time steps.
-The arrival rates remain as \(\lambda_1 = 0.5\) and \(\lambda_2 = 1\) for the
+The arrival rates are set to \(\lambda_1 = 0.5\) and \(\lambda_2 = 1\) for the
 first \(2000\) time steps.
 Then the arrival rates are increased to \(\lambda_1 = 3\) and
 \(\lambda_2 = 3.5\) for time steps \(2000\) to \(4000\) and then the arrival

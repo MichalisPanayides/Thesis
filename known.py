@@ -109,6 +109,7 @@ words = {
     "linspace",
     "lognormal",
     "lsoda",
+    "lst",
     "markov",
     "Markovian",
     "math",

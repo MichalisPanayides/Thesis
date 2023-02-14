@@ -6,7 +6,10 @@ The server-dependent model has a similar structure as the state-dependent model
 described in Section~\ref{sec:state_dependent}.
 In this variation each server has its own service rate.
 
-The new service rate \(\mu\) that is used here is defined as follows:
+Similar to Section~\ref{sec:state_dependent} the server-dependent variation of
+the parametric service rate \(\mu = \mu_i\) for a given
+\(i \in {1, 2, \dots, C}\) (where \(C\) is the number of servers) is defined as
+follows:
 
 \begin{equation}\label{eq:server_dependent_service_rate}
     \mu =
@@ -18,8 +21,6 @@ The new service rate \(\mu\) that is used here is defined as follows:
     \end{cases}
 \end{equation}
 
-Once again, the server-dependent variation of the queueing system was
-implemented only on the DES version of the queue.
 Consider an example of the queueing system described in
 Section~\ref{sec:queueing_section} where the number of servers is set to
 \(C = 4\), the threshold is set to \(T = 1\), node 1 capacity is \(N = 2\) and

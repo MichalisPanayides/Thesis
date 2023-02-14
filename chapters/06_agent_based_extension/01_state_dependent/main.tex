@@ -4,10 +4,15 @@ This section focuses on creating a state-dependent variation of the queueing
 system described in Section~\ref{sec:queueing_section}.
 The state-dependent version is based on the idea that the speed of the servers
 could be based on the number of individuals present in the system.
-This was implemented only on the Discrete Event Simulation (DES) version of
-the queueing model described in Section~\ref{sec:discrete_event_simulation}.
 
-The new service rate \(\mu\) that is used here is defined as follows:
+In the previous chapters of this thesis, the value of the service rate \(\mu\)
+was set to a constant value.
+For this variation of the model \(\mu\) will have a different value depending
+on the number of individuals present in the two nodes of the queue.
+In other words \(\mu\) will take a different value depending on the state
+\(u, v\) of which the system is in.
+A parametric service rate \(\mu = \mu_{(u,v)}\) for a given \((u, v) \in S\) is
+defined as follows:
 
 \begin{equation}\label{eq:state_dependent_service_rate}
     \mu =
@@ -19,9 +24,6 @@ The new service rate \(\mu\) that is used here is defined as follows:
     \end{cases}
 \end{equation}
 
-Although the state-dependent variation of the queueing system was implemented
-only on the DES version of the queue, for visualisation purposes, the Markov
-chain model will be used to better demonstrate the concept of this model.
 Consider an example of the queueing system described in
 Section~\ref{sec:queueing_section} where the number of servers is set to
 \(C = 1\), the threshold is set to \(T = 1\), node 1 capacity is \(N = 2\) and
@@ -36,12 +38,6 @@ Markov chain model of the queueing system.
     \label{fig:state_dependent_markov_example}
 \end{figure}
 
-In the previous chapters of this thesis, the value of the service rate \(\mu\)
-was set to a constant value.
-For this variation of the model \(\mu\) will have a different value depending
-on the number of individuals present in the two nodes of the queue.
-In other words \(\mu\) will take a different value depending on the state
-\(u, v\) of which the system is in.
 Consider the following value of \(\mu\) for the Markov chain model shown in
 Figure~\ref{fig:state_dependent_markov_example}.
 
@@ -60,20 +56,26 @@ Figure~\ref{fig:state_dependent_markov_example}.
 
 \subsection{Implementation}
 
-
 The state-dependent variation of the queueing system was implemented using the
-python library \texttt{ciw}~\cite{ciwpython}.
+python library \texttt{ciw}~\cite{ciwpython} only on the Discrete Event
+Simulation (DES) version of the queueing model described in
+Section~\ref{sec:discrete_event_simulation}.
 All the code used to implement the state-dependent variation of the queueing
-system is publicly available on GitHub.
+system is archived at~\cite{ambulance_game_github_repo} and developed openly on
+GitHub.
 More details on the code can be found in appendix~\ref{appendix:ambulance_game}.
 The \texttt{ciw} library is structured in a way that allows the user to create
 their own class for the service time distribution.
 This class must inherit from the \texttt{ciw.dists.Distribution} class and
 implement the \texttt{\_\_init\_\_} and \texttt{sample} methods.
-The following code shows the implementation of the state-dependent service time
-distribution class.
+The code snippet in~\ref{lst:state_dependent_class} shows the implementation of
+the state-dependent service time distribution class.
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={State-dependent service time distribution class.},
+    label={lst:state_dependent_class}
+]
 >>> import ciw
 >>> class StateDependentExponential(
 ...     ciw.dists.Distribution
