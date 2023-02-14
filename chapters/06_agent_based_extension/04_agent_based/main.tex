@@ -1,0 +1,409 @@
+\section{The agent-based model}\label{sec:agent_based_model}
+
+Section~\ref{sec:state_server_dependent_model} describes an extension to the
+queueing system described in Section~\ref{sec:queueing_section} that allows
+each server to have their own service rate for every possible state of the
+system.
+In this section, an agent-based model is proposed where servers are considered
+as agents that can make their own decisions.
+The idea is that every agent in the system can choose their own service rate
+based on some utility function that they aim to maximise.
+This would mean that the servers would be able to choose and update their own
+speed at which they serve individuals while the system is running.
+Such decisions could be based on a number of factors, such as minimising the
+number of customers in the system, minimising the proportion of patients lost
+to the system, maximising their own idle time and so on.
+
+\subsection{Utility functions}
+
+Utility functions are a way of quantifying how ``happy'' an agent is with the
+current condition of the system~\cite{fishburn1970utility, fishburn1968utility}.
+Each agent in the system can have their own utility function that they aim to
+maximise.
+In a realistic scenario, these utility functions could be based in a number of
+factors, where each agent can have a different weight for each factor.
+
+At the end of the simulation run there are some key performance measures that
+can be extracted to quantify the performance of the overall system and each
+server individually.
+Table~\ref{tab:server_agents_performance_measures} shows these measures that
+will then be used to formulate the utility functions.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Performance measures that could affect each agent's utility}
+    \label{tab:server_agents_performance_measures}
+    \begin{tabular}{|c|c|}
+        \hline
+        \textbf{Notation} & \textbf{Description} \\
+        \hline
+        \hline
+        \(I\) & Total number of individuals (both served and lost) \\
+        \hline
+        \(I_s\) & Number of served individuals \\
+        \hline
+        \(I_L\) & Number of individuals that are lost due to the system being
+        full \\
+        \hline
+        \(I_s^{(k)}\) & All individuals served by server \(k\) \\
+        \hline
+        \(R\) & Overall runtime of the simulation \\
+        \hline
+        \(B^{(k)}\) & Busy time of server \(k\) \\
+        \hline
+        \(R - B^{(k)}\) & Idle time of server \(k\) \\
+        \hline
+        \(\bar{\mu}^{(k)}\) & Mean service rate of server \(k\) \\
+        \hline
+        \(\bar{m}^{(k)}\) & Mean service time of server \(k\) \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Note that the difference between the mean service rate and the mean service
+time is that the mean service rate is the average out of all the service rates
+for every state \((u, v)\) with no particular weight given to any of them.
+In contrast, the mean service time is the average of all the service times
+that each server has experienced.
+That means that if a particular state has not been visited by a server, then
+the mean service time will not be affected by that state.
+
+The above measures could be combined together in a number of ways to formulate
+utility functions.
+Some examples of utility functions that could be used are the following:
+
+\begin{align}
+    U_k^{(1)} &= e \, I_s^{(k)} + (1 - e) \, (R - B^{(k)})
+    \label{eq:utility_1} \\
+    U_k^{(2)} &= e \, \frac{I_s^{(k)}}{I_s} + (1 - e) \, \frac{R - B^{(k)}}{R}
+    \label{eq:utility_2} \\
+    U_k^{(3)} &= e \, \bar{m}^{(k)} + (1 - e) \, (R - B^{(k)})
+    \label{eq:utility_3} \\
+    U_k^{(4)} &= e \, \frac{1}{\bar{m}^{(k)}} + (1 - e) \, (R - B^{(k)})
+    \label{eq:utility_4} \\
+    U_k^{(5)} &= e \, \frac{I_s^{(k)}}{I_s} + (1 - e) \, \bar{m}^{(k)}
+    \label{eq:utility_5} \\ 
+    U_k^{(6)} &= e \, \frac{I_s^{(k)}}{I} + (1 - e) \, \frac{1}{\bar{m}^{(k)}}
+    \label{eq:utility_6} \\
+    U_k^{(7)} &= e \, \frac{I_s}{I} + (1 - e) \, \frac{R - B^{(k)}}{R}
+    \label{eq:utility_7} \\
+\end{align}
+
+where \(U_k^{(i)}\) is utility \(i\) of server \(k\) and \(e\) is a parameter that
+can be used to weight the importance of each measure.
+For example, \(e = 0.5\) would mean that the two measures are equally important
+for the agent.
+
+\subsection{Case study}\label{sec:agent_based_case_study}
+
+In this subsection, an empirical study is presented to show how the above
+utility functions can be used to measure each server's ``happiness''.
+The study builds upon the empirical study on the queueing system described
+in~\cite{harper2020server}.
+This subsection will use the same data set as in~\cite{harper2020server}, but
+applied to the queueing system described in Section~\ref{sec:queueing_section}
+and the agent-based model described in Section~\ref{sec:agent_based_model}.
+
+In that study a set of data was collected from a large emergency department in
+Wales, UK.
+The data was collected over 6 months and contained information
+on each patient that arrived at the emergency department.
+Such information included the time of arrival, the time of service, the triage
+category and the time of discharge.
+The dataset consisted of \(4,832\) patients that were considered as ``urgent''.
+In~\cite{harper2020server} it was shown that as the workload of the system
+changed, the service times of the serves also changed.
+In fact, low to moderate workload levels resulted in service times that were
+lower than the service times experienced at high workload levels.
+
+The system was modelled as a single-server queueing system with two service
+speeds.
+Arrivals follow a Poisson distribution with mean inter-arrival time
+of \(92\) minutes, thus the arrival rate can be set to
+\(\lambda = \frac{1}{92}\).
+The service speed was partitioned into two distributions; one for low to
+moderate workload levels and one for high workload levels.
+The service speed for the low to moderate workload levels was found to follow
+a lognormal distribution with a mean of \(86\) minutes and the service speed for
+the high workload levels was found to follow a lognormal distribution
+with a mean of \(62\) minutes.
+Therefore, the service rates can be set to \(\mu_1 = \frac{1}{86}\) and
+\(\mu_2 = \frac{1}{62}\).
+It was observed that the slow service speed was used for when \(6\) or less
+individuals were in the system and the fast service speed was used for when
+\(7\) or more individuals were present. 
+
+The above parameters were slightly modified so that they are applied to the
+queueing system described in Section~\ref{sec:queueing_section}.
+In essence, the queueing system is now a \(4\) server system and the arrival
+rate is set to \(\lambda = 4 \times \frac{1}{92}\) and the two service speeds
+stay the same.
+In addition, the new arrival rate is now split into two distributions, one for
+type 1 individuals and one for type 2 individuals.
+Type 1 arrivals follow a Poisson distribution with mean inter-arrival time
+of \(57.5\) minutes and type 2 arrivals follow a Poisson distribution with mean
+inter-arrival time of \(38.3\) minutes.
+Therefore, the arrival rates for type 1 and type 2 individuals are
+\(\lambda_1 = \frac{1}{57.5}\) and \(\lambda_2 = \frac{1}{38.3}\) respectively.
+
+Additionally, for this modified example the \(4\) servers fall into one of
+three groups; experienced, moderate and intern.
+In particular server \(1\) is an experienced server, server \(2\) and server
+\(3\) are moderate servers and server \(4\) is an intern.
+This means that server \(1\) has a slightly higher service rate than the other
+servers and if they are available they will always be assigned the incoming
+individual.
+Servers \(2\) and \(3\) have the same service rate and if they are available
+they may be assigned the incoming individual with an equal probability.
+Finally, server \(4\) has the lowest service rate and they will only be
+assigned the incoming individual if the other servers are unavailable.
+More specifically, the service rates for the ``experienced'' server is
+multiplied by a factor of \(1.2\) and the service rates for the ``intern''
+server is multiplied by a factor of \(0.8\), while the ``moderate'' servers
+stay unchanged.
+This might not be a realistic example, but it is used here to demonstrate the
+utilities in this agent-based model.
+
+Because of the way the queueing system described in
+Section~\ref{sec:queueing_section} is modelled, there are some additional
+parameters that need to be considered.
+These are the capacity of Node \(1\), the capacity of Node \(2\), and the
+threshold.
+The capacity of Node \(1\) is set to \(N = 35\), the capacity of Node \(2\) is
+set to \(M = 20\) and the threshold is set to \(T = 10\).
+Therefore the complete set of parameters for the queueing system are:
+
+\begin{multicols}{2}
+    \begin{itemize}
+        \item \(\lambda_1 = \frac{1}{57.5}\)
+        \item \(\lambda_2 = \frac{1}{38.3}\)
+        \item \(C = 4\)
+        \item \(\mu^{(1)} =
+        \begin{cases}
+            1.2 \times \frac{1}{86}, & \text{if } u + v < 7 \\
+            1.2 \times \frac{1}{62}, & \text{if } u + v \geq 7    
+        \end{cases}\)
+        \item \(T = 10\)
+        \item \(N = 35\)
+        \item \(M = 20\)
+        \item \(\mu^{(4)} =
+        \begin{cases}
+            0.8 \times \frac{1}{86}, & \text{if } u + v < 7 \\
+            0.8 \times \frac{1}{62}, & \text{if } u + v \geq 7    
+        \end{cases}\)
+    \end{itemize}
+\end{multicols}
+
+\begin{center}
+    \begin{minipage}{0.6\textwidth}
+        \begin{itemize}
+            \item \(\mu^{(i)} =
+            \begin{cases}
+                \frac{1}{86}, & \text{if } u + v < 7 \\
+                \frac{1}{62}, & \text{if } u + v \geq 7    
+            \end{cases} \quad \text{for } i \in \{2,3\}\)    
+        \end{itemize}    
+    \end{minipage}
+\end{center}
+
+Running the simulation for \(100,000\) time units each server's utilisation
+(i.e. what percentage of time they were busy), the proportion of individuals
+that they served and their mean service time were recorded.
+
+\begin{table}[H]
+    \caption{Each server's performance measure for a run of the simulation.}
+    \label{tab:case_study_server_metrics}
+    \begin{tabular}{|c|c|c|c|}
+        \hline
+        Server & Server utilisation & Proportion of individuals served &
+        Mean service time \\
+        \hline
+        1 & 87.24 & 33.07 & 62.44 \\
+        2 & 82.51 & 24.54 & 79.56 \\
+        3 & 83.55 & 24.26 & 81.51 \\
+        4 & 78.45 & 18.13 & 102.3 \\
+        \hline
+    \end{tabular}
+\end{table}
+
+These performance measures can now be used to populate the different utility
+functions described in equations~\eqref{eq:utility_1}~-~\eqref{eq:utility_7}.
+All utility functions are a weighted average between two performance measures
+that are chosen to be the important factors for a server.
+The weigh parameter \(e\) can take on any value between \(0\) and \(1\).
+Tables~\ref{tab:case_study_utility_1_all_servers}~-~\ref{tab:case_study_utility_7_all_servers}
+show the utility functions for each server for different values of \(e\).
+
+\begin{table}[H]
+    \caption{Utility function \(1\) (\(U_k^{(1)}\)) for the \(4\) servers and
+    different values of \(e\)}
+    \label{tab:case_study_utility_1_all_servers}
+    \begin{adjustbox}{width=\columnwidth,center}
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
+            \hline
+            Server & \(e = 0\) & \(e = 0.1\) & \(e = 0.2\) & \(e = 0.3\)
+                   & \(e = 0.4\) & \(e = 0.5\) & \(e = 0.6\) & \(e = 0.7\)
+                   & \(e = 0.8\) & \(e = 0.9\) & \(e = 1\) \\
+            \hline
+            1 & 17703 & 16101 &	14500 & 12899 & 11298 & 9697 & 8096 & 6494
+                & 4893 & 3292 & 1691 \\
+            2 & 20729 & 18754 &	16780 & 14805 & 12830 & 10855 & 8880 & 6905
+                & 4931 & 2956 & 981 \\
+            3 & 21270 & 19247 & 17224 & 15200 & 13177 & 11154 & 9131 & 7108
+                & 5084 & 3061 & 1038 \\
+            4 & 25599 & 23111 &	20624 & 18136 & 15648 & 13161 & 10673 & 8186
+                & 5698 & 3211 & 723 \\
+            \hline
+        \end{tabular}
+    \end{adjustbox}
+\end{table}
+
+\begin{table}[H]
+    \caption{Utility function \(2\) (\(U_k^{(2)}\)) for the \(4\) servers and
+    different values of \(e\)}
+    \label{tab:case_study_utility_2_all_servers}
+    \begin{adjustbox}{width=\columnwidth,center}
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
+            \hline
+            Server & \(e = 0\) & \(e = 0.1\) & \(e = 0.2\) & \(e = 0.3\)
+                   & \(e = 0.4\) & \(e = 0.5\) & \(e = 0.6\) & \(e = 0.7\)
+                   & \(e = 0.8\) & \(e = 0.9\) & \(e = 1\) \\
+            \hline
+            1 & 0.128 & 0.148 & 0.168 & 0.189 & 0.209 & 0.229 & 0.25 & 0.27
+            & 0.29 & 0.311 & 0.331 \\
+            2 & 0.175 & 0.182 & 0.189 & 0.196 & 0.203 & 0.21 & 0.217 & 0.224
+            & 0.232 & 0.239 & 0.246 \\
+            3 & 0.165 & 0.172 & 0.18 & 0.188 & 0.196 & 0.204 & 0.212 & 0.219
+            & 0.227 & 0.235 & 0.243 \\
+            4 & 0.216 & 0.212 & 0.209 & 0.205 & 0.202 & 0.199 & 0.195 & 0.192
+            & 0.188 & 0.185 & 0.182 \\
+            \hline
+        \end{tabular}
+    \end{adjustbox}
+\end{table}
+
+\begin{table}[H]
+    \caption{Utility function \(3\) (\(U_k^{(3)}\)) for the \(4\) servers and
+    different values of \(e\)}
+    \label{tab:case_study_utility_3_all_servers}
+    \begin{adjustbox}{width=\columnwidth,center}
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
+            \hline
+            Server & \(e = 0\) & \(e = 0.1\) & \(e = 0.2\) & \(e = 0.3\)
+                   & \(e = 0.4\) & \(e = 0.5\) & \(e = 0.6\) & \(e = 0.7\)
+                   & \(e = 0.8\) & \(e = 0.9\) & \(e = 1\) \\
+            \hline
+            1 & 0.1 & 6.4 & 12.6 & 18.8 & 25.1 & 31.3 & 37.5 & 43.7 & 50.0
+            & 56.2 & 62.4 \\
+            2 & 0.2 & 8.1 & 16.1 & 24.0 & 31.9 & 39.9 & 47.8 & 55.7 & 63.7
+            & 71.6 & 79.6 \\
+            3 & 0.2 & 8.3 & 16.4 & 24.6 & 32.7 & 40.8 & 49.0 & 57.1 & 65.2
+            & 73.4 & 81.5 \\
+            4 & 0.2 & 10.4 & 20.6 & 30.8 & 41.0 & 51.3 & 61.5 & 71.7 & 81.9
+            & 92.1 & 102.3 \\
+            \hline
+        \end{tabular}
+    \end{adjustbox}
+\end{table}
+
+\begin{table}[H]
+    \caption{Utility function \(4\) (\(U_k^{(4)}\)) for the \(4\) servers and
+    different values of \(e\)}
+    \label{tab:case_study_utility_4_all_servers}
+    \begin{adjustbox}{width=\columnwidth,center}
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
+            \hline
+            Server & \(e = 0\) & \(e = 0.1\) & \(e = 0.2\) & \(e = 0.3\)
+                   & \(e = 0.4\) & \(e = 0.5\) & \(e = 0.6\) & \(e = 0.7\)
+                   & \(e = 0.8\) & \(e = 0.9\) & \(e = 1\) \\
+            \hline
+            1 & 0.128 & 0.117 & 0.105 & 0.094 & 0.083 & 0.072 & 0.061 & 0.05
+            & 0.038 & 0.027 & 0.016 \\
+            2 & 0.175 & 0.159 & 0.142 & 0.126 & 0.11 & 0.094 & 0.078 & 0.061
+            & 0.045 & 0.029 & 0.013 \\
+            3 & 0.165 & 0.149 & 0.134 & 0.119 & 0.104 & 0.088 & 0.073 & 0.058
+            & 0.043 & 0.027 & 0.012 \\
+            4 & 0.216 & 0.195 & 0.174 & 0.154 & 0.133 & 0.113 & 0.092 & 0.072
+            & 0.051 & 0.03 & 0.01 \\            
+            \hline
+        \end{tabular}
+    \end{adjustbox}
+\end{table}
+
+\begin{table}[H]
+    \caption{Utility function \(5\) (\(U_k^{(5)}\)) for the \(4\) servers and
+    different values of \(e\)}
+    \label{tab:case_study_utility_5_all_servers}
+    \begin{adjustbox}{width=\columnwidth,center}
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
+            \hline
+            Server & \(e = 0\) & \(e = 0.1\) & \(e = 0.2\) & \(e = 0.3\)
+                   & \(e = 0.4\) & \(e = 0.5\) & \(e = 0.6\) & \(e = 0.7\)
+                   & \(e = 0.8\) & \(e = 0.9\) & \(e = 1\) \\
+            \hline
+            1 & 62.44 & 56.23 & 50.02 & 43.81 & 37.6 & 31.39 & 25.18 & 18.96 &
+            12.75 & 6.54 & 0.33 \\
+            2 & 79.56 & 71.62 & 63.69 & 55.76 & 47.83 & 39.9 & 31.97 & 24.04
+            & 16.11 & 8.18 & 0.25 \\
+            3 & 81.51 & 73.38 & 65.25 & 57.13 & 49.0 & 40.87 & 32.75 & 24.62
+            & 16.5 & 8.37 & 0.24 \\
+            4 & 102.3 & 92.08 & 81.87 & 71.66 & 61.45 & 51.24 & 41.03 & 30.82
+            & 20.6 & 10.39 & 0.18 \\
+            \hline
+        \end{tabular}
+    \end{adjustbox}
+\end{table}
+
+\begin{table}[H]
+    \caption{Utility function \(6\) (\(U_k^{(6)}\)) for the \(4\) servers and
+    different values of \(e\)}
+    \label{tab:case_study_utility_6_all_servers}
+    \begin{adjustbox}{width=\columnwidth,center}
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
+            \hline
+            Server & \(e = 0\) & \(e = 0.1\) & \(e = 0.2\) & \(e = 0.3\)
+                   & \(e = 0.4\) & \(e = 0.5\) & \(e = 0.6\) & \(e = 0.7\)
+                   & \(e = 0.8\) & \(e = 0.9\) & \(e = 1\) \\
+            \hline
+            1 & 0.02 & 0.05 & 0.08 & 0.11 & 0.14 & 0.17 & 0.2 & 0.24
+            & 0.27 & 0.3 & 0.33 \\ 
+            2 & 0.01 & 0.04 & 0.06 & 0.08 & 0.11 & 0.13 & 0.15 & 0.18
+            & 0.2 & 0.22 & 0.25 \\ 
+            3 & 0.01 & 0.04 & 0.06 & 0.08 & 0.1 & 0.13 & 0.15 & 0.17
+            & 0.2 & 0.22 & 0.24 \\ 
+            4 & 0.01 & 0.03 & 0.04 & 0.06 & 0.08 & 0.1 & 0.11 & 0.13
+            & 0.15 & 0.16 & 0.18 \\ 
+            \hline
+        \end{tabular}
+    \end{adjustbox}
+\end{table}
+
+\begin{table}[H]
+    \caption{Utility function \(7\) (\(U_k^{(7)}\)) for the \(4\) servers and
+    different values of \(e\)}
+    \label{tab:case_study_utility_7_all_servers}
+    \begin{adjustbox}{width=\columnwidth,center}
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|}
+            \hline
+            Server & \(e = 0\) & \(e = 0.1\) & \(e = 0.2\) & \(e = 0.3\)
+                   & \(e = 0.4\) & \(e = 0.5\) & \(e = 0.6\) & \(e = 0.7\)
+                   & \(e = 0.8\) & \(e = 0.9\) & \(e = 1\) \\
+            \hline
+            1 & 0.128 & 0.215 & 0.302 & 0.389 & 0.476 & 0.563 & 0.65 & 0.737
+            & 0.824 & 0.911 & 0.999 \\ 
+            2 & 0.175 & 0.257 & 0.34 & 0.422 & 0.504 & 0.587 & 0.669 & 0.751
+            & 0.834 & 0.916 & 0.999 \\ 
+            3 & 0.165 & 0.248 & 0.331 & 0.415 & 0.498 & 0.582 & 0.665 & 0.748
+            & 0.832 & 0.915 & 0.999 \\ 
+            4 & 0.216 & 0.294 & 0.372 & 0.45 & 0.529 & 0.607 & 0.685 & 0.764
+            & 0.842 & 0.92 & 0.999 \\ 
+            \hline
+        \end{tabular}
+    \end{adjustbox}
+\end{table}
+
+The above tables show the range of values of the utility functions can take
+for the different servers and different values of \(e\).
+Throughout the rest of this section, these utility functions will be used
+as the key performance indicators that the servers will use to make decisions
+about their own service speed.

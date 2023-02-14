@@ -1,4 +1,42 @@
-\chapter{Agent-based extension}
-\section{State-dependent model}
-\section{Server-dependent model}
-\section{Reinforcement learning}
+\chapter{Extending to agent-based extension}
+
+This chapter aims to explore an extension to the game described earlier.
+The extension is based on the idea of an agent-based
+model~\cite{de2014agent, fetta2012peter, knight2012modelling}.
+What if the servers of the queueing system described in
+Section~\ref{sec:queueing_section} could be treated as entities that could make
+their own decisions?
+
+The idea here is that servers could choose their own service rate so as to
+maximise their own utility.
+This would mean that the servers would be able to choose their own speed at
+which they serve customers while the system is running.
+Such decisions could be based on a number of factors, such as minimising the
+number of customers in the system, minimising the proportion of patients lost
+to the system, maximising their own idle time and so on.
+
+The previous chapters are based on the assumption that hospitals and ambulances
+play a non-cooperative game and act in their own self-interest.
+Although this might be true in some cases, insights from ethnographic
+studies~\cite{allen2004understanding} have shown that some cooperation and
+empathy can be found among staff in such gaming environment.
+The motivation for this chapter was initiated by these insights.
+
+This chapter is structured in such a way that the first section describes a
+state-dependent version of the queueing system described in
+Section~\ref{sec:queueing_section}, the second section describes
+a server-dependent variant and the third section combines them together and
+formulate a reinforcement learning algorithm that works on finding the best
+policies for the servers so that they can maximise their own utility.
+
+
+
+\input{chapters/06_agent_based_extension/01_state_dependent/main.tex}
+
+\input{chapters/06_agent_based_extension/02_server_dependent/main.tex}
+
+\input{chapters/06_agent_based_extension/03_state_server_dependent/main.tex}
+
+\input{chapters/06_agent_based_extension/04_agent_based/main.tex}
+
+\input{chapters/06_agent_based_extension/05_reinforcement_learning/main.tex}

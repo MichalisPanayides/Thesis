@@ -1,0 +1,150 @@
+\section{State-dependent variation}\label{sec:state_dependent}
+
+This section focuses on creating a state-dependent variation of the queueing
+system described in Section~\ref{sec:queueing_section}.
+The state-dependent version is based on the idea that the speed of the servers
+could be based on the number of individuals present in the system.
+
+In the previous chapters of this thesis, the value of the service rate \(\mu\)
+was set to a constant value.
+For this variation of the model \(\mu\) will have a different value depending
+on the number of individuals present in the two nodes of the queue.
+In other words \(\mu\) will take a different value depending on the state
+\(u, v\) of which the system is in.
+A parametric service rate \(\mu = \mu_{(u,v)}\) for a given \((u, v) \in S\) is
+defined as follows:
+
+\begin{equation}\label{eq:state_dependent_service_rate}
+    \mu =
+    \begin{cases}
+        \mu_{(0,0)}, & \text{if } (u, v) = (0, 0) \\
+        \mu_{(0,1)}, & \text{if } (u, v) = (0, 1) \\
+        \quad \vdots & \qquad \quad \vdots \\
+        \mu_{(N,M)}, & \text{if } (u, v) = (M, N)
+    \end{cases}
+\end{equation}
+
+Consider an example of the queueing system described in
+Section~\ref{sec:queueing_section} where the number of servers is set to
+\(C = 1\), the threshold is set to \(T = 1\), node 1 capacity is \(N = 2\) and
+node 2 capacity is \(M = 1\).
+Figure~\ref{fig:state_dependent_markov_example} shows the state-dependent
+Markov chain model of the queueing system.
+
+\begin{figure}[H]
+    \centering
+    \input{chapters/06_agent_based_extension/Bin/example_model_1121/main.tex}
+    \caption{Markov chain example with \(C=1, T=1, N=2, M=1\)}
+    \label{fig:state_dependent_markov_example}
+\end{figure}
+
+Consider the following value of \(\mu\) for the Markov chain model shown in
+Figure~\ref{fig:state_dependent_markov_example}.
+
+\begin{equation*}
+    \mu =
+    \begin{cases}
+        \mu_{(0, 0)}, \text{ if } (u, v) = (0, 0) \\
+        \mu_{(0, 1)}, \text{ if } (u, v) = (0, 1) \\
+        \mu_{(0, 2)}, \text{ if } (u, v) = (0, 2) \\
+        \mu_{(1, 1)}, \text{ if } (u, v) = (1, 1) \\
+        \mu_{(1, 2)}, \text{ if } (u, v) = (1, 2)
+    \end{cases}
+\end{equation*}
+
+
+
+\subsection{Implementation}
+
+The state-dependent variation of the queueing system was implemented using the
+python library \texttt{ciw}~\cite{ciwpython} only on the Discrete Event
+Simulation (DES) version of the queueing model described in
+Section~\ref{sec:discrete_event_simulation}.
+All the code used to implement the state-dependent variation of the queueing
+system is archived at~\cite{ambulance_game_github_repo} and developed openly on
+GitHub.
+More details on the code can be found in appendix~\ref{appendix:ambulance_game}.
+The \texttt{ciw} library is structured in a way that allows the user to create
+their own class for the service time distribution.
+This class must inherit from the \texttt{ciw.dists.Distribution} class and
+implement the \texttt{\_\_init\_\_} and \texttt{sample} methods.
+The code snippet in~\ref{lst:state_dependent_class} shows the implementation of
+the state-dependent service time distribution class.
+
+\begin{lstlisting}[
+    style=pystyle,
+    caption={State-dependent service time distribution class.},
+    label={lst:state_dependent_class}
+]
+>>> import ciw
+>>> class StateDependentExponential(
+...     ciw.dists.Distribution
+... ):
+...     def __init__(self, rates):
+...         self.rates = rates
+... 
+...     def sample(self, t=None, ind=None):
+...         """
+...         This method is used to sample the service time for an
+...         individual based on the current state
+...         """
+...         state = (
+...             len(ind.simulation.nodes[1].individuals[0]),
+...             len(ind.simulation.nodes[2].individuals[0]),
+...         )
+...         is_invalid_state = (
+...             state[0] > 0 and state[1] < ind.simulation.threshold
+...         )
+...         if is_invalid_state:
+...             state = (state[0] - 1, state[1] + 1)
+...         rate = self.rates[state]
+...         return random.expovariate(rate)
+    
+\end{lstlisting}
+
+The function \texttt{simulate\_model} described in
+Section~\ref{sec:discrete_event_simulation} takes \texttt{mu} as one of its
+arguments.
+Whenever the value of \(\mu\) is a dictionary with keys being the possible
+states and values the service rate for that state, the \texttt{mu} argument
+will be a \texttt{StateDependentExponential} object.
+The following code shows the implementation of the
+\texttt{simulate\_model} function for the state-dependent variation of the
+queueing system.
+
+\begin{lstlisting}[style=pystyle]
+>>> import ambulance_game as abg
+>>> import ciw
+>>> import numpy as np
+>>>
+>>> lambda_1 = 1
+>>> lambda_2 = 1
+>>> num_of_servers = 1
+>>> threshold = 1
+>>> system_capacity = 2
+>>> buffer_capacity = 1
+>>> runtime = 1000
+>>> seed_num = 0
+>>>
+>>> Q = abg.simulation.simulate_model(
+...     lambda_1=lambda_1,
+...     lambda_2=lambda_2,
+...     mu={
+...         (0, 0): 2,
+...         (0, 1): 3,
+...         (0, 2): 4,
+...         (1, 1): 4,
+...         (1, 2): 5,
+...     },
+...     num_of_servers=num_of_servers,
+...     threshold=threshold,
+...     seed_num=seed_num,
+...     system_capacity=system_capacity,
+...     buffer_capacity=buffer_capacity,
+...     runtime=runtime,
+... )
+>>> mean_waiting_time = np.mean([w.waiting_time for w in Q.get_all_records()])
+>>> np.round(mean_waiting_time, 8)
+0.06028274
+
+\end{lstlisting}

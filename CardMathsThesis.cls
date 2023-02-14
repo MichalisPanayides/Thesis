@@ -38,9 +38,7 @@
 
 
 % you need an oxlogo.eps or oxlogo.pdf file as appropriate
-\def\logo{}
-% TODO: Somehow use this \includegraphics[width=45mm]{Cardifflogo.pdf}
-% inside \logo{} without breaking github actions 
+\def\logo{\includegraphics[width=45mm]{Cardifflogo.pdf}}
 
 %
 % Define text area of page and margin offsets
