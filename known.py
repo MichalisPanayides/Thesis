@@ -88,6 +88,7 @@ words = {
     "glynatsi",
     "hasattr",
     "heatmap",
+    "Heatmaps",
     "howson",
     "Howson",
     "hstack",
