@@ -1177,7 +1177,7 @@ then be used to compute \(W\), the overall mean waiting time for both types.
 
 \paragraph{Implementation}\label{sec:waiting_closed_form_implementation}
 
-The closed-form formula can be implemented in one function.
+The closed-form method can be implemented in one function.
 The functions is broken down in two parts for the case of each individual type.
 
 \begin{lstlisting}[style=pystyle]
@@ -1193,7 +1193,7 @@ The functions is broken down in two parts for the case of each individual type.
 ...     **kwargs,
 ... ):
 ...     """
-...     Get the mean waiting time by using a closed-form formula.
+...     Get the mean waiting time by using a closed-form method.
 ...     """
 ...     sojourn_time = 1 / (num_of_servers * mu)
 ...     if class_type == 0:

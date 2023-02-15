@@ -2,6 +2,7 @@ import pathlib
 import re
 import subprocess
 import sys
+import yaml
 
 from invoke import task
 import proselint as plnt
@@ -51,45 +52,98 @@ def proselint(c):
     Check the spelling of all .tex files
     """
 
-    def remove_expected_errors(errors):
+    def remove_expected_errors(path, errors, errors_to_ignore):
         """
         Remove general errors that were expected from the error list
         """
-        expected_errors = [
-            "annotations.misc",
-            "typography.symbols.ellipsis",
-            "typography.symbols.sentence_spacing",
-            "lexical_illusions.misc",
-            "leonard.exclamation.30ppm",
-            "typography.symbols.curly_quotes",
-            "consistency.spelling",
-            "typography.symbols.copyright",
-        ]
         updated_errors = []
         for error in errors:
-            if error[0] not in expected_errors:
+            if [error[0], str(path)] not in errors_to_ignore:
                 updated_errors.append(error)
-        return updated_errors
 
-    def exclude_tex_files_for_imgs(file_paths):
+        return updated_errors
+    
+    def remove_unnecessary_lines(text):
         """
-        Remove files that contain images (mainly tikz) from the list of files
-        to run proselint on
+        Remove code blocks, equations, tikzpictures and all includegraphics
+        commands from the text to be checked by proselint. Also remove the
+        command begin{center} and end{center} from the text since it flags
+        an error of using inconsistent spelling of centre. Note that the lines
+        that are removed are replaced by the same number of empty new lines.
+        This is done to keep the line numbers in the error messages correct.
+        """
+        updated_text = text
+
+        code_block_regex = r"\\begin\{lstlisting\}.*?\\end\{lstlisting\}"
+        code_blocks = re.findall(code_block_regex, text, re.DOTALL)
+        for code_block in code_blocks:
+            updated_text = updated_text.replace(code_block, "\n" * (code_block.count("\n")))
+
+        equation_regex = r"\\begin\{equation\}.*?\\end\{equation\}"
+        all_equations = re.findall(equation_regex, text, re.DOTALL)
+        for equation in all_equations:
+            updated_text = updated_text.replace(equation, "\n" * (equation.count("\n")))
+
+        equation_regex_2 = r"\\begin\{equation\*\}.*?\\end\{equation\*\}"
+        all_equations_2 = re.findall(equation_regex_2, text, re.DOTALL)
+        for equation in all_equations_2:
+            updated_text = updated_text.replace(equation, "\n" * (equation.count("\n")))
+
+        align_regex = r"\\begin\{align\}.*?\\end\{align\}"
+        all_aligns = re.findall(align_regex, text, re.DOTALL)
+        for align in all_aligns:
+            updated_text = updated_text.replace(align, "\n" * (align.count("\n")))
+
+        tikz_regex = r"\\begin\{tikzpicture\}.*?\\end\{tikzpicture\}"
+        all_tikz = re.findall(tikz_regex, text, re.DOTALL)
+        for tikz in all_tikz:
+            updated_text = updated_text.replace(tikz, "\n" * (tikz.count("\n")))
+        
+        includegraphics_regex = r"\\includegraphics.*?\}"
+        includegraphics = re.findall(includegraphics_regex, text, re.DOTALL)
+        for includegraphic in includegraphics:
+            updated_text = updated_text.replace(includegraphic, "")
+
+        updated_text = updated_text.replace("\\centering", " ")
+        updated_text = updated_text.replace("\\begin{center}", " ")
+        updated_text = updated_text.replace("\\end{center}", " ")
+        
+        return updated_text
+
+    def exclude_tex_files(file_paths, files_to_ignore):
+        """
+        Remove files that should be ignored from the list of files to be
+        checked. These files are specified in the .proselint_config file.
         """
         updated_files = []
+        # Return the file_paths that do not contain any of the files_to_ignore
+
         for file_path in file_paths:
-            if "img" not in str(file_path):
+            if not any(
+                file_to_ignore in str(file_path)
+                for file_to_ignore in files_to_ignore
+            ):
                 updated_files.append(file_path)
         return updated_files
 
+
+    with open(".proselint", 'r') as f:
+        config = yaml.safe_load(f)
+        
+    errors_to_ignore = config["errors_to_ignore"]
+    files_to_ignore = config["files_to_ignore"]
+
     all_tex_files = list(pathlib.Path().glob("**/*.tex"))
-    all_tex_files_without_imgs = exclude_tex_files_for_imgs(all_tex_files)
+    all_included_tex_files = exclude_tex_files(all_tex_files, files_to_ignore)
+
     exit_codes = [0]
-    for path in all_tex_files_without_imgs:
+    for path in all_included_tex_files:
         with open(path, "r") as f:
-            text = "\n\n" + f.read()
-            errors = plnt.tools.lint(text)
-        errors = remove_expected_errors(errors)
+            text = "\n" + f.read()
+        
+        updated_text = remove_unnecessary_lines(text)
+        errors = plnt.tools.lint(updated_text)
+        errors = remove_expected_errors(path, errors, errors_to_ignore)
         if errors:
             print(f"In {path} the following errors were found: ")
             for error in errors:
