@@ -539,9 +539,14 @@ in Section~\ref{sec:proportion_of_individuals_within_time}.
 The first equation to be considered is the simplified version of
 \(\Psi_{k, \lambda}(t)\) described in
 equation~\eqref{eq:specific_cdf_hypoexponential}.
-The following code snippet shows the implementation of this equation in python.
+Code snippet~\ref{lst:specific_psi_function} shows the implementation of this
+equation in python.
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Function for the simplified version of \(\Psi_{k, \lambda}(t)\)},
+    label={lst:specific_psi_function},
+]
 >>> def specific_psi_function(
 ...     arg, k, l, exp_rates, freq, a
 ... ):
@@ -564,12 +569,17 @@ The following code snippet shows the implementation of this equation in python.
 
 \end{lstlisting}
 
-The following piece of code returns the cumulative distribution function of
-the hypoexponential distribution.
+The piece of code shown in~\ref{lst:hypoexponential_cdf} returns the cumulative
+distribution function of the hypoexponential distribution.
 In essence this is the value of \(P(H<t)\) outlined in
 equation~\eqref{eq:specific_cdf_hypoexponential}.
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Function for the cumulative distribution of the Hypoexponential
+    distribution},
+    label={lst:hypoexponential_cdf},
+]
 >>> def hypoexponential_cdf(
 ...     x, exp_rates, freq, psi_func=specific_psi_function
 ... ):
@@ -629,10 +639,15 @@ equation~\eqref{eq:specific_cdf_hypoexponential}.
 
 Similarly the cumulative distribution function of the erlang distribution is
 also needed here.
-The following code snippet shows the implementation of this function as
-described in equation~\eqref{eq:cdf_erlang}.
+The code snippet in~\ref{lst:erlang_cdf} shows the implementation of this
+function as described in equation~\eqref{eq:cdf_erlang}.
 
-\begin{lstlisting}[style=pystyle] 
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Function for the cumulative distribution of the Erlang
+    distribution},
+    label={lst:erlang_cdf},
+] 
 >>> def erlang_cdf(mu, n, x):
 ...     """
 ...     Cumulative distribution function of the erlang distribution.
@@ -658,11 +673,17 @@ described in equation~\eqref{eq:cdf_erlang}.
 
 \end{lstlisting}
 
-Having defined all functions necessary the following piece of code aims to
-decide which of the two distributions to use to calculate the probability
-of an individual being within a given time target.
+Having defined all functions necessary the code snippet
+in~\ref{lst:distribution_decision_function} chooses which of the two 
+distributions to use to calculate the probability of an individual being within
+a given time target.
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Function for deciding which distribution to use to calculate
+    the probability of an individual being within a given time target.},
+    label={lst:distribution_decision_function},
+]
 >>> def get_probability_of_waiting_time_in_system_less_than_target_for_state(
 ...     state,
 ...     class_type,
@@ -732,12 +753,18 @@ of an individual being within a given time target.
 \end{lstlisting}
 
 Finally, putting everything together, going through all the states of a given
-Markov chain model, the following function calculates the probability of
+Markov chain model, the function defined in~\ref{lst:proportion_within_target}
+calculates the probability of
 spending less time than the target in the system for a given individual type.
 This corresponds to both equations~\eqref{eq:proportion_of_inds_type_1}
 and~\eqref{eq:proportion_of_inds_type_2}.
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Function for calculating the probability of spending less time
+    than the target in the system for a given individual type.},
+    label={lst:proportion_within_target},
+]
 >>> def get_proportion_of_individuals_within_time_target(
 ...     all_states,
 ...     pi,
@@ -811,7 +838,12 @@ and~\eqref{eq:proportion_of_inds_type_2}.
 Using all functions created so far, the proportion of individuals within target
 can be calculated for a given Markov chain model and a given individual type.
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Combining all functions to calculate the proportion of type 1 
+    individuals within a time target of \(1\) time unit.},
+    label={lst:proportion_within_target_example},
+]
 >>> import ambulance_game as abg
 >>> import numpy as np
 >>> all_states = abg.markov.build_states(
@@ -851,5 +883,5 @@ can be calculated for a given Markov chain model and a given individual type.
 
 \end{lstlisting}
 
-This shows that for the given set of parameters the and for type 1 individuals
+This shows that for the given set of parameters and for type 1 individuals
 the probability of spending less than 1 unit of time in the system is 91.9\%.

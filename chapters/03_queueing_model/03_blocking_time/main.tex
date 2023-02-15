@@ -267,10 +267,15 @@ Section~\ref{sec:steady_state_probabilities}.
 
 The mean blocking time is only calculated using a direct approach
 similar to the one described in Section~\ref{sec:waiting_direct_implementation}.
-Since this implementation is the same as the waiting time one, the following
-codes shows only the usage of the function rather than the function itself.
+Since this implementation is the same as the waiting time one, the code
+snippet shown in~\ref{lst:mean_blocking_time_usage} shows only the usage of the
+function rather than the function itself.
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Usage of the function to calculate the mean blocking time.},
+    label={lst:mean_blocking_time_usage},
+]
 >>> import ambulance_game as abg
 >>> import numpy as np
 >>>

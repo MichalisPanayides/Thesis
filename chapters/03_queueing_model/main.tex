@@ -242,11 +242,16 @@ This method is generally used to solve systems of the form
 \(\frac{dy}{dt} = f\) with a dense or banded Jacobian when the problem is stiff,
 which then uses the BDF algorithm, while when the problem is non-stiff it uses
 Adams' method.
-This was implemented using \textit{scipy.integrate. odeint} from the python
-library \textit{SciPy}~\cite{2020SciPy-NMeth} that uses the
-\textit{lsoda}~\cite{lsoda_algorithm} integration method.
+This was implemented using \texttt{scipy.integrate.odeint} from the python
+library \texttt{SciPy}~\cite{2020SciPy-NMeth} that uses the
+\texttt{lsoda}~\cite{lsoda_algorithm} integration method.
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Steady state probabilities calculation using numeric integration
+    using the \texttt{odeint} function.},
+    label={lst:steady_state_probabilities_odeint},
+]
 >>> import ambulance_game as abg
 >>> import scipy as sci
 >>> Q = abg.markov.get_transition_matrix(
@@ -291,10 +296,15 @@ where \(y_0\) is the given initial value, \(s\) is the number of stages and
 \(h\) is the step size.
 The coefficients \(b_i\), \(c_i\), and \(a_{ij}\) are usually arranged in a
 mnemonic device known as the Butcher's tableau.
-This was implemented using \textit{scipy.integrate. solve\_ivp} from the python
-library \textit{SciPy}~\cite{2020SciPy-NMeth}.
+This was implemented using \texttt{scipy.integrate. solve\_ivp} from the python
+library \texttt{SciPy}~\cite{2020SciPy-NMeth}.
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Steady state probabilities calculation using numeric integration
+    using the \texttt{solve\_ivp} function.},
+    label={lst:steady_state_probabilities_solve_ivp},
+]
 >>> pi = abg.markov.get_steady_state_numerically(
 ...     Q, integration_function=sci.integrate.solve_ivp
 ... )
@@ -334,11 +344,16 @@ Using LU decomposition with partial pivoting and row interchanges, matrix
 a permutation matrix, \(L\) is a unit lower triangular matrix, and \(U\) is
 an upper triangular matrix~\cite{strang2006linear}.
 The factored form of \(Q^T\) can then be used to solve the system.
-This was implemented using \textit{numpy.linalg.solve} from the
-python library \textit{numpy}~\cite{2020NumPy-Array, lapack99}.
+This was implemented using \texttt{numpy.linalg.solve} from the
+python library \texttt{numpy}~\cite{2020NumPy-Array, lapack99}.
 
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Steady state probabilities calculation using linear algebraic
+    approach with \texttt{numpy.linalg.solve}.},
+    label={lst:steady_state_probabilities_numpy_linalg_solve_1},
+]
 >>> import numpy as np
 >>> pi = abg.markov.get_steady_state_algebraically(
 ...     Q, algebraic_function=np.linalg.solve
@@ -365,10 +380,15 @@ by solving the following equation:
 
 The above expression gets the vector \( \pi \) that approximately solves
 equation \(\tilde Q^T \pi = b\).
-This was implemented using \textit{numpy.linalg.lstsq} from the python
-library \textit{numpy}~\cite{2020NumPy-Array}.
+This was implemented using \texttt{numpy.linalg.lstsq} from the python
+library \texttt{numpy}~\cite{2020NumPy-Array}.
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Steady state probabilities calculation using least squares
+    approach with \texttt{numpy.linalg.lstsq}.},
+    label={lst:steady_state_probabilities_numpy_linalg_lstsq},
+]
 >>> pi = abg.markov.get_steady_state_algebraically(
 ...     Q, algebraic_function=np.linalg.lstsq
 ... )
@@ -406,7 +426,35 @@ average number of individuals in node 1 and in node 2:
 The python code for these functions may be obtained quite quickly using the set
 of all states and the steady state probability.
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Code snippet for getting the set of all states and the steady
+    state probabilities.},
+    label={lst:set_of_all_states_and_steady_state_probabilities},
+]
+>>> all_states = abg.markov.build_states(
+...     threshold=3 ,
+...     system_capacity=4,
+...     buffer_capacity=2
+... )
+>>> pi = abg.markov.get_steady_state_algebraically(
+...     Q, algebraic_function=np.linalg.lstsq
+... )
+
+\end{lstlisting}
+
+Having the set of all states and the steady state probabilities, the mean
+number of individuals in the system, in node 1 and in node 2 can be calculated
+as shown in code snippets~\ref{lst:mean_number_of_individuals_in_system},
+\ref{lst:mean_number_of_individuals_in_node_1}
+and~\ref{lst:mean_number_of_individuals_in_node_2}.
+
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Code snippet for calculating the mean number of individuals in
+    the system.},
+    label={lst:mean_number_of_individuals_in_system},
+]
 >>> def get_mean_number_of_individuals_in_system(pi, states):
 ...     """Gets the mean number of individuals in the system
 ...     Parameters
@@ -424,7 +472,17 @@ of all states and the steady state probability.
 ...     mean_inds_in_system = np.sum((states[:, 0] + states[:, 1]) * pi)
 ...     return mean_inds_in_system
 >>>
->>>
+>>> round(get_mean_number_of_individuals_in_system(pi, all_states), 10)
+2.0872927227
+
+\end{lstlisting}
+
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Code snippet for calculating the mean number of individuals in
+    Node 1.},
+    label={lst:mean_number_of_individuals_in_node_1},
+]
 >>> def get_mean_number_of_individuals_in_node_1(pi, states):
 ...     """Mean number of individuals in node 1
 ...     Parameters
@@ -442,7 +500,17 @@ of all states and the steady state probability.
 ...     mean_inds_in_node_1 = np.sum(states[:, 1] * pi)
 ...     return mean_inds_in_node_1
 >>>
->>>
+>>> round(get_mean_number_of_individuals_in_node_1(pi, all_states), 10)
+1.8187129478
+
+\end{lstlisting}
+
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Code snippet for calculating the mean number of individuals in
+    Node 2.},
+    label={lst:mean_number_of_individuals_in_node_2},
+]
 >>> def get_mean_number_of_individuals_in_node_2(pi, states):
 ...     """Mean number of class 2 individuals blocked
 ...     Parameters
@@ -460,19 +528,6 @@ of all states and the steady state probability.
 ...     mean_blocked = np.sum(states[:, 0] * pi)
 ...     return mean_blocked
 >>>
->>>
->>> all_states = abg.markov.build_states(
-...     threshold=3 ,
-...     system_capacity=4,
-...     buffer_capacity=2
-... )
->>> pi = abg.markov.get_steady_state_algebraically(
-...     Q, algebraic_function=np.linalg.lstsq
-... )
->>> round(get_mean_number_of_individuals_in_system(pi, all_states), 10)
-2.0872927227
->>> round(get_mean_number_of_individuals_in_node_1(pi, all_states), 10)
-1.8187129478
 >>> round(get_mean_number_of_individuals_in_node_2(pi, all_states), 10)
 0.2685797749
 

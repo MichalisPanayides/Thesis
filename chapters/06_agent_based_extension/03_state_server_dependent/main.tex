@@ -72,7 +72,12 @@ defined in this class.
 Method \texttt{update\_server\_attributes} adds additional attributes to the
 server objects to allow for further analysis of each server's performance.
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Example of the state and server-dependent variation of the
+    queueing system},
+    label={lst:state_server_dependent_example},
+]
 >>> import random
 >>> import ciw
 >>> class StateServerDependentExponential(
@@ -141,7 +146,12 @@ Let the service rates be defined in such a way where:
 The following code snippet shows how to define the model and run the simulation
 for \(1000\) time units.
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Example code of the state and server-dependent variation of the
+    queueing system},
+    label={lst:state_server_dependent_example_code},
+]
 >>> import ambulance_game as abg
 >>> import numpy as np
 >>>
@@ -184,17 +194,23 @@ Server 2: 0.87253758
 
 \end{lstlisting}
 
-Note that, in the implementation above the individuals are paired with a server
+Note that, in the implementation shown in code
+snippet~\ref{lst:state_server_dependent_example_code} the individuals are
+paired with a server
 in an ``unfair'' way since the default behaviour of \texttt{ciw} does not
 focus on the fairness of server allocation.
 Server 1 is always assigned an individual if they are free, while Server 2 is
 only assigned an individual if Server 1 is busy.
 For the purposes of this project though, it is important to have a more
 ``fair'' allocation of individuals to servers.
-This can be done by using the server\_priority\_function argument of the
-\texttt{simulate\_model} function.
+This can be done by using the \texttt{server\_priority\_function} argument of
+the \texttt{simulate\_model} function.
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Example of using fair allocation of individuals to servers},
+    label={lst:fair_allocation_example_code},
+]
 >>> Q = abg.simulation.simulate_model(
 ...     lambda_1=lambda_1,
 ...     lambda_2=lambda_2,

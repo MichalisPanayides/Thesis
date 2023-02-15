@@ -68,28 +68,26 @@
 
 \setcounter{MaxMatrixCols}{20}
 
+\renewcommand{\lstlistingname}{Code snippet}
+
 % Specifications for python environment
-\definecolor{codegreen}{rgb}{0,0.6,0}
-\definecolor{backcolor}{rgb}{0.95,0.95,0.92}
-\definecolor{keywordcolor1}{RGB}{37, 150, 190}
-\definecolor{keywordcolor2}{RGB}{198, 98, 18}
-\definecolor{keywordcolor3}{RGB}{18, 135, 180}
-\definecolor{keywordcolor4}{RGB}{162, 21, 159}
-% \definecolor[keywordcolor5]{RGB}{37, 150, 190}
+\definecolor{commentcolor}{RGB}{166,0,0}
+\definecolor{backcolor}{RGB}{253, 246, 175}
+\definecolor{keywordcolor1}{RGB}{9, 130, 39}
+\definecolor{keywordcolor2}{RGB}{1, 1, 190}
+\definecolor{keywordcolor3}{RGB}{255, 0 255}
 \lstdefinestyle{pystyle}{
-    language=Python,
-    basicstyle=\ttfamily\scriptsize,
+    language=python,
+    basicstyle=\bfseries\ttfamily\scriptsize,
     backgroundcolor=\color{backcolor},
-    commentstyle=\color{codegreen},
-    keywords=[1]{len, hasattr, print, range},
-    keywordstyle=[1]\bfseries\color{keywordcolor1},
-    alsoletter={>>>, ...},
-    keywords=[2]{>>> , ... },
+    commentstyle=\itshape\color{commentcolor},
+    frame=lines,
+    keywords=[1]{import, as, for, def, len, class, None, True, False, if, self, return},
+    keywordstyle=[1]\color{keywordcolor1},
+    keywords=[2]{ambulance_game, abg, numpy, np, scipy, scipy.optimize, sci, ciw, itertools, nashpy, nash, random},
     keywordstyle=[2]\color{keywordcolor2},
-    keywords=[3]{ambulance_game, abg, numpy, np, scipy, sci, ciw, random, nashpy, nash},
+    keywords=[3]{in, and, or, not},
     keywordstyle=[3]\bfseries\color{keywordcolor3},
-    keywords=[4]{for, in, class, def, and, or, not, True, False, if, else, pass, return, is, self, as, import},
-    keywordstyle=[4]\bfseries\color{keywordcolor4},
     breaklines=true,
     captionpos=b,
     keepspaces=true,

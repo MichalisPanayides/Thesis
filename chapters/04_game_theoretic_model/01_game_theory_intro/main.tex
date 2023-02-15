@@ -6,7 +6,7 @@ of the scenario studied in this research project.
 The first one is normal form games the second one is perfect information
 extensive form games and the third one is extensive form games with imperfect
 information.
-The documentation of the python library \lstinline[style=pystyle]{nashpy} can
+The documentation of the python library \texttt{nashpy} can
 be used to find more information about the different types of games and concepts
 that are discussed throughout this section.
 
@@ -210,12 +210,16 @@ algorithm performs the following steps:
 Repeat steps 3 and 4 until there are no duplicate labels.
 
 The Lemke-Howson algorithm is implemented using the
-\lstinline[style=pystyle]{nashpy} python library~\cite{thenashpyproject}.
-The following code snippet shows how to use the Lemke-Howson algorithm to find
-the Nash equilibrium of the pig and piglet game described in
+\texttt{nashpy} python library~\cite{thenashpyproject}.
+The code snippet in~\ref{lst:lemke_howson_pig_piglet_game} shows how to use the Lemke-Howson
+algorithm to find the Nash equilibrium of the pig and piglet game described in
 equation~\eqref{eq:pig_piglet_payoff}.
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Lemke-Howson python code for the pig and piglet game.},
+    label={lst:lemke_howson_pig_piglet_game}
+]
 >>> import nashpy as nash
 >>> import numpy as np
 >>> A = np.array([[4, 2], [6, 0]])
@@ -260,7 +264,11 @@ shown in~\eqref{eq:rock_paper_scissors_payoff}.
 By implementing the Lemke-Howson algorithm on the Rock-Paper-Scissors game, one
 Nash equilibrium can be found.
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Lemke-Howson python code for the Rock-Paper-Scissors game.},
+    label={lst:lemke_howson_pig_piglet_game_rock_paper_scissors}
+]
 >>> A = np.array([
 ...     [1, -1, 0],
 ...     [0, 1, -1],
@@ -309,7 +317,7 @@ return all pairs of best responses in a game with payoff matrices \(A\) and
 \end{enumerate}
 
 The support enumeration algorithm is implemented using the
-\lstinline[style=pystyle]{nashpy} python library~\cite{thenashpyproject}.
+\texttt{nashpy} python library~\cite{thenashpyproject}.
 Consider the payoff matrices for the game of coordination shown
 in~\eqref{eq:coordination_payoff}, where the two players would prefer to
 perform the same action if possible, but player 1 has a slight preference
@@ -333,10 +341,15 @@ for action \(S_1\) and player 2 has a slight preference for action \(S_2\).
     \label{eq:coordination_payoff}
 \end{align}
 
-The following piece of code implements the support enumeration algorithm on the
+The piece of code in~\ref{lst:support_enumeration_game_coordination} implements
+the support enumeration algorithm on the
 coordination game and returns all Nash equilibria of the game.
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Support enumeration python code for the coordination game.},
+    label={lst:support_enumeration_game_coordination},
+]
 >>> A = np.array([
 ...     [3, 1],
 ...     [0, 2]
@@ -407,11 +420,15 @@ previous actions of the opposing player.
 In other words the players play a best response to their opponent's
 empirical frequency of actions.
 
-Once again, using the \lstinline[style=pystyle]{nashpy} python
+Once again, using the \texttt{nashpy} python
 library~\cite{thenashpyproject} the fictitious play algorithm can be
-implemented on the following game.
+implemented on the game shown in~\ref{lst:fictitious_play_custom_game}.
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Fictitious play python code for a 2-player game.},
+    label={lst:fictitious_play_custom_game},
+]
 >>> A = np.array([
 ...     [4, 1, 3],
 ...     [2, 0, 2],
@@ -458,7 +475,11 @@ where \(\epsilon_i \in [0, \bar{\epsilon}]\) where \(\bar{\epsilon}\) is a
 parameter needed for the algorithm.
 
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Stochastic fictitious play python code for a 2-player game.},
+    label={lst:stochastic_fictitious_play_custom_game},
+]
 >>> A = np.array([
 ...     [4, 1, 3],
 ...     [2, 0, 2],
@@ -548,13 +569,17 @@ equations:
 \end{align}
 
 Asymmetric replicator dynamics is implemented by using the python
-\lstinline[style=pystyle]{nashpy} library.
-The following code snippet shows how to use the asymmetric replicator dynamics
+\texttt{nashpy} library.
+Code snippet~\ref{lst:asymmetric_replicator_dynamics_custom_game} shows how to
+use the asymmetric replicator dynamics
 algorithm to find the Nash equilibrium of a two-player game.
-Consider the rock-paper-scissors game defined by the matrices
-in~\eqref{eq:rock_paper_scissors_payoff}.
 
-\begin{lstlisting}[style=pystyle]
+
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Asymmetric replicator dynamics python code for a 2-player game.},
+    label={lst:asymmetric_replicator_dynamics_custom_game},
+]
 >>> A = np.array([
 ...     [4, 1, 3],
 ...     [2, 0, 2],
@@ -601,7 +626,12 @@ This game cannot reach a steady state given the uniform initial distribution of
 the strategies.
 Consider a different game where the steady strategy choice can be reached.
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Asymmetric replicator dynamics run on a game that is able to reach
+    steady state},
+    label={lst:asymmetric_replicator_dynamics_steady_state},
+]
 >>> A = np.array([
 ...     [4, 1],
 ...     [2, 5],
