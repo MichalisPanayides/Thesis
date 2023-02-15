@@ -130,7 +130,9 @@ best response for this particular example.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/img/brents_method/brent_method_example.pdf}
-    \caption{Decision values for queueing system \(A\) and queueing system \(B\)}
+    \caption{Decision values for queueing system \(A\) and queueing system \(B\)
+    where decision value 1 \(= \alpha L_A(p_A) + (1 - \alpha) B_A(p_A)\) and
+    decision value 2 \(= \alpha L_B(p_B) - (1 - \alpha) B_B(p_B)\)}
     \label{fig:brent_method_example}
 \end{figure}
 
@@ -142,7 +144,9 @@ distribution service should pick is where the function crosses the \(x\)-axis.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/img/brents_method/brent_method_diffs.pdf}
-    \caption{Brent's algorithm on the differences}
+    \caption{Visualisation of Brent's algorithm showing the differences
+    between the two decision values and the point at which the function crosses
+    the \(x\)-axis}
     \label{fig:brent_method_diffs}
 \end{figure}
 
@@ -158,35 +162,40 @@ values of the service rate of queueing system \(A\), \(\mu^A =
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/img/brents_method/brent_method_example_mu_A_1.0.pdf}
-    \caption{\(\mu^A = 1\)}
+    \caption{Brent's algorithm example where the service parameter of queueing
+    system A is \(\mu^A = 1\)}
     \label{fig:brent_method_example_mu_A_1}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/img/brents_method/brent_method_example_mu_A_1.5.pdf}
-    \caption{\(\mu^A = 1.5\)}
+    \caption{Brent's algorithm example where the service parameter of queueing
+    system A is \(\mu^A = 1.5\)}
     \label{fig:brent_method_example_mu_A_2}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/img/brents_method/brent_method_example_mu_A_2.0.pdf}
-    \caption{\(\mu^A = 2\)}
+    \caption{Brent's algorithm example where the service parameter of queueing
+    system A is \(\mu^A = 2\)}
     \label{fig:brent_method_example_mu_A_3}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/img/brents_method/brent_method_example_mu_A_2.5.pdf}
-    \caption{\(\mu^A = 2.5\)}
+    \caption{Brent's algorithm example where the service parameter of queueing
+    system A is \(\mu^A = 2.5\)}
     \label{fig:brent_method_example_mu_A_4}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/img/brents_method/brent_method_example_mu_A_3.0.pdf}
-    \caption{\(\mu^A = 3\)}
+    \caption{Brent's algorithm example where the service parameter of queueing
+    system A is \(\mu^A = 3\)}
     \label{fig:brent_method_example_mu_A_5}
 \end{figure}
 
@@ -206,7 +215,8 @@ correspond to the two queueing systems of the new example.
     \centering
     \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/img/brents_method/brent_method_special_case.pdf}
     \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/img/brents_method/brent_method_special_case_diffs.pdf}
-    \caption{Decision values for queueing system \(A\) and queueing system \(B\)}
+    \caption{Decision values for queueing system \(A\) and queueing system \(B\)
+    (top) and the differences between them (bottom).}
     \label{fig:brent_method_special_case}
 \end{figure}
 
@@ -849,7 +859,7 @@ times and the computation time was recorded for each run.
     \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/img/brents_method/tolerance/tolerance_violinplots_2.pdf}
     \caption{
         Violinplots of the duration of Brent's algorithm for different values of
-        \(N_A\).
+        \(N_A\) for two parameter sets.
     }
     \label{fig:tolerance_violinplots}
 \end{figure}
@@ -866,7 +876,8 @@ Note that the violinplots include all values of the tolerance parameters
     \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/img/brents_method/tolerance/tolerance_lineplots_2.pdf}
     \caption{
         Line plots of the duration of Brent's algorithm for different values of
-        \(N_A\) over different values of the absolute tolerance parameter xtol.
+        \(N_A\) over different values of the absolute tolerance parameter xtol
+        for two parameter sets.
     }
     \label{fig:tolerance_lineplots}
 \end{figure}
@@ -964,7 +975,7 @@ The game is now a 2-player normal form game with payoff matrices \(A\) and
 Consider an example of the described game with the following parameters:
 
 \begin{table}[H]
-    \caption{Distribution service parameters}
+    \caption{Example \(1\) of parameters of the distribution service}
     \begin{center}
         \begin{tabular}{||c|c|c|c||}
             \hline
@@ -978,7 +989,7 @@ Consider an example of the described game with the following parameters:
 \end{table}
 
 \begin{table}[H]
-    \caption{Queueing systems parameters}
+    \caption{Example \(1\) of parameters of the two queueing systems}
     \begin{center}
         \begin{tabular}{||c|c|c|c|c|c||}
             \hline
@@ -1359,7 +1370,7 @@ Consider a game between queueing systems \(A\) and \(B\) and a distribution
 service \(D\) with the following parameters.
 
 \begin{table}[H]
-    \caption{Distribution service parameters}
+    \caption{Example \(2\) of parameters of the distribution service}
     \begin{center}
         \begin{tabular}{||c|c|c|c||}
             \hline
@@ -1373,7 +1384,7 @@ service \(D\) with the following parameters.
 \end{table}
 
 \begin{table}[H]
-    \caption{Queueing systems parameters}
+    \caption{Example \(2\) of parameters of the two queueing systems}
     \begin{center}
         \begin{tabular}{||c|c|c|c|c|c||}
             \hline
@@ -1522,7 +1533,7 @@ their strategies over time.
     \centering
     \includegraphics[width=0.49\textwidth]{chapters/04_game_theoretic_model/img/numeric_results/fictitious_play_A.pdf}
     \includegraphics[width=0.49\textwidth]{chapters/04_game_theoretic_model/img/numeric_results/fictitious_play_B.pdf}
-    \caption{Fictitious play algorithm on both players' strategies.}
+    \caption{Fictitious play algorithm run on the strategies of the players.}
     \label{fig:solving_game_fictitious_example}
 \end{figure}
 
@@ -1557,7 +1568,8 @@ smaller than the algorithm can handle.
     \centering
     \includegraphics[width=0.49\textwidth]{chapters/04_game_theoretic_model/img/numeric_results/stochastic_fictitious_play_A.pdf}
     \includegraphics[width=0.49\textwidth]{chapters/04_game_theoretic_model/img/numeric_results/stochastic_fictitious_play_B.pdf}
-    \caption{Stochastic fictitious play algorithm on both players' strategies.}
+    \caption{Stochastic fictitious play algorithm on the strategies of the
+    players.}
     \label{fig:solving_game_stochastic_fictitious_example}
 \end{figure}
 
@@ -1588,7 +1600,7 @@ players evolve their strategies over time.
     \centering
     \includegraphics[width=0.49\textwidth]{chapters/04_game_theoretic_model/img/numeric_results/asymmetric_replicator_dynamics_A.pdf}
     \includegraphics[width=0.49\textwidth]{chapters/04_game_theoretic_model/img/numeric_results/asymmetric_replicator_dynamics_B.pdf}
-    \caption{Asymmetric replicator dynamics on both players' strategies.}
+    \caption{Asymmetric replicator dynamics on the strategies of the players.}
     \label{fig:solving_game_asymmetric_replicator_example}
 \end{figure}
 

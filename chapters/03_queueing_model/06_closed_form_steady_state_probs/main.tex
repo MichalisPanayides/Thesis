@@ -13,7 +13,8 @@ Every edge is expressed as \(e = (v_i, v_j)\) where \(v_i, v_j \in V\).
 \begin{figure}[H]
     \centering
     \input{chapters/03_queueing_model/img/graph_theory_examples/graph.tex}
-    \caption{Example of a graph}
+    \caption{An example of a simple undirected graph with \(5\) vertices and
+    \(7\) edges.}
     \label{fig:example_of_graph}
 \end{figure}
 
@@ -25,7 +26,8 @@ In this case, the edges are expressed as \(e = (v_i, v_j)\) where \(v_i, v_j
 \begin{figure}[H]
     \centering
     \input{chapters/03_queueing_model/img/graph_theory_examples/directed_graph.tex}
-    \caption{Example of a graph}
+    \caption{An example of a directed graph with \(5\) vertices and \(7\)
+    edges.}
     \label{fig:example_of_directed_graph}
 \end{figure}
 
@@ -37,7 +39,8 @@ In this case, the edges are expressed as \(e = (v_i, v_j, w)\) where \(v_i, v_j
 \begin{figure}[H]
     \centering
     \input{chapters/03_queueing_model/img/graph_theory_examples/weighted_directed_graph.tex}
-    \caption{Example of a graph}
+    \caption{An example of a weighted directed graph with \(5\) vertices and
+    \(7\) edges.}
     \label{fig:example_of_weighted_directed_graph}
 \end{figure}
 
@@ -97,7 +100,7 @@ More specifically, the way these parameters are translated into the model are:
     \scalebox{0.7}{
         \input{chapters/03_queueing_model/img/example_model_1352/main.tex}
         }
-    \caption{\(C=1, T=3, N=5, M=2\)}
+    \caption{Example of a Markov model with \(C=1, T=3, N=5, M=2\)}
     \label{fig:Markov_1352_example_for_closed_form}
 \end{figure}
 
@@ -136,7 +139,9 @@ The graph points out a spanning tree that is rooted at vertex 3.
         \draw[->, thick] (u6) -- (u5);
         \draw[->, thick] (u7) -- (u6);
     \end{tikzpicture}
-    \caption{Spanning tree of a graph rooted at vertex 3}
+    \caption{Example of one of the spanning trees rooted at vertex 3 of the
+    directed graph. Note that the graph corresponds to a Markov model with
+    parameters \(T=1, N=3, M=1\).}
     \label{fig:example_spanning_tree}
 \end{figure}
 
@@ -151,7 +156,7 @@ of the edges it contains~\cite{williams2022combinatorics}:
 \]
 
 
-\definition{Markov chain tree theorem}~\cite{broder1989generating}:
+{\definition Markov chain tree theorem~\cite{broder1989generating}}:
 \textit{Let M be an irreducible Markov chain on n states with stationary
 distribution \(\pi_1, \pi_2, \dots, \pi_n\).
 Let \(G_M\) be the directed graph associated with \(M\).
@@ -169,7 +174,7 @@ numerator denoted as \(\tilde{\pi}_i=\sum_{t \in T_i(G_M)} w(t)\).
 Another useful theorem that can be utilised is Kirchhoff's theorem that gives
 some useful insights on the number of spanning trees of a graph.
 
-\definition{Kirchhoff's theorem}~\cite{chaiken1978matrix}:
+{\definition Kirchhoff's theorem~\cite{chaiken1978matrix}}:
 \textit{The number of directed spanning trees rooted at a state \(i\) can be
 found by calculating the determinant of the Laplacian matrix \(Q\) of the
 directed graph and removing row \(i\) and column \(i\).}
@@ -219,6 +224,7 @@ As well as this, the sum of all the weights of the spanning trees denoted by
     \tilde{\pi}_{(0,0)} = \mu^4 + \lambda_2 \mu^3
 \end{equation*}
 
+\newpage
 
 \begin{figure}[H]
     \centering
@@ -324,8 +330,6 @@ As well as this, the sum of all the weights of the spanning trees denoted by
     \end{equation*}
 \end{multicols}
 
-\newpage
-
 \begin{multicols}{4}
     \begin{figure}[H]
         \centering
@@ -370,20 +374,20 @@ the same threshold \(T=1\), the same node 1 capacity \(N=2\) but
         \centering
         \scalebox{0.65}{
             \input{chapters/03_queueing_model/img/example_model_1121/main.tex}}
-        \caption{\(M=1\)}
+        \caption[]{\(M=1\)}
     \end{figure}
     \columnbreak
     \begin{figure}[H]
         \centering
         \scalebox{0.65}{
             \input{chapters/03_queueing_model/img/example_model_1122/main.tex}}
-        \caption{\(M=2\)}
+        \caption[]{\(M=2\)}
     \end{figure}
     \begin{figure}[H]
         \centering
         \scalebox{0.65}{
             \input{chapters/03_queueing_model/img/example_model_1123/main.tex}}
-        \caption{\(M=3\)}
+        \caption[]{\(M=3\)}
     \end{figure}
 \end{multicols}
 
@@ -617,7 +621,7 @@ Consider the following Markov model and the spanning trees rooted at state
         \vspace{0.4cm} \\
     \scalebox{0.6}{
         \input{chapters/03_queueing_model/img/spanning_trees_1131/main_4.tex}}
-    \caption{Markov chain model with \(C=1, T=1, N=3, M=1\) with its
+    \caption{Markov chain model with \(C=1, T=1, N=3, M=1\) with all of its
     equivalent spanning trees rooted at \((0,0)\)}
     \label{fig:example_spanning_trees_1131}
 \end{figure}
@@ -756,6 +760,7 @@ spanning tree.
                 \draw[->](u0v3) edge[bend left] node {} (u0v2);
             \end{tikzpicture}
         }
+        % TODO: Fix potential overfull hbox here
         \caption{Example of a permutation that does not produce a valid spanning
         tree based on Rule 2}
         \label{fig:state_probs_closed_form_rule_2_visualised}
@@ -906,11 +911,15 @@ coefficient is obtained.
         \end{scope}
         
     \end{tikzpicture}
-    \caption{The two sets that should not be considered in the calculation}
+    \caption{The two sets of permutations that should not be considered in the
+    calculation of \(R(p_1, p_2, p_3)\). The left-most set consists of all the
+    permutations that are excluded by Rule 1 and the right-most are excluded
+    by Rule 2}
     \label{fig:venn_diagram_with_rules}
 \end{figure}
 
-The difficulty with this formulation is that the highlighted intersection will
+The difficulty with this formulation is that the highlighted intersection from
+Figure~\ref{fig:venn_diagram_with_rules} will
 be counted twice and is hard to identify how many such terms there are.
 An alternative approach is to break down the Rule 2 subset into three parts as
 show in Figure~\ref{fig:venn_diagram_with_subsets}.
@@ -929,8 +938,8 @@ show in Figure~\ref{fig:venn_diagram_with_subsets}.
         \draw (1.4, -0.5) --(3.2, -0.5);
         \node at (2, -0.8) {$E_{RL}$};
     \end{tikzpicture}
-    \caption{Splitting rule 1 and rule 2 into multiple subsets without any
-    intersections}
+    \caption{All permutations that are excluded by Rule 1 and Rule 2
+    partiotioned into four disjoint subsets.}
     \label{fig:venn_diagram_with_subsets}
 \end{figure}
 
