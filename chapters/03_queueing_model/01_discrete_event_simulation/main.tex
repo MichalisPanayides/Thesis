@@ -368,3 +368,20 @@ records.
 (1.7038750111337655, 2.041619227158985, 8.227702587974997)
 
 \end{lstlisting}
+
+The performance measures discussed so far are the ones that are related to the
+amount of time that individuals spend in the system.
+Some additional performance measures that could be of interest are the
+ones that are related to the number of individuals, such as the mean number of
+individuals in the system, the mean number of individuals in Node 1 and the
+mean number of individuals in Node 2.
+These metrics can also by calculated using an additional functionality of
+\texttt{ciw}.
+There is an additional argument that can be passed to the
+\texttt{ciw.Simulation} object called \texttt{tracker} where it makes the
+simulation object track the state of the system throughout the simulation.
+Thus, at the end of the simulation, the probability distribution of the number
+of individuals in each node can be extracted.
+Section~\ref{sec:queueing_performance_measures} gives a more detailed
+explanation of how to calculate these performance measures using just the
+state probabilities of the system.

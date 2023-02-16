@@ -1,4 +1,4 @@
-\section{Performance measures}
+\section{Performance measures}\label{sec:queueing_performance_measures}
 Using vector \(\pi\) there are numerous performance measures of the model that
 can be calculated.
 The following equations utilise \(\pi\) to get performance measures on the
@@ -28,8 +28,19 @@ of all states and the steady state probability.
     state probabilities.},
     label={lst:set_of_all_states_and_steady_state_probabilities},
 ]
+>>> import ambulance_game as abg
+>>> import numpy as np
 >>> all_states = abg.markov.build_states(
 ...     threshold=3 ,
+...     system_capacity=4,
+...     buffer_capacity=2
+... )
+>>> Q = abg.markov.get_transition_matrix(
+...     lambda_1=1,
+...     lambda_2=2,
+...     mu=2,
+...     num_of_servers=2,
+...     threshold=3,
 ...     system_capacity=4,
 ...     buffer_capacity=2
 ... )

@@ -947,7 +947,8 @@ the value of vector \(y\) that correspond to the state \((u,v)\).
 
 \end{lstlisting}
 
-In the above code, the function returns a tuple with two elements; the row of
+In code snippet~\ref{lst:get_coefficients_row_for_state}, the function returns
+a tuple with two elements; the row of
 matrix \(Z\) and the value of vector \(y\) that corresponds to state \((2,3)\).
 Using the function defined in~\ref{lst:get_coefficients_row_for_state}
 the matrix \(Z\) and vector \(y\) can be constructed
@@ -1025,7 +1026,7 @@ array([[-1.,  0.,  0.,  0.,  0.,  0.,  0.,  0.],
 
 \end{lstlisting}
 
-The piece of code in~\ref{lst:waiting_time_direct_approach}
+The piece of code in~\ref{lst:waiting_time_for_each_state_direct_approach}
 solves the linear system \(Z X = y\) to obtain the
 vector \(X\) containing the waiting times for all states of the Markov chain.
 After solving the linear system for vector \(X\) it also converts the
