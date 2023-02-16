@@ -61,6 +61,7 @@ words = {
     "dataset",
     "de",
     "DES",
+    "dists",
     "DOI",
     "donepezil",
     "DRL",
