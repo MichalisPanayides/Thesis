@@ -65,8 +65,8 @@ combination of the state-dependent and server-dependent models' implementation.
 Once again the implementation is done using the python library \(\texttt{ciw}\)
 library.
 The distribution for the state and server-dependent model is defined as a
-class that inherits from the \texttt{ciw}'s class
-\texttt{ciw.dists.Distribution}.
+class that inherits from \texttt{ciw}'s class \texttt{Distribution} from
+the \texttt{dists} module.
 Note that as opposed to the classes defined earlier an additional method id
 defined in this class.
 Method \texttt{update\_server\_attributes} adds additional attributes to the
@@ -243,7 +243,8 @@ theoretic model is only implemented using Discrete Event Simulation (DES) it is
 not possible to use the Markov chain model here.
 Thus, the implementation of the game was modified so that it can be used with
 the DES model as well.
-More details on the code can be found in appendix~\ref{appendix:ambulance_game}.
+More details on the code can be found in appendix.
+% TODO: reference appendix section ~\ref{appendix:ambulance_game}.
 At its core the only metric that is needed from the Markov model are the
 performance measures of the queue (blocking time and proportion of individuals
 within target) which can also be obtained using the DES model.

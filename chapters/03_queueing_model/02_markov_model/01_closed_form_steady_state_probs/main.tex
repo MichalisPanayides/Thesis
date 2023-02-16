@@ -370,27 +370,17 @@ the same threshold \(T=1\), the same node 1 capacity \(N=2\) but
 \(M\in\{1, 2, 3\}\).
 
 
-\begin{multicols}{3}
-    \begin{figure}[H]
-        \centering
-        \scalebox{0.65}{
-            \input{chapters/03_queueing_model/Bin/example_model_1121/main.tex}}
-        \caption[]{\(M=1\)}
-    \end{figure}
-    \columnbreak
-    \begin{figure}[H]
-        \centering
-        \scalebox{0.65}{
-            \input{chapters/03_queueing_model/Bin/example_model_1122/main.tex}}
-        \caption[]{\(M=2\)}
-    \end{figure}
-    \begin{figure}[H]
-        \centering
-        \scalebox{0.65}{
-            \input{chapters/03_queueing_model/Bin/example_model_1123/main.tex}}
-        \caption[]{\(M=3\)}
-    \end{figure}
-\end{multicols}
+\begin{figure}[H]
+    \centering
+    \scalebox{0.65}{
+        \input{chapters/03_queueing_model/Bin/example_model_1121/main.tex}}
+    \scalebox{0.65}{
+        \input{chapters/03_queueing_model/Bin/example_model_1122/main.tex}}
+    \scalebox{0.65}{
+        \input{chapters/03_queueing_model/Bin/example_model_1123/main.tex}}
+    \caption{Examples of Markov chain models with different values of \(M\),
+    where \(M=1\) (left), \(M=2\) (middle) and \(M=3\) (right).}
+\end{figure}
 
 By increasing the node 2 capacity of the system it can be observed that
 \(|T_{(0,0)}(G)|\) increases as well since more combinations of paths can be
