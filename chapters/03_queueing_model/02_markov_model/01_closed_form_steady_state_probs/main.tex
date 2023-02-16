@@ -706,7 +706,7 @@ Rule \ref{rule2} makes sure that there are no neighbour states that point to
 each other since that would create a cycle and would not generate a valid
 spanning tree.
 
-
+\begin{minipage}{\linewidth}
 \begin{multicols}{2}
     \begin{figure}[H]
         \centering
@@ -757,6 +757,7 @@ spanning tree.
         \label{fig:state_probs_closed_form_rule_2_visualised}
     \end{figure}    
 \end{multicols}
+\end{minipage}
 
 Shown below, are all possible permutations of the DRL array along with the
 excluded cases.
@@ -782,18 +783,21 @@ them not valid.
 \subsubsection{
     Examples of mappings of directed spanning trees to permutation arrays}
 
-\begin{multicols}{2}
-    \begin{figure}[H]
-        \centering
-        \scalebox{0.6}{
-            \input{chapters/03_queueing_model/Bin/spanning_trees_1131/main_0.tex}}
-    \end{figure}
+\begin{minipage}{\linewidth}
+    \begin{multicols}{2}
+        \begin{figure}[H]
+            \centering
+            \scalebox{0.6}{
+                \input{chapters/03_queueing_model/Bin/spanning_trees_1131/main_0.tex}}
+        \end{figure}
+    
+        \begin{flalign*}
+            \hspace*{-3cm} \xrightarrow{\hspace*{2cm}} \hspace{1cm} [D, D]
+        \end{flalign*}
+    \end{multicols}
+\end{minipage}
 
-    \begin{flalign*}
-        \hspace*{-3cm} \xrightarrow{\hspace*{2cm}} \hspace{1cm} [D, D]
-    \end{flalign*}
-\end{multicols}
-
+\begin{minipage}{\linewidth}
 \begin{multicols}{2}
     \begin{figure}[H]
         \centering
@@ -805,7 +809,9 @@ them not valid.
         \hspace*{-3cm} \xrightarrow{\hspace*{2cm}} \hspace{1cm} [L, D]
     \end{flalign*}
 \end{multicols}
+\end{minipage}
 
+\begin{minipage}{\linewidth}
 \begin{multicols}{2}
     \begin{figure}[H]
         \centering
@@ -817,7 +823,9 @@ them not valid.
         \hspace*{-3cm} \xrightarrow{\hspace*{2cm}} \hspace{1cm} [D, L]
     \end{flalign*}
 \end{multicols}
+\end{minipage}
 
+\begin{minipage}{\linewidth}
 \begin{multicols}{2}
     \begin{figure}[H]
         \centering
@@ -829,7 +837,9 @@ them not valid.
         \hspace*{-3cm} \xrightarrow{\hspace*{2cm}} \hspace{1cm} [R, D]
     \end{flalign*}
 \end{multicols}
+\end{minipage}
 
+\begin{minipage}{\linewidth}
 \begin{multicols}{2}
     \begin{figure}[H]
         \centering
@@ -841,6 +851,7 @@ them not valid.
         \hspace*{-3cm} \xrightarrow{\hspace*{2cm}} \hspace{1cm} [L, L]
     \end{flalign*}
 \end{multicols}
+\end{minipage}
 
 \subsubsection{Closed-form approach for state probabilities}
 A general formula for finding all such permutations can be found, where the

@@ -44,6 +44,7 @@ words = {
     "CDFs",
     "center",
     "cfb",
+    "chapterstyle",
     "citecolor",
     "ciw's",
     "ciw",

@@ -15,6 +15,17 @@
 
 \RequirePackage{graphicx} % needed for latest frontpage logo
 \RequirePackage{ifthen}   % needed for option parsing for logo
+\RequirePackage{setspace} % needed for the \onehalfspacing command 
+\RequirePackage{parskip}  % needed for the \parskip command
+
+
+
+% Line spacing 
+\onehalfspacing
+
+% Remove paragraph indentation and set paragraph spacing
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{10pt}
 
 \raggedbottom
 

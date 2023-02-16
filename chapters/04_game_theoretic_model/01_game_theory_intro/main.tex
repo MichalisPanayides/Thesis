@@ -37,8 +37,8 @@ for each player) to a payoff for player \(k\).
 The payoff for player \(k\) is given by \(u_k(\sigma^1, \sigma^2, \dots,
 \sigma^n)\) where each \(\sigma^i\) represents a player. 
 
-For example, consider the Prisoner's Dilemma game illustrated in
-Table~\ref{tab:prisoners_dilemma}~cite{glynatsi2021bibliometric}.
+For example, consider the Prisoner's Dilemma game shown in
+Table~\ref{tab:prisoners_dilemma}~\cite{glynatsi2021bibliometric}.
 In this game, player 1 can choose to either \textit{Cooperate} (C) or
 \textit{Defect} (D) and player 2 can also choose to either \textit{Cooperate}
 (C) or \textit{Defect} (D).
@@ -209,8 +209,9 @@ algorithm performs the following steps:
 \end{enumerate}
 Repeat steps 3 and 4 until there are no duplicate labels.
 
-The Lemke-Howson algorithm is implemented using the
-\texttt{nashpy} python library~\cite{thenashpyproject}.
+The Lemke-Howson algorithm is implemented using
+\texttt{nashpy}~\cite{thenashpyproject}, which is a game theoretic python
+library.
 The code snippet in~\ref{lst:lemke_howson_pig_piglet_game} shows how to use the Lemke-Howson
 algorithm to find the Nash equilibrium of the pig and piglet game described in
 equation~\eqref{eq:pig_piglet_payoff}.
