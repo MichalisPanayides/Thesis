@@ -127,7 +127,7 @@ def proselint(c):
         return updated_files
 
 
-    with open(".proselint", 'r') as f:
+    with open(".proselint.yaml", 'r') as f:
         config = yaml.safe_load(f)
         
     errors_to_ignore = config["errors_to_ignore"]

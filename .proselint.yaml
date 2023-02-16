@@ -2,14 +2,14 @@
   "errors_to_ignore": [
       ["typography.symbols.copyright", chapters\04_game_theoretic_model\01_game_theory_intro\main.tex],
       # Several comments in the tex files (TODOs, etc.)
-      ["annotations.misc", chapters\03_queueing_model\02_waiting_time\main.tex],
-      ["annotations.misc", chapters\03_queueing_model\06_closed_form_steady_state_probs\main.tex],
+      ["annotations.misc", chapters\03_queueing_model\02_markov_model\01_closed_form_steady_state_probs\main.tex],
+      ["annotations.misc", chapters\03_queueing_model\03_performance_measures\01_waiting_time\main.tex],
       ["annotations.misc", chapters\04_game_theoretic_model\03_methodology\main.tex],
       ["annotations.misc", chapters\05_numerical_results\01_data_collection\main.tex],
-      ["annotations.misc", chapters\05_numerical_results\03_what_if\main.tex],
+      ["annotations.misc", chapters\05_numerical_results\03_what_if\main.tex]
   ],
   "files_to_ignore": [
       "\\Bin\\",
-      "packages.tex",
+      "packages.tex"
   ]
 }
