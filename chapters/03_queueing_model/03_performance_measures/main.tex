@@ -1,0 +1,150 @@
+\section{Performance measures}
+Using vector \(\pi\) there are numerous performance measures of the model that
+can be calculated.
+The following equations utilise \(\pi\) to get performance measures on the
+average number of individuals in node 1 and in node 2:
+
+\begin{itemize}
+    \item Mean number of individuals in the entire system:
+        \begin{equation}
+            L_S = \sum_{i=1}^{|\pi|} \pi_i (u_i + v_i)
+        \end{equation}
+    \item Mean number of individuals in node 1:
+        \begin{equation}
+            L_1 = \sum_{i=1}^{|\pi|} \pi_i v_i
+        \end{equation}
+    \item Mean number of individuals in node 2:
+        \begin{equation}
+            L_2 = \sum_{i=1}^{|\pi|} \pi_i u_i
+        \end{equation}
+\end{itemize}
+
+The python code for these functions may be obtained quite quickly using the set
+of all states and the steady state probability.
+
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Code snippet for getting the set of all states and the steady
+    state probabilities.},
+    label={lst:set_of_all_states_and_steady_state_probabilities},
+]
+>>> all_states = abg.markov.build_states(
+...     threshold=3 ,
+...     system_capacity=4,
+...     buffer_capacity=2
+... )
+>>> pi = abg.markov.get_steady_state_algebraically(
+...     Q, algebraic_function=np.linalg.lstsq
+... )
+
+\end{lstlisting}
+
+Having the set of all states and the steady state probabilities, the mean
+number of individuals in the system, in node 1 and in node 2 can be calculated
+as shown in code snippets~\ref{lst:mean_number_of_individuals_in_system},
+\ref{lst:mean_number_of_individuals_in_node_1}
+and~\ref{lst:mean_number_of_individuals_in_node_2}.
+
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Code snippet for calculating the mean number of individuals in
+    the system.},
+    label={lst:mean_number_of_individuals_in_system},
+]
+>>> def get_mean_number_of_individuals_in_system(pi, states):
+...     """Gets the mean number of individuals in the system
+...     Parameters
+...     ----------
+...     pi : numpy.ndarray
+...         steady state vector
+...     states : list
+...         list of tuples that contains all states
+...     Returns
+...     -------
+...     float
+...         Mean number of individuals in the whole model
+...     """
+...     states = np.array(states)
+...     mean_inds_in_system = np.sum((states[:, 0] + states[:, 1]) * pi)
+...     return mean_inds_in_system
+>>>
+>>> round(get_mean_number_of_individuals_in_system(pi, all_states), 10)
+2.0872927227
+
+\end{lstlisting}
+
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Code snippet for calculating the mean number of individuals in
+    Node 1.},
+    label={lst:mean_number_of_individuals_in_node_1},
+]
+>>> def get_mean_number_of_individuals_in_node_1(pi, states):
+...     """Mean number of individuals in node 1
+...     Parameters
+...     ----------
+...     pi : numpy.ndarray
+...         steady state vector
+...     states : list
+...         list of tuples that contains all states
+...     Returns
+...     -------
+...     float
+...         Mean number of individuals
+...     """
+...     states = np.array(states)
+...     mean_inds_in_node_1 = np.sum(states[:, 1] * pi)
+...     return mean_inds_in_node_1
+>>>
+>>> round(get_mean_number_of_individuals_in_node_1(pi, all_states), 10)
+1.8187129478
+
+\end{lstlisting}
+
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Code snippet for calculating the mean number of individuals in
+    Node 2.},
+    label={lst:mean_number_of_individuals_in_node_2},
+]
+>>> def get_mean_number_of_individuals_in_node_2(pi, states):
+...     """Mean number of class 2 individuals blocked
+...     Parameters
+...     ----------
+...     pi : numpy.ndarray
+...         steady state vector
+...     states : list
+...         list of tuples that contains all states
+...     Returns
+...     -------
+...     float
+...         Mean number of blocked class 2 individuals
+...     """
+...     states = np.array(states)
+...     mean_blocked = np.sum(states[:, 0] * pi)
+...     return mean_blocked
+>>>
+>>> round(get_mean_number_of_individuals_in_node_2(pi, all_states), 10)
+0.2685797749
+
+\end{lstlisting}
+
+
+Consequently, there are some additional performance measures of interest that
+are more complex to calculate.
+Such performance measures are the mean waiting time in the system (for both
+type 1 and type 2 individuals), the mean time blocked in node 2 (only
+valid for type 2 individuals) and the proportion of individuals that wait in
+node 1 within a predefined time target (for both types).
+Under the scope of this study three approaches have been considered to calculate
+these performance measures; a recursive algorithm, a direct approach and
+a closed-form equation. 
+Furthermore, different formulas arise for type 1 individuals and different
+ones for type 2 individuals.
+
+
+\input{chapters/03_queueing_model/03_performance_measures/01_waiting_time/main.tex}
+
+\input{chapters/03_queueing_model/03_performance_measures/02_blocking_time/main.tex}
+
+\input{chapters/03_queueing_model/03_performance_measures/03_proportion_of_individuals_within_time/main.tex}
