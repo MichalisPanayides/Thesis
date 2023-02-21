@@ -79,6 +79,7 @@ closed form method.
 
 
 \subsection{Accuracy of steady state probability calculations}
+\label{sec:accuracy_of_steady_state_probabilities}
 
 Another comparison that can be made is the comparison between the steady state
 probabilities calculated using the Markov chain and the simulation.
@@ -235,6 +236,7 @@ Figures~\ref{fig:comparison_steady_state_probabilities_2_1}
 
 
 \subsection{Computation time of DES and Markov chain}
+\label{sec:computation_time_des_markov_chain}
 
 The choice of the artificial truncation parameters \(N\) and \(M\) is an
 important decision of the model.
@@ -337,6 +339,7 @@ the Markov chain model increases while the simulation time stays relatively
 similar.
 
 \subsection{Truncation effect on performance measures}
+\label{sec:truncation_effect_performance_measures}
 
 This section is used to demonstrate the accuracy of the performance measure
 formulas of the constructed Markov model compared to the simulation as well as
@@ -366,7 +369,8 @@ Section~\ref{sec:discrete_event_simulation}).
 \begin{figure}[H]
     \includegraphics[width=\textwidth]{chapters/03_queueing_model/Bin/numeric_results_and_timings/truncation_effect/waiting_time_overall.pdf}
     \caption{
-        Comparison of overall mean waiting time between values obtained from the
+        Example 1 - Comparison of overall mean waiting time between values
+        obtained from the
         Markov chain formula, values obtained from the truncated simulation and
         values obtained from the untruncated simulation.
     }
@@ -376,7 +380,8 @@ Section~\ref{sec:discrete_event_simulation}).
 \begin{figure}[H]
     \includegraphics[width=\textwidth]{chapters/03_queueing_model/Bin/numeric_results_and_timings/truncation_effect/waiting_time_type_1.pdf}
     \caption{
-        Comparison of type 1 individuals mean waiting time between values
+        Example 1 - Comparison of type 1 individuals mean waiting time between
+        values
         obtained from the Markov chain formula, values obtained from the
         truncated simulation and values obtained from the untruncated
         simulation.
@@ -387,7 +392,8 @@ Section~\ref{sec:discrete_event_simulation}).
 \begin{figure}[H]
     \includegraphics[width=\textwidth]{chapters/03_queueing_model/Bin/numeric_results_and_timings/truncation_effect/waiting_time_type_2.pdf}
     \caption{
-        Comparison of type 2 individuals mean waiting time between values
+        Example 1 - Comparison of type 2 individuals mean waiting time between
+        values
         obtained from the Markov chain formula, values obtained from the
         truncated simulation and values obtained from the untruncated
         simulation.
@@ -424,7 +430,8 @@ Note that the blocking time can only be calculated for type 2 individuals.
 \begin{figure}[H]
     \includegraphics[width=\textwidth]{chapters/03_queueing_model/Bin/numeric_results_and_timings/truncation_effect/blocking_time_type_2.pdf}
     \caption{
-        Comparison of mean waiting time between values obtained from the Markov
+        Example 1 - Comparison of mean blocking time between values obtained
+        from the Markov
         chain formula, values obtained from the truncated simulation and values
         obtained from the untruncated simulation.
     }
@@ -443,7 +450,8 @@ individuals between the simulation and the Markov chain get closer.
 \begin{figure}[H]
     \includegraphics[width=\textwidth]{chapters/03_queueing_model/Bin/numeric_results_and_timings/truncation_effect/proportion_overall.pdf}
     \caption{
-        Comparison of overall mean waiting time between values obtained from the
+        Example 1 - Comparison of overall proportion of individuals within
+        target between values obtained from the
         Markov chain formula, values obtained from the truncated simulation and
         values obtained from the untruncated simulation.
     }
@@ -453,7 +461,8 @@ individuals between the simulation and the Markov chain get closer.
 \begin{figure}[H]
     \includegraphics[width=\textwidth]{chapters/03_queueing_model/Bin/numeric_results_and_timings/truncation_effect/proportion_type_1.pdf}
     \caption{
-        Comparison of type 1 individuals mean waiting time between values
+        Example 1 - Comparison of proportion of type 1 individuals within
+        target between values
         obtained from the Markov chain formula, values obtained from the
         truncated simulation and values obtained from the untruncated
         simulation.
@@ -464,7 +473,8 @@ individuals between the simulation and the Markov chain get closer.
 \begin{figure}[H]
     \includegraphics[width=\textwidth]{chapters/03_queueing_model/Bin/numeric_results_and_timings/truncation_effect/proportion_type_2.pdf}
     \caption{
-        Comparison of type 2 individuals mean waiting time between values
+        Example 1 - Comparison of proportion of type 2 individuals within
+        target between values
         obtained from the Markov chain formula, values obtained from the
         truncated simulation and values obtained from the untruncated
         simulation.
@@ -499,7 +509,8 @@ Figures~\ref{fig:markov_vs_des_waiting_time_comparison_overall_2}
 \begin{figure}[H]
     \includegraphics[width=\textwidth]{chapters/03_queueing_model/Bin/numeric_results_and_timings/truncation_effect_2/waiting_time_overall.pdf}
     \caption{
-        Comparison of overall mean waiting time between values obtained from the
+        Example 2 - Comparison of overall mean waiting time between values
+        obtained from the
         Markov chain formula, values obtained from the truncated simulation and
         values obtained from the untruncated simulation.
     }
@@ -510,7 +521,8 @@ Figures~\ref{fig:markov_vs_des_waiting_time_comparison_overall_2}
 \begin{figure}[H]
     \includegraphics[width=\textwidth]{chapters/03_queueing_model/Bin/numeric_results_and_timings/truncation_effect_2/waiting_time_type_1.pdf}
     \caption{
-        Comparison of type 1 individuals mean waiting time between values
+        Example 2 - Comparison of type 1 individuals mean waiting time
+        between values
         obtained from the Markov chain formula, values obtained from the
         truncated simulation and values obtained from the untruncated
         simulation.
@@ -521,7 +533,8 @@ Figures~\ref{fig:markov_vs_des_waiting_time_comparison_overall_2}
 \begin{figure}[H]
     \includegraphics[width=\textwidth]{chapters/03_queueing_model/Bin/numeric_results_and_timings/truncation_effect_2/waiting_time_type_2.pdf}
     \caption{
-        Comparison of type 2 individuals mean waiting time between values
+        Example 2 - Comparison of type 2 individuals mean waiting time
+        between values
         obtained from the Markov chain formula, values obtained from the
         truncated simulation and values obtained from the untruncated
         simulation.
@@ -532,7 +545,8 @@ Figures~\ref{fig:markov_vs_des_waiting_time_comparison_overall_2}
 \begin{figure}[H]
     \includegraphics[width=\textwidth]{chapters/03_queueing_model/Bin/numeric_results_and_timings/truncation_effect_2/blocking_time_type_2.pdf}
     \caption{
-        Comparison of mean waiting time between values obtained from the Markov
+        Example 2 - Comparison of mean blocking time between values obtained
+        from the Markov
         chain formula, values obtained from the truncated simulation and values
         obtained from the untruncated simulation.
     }
@@ -543,7 +557,8 @@ Figures~\ref{fig:markov_vs_des_waiting_time_comparison_overall_2}
 \begin{figure}[H]
     \includegraphics[width=\textwidth]{chapters/03_queueing_model/Bin/numeric_results_and_timings/truncation_effect_2/proportion_overall.pdf}
     \caption{
-        Comparison of overall mean waiting time between values obtained from the
+        Example 2 - Comparison of overall proportion of individuals within
+        target between values obtained from the
         Markov chain formula, values obtained from the truncated simulation and
         values obtained from the untruncated simulation.
     }
@@ -553,7 +568,8 @@ Figures~\ref{fig:markov_vs_des_waiting_time_comparison_overall_2}
 \begin{figure}[H]
     \includegraphics[width=\textwidth]{chapters/03_queueing_model/Bin/numeric_results_and_timings/truncation_effect_2/proportion_type_1.pdf}
     \caption{
-        Comparison of type 1 individuals mean waiting time between values
+        Example 2 - Comparison of proportion of type 1 individuals within
+        target between values
         obtained from the Markov chain formula, values obtained from the
         truncated simulation and values obtained from the untruncated
         simulation.
@@ -564,7 +580,8 @@ Figures~\ref{fig:markov_vs_des_waiting_time_comparison_overall_2}
 \begin{figure}[H]
     \includegraphics[width=\textwidth]{chapters/03_queueing_model/Bin/numeric_results_and_timings/truncation_effect_2/proportion_type_2.pdf}
     \caption{
-        Comparison of type 2 individuals mean waiting time between values
+        Example 2 - Comparison of proportion of type 2 individuals within
+        target between values
         obtained from the Markov chain formula, values obtained from the
         truncated simulation and values obtained from the untruncated
         simulation.

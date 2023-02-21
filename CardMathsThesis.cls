@@ -83,19 +83,23 @@
     \thispagestyle{empty}
   \null\vfill
   \begin{center}
+    \hrule
+    \vspace{10pt}
     { \Huge {\bfseries {\@title}} \par}
-{\large \vspace*{35mm} {\logo \par} \vspace*{25mm}}
-    {{\Large \@author} \par}
-{\large \vspace*{1ex}
-    {{\@college} \par}
-\vspace*{1ex}
-    {Cardiff University \par}
-\vspace*{25mm}
-    {{\submittedtext} \par}
-\vspace*{1ex}
-    {\it {\@degree} \par}
-\vspace*{2ex}
-    {\@degreedate}}
+    \vspace{12pt}
+    \hrule
+    {\large \vspace*{35mm} {\logo \par} \vspace*{25mm}}
+    {{\LARGE \@author} \par}
+    {\large \vspace*{1ex}
+        {{\@college} \par}
+    \vspace*{1ex}
+        {Cardiff University \par}
+    \vspace*{25mm}
+        {{\submittedtext} \par}
+    \vspace*{1ex}
+        {\it {\@degree} \par}
+    \vspace*{2ex}
+        {\@degreedate}}
   \end{center}
   \null\vfill
 \end{alwayssingle}}
