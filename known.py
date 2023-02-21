@@ -53,6 +53,7 @@ words = {
     "coeff",
     "colorlinks",
     "combinatorial",
+    "combinatorics",
     "commentcolor",
     "commentstyle",
     "cooldown",

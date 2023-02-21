@@ -1,5 +1,7 @@
 \chapter{Queueing theoretic model}\label{sec:queueing_section}
 
+\section{Introduction}
+
 One of the main outcomes of this research is the creation of a queueing network
 model that consists of two queueing nodes and accepts two types of individuals.
 
@@ -75,3 +77,97 @@ consists of the following sections:
 \input{chapters/03_queueing_model/04_numeric_results_and_timings/main.tex}
 
 \input{chapters/03_queueing_model/05_ed_ems_application/main.tex}
+
+
+\section{Chapter summary}
+
+This chapter introduces a novel queueing network model that is then used to
+model the emergent behaviour between EDs and the EMS.
+The models consists of two types of individuals and two queueing nodes.
+Type 1 individuals arrive instantly at node 1 and wait to receive their
+service while type 2 individuals arrive at node 2 and wait there until they
+are allowed to move to node 1.
+This decision is made based on the number of individuals in node 1 a
+pre-determined threshold \(T\).
+
+Two modelling approaches were used to model the queueing network.
+Section~\ref{sec:discrete_event_simulation} gives an overview of the first
+approach that was used to model the queueing network; the discrete event
+simulation (DES) model.
+The DES model was also used to extract certain performance measures of the
+system.
+The implementation of this approach was written in \texttt{Python} and uses the
+\texttt{Ciw} library.
+Additionally, the second approach that was used to model the queueing network
+was the Markov chain model.
+Section~\ref{sec:markov_model} introduces the Markov chain model that was
+used to model the queueing network and describes several approaches that
+were used to extract the steady state probabilities of the system
+(Section~\ref{sec:steady_state_probabilities}).
+The steady state probabilities of the system are calculated using numerical
+integration, linear algebra and a least squares approach.
+An attempt to come up with a closed form solution for the steady state
+probabilities was also made using concepts from graph theory and
+combinatorics.
+The Markov chain model was also implemented in \texttt{Python}.
+
+Section~\ref{sec:queueing_performance_measures} describes several algorithms
+that were used to extract performance measures from the Markov chain model.
+There are three key performance metrics that are of interest in this thesis.
+These are the average waiting time of individuals in the system, the average
+blocking time of individuals in node 2 and the proportion of individuals that
+are able to be served within a certain time target.
+Section~\ref{sec:waiting_time} describes the different methods that were
+considered to extract the average waiting time of individuals in the system.
+Such methods were a recursive approach
+(Section~\ref{sec:waiting_recursive_implementation}), a direct approach 
+(Section~\ref{sec:direct_waiting_time}) and a closed form approach
+(Section~\ref{sec:closed_form_waiting_time}).
+For the mean blocking time of individuals in node 2 only a direct approach
+was developed (Section~\ref{sec:blocking_time}).
+Because of the nature of arrivals in the system a recursive approach was not
+formulated and neither was a closed form approach.
+The final performance measure that was considered was the proportion of
+individuals that are able to be served within a certain time target.
+For this performance measure the distribution of the waiting time of
+individuals had to be considered so that the cumulative distribution
+function (CDF) could be extracted.
+The CDF could then be used to get the probability that the waiting time of
+individuals is less than a certain value.
+The CDF of the waiting time is partitioned into three cases, each one using a
+different distribution.
+The exponential distribution, the Erlang distribution and the Hypoexponential
+distribution were considered for the creation of this CDF.
+
+Section~\ref{sec:numeric_results_and_timings} presents some numerical
+results and timings experiments for the queueing network, along with
+a comparison between the DES and Markov chain approach.
+Subsection~\ref{sec:waiting_time_approach_comparison} compares the three
+different approaches that were used to extract the average waiting time of
+individuals in the system and it is observed that the three approaches return
+the same results for a particular example of parameters.
+In addition, the computation time of the three approaches is compared for
+different values of the system's capacity.
+It is observed that, while for small values of \(N\) and \(M\) the all
+approaches take a similar amount of time to compute the average waiting time,
+as the values of \(N\) and \(M\) increase the direct approach takes a
+considerably longer time to compute the average waiting time.
+Subsection~\ref{sec:accuracy_of_steady_state_probabilities} compares the
+value of steady state probability vector that is obtained using the
+DES model and the Markov chain model.
+Subsection~\ref{sec:computation_time_des_markov_chain} compares the
+computation time of the DES model and the Markov chain model.
+Timing results are shown for a single trial and \(100\) trials of the DES
+model, and timings for each of the performance measure formula are shown for
+the Markov chain model.
+Consequently, the effect of truncating the Markov model is also investigated
+in Subsection~\ref{sec:truncation_effect_performance_measures}.
+It is shown that as the arrival rate increases and the system is more busy,
+the truncation of the Markov model has a greater effect on the performance
+measures.
+
+In addition Section~\ref{sec:queueing_ems_ed_application} describes how the
+queueing network can be used in a healthcare scenario.
+The queueing structure is mapped to an ED that accepts two types of patients;
+non-urgent patients from the EMS and patients form other sources
+(walk-ins, urgent patients from the EMS, etc).
