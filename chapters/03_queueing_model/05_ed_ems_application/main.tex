@@ -1,4 +1,4 @@
-\section{ED-EMS application}\label{sec:queueing_ems_es_application}
+\section{ED-EMS application}\label{sec:queueing_ems_ed_application}
 
 The queueing network described in Section~\ref{sec:queueing_section} can be
 directly applied to a healthcare setting.
@@ -36,7 +36,19 @@ Figure~\ref{fig:diagram_of_queueing_system_applied_to_ed_ems} shows the applied
 version of Figure~\ref{fig:diagram_of_queueing_system} that is the queueing
 network introduced in Section~\ref{sec:queueing_section}.
 
-\input{chapters/03_queueing_model/img/queueing_model_diagram_ed_ems.tex}
+\begin{figure}[H]
+    \centering
+    \input{chapters/03_queueing_model/Bin/queueing_model_diagram_ed_ems.tex}
+    \caption{A diagrammatic representation of the Emergency Department.
+    Similar to Figure~\ref{fig:diagram_of_queueing_system}, the threshold \(T\)
+    only applies to type 2 individuals (i.e. patients arriving via an ambulance
+    that can be blocked).
+    If the number of individuals in the hospital's waiting room is greater than
+    or equal to \(T\), only type 1 patients are accepted while patients of type
+    2 are blocked in the parking space.}
+    \label{fig:diagram_of_queueing_system_applied_to_ed_ems}
+\end{figure}
+
 
 The performance measures of the queueing system
 have an additional meaning under the context of this new application.

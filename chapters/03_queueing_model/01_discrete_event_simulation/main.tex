@@ -28,7 +28,7 @@ capacity, as shown in Figure~\ref{fig:equivalent_diagram_of_queueing_system}.
 
 \begin{figure}[H]
     \centering
-    \input{chapters/03_queueing_model/img/equivalent_queueing_model_diagram.tex}
+    \input{chapters/03_queueing_model/Bin/equivalent_queueing_model_diagram.tex}
     \caption{An equivalent model to the one described in
     Figure~\ref{fig:diagram_of_queueing_system}. The difference between the two
     diagrams is the formulation of node 2. The original diagram uses
@@ -65,7 +65,7 @@ from node 2 to node 1.
 
 
 \subsection{Implementation}
-The python library \lstinline[style=pystyle]{ciw}~\cite{ciwpython, ciwarticle}
+The python library \texttt{ciw}~\cite{ciwpython, ciwarticle}
 was used to implement the DES model.
 The library treats queues as distinct nodes in the network where each node has
 an arrival distribution, a service distribution, a number of available servers
@@ -73,15 +73,21 @@ and a queue capacity.
 
 The following code can be used to generate a queueing network with two
 queues and two types of individuals, where type 1 individuals arrive at node
-1 with an arrival rate of \lstinline[style=pystyle]{lambda_1} and type 2
+1 with an arrival rate of \texttt{lambda\_1} and type 2
 individuals arrive at node 2 with an arrival rate of
-\lstinline[style=pystyle]{lambda_2}.
+\texttt{lambda\_2}.
 Node 2 has a deterministic fixed service rate of
-\lstinline[style=pystyle]{0} (since there is no service involved in the buffer
+\texttt{0} (since there is no service involved in the buffer
 centre) and node 1 has an exponential service rate of
-\lstinline[style=pystyle]{mu}.
+\texttt{mu}.
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Using the \texttt{ciw} library to create a queueing network with
+    two queues and two types of individuals and the particular structure
+    defined in Figure~\ref{fig:equivalent_diagram_of_queueing_system}.},
+    label={lst:create_initial_queueing_network},
+]
 >>> import ciw
 >>> lambda_1 = 1.0
 >>> lambda_2 = 2.0
@@ -112,19 +118,19 @@ Figure~\ref{fig:diagram_of_queueing_system}, type 1 individuals arrive at
 node 1 and exit the system after their service finishes, but type 2 individuals
 arrive at node 2 and then proceed to node 1 after leaving node 2.
 This logic is implemented in the queueing network using the
-\lstinline[style=pystyle]{routing} parameter that consists of the routing
+\texttt{routing} parameter that consists of the routing
 probabilities between different nodes.
 For the current implementation the routing matrix is a \(2 \times 2\) array
 that routes individuals from node 2 to node 1 with a probability of
 \(1.0\).
 Furthermore, the server availability for nodes 1 and 2 are set to
-the \lstinline[style=pystyle]{buffer_capacity} and
-\lstinline[style=pystyle]{num_of_servers} respectively and the queue capacities
-are set to \lstinline[style=pystyle]{0} and
-\lstinline[style=pystyle]{system_capacity - num_of_servers}.
+the \texttt{buffer\_capacity} and
+\texttt{num\_of\_servers} respectively and the queue capacities
+are set to \texttt{0} and
+\texttt{system\_capacity - num\_of\_servers}.
 Note that for node 2 queue capacity is set to 0 and its
 number of servers is set to the buffer capacity.
-From \lstinline[style=pystyle]{ciw}'s data records perspective this made more
+From \texttt{ciw}'s data records perspective this made more
 sense since individuals are recorded as blocked this way.
 If the queue capacity was non-zero, individuals could also have a waiting time
 but no waiting should take place in node 2, only blockage.
@@ -136,16 +142,22 @@ need to stay blocked in node 2 whenever the number of individuals in node 1
 reaches a certain threshold \(T\).
 As opposed to the rest of the model, this portion of the queueing network
 requires more effort to build.
-\lstinline[style=pystyle]{Ciw} allows users to get more custom behaviour by
+\texttt{Ciw} allows users to get more custom behaviour by
 creating their own node class that inherits from the original one.
-By inheriting the original \lstinline[style=pystyle]{ciw.Node} the general
+By inheriting the original \texttt{ciw.Node} the general
 behaviour of all nodes can be altered.
 Note that node ids are assigned in the order they are created so in the
-\lstinline[style=pystyle]{ciw} implementation node 2 is assigned id 1 and node 1
+\texttt{ciw} implementation node 2 is assigned id 1 and node 1
 is assigned id 2.
 
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Function that contains the custom node class that blocks
+    individuals to node 1 when the number of individuals in node 2 exceeds
+    the threshold.},
+    label={lst:build_custom_node},
+]
 >>> import numpy as np
 >>> def build_custom_node(threshold=float("inf")):
 ...     """
@@ -262,27 +274,30 @@ is assigned id 2.
 
 \end{lstlisting}
 
-The class \lstinline[style=pystyle]{CustomNode} inherits from
-\lstinline[style=pystyle]{ciw.Node} and changes two of the methods
-(\lstinline[style=pystyle]{release_blocked_individual} and
-\lstinline[style=pystyle]{finish_service}) so that the additional logic of the
+The class \texttt{CustomNode} inherits from \texttt{ciw}'s
+\texttt{Node} class and changes two of the methods
+(\texttt{release\_blocked\_individual} and
+\texttt{finish\_service}) so that the additional logic of the
 threshold is incorporated.
-In the \lstinline[style=pystyle]{release_blocked_individual} method an
+In the \texttt{release\_blocked\_individual} method an
 additional check is added before releasing a potentially blocked individual from
 node 2 to node 1.
 This essentially checks whether the id number of the node is 2 and
 the number of individuals in it are more than or equal to the
-\lstinline[style=pystyle]{threshold} so that it can accept a blocked individual.
-Similarly \lstinline[style=pystyle]{finish_service} is called once an individual
+\texttt{threshold} so that it can accept a blocked individual.
+Similarly \texttt{finish\_service} is called once an individual
 finishes their service.
 The additional check that was added checks whether the id of the node is 1 and
 the number of individuals in the next node (i.e. node 1) is more than the
 threshold, which would result in blockage.
 Finally, the simulation object can be created and simulated for a specific
-\lstinline[style=pystyle]{threshold} and \lstinline[style=pystyle]{runtime} by
-running:
+\texttt{threshold} and \texttt{runtime} by running:
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Building and simulating the network model using the custom node},
+    label={lst:simulating_with_custom_node},
+]
 >>> threshold = 4
 >>> runtime = 1000
 >>> custom_node = build_custom_node(threshold)
@@ -295,14 +310,20 @@ running:
 
 \subsection{Performance Measures}
 
-Having run the simulation using \lstinline[style=pystyle]{ciw} all necessary
+Having run the simulation using \texttt{ciw} all necessary
 performance measures can be calculated.
 Calculating all performance measure that are related to the duration of time is
 not too difficult.
-The following code gets all waiting times, service times and blocking times for
-all individuals that have passed through the model.
+The code snippet in~\ref{lst:des_performance_measures} gets all waiting times,
+service times and blocking times for all individuals that have passed through
+the model.
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Function that extracts performance measures from the simulation
+    records},
+    label={lst:des_performance_measures},
+]
 >>> def extract_times_from_records(simulation_records, warm_up_time):
 ...     """Get the required times (waiting, service, blocking) out of ciw's
 ...     records where all individuals are treated the same way. This function
@@ -329,11 +350,15 @@ all individuals that have passed through the model.
 
 \end{lstlisting}
 
-Using the earlier variable \lstinline[style=pystyle]{simulation}, the waiting
+Using the earlier variable \texttt{simulation}, the waiting
 times, service times and blocking times can be extracted from the simulation
 records.
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Using the function defined in~\ref{lst:des_performance_measures}},
+    label={lst:des_performance_measures_example},
+]
 >>> warm_up_time = 100
 >>> all_records = simulation.get_all_records()
 >>> waiting_times, serving_times, blocking_times = extract_times_from_records(
@@ -343,3 +368,20 @@ records.
 (1.7038750111337655, 2.041619227158985, 8.227702587974997)
 
 \end{lstlisting}
+
+The performance measures discussed so far are the ones that are related to the
+amount of time that individuals spend in the system.
+Some additional performance measures that could be of interest are the
+ones that are related to the number of individuals, such as the mean number of
+individuals in the system, the mean number of individuals in Node 1 and the
+mean number of individuals in Node 2.
+These metrics can also by calculated using an additional functionality of
+\texttt{ciw}.
+There is an additional argument that can be passed to the
+\texttt{ciw.Simulation} object called \texttt{tracker} where it makes the
+simulation object track the state of the system throughout the simulation.
+Thus, at the end of the simulation, the probability distribution of the number
+of individuals in each node can be extracted.
+Section~\ref{sec:queueing_performance_measures} gives a more detailed
+explanation of how to calculate these performance measures using only the
+state probabilities of the system.

@@ -14,8 +14,8 @@ Consider the case when an arrival occurs when the model is at a specific state.
 
 \begin{figure}[H]
     \centering
-    \scalebox{0.75}{\input{chapters/03_queueing_model/img/example_model_1242/main.tex}}
-    \caption{Example Markov model \(C=1, T=2, N=4, M=2\)}
+    \scalebox{0.75}{\input{chapters/03_queueing_model/Bin/example_model_1242/main.tex}}
+    \caption{Example of Markov model with \(C=1, T=2, N=4, M=2\)}
     \label{fig:distribution_of_time_at_specific_state_1_server}
 \end{figure}
 
@@ -80,8 +80,8 @@ and there is an empty server).
 
 \begin{figure}[H]
     \centering
-    \scalebox{0.75}{\input{chapters/03_queueing_model/img/example_model_2242/main.tex}}
-    \caption{Example Markov model \(C=2, T=2, N=4, M=2\)}
+    \scalebox{0.75}{\input{chapters/03_queueing_model/Bin/example_model_2242/main.tex}}
+    \caption{Example of Markov model with \(C=2, T=2, N=4, M=2\)}
     \label{fig:distribution_of_time_at_specific_state_2_servers}
 \end{figure}
 
@@ -106,8 +106,8 @@ sum of erlang distributed random variables.
 The sum of erlang distributed random variables is said to follow the
 hypoexponential distribution.
 The hypoexponential distribution is defined with two vectors of size equal
-to the number of Erlang random variables that are added together
-\cite{Akkouchi2008}, \cite{Smaili2013}.
+to the number of Erlang random variables that are added
+together~\cite{Akkouchi2008, Smaili2013}.
 For this particular example:
 
 \footnotesize
@@ -124,16 +124,17 @@ For this particular example:
 \end{align}
 \normalsize
 
-The random variable \(H\) from equation
-(\ref{eq:multiple_servers_distribution_example}) follows a hypoexponential
+The random variable \(H\) from
+equation~\eqref{eq:multiple_servers_distribution_example} follows a
+hypoexponential
 distribution with two vector parameters (\((2,1)\) and \((2\mu, \mu)\)).
 The CDF of this distribution can be therefore used to get the probability of the
 time spent in the system being less than a given target.
 The CDF of the general hypoexponential distribution \(Hypo(\vec{r},
-\vec{\lambda})\), is given by the (\ref{eq:general_cdf_hypoexponential}), where
+\vec{\lambda})\), is given by the~\eqref{eq:general_cdf_hypoexponential}, where
 vector \(\vec{r}\) contains all \(k\)-values of the erlang distributions
-defined in (\ref{eq:erlang_distribution_definition}) and \(\vec{\lambda}\)
-is a vector of the distinct parameters \cite{Favaro2010}.
+defined in~\eqref{eq:erlang_distribution_definition} and \(\vec{\lambda}\)
+is a vector of the distinct parameters~\cite{Favaro2010}.
 
 \begin{align} \label{eq:general_cdf_hypoexponential}
     & P(H < t) = 1 - \left( \prod_{j=1}^{\mid \vec{r} \mid} \lambda_j^{r_j}
@@ -147,9 +148,9 @@ is a vector of the distinct parameters \cite{Favaro2010}.
 \end{align}
 
 
-The computation of the derivative makes equation (\ref{eq:general_cdf_hypoexponential})
-computationally expensive.
-In \cite{Legros2015} an alternative linear version of that CDF is explored via
+The computation of the derivative makes
+equation~\eqref{eq:general_cdf_hypoexponential} computationally expensive.
+In~\cite{Legros2015} an alternative linear version of that CDF is explored via
 matrix analysis, and is given by the following formula:
 
 \small
@@ -173,22 +174,23 @@ matrix analysis, and is given by the following formula:
 \end{equation}
 \normalsize
 
-Although equation (\ref{eq:linear_general_cdf_hypoexponential}) is a simplified
-version of equation (\ref{eq:general_cdf_hypoexponential}) it still has some
+Although equation~\eqref{eq:linear_general_cdf_hypoexponential} is a simplified
+version of equation~\eqref{eq:general_cdf_hypoexponential} it still has some
 unnecessary complexity.
 The described expressions are general expressions used to get the CDF of
 the hypoexponential distribution, which is in turn the sum of multiple
 Erlang distributed random variables.
-However, the random variable \(H\), described in
-(\ref{eq:multiple_servers_distribution_example}), is the sum of only two
+However, the random variable \(H\), described
+in~\eqref{eq:multiple_servers_distribution_example}, is the sum of only two
 different erlang distributed random variables.
 Thus, perhaps a more simplified version of the above expressions can be derived
 that is specific to the case of two erlang distributed random variables.
 
 
 \subsubsection{Specific CDF of hypoexponential distribution}
-Equations (\ref{eq:general_cdf_hypoexponential}) and
-(\ref{eq:linear_general_cdf_hypoexponential}) refers to the general CDF of the
+Equations~\eqref{eq:general_cdf_hypoexponential}
+and~\eqref{eq:linear_general_cdf_hypoexponential} refers to the general CDF
+of the
 hypoexponential distribution where the size of the vector parameters can be of
 any size~\cite{Favaro2010}.
 In the Markov chain models described in
@@ -222,10 +224,10 @@ arises, where the derivative is removed:
     & \textbf{and} \quad \qquad \lambda_0 = 0, r_0 = 1
 \end{align}
 
-Note here that the only difference between equation
-(\ref{eq:general_cdf_hypoexponential}) and
-(\ref{eq:specific_cdf_hypoexponential}) is the \(\Psi\), where it is now only
-computed for \(k=1,2\).
+Note here that the only difference between
+equation~\eqref{eq:general_cdf_hypoexponential}
+and~\eqref{eq:specific_cdf_hypoexponential} is the \(\Psi\), where it is now
+only computed for \(k=1,2\).
 The following subsection proves the following expression:
 
 \begin{equation} \label{eq:hypoexponential_expression_to_proof}
@@ -243,17 +245,17 @@ The following subsection proves the following expression:
 
 
 \subsubsection{Proof of specific hypoexponential distribution
-(eq. (\ref{eq:hypoexponential_expression_to_proof}))}
+(eq.~\eqref{eq:hypoexponential_expression_to_proof})}
 
-This section aims to show that there exists a simplified expression of equation
-(\ref{eq:general_cdf_hypoexponential}) that is specific to the proposed Markov
-model.
+This section aims to show that there exists a simplified expression of
+equation~\eqref{eq:general_cdf_hypoexponential} that is specific to the proposed
+Markov model.
 Function \(\Psi\) is defined using the parameter \(t\) and the variables \(k\)
 and \(l\).
 Given the Markov model, the range of values that \(k\) and \(l\) can take can be
 bounded.
-First, from the range of the double summation in equation
-(\ref{eq:general_cdf_hypoexponential}), it can be seen that
+First, from the range of the double summation in
+equation~\eqref{eq:general_cdf_hypoexponential}, it can be seen that
 \(k = 1, 2, \dots, \mid \vec{r} \mid\).
 Now, \(\mid \vec{r} \mid\) represents the size of the parameter vectors that,
 for the Markov model, will always be 2.
@@ -265,8 +267,8 @@ thus forming two erlang distributions. Therefore:
     k = 1, 2
 \end{equation*}
 
-By observing equation (\ref{eq:general_cdf_hypoexponential}) once more, the range
-of values that \(l\) takes are \(l = 1, 2, \dots, r_k\), where \(r_1\) is
+By observing equation~\eqref{eq:general_cdf_hypoexponential} once more, the
+range of values that \(l\) takes are \(l = 1, 2, \dots, r_k\), where \(r_1\) is
 subject to the individual's position in the queue and \(r_2 = 1\).
 In essence, the hypoexponential distribution will be used with these bounds:
 
@@ -275,12 +277,14 @@ In essence, the hypoexponential distribution will be used with these bounds:
     k = 2 & \qquad \Rightarrow \qquad l = 1
 \end{align}
 
-Thus the left hand side of equation (\ref{eq:hypoexponential_expression_to_proof})
+Thus the left hand side of equation~\eqref{eq:hypoexponential_expression_to_proof}
 needs only to be defined for these bounds.
-The specific hypoexponential distribution investigated here is of the form
-\(Hypo((r_1, 1)(\lambda_1, \lambda_2))\).
-Note the initial conditions \(\lambda_0=0, r_0=1\) defined in equation
-(\ref{eq:general_cdf_hypoexponential}) also hold here.
+The specific hypoexponential distribution investigated here is of the form:
+\[
+    Hypo((r_1, 1)(\lambda_1, \lambda_2))
+\]
+Note the initial conditions \(\lambda_0=0, r_0=1\) defined in
+equation~\eqref{eq:general_cdf_hypoexponential} also hold here.
 Thus the proof is split into two parts, for \(k=1\) and \(k=2\).
 
 
@@ -382,9 +386,9 @@ Thus the proof is split into two parts, for \(k=1\) and \(k=2\).
 
 \subsubsection{Proportion within target for type 1 and type 2 individuals}
 
-Given the two CDFs of the Erlang and Hypoexponential distributions (equations
-(\ref{eq:erlang_distribution_definition}) and
-(\ref{eq:specific_cdf_hypoexponential})) a new function has to be defined to
+Given the two CDFs of the Erlang and Hypoexponential distributions
+(equations~\eqref{eq:erlang_distribution_definition}
+and~\eqref{eq:specific_cdf_hypoexponential}) a new function has to be defined to
 decide which one to use between the two.
 Based on the state of the model, there can be three scenarios when an individual
 arrives.
@@ -435,7 +439,7 @@ state \((u,v)\) of the model.
 \normalsize
 
 
-Equations (\ref{eq:cdf_erlang}) and (\ref{eq:specific_cdf_hypoexponential}) can
+Equations~\eqref{eq:cdf_erlang} and~\eqref{eq:specific_cdf_hypoexponential} can
 now be used.
 Therefore, the probability that an individual arriving at a specific state is
 within a given time target \(t\) is given by the following formulas:
@@ -483,15 +487,15 @@ within a given time target \(t\) is given by the following formulas:
 \normalsize
 
 In addition the set of accepting states for type 1 (\(S_A^{(1)}\)) and type 2
-(\(S_A^{(2)}\)) individuals defined in equations
-(\ref{eq:accepting_states_type_1}) and (\ref{eq:accepting_states_type_2}) are
-also needed here.
+(\(S_A^{(2)}\)) individuals defined in
+equations~\eqref{eq:accepting_states_type_1}
+and~\eqref{eq:accepting_states_type_2} are also needed here.
 Note here that, \(S\) denotes the set of all states of the Markov chain model.
 
 
 Having defined everything, a formula similar to the ones
-of equations (\ref{eq:recursive_waiting_time_for_type_i}) and
-(\ref{eq:example_direct_approach_blocking_time}) can be generated.
+of equations~\eqref{eq:recursive_waiting_time_for_type_i}
+and~\eqref{eq:example_direct_approach_blocking_time} can be generated.
 The following formula uses the state probability vector \(\pi\) to get the
 weighted average of the probability below target of all states in the Markov
 model.
@@ -510,8 +514,9 @@ model.
 \subsubsection{Overall proportion within target}
 
 The overall proportion of individuals for both type 1 and type 2 individuals
-is given by the equivalent formula of equations
-(\ref{eq:overall_waiting_time_coeff}) and (\ref{eq:overall_waiting_time}).
+is given by the equivalent formula of
+equations~\eqref{eq:overall_waiting_time_coeff}
+and~\eqref{eq:overall_waiting_time}.
 The following formula uses the probability of lost individuals from both types
 to get the weighted sum of the two already existing probabilities.
 
@@ -534,11 +539,16 @@ This section focuses on the implementation of all necessary equations to
 calculate the proportion of individuals within target as described
 in Section~\ref{sec:proportion_of_individuals_within_time}.
 The first equation to be considered is the simplified version of
-\(\Psi_{k, \lambda}(t)\) described in equation
-(\ref{eq:specific_cdf_hypoexponential}).
-The following code snippet shows the implementation of this equation in python.
+\(\Psi_{k, \lambda}(t)\) described in
+equation~\eqref{eq:specific_cdf_hypoexponential}.
+Code snippet~\ref{lst:specific_psi_function} shows the implementation of this
+equation in python.
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Function for the simplified version of \(\Psi_{k, \lambda}(t)\)},
+    label={lst:specific_psi_function},
+]
 >>> def specific_psi_function(
 ...     arg, k, l, exp_rates, freq, a
 ... ):
@@ -561,12 +571,17 @@ The following code snippet shows the implementation of this equation in python.
 
 \end{lstlisting}
 
-The following piece of code returns the cumulative distribution function of
-the hypoexponential distribution.
-In essence this is the value of \(P(H<t)\) outlined in equation
-(\ref{eq:specific_cdf_hypoexponential}).
+The piece of code shown in~\ref{lst:hypoexponential_cdf} returns the cumulative
+distribution function of the hypoexponential distribution.
+In essence this is the value of \(P(H<t)\) outlined in
+equation~\eqref{eq:specific_cdf_hypoexponential}.
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Function for the cumulative distribution of the Hypoexponential
+    distribution},
+    label={lst:hypoexponential_cdf},
+]
 >>> def hypoexponential_cdf(
 ...     x, exp_rates, freq, psi_func=specific_psi_function
 ... ):
@@ -626,10 +641,15 @@ In essence this is the value of \(P(H<t)\) outlined in equation
 
 Similarly the cumulative distribution function of the erlang distribution is
 also needed here.
-The following code snippet shows the implementation of this function as
-described in equation (\ref{eq:cdf_erlang}).
+The code snippet in~\ref{lst:erlang_cdf} shows the implementation of this
+function as described in equation~\eqref{eq:cdf_erlang}.
 
-\begin{lstlisting}[style=pystyle] 
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Function for the cumulative distribution of the Erlang
+    distribution},
+    label={lst:erlang_cdf},
+] 
 >>> def erlang_cdf(mu, n, x):
 ...     """
 ...     Cumulative distribution function of the erlang distribution.
@@ -655,11 +675,17 @@ described in equation (\ref{eq:cdf_erlang}).
 
 \end{lstlisting}
 
-Having defined all functions necessary the following piece of code aims to
-decide which of the two distributions to use to calculate the probability
-of an individual being within a given time target.
+Having defined all functions necessary the code snippet
+in~\ref{lst:distribution_decision_function} chooses which of the two 
+distributions to use to calculate the probability of an individual being within
+a given time target.
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Function for deciding which distribution to use to calculate
+    the probability of an individual being within a given time target.},
+    label={lst:distribution_decision_function},
+]
 >>> def get_probability_of_waiting_time_in_system_less_than_target_for_state(
 ...     state,
 ...     class_type,
@@ -729,12 +755,18 @@ of an individual being within a given time target.
 \end{lstlisting}
 
 Finally, putting everything together, going through all the states of a given
-Markov chain model, the following function calculates the probability of
+Markov chain model, the function defined in~\ref{lst:proportion_within_target}
+calculates the probability of
 spending less time than the target in the system for a given individual type.
-This corresponds to both equations (\ref{eq:proportion_of_inds_type_1}) and
-(\ref{eq:proportion_of_inds_type_2}).
+This corresponds to both equations~\eqref{eq:proportion_of_inds_type_1}
+and~\eqref{eq:proportion_of_inds_type_2}.
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Function for calculating the probability of spending less time
+    than the target in the system for a given individual type.},
+    label={lst:proportion_within_target},
+]
 >>> def get_proportion_of_individuals_within_time_target(
 ...     all_states,
 ...     pi,
@@ -808,7 +840,12 @@ This corresponds to both equations (\ref{eq:proportion_of_inds_type_1}) and
 Using all functions created so far, the proportion of individuals within target
 can be calculated for a given Markov chain model and a given individual type.
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Combining all functions to calculate the proportion of type 1 
+    individuals within a time target of \(1\) time unit.},
+    label={lst:proportion_within_target_example},
+]
 >>> import ambulance_game as abg
 >>> import numpy as np
 >>> all_states = abg.markov.build_states(
@@ -848,5 +885,5 @@ can be calculated for a given Markov chain model and a given individual type.
 
 \end{lstlisting}
 
-This shows that for the given set of parameters the and for type 1 individuals
+This shows that for the given set of parameters and for type 1 individuals
 the probability of spending less than 1 unit of time in the system is 91.9\%.

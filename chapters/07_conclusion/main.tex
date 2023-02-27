@@ -1,1 +1,212 @@
-\chapter{Conclusion}
+\chapter{Conclusions}\label{sec:conclusion}
+
+This Chapter will act as a summary of the research presented in this thesis.
+It will also provide a reflection on the research process and the
+contributions that have been made.
+Finally, it will provide some recommendations for future work.
+Each chapter of this thesis included a \textit{Chapter Summary} section, and
+so the summary here will be brief.
+
+
+\section{Research Overview}
+
+The motivation behind this thesis has been the fact that emergency departments
+are under a lot of pressure to treat patients.
+This is, in practice, often centrally controlled through a mechanism of some
+sort of performance measure target.
+The research presented in this thesis shows how this can negatively impact the
+pathway of both the ambulance patients and the ambulance service itself.
+Due to some managerial decision making that takes place at the ED, ambulances
+stay blocked outside of the ED at the hospital's parking zone in an attempt to
+satisfy these regulations
+
+This thesis presents a queueing network model that is used to describe an
+Emergency Department (ED) that accepts patients arriving by ambulance and
+patients that arrive by other means.
+The model is then used to construct a game theoretic model that is informed
+by the queueing network model.
+The game theoretic model is presented as a 3-player game between the
+Emergency Medical Services (EMS) and two EDs.
+The game theoretic model is then used to explore the impact of different
+strategies on the performance of the EDs.
+
+Chapter~\ref{sec:introduction} provides an overview the Operational Research
+(OR) field and the problem of congestion in healthcare which served as the
+motivation for this research.
+Chapter~\ref{sec:lit_review} then provides a literature review of the
+relevant research that has been done.
+Namely, a review of the literature on OR models applied to healthcare
+systems, a review of the conjunction of queueing theory and game theory and a
+review of the literature on game theoretic models applied to healthcare has
+been presented.
+Moreover, a brief review on behavioural OR is also presented to provide some
+context for the agent-based model that is presented in this thesis.
+Chapter~\ref{sec:queueing_section} then introduces a queueing network model
+with two waiting spaces that accepts two types of individuals.
+The types of individuals are then used to describe an ED that accepts
+patients arriving by ambulance and patients that arrive by other means.
+The modelling approaches along with the calculations for the model's
+performance measures are also presented.
+In addition, some numerical comparisons of the different approaches are
+given as a form of validation of the different approaches.
+Chapter~\ref{sec:game_theoretic_model} introduces a game theoretic model
+using the queueing network model as a basis.
+Essentially, the queueing network model is used to construct a 3-player game
+between the decision makers of two queueing networks and a provider that
+distributes individuals between the two queueing networks.
+This is later mapped to a 3-player game between the EMS and two EDs.
+The methodology included using Brent's algorithm to find the best response of
+the third player (the EMS) to all possible combinations of strategies of the
+other two players (the two EDs).
+The resultant game is then reduced to a 2-player game between the two EDs
+and already existing Nash Equilibrium algorithms and evolutionary learning
+algorithms could be applied.
+Some results of the numerical experiments are then presented and discussed in
+Chapter~\ref{sec:numerical_results}.
+The particular scenario that was explored was one between two EDs that
+were heavily congested.
+Several what-if scenarios were investigated to determine ways to reduce the
+ambulance congestion at the EDs.
+
+In addition to the game theoretic model, an agent-based model was also
+developed in Chapter~\ref{sec:agent_based_extension}.
+Instead of the previous constant service times, the queueing model was expanded
+to use state- and server-dependent service times.
+As a result, an agent-based model is built with different service times for
+every server and system state.
+The learning that occurs when servers determine the speed at which they serve
+customers in order to maximise some utility is then observed using a
+reinforcement learning algorithm.
+Some numerical results are then presented and discussed in
+Section~\ref{sec:reiforcement_learning_numeric_results}.
+
+The motivation for the agent-based extension came from certain ethnographic
+insights where it was observed that ambulance staff and ED staff were in fact
+playing a more cooperative game.
+In fact, the players were not only trying to maximise their own utility but
+also the utility of the system.
+Thus, some of the utility functions used for the agent-based model were
+structured in a way that aimed to increase both each staff member's happiness
+and the overall social welfare of the system.
+
+
+
+\section{Contributions}
+
+The research presented in this thesis has made some novel contributions to the
+literature on Operational Research (OR) models and healthcare applications.
+The findings of this thesis that relate to the queueing network and the game
+theoretic model have also been published and are presented
+in~\cite{panayides2023game}.
+The contributions are as follows:
+
+\begin{itemize}
+    \item A novel queueing network model with two waiting spaces where one
+    serves as a buffer for the other.
+    The model is used to describe an ED that accepts patients arriving by
+    ambulance and patients that arrive by other means.
+    \item Performance measure calculations for the queueing network model.
+    Such performance metrics include the average number of individuals in the
+    system, mean waiting time, mean blocking time and proportion of individuals
+    that are served within a certain time.
+    \item A 3-player game theoretic model between two queueing networks and a
+    provider that distributes individuals between the two queueing networks.
+    The game is then mapped to a 3-player game between the EMS and two EDs.
+    \item Numerical experiments showing emergent behaviour of gaming between
+    EDs and the EMS.
+    A scenario where two EDs are heavily congested is explored and several
+    what-if scenarios are investigated to determine ways to reduce the
+    ambulance congestion at the EDs.
+    \item An agent-based model with reinforcement learning that is used to
+    explore the learning that occurs when servers determine the speed at which
+    they serve customers in order to maximise some utility.
+    The model is built using the queueing network model as a basis.
+    \item Numerical experiments using the agent-based model with reinforcement
+    learning to explore the learning that occurs.
+\end{itemize}
+
+Although this research is motivated by the particular EMS-ED example, the
+developed modelling framework and behavioural insights has applications to
+similar systems across a range of sectors and settings.
+The queueing model can be applied to any setting where individuals may be
+blocked on a separate queue.
+An example of such setting can be any type of delivery service where customers
+can purchase goods either online or in-person.
+At busier times, the person delivering the product may be blocked outside the
+store in an attempt to improve the waiting times for walk-in customers.
+
+
+The key findings from this paper that were observed when playing the game
+between two EDs and the EMS are:
+
+\begin{itemize}
+    \item Inefficiencies can be learned and emerge naturally;
+    \item Targeted incentivisation of behaviours can help escape inefficiencies.
+\end{itemize}
+
+The former relates to the results of asymmetric replicator dynamics that shown
+in Chapter~\ref{sec:numerical_results}.
+The results showed that inefficient scenarios can arise by letting the players
+play the game by prioritising their best interests, while the latter
+implies that these learned inefficiencies can be escaped by carefully applying
+certain incentives to the players.
+In theory, this careful incentivisation of behaviours is done by applying some
+form of penalty to the payoff matrices of the players to force them change
+their strategy.
+In practice, applying this incentive mechanism to an ED would be difficult
+because the EDs are not a single entity but rather a collection of individuals
+that could be incentivised in different ways.
+
+
+Apart from the theoretical contributions, this thesis also made some
+contributions to open-source software.
+The following software contributions were made as part of this thesis:
+
+\begin{itemize}
+    \item \texttt{ambulance\_game}: A Python package that implements the
+    queueing network model and the game theoretic model presented in this
+    thesis.
+    A detailed description of the package can be found in
+    Appendix % TODO: ~\ref{app:ambulance_game}.
+    \item \texttt{nashpy} contribution: Implemented the asymmetric replicator
+    dynamics algorithm in the \texttt{nashpy} Python library.
+    \item \texttt{ciw} contribution: Implemented custom server priorities in
+    the \texttt{ciw} Python library.
+    \item \texttt{ciw} contribution: Implemented server dependent distributions
+    in the \texttt{ciw} Python library.
+\end{itemize}
+
+
+
+
+\section{Future Work}
+
+The model that is being discussed here presupposes the presence of only two
+players that can receive individual.
+However, in a realistic healthcare scenario an ambulance may have to decide
+among multiple EDs.
+An immediate extension of this work would be to consider a multiplayer system
+that could represent a group of hospitals in a concentrated area.
+Moreover, the developed game theoretic model employs a discrete strategy space
+for the EDs (something that is also present in various related
+literature~\cite{deo2011centralized,knight_measuring_poa}).
+The single threshold parameter that is used for the ED's decision may not be
+a good representation of the way EDs actually operate.
+In reality ED managers might adopt far more complex parameters for their
+decision making process.
+Moreover, the game theoretic model of this work assumes that the EMS and EDs
+act in a selfish and rational way by only aiming to satisfy their own
+objectives.
+In some settings, cooperation may be observed and would therefore require
+an adapted modelling approach.
+The creation of the agent-based model that was introduced in
+Chapter~\ref{sec:agent_based_model} was motivated by the potential cooperation
+between the EMS and EDs.
+Further research could be done to explore the potential for cooperation in
+this setting and how it could be further investigated.
+Finally, future work could touch upon the completion of the work presented in
+Section~\ref{sec:state_probs_closed_form}, where an attempt to develop a closed
+form formula for the steady state probabilities of the queueing model was
+made.
+The formula was not completed and therefore further research could be done to
+derive the formula and investigate its properties.

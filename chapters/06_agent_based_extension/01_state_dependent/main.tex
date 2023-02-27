@@ -63,7 +63,8 @@ Section~\ref{sec:discrete_event_simulation}.
 All the code used to implement the state-dependent variation of the queueing
 system is archived at~\cite{ambulance_game_github_repo} and developed openly on
 GitHub.
-More details on the code can be found in appendix~\ref{appendix:ambulance_game}.
+More details on the code can be found in appendix.
+% TODO: reference appendix section ~\ref{appendix:ambulance_game}.
 The \texttt{ciw} library is structured in a way that allows the user to create
 their own class for the service time distribution.
 This class must inherit from the \texttt{ciw.dists.Distribution} class and
@@ -112,7 +113,11 @@ The following code shows the implementation of the
 \texttt{simulate\_model} function for the state-dependent variation of the
 queueing system.
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Example of the state-dependent variation of the queueing system.},
+    label={lst:state_dependent_example},
+]
 >>> import ambulance_game as abg
 >>> import ciw
 >>> import numpy as np

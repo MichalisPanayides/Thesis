@@ -1,8 +1,767 @@
-% INTRODUCTION %
+%%%%%%%%%%%%%%%%%%
+%% INTRODUCTION %%
+%%%%%%%%%%%%%%%%%%
 
-% LITERATURE REVIEW %
+  @article{panayides2023game,
+    title={A game theoretic model of the behavioural gaming that takes place at the EMS - ED interface},
+    author={Panayides, Michalis and Knight, Vince and Harper, Paul},
+    journal={European Journal of Operational Research},
+    volume={305},
+    number={3},
+    pages={1236--1258},
+    year={2023},
+    publisher={Elsevier}
+  }
 
-% QUEUEING THEORETIC MODEL %
+  @article{dailyrecords,
+    author={Aitken, Vivienne},
+    date={2021-09-10},
+    year={2021},
+    title={The Red Cross drafted into Scotland's biggest hospital as ambulances queue up},
+    journal={Daily Record},
+    url={https://www.dailyrecord.co.uk/news/scottish-news/red-cross-drafted-scotlands-biggest-24950875},
+  }
+
+  @article{staffordshirelive,
+    author={Crouch, Julie},
+    date={2021-09-05},
+    year={2021},
+    title={Thousands of hours lost as ambulance idle outside hospitals in Derbyshire},
+    journal={Staffordshire Live},
+    url={https://www.staffordshire-live.co.uk/news/health/thousands-hours-lost-ambulance-idle-5866867},
+  }
+
+  @article{herefordtimes,
+    author={Thomas, James},
+    date={2021-08-22},
+    year={2021},
+    title={Ambulances queue at Hereford hospital as NHS pressure mounts},
+    journal={Hereford Times},
+    url={https://www.herefordtimes.com/news/19524278.ambulances-queue-hereford-hospital-nhs-pressure-mounts/},
+  }
+
+  @article{southwalesargus,
+    author={McAdams, Ben},
+    date={2021-09-12},
+    year={2021},
+    title={Caldicot girl waited nine hours for ambulance after fall},
+    journal={South Wales Argus},
+    url={https://www.southwalesargus.co.uk/news/19573384.caldicot-girl-waited-nine-hours-ambulance-fall/},
+  }
+
+  @article{bbcwales,
+    author={Clarke, Owain},
+    date={2021-08-11},
+    year={2021},
+    title={A\&E queues mean Wales ambulances can't take 999 calls},
+    journal={BBC Wales},
+    url={https://www.bbc.co.uk/news/uk-wales-58161914},
+  }
+
+  @article{EmergencyDepartmentWinterPressures,
+    title={CQC Covid insight: Winter pressures on emergency care},
+    author={Halliwell, Amanda},
+    journal={Practice Management},
+    volume={31},
+    number={4},
+    pages={28--30},
+    year={2021},
+    publisher={MA Healthcare London}
+  }
+
+  @article{clarey2014ambulance,
+    title={Ambulance handovers: can a dedicated ED nurse solve the delay in ambulance turnaround times?},
+    author={Clarey, A and Allen, M and Brace-McDonnell, S and Cooke, MW},
+    journal={Emergency Medicine Journal},
+    volume={31},
+    number={5},
+    pages={419--420},
+    year={2014},
+    publisher={BMJ Publishing Group Ltd and the British Association for Accident~…}
+  }
+
+  @article{mirror,
+    author={Knapper, Dave \& Dresch, Matthew},
+    date={2021-10-07},
+    year={2021},
+    title={Ambulances queue 10 in a row outside hospital buckling under 'significant' pressure},
+    journal={Mirror},
+    url={https://www.mirror.co.uk/news/uk-news/ambulances-queued-10-row-outside-25165162},
+  }
+
+  @article{thenews,
+    author={Lemmer, Richard},
+    date={2021-01-14},
+    year={2021},
+    title={Portsmouth's Queen Alexandra Hospital patients see more than 250 hour-long ambulance handover delays},
+    journal={The News},
+    url={https://www.portsmouth.co.uk/health/portsmouths-queen-alexandra-hospital-patients-see-more-250-hour-long-ambulance-handover-delays-3100611},
+  }
+
+  @article{eastanglia,
+    author={Day, Suzanne},
+    date={2021-10-12},
+    year={2021},
+    title={Woman, 85, has 'appalling' three hour wait for ambulance},
+    journal={East Anglia},
+    url={https://www.eadt.co.uk/news/health/needham-market-woman-has-three-hour-ambulance-wait-8401674},
+  }
+
+  @article{bmj,
+    author={Mahase, Elizabeth},
+    date={2020-12-31},
+    year={2020},
+    title={Covid-19: Hospitals in crisis as ambulances queue and staff are asked to cancel leave},
+    journal={The BMJ},
+    url={https://www.bmj.com/content/371/bmj.m4980},
+  }
+
+  @inproceedings{sztrik2010queueing,
+    title={Queueing theory and its Applications, a personal view},
+    author={Sztrik, J{\'a}nos},
+    booktitle={Proceedings of the 8th international conference on applied informatics},
+    volume={1},
+    pages={9--30},
+    year={2010}
+  }
+
+  @article{erlang1909,
+    author={Agner, K. Erlang},
+    year={1909},
+    title={The Theory of Probabilities and Telephone Conversations},
+    journal={Nyt Tidsskrift for Matematik B},
+    volume={20}
+  }
+
+  @misc{von1947theory,
+    title={Theory of games and economic behavior},
+    author={Von Neumann, John and Morgenstern, Oskar},
+    year={1947},
+    publisher={Princeton university press}
+  }
+
+  @article{wilson2014best,
+    title={Best practices for scientific computing},
+    author={Wilson, Greg and Aruliah, Dhavide A and Brown, C Titus and Chue Hong, Neil P and Davis, Matt and Guy, Richard T and Haddock, Steven HD and Huff, Kathryn D and Mitchell, Ian M and Plumbley, Mark D and others},
+    journal={PLoS biology},
+    volume={12},
+    number={1},
+    pages={e1001745},
+    year={2014},
+    publisher={Public Library of Science San Francisco, USA}
+  }
+
+  @article{jimenez2017four,
+    title={Four simple recommendations to encourage best practices in research software},
+    author={Jim{\'e}nez, Rafael C and Kuzak, Mateusz and Alhamdoosh, Monther and Barker, Michelle and Batut, B{\'e}r{\'e}nice and Borg, Mikael and Capella-Gutierrez, Salvador and Hong, Neil Chue and Cook, Martin and Corpas, Manuel and others},
+    journal={F1000Research},
+    volume={6},
+    year={2017},
+    publisher={Faculty of 1000 Ltd}
+  }
+
+  @book{mulgan2005wide,
+    title={Wide Open: Open source methods and their future potential},
+    author={Mulgan, Geoff and Steinberg, Tom and Salem, Omar},
+    year={2005},
+    publisher={Demos London}
+  }
+
+  @article{mckiernan2016open,
+    title={How open science helps researchers succeed},
+    author={McKiernan, Erin C and Bourne, Philip E and Brown, C Titus and Buck, Stuart and Kenall, Amye and Lin, Jennifer and McDougall, Damon and Nosek, Brian A and Ram, Karthik and Soderberg, Courtney K and others},
+    journal={elife},
+    volume={5},
+    pages={e16800},
+    year={2016},
+    publisher={eLife Sciences Publications, Ltd}
+  }
+
+  @book{van1995python,
+    title={Python tutorial},
+    author={Van Rossum, Guido and Drake Jr, Fred L},
+    volume={620},
+    year={1995},
+    publisher={Centrum voor Wiskunde en Informatica Amsterdam, The Netherlands}
+  }
+
+  @article{zolkifli2018version,
+    title={Version control system: A review},
+    author={Zolkifli, Nazatul Nurlisa and Ngah, Amir and Deraman, Aziz},
+    journal={Procedia Computer Science},
+    volume={135},
+    pages={408--415},
+    year={2018},
+    publisher={Elsevier}
+  }
+
+  @article{spinellis2012git,
+    title={Git},
+    author={Spinellis, Diomidis},
+    journal={IEEE software},
+    volume={29},
+    number={3},
+    pages={100--101},
+    year={2012},
+    publisher={IEEE}
+  }
+
+  @article{blischak2016quick,
+    title={A quick introduction to version control with Git and GitHub},
+    author={Blischak, John D and Davenport, Emily R and Wilson, Greg},
+    journal={PLoS computational biology},
+    volume={12},
+    number={1},
+    pages={e1004668},
+    year={2016},
+    publisher={Public Library of Science}
+  }
+
+  @article{rolon2016introduction,
+    title={Introduction to Anaconda and Python: Installation and setup},
+    author={Rolon-M{\'e}rette, Damien and Ross, Matt and Rolon-M{\'e}rette, Thadd{\'e} and Church, Kinsey},
+    journal={Quant. Methods Psychol},
+    volume={16},
+    number={5},
+    pages={S3--S11},
+    year={2016}
+  }
+
+  @book{myers2011art,
+    title={The art of software testing},
+    author={Myers, Glenford J and Sandler, Corey and Badgett, Tom},
+    year={2011},
+    publisher={John Wiley \& Sons}
+  }
+
+  @book{astels2003test,
+    title={Test driven development: A practical guide},
+    author={Astels, Dave},
+    year={2003},
+    publisher={Prentice Hall Professional Technical Reference}
+  }
+
+  @misc{Procida_Diataxis_documentation_framework,
+    author={Procida, Daniele},
+    title={{Diátaxis documentation framework}},
+    url={https://diataxis.fr/}
+  }
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%% LITERATURE REVIEW %%
+%%%%%%%%%%%%%%%%%%%%%%%
+
+  % EMS/ED OR models
+
+  @book{ravindran2008operations,
+    title={Operations research applications},
+    author={Ravindran, A Ravi},
+    year={2008},
+    publisher={CRC Press}
+  }
+
+  @article{or_for_multi_organizations,
+    author={J. Stringer},
+    title={Operational Research for “Multi-organizations”},
+    journal={Journal of the Operational Research Society},
+    volume={18},
+    number={2},
+    pages={105-120},
+    year ={1967},
+    publisher={Taylor & Francis},
+    doi={10.1057/jors.1967.23},
+  }
+
+  @book{jensen2002operations,
+    title={Operations research models and methods},
+    author={Jensen, Paul A and Bard, Jonathan F},
+    year={2002},
+    publisher={John Wiley \& Sons}
+  }
+
+  @article{Markov_life_and_work,
+    author={Gely P. Basharin and Amy N. Langville and Valeriy A. Naumov},
+    title={The life and work of A.A. Markov},
+    journal={Linear Algebra and its Applications},
+    volume={386},
+    pages={3-26},
+    year={2004},
+    issn={0024-3795},
+    doi={https://doi.org/10.1016/j.laa.2003.12.041},
+  }
+
+  @book{pushkin2003eugene,
+    title={Eugene Onegin},
+    author={Pushkin, Alexander},
+    year={2003},
+    publisher={Penguin UK}
+  }
+
+  @misc{Gosavi2020399,
+    author={Gosavi, A. and Murray, S.L. and Karagiannis, N.},
+    title={A Markov chain approach for forecasting progression of opioid addiction},
+    year={2020},
+    journal={Proceedings of the 2020 IISE Annual Conference},
+    pages={399-404},
+  }
+
+  @article{Standfield2014165,
+	  author={Standfield, Lachlan and Comans, Tracy and Scuffham, Paul},
+	  title={Markov modeling and discrete event simulation in health care: A systematic comparison},
+	  year={2014},
+	  journal={International Journal of Technology Assessment in Health Care},
+	  volume={30},
+	  number={2},
+	  pages={165-172},
+	  doi={10.1017/S0266462314000117},
+  }
+
+  @misc{Hamdani2015,
+    author={Hamdani, F.Z. and Jdaini, L. and Masmoudi, M. and Roche, J.},
+    title={Quantitative modelling of elderly people flow within French heathcare system},
+    year={2015},
+    journal={Proceedings - CIE 45: 2015 International Conference on Computers and Industrial Engineering},
+    pages={1-6},
+  }
+
+  @article{Liao2021,
+    author={Liao, Hao-yu and Cade, Willie and Behdad, Sara},
+    title={Markov chain optimization of repair and replacement decisions of medical equipment},
+    year={2021},
+    journal={Resources, Conservation and Recycling},
+    volume={171},
+    doi={10.1016/j.resconrec.2021.105609},
+  }
+
+  @article{vile2017queueing,
+    title={A Queueing Theoretic Approach to Set Staffing Levels in Time-Dependent Dual-Class Service Systems},
+    author={Vile, Julie Leanne and Gillard, Jonathan W and Harper, Paul R and Knight, Vincent A},
+    journal={Decision Sciences},
+    volume={48},
+    number={4},
+    pages={766--794},
+    year={2017},
+    publisher={Wiley Online Library}
+  }
+
+  @article{McClean2006256,
+    author={McClean, Sally and Millard, Peter},
+    title={Using Markov models to manage high occupancy hospital care},
+    year={2006},
+    journal={IEEE Intelligent Systems},
+    pages={256-260},
+    doi={10.1109/IS.2006.348427},
+  }
+
+  @article{skoog2010measuring,
+    title={Measuring years of inactivity, years in retirement, time to retirement, and age at retirement within the Markov model},
+    author={Skoog, Gary R and Ciecka, James E},
+    journal={Demography},
+    volume={47},
+    number={3},
+    pages={609--628},
+    year={2010},
+    publisher={Springer}
+  }
+
+  @article{vile2016time,
+    title={Time-dependent stochastic methods for managing and scheduling Emergency Medical Services},
+    author={Vile, Julie Leanne and Gillard, Jonathan William and Harper, Paul Robert and Knight, Vincent Anthony},
+    journal={Operations Research for health care},
+    volume={8},
+    pages={42--52},
+    year={2016},
+    publisher={Elsevier}
+  }
+
+  @article{williams2020discrete,
+    title={Discrete-event simulation modeling of critical care flow: New hospital, old challenges},
+    author={Williams, E. and Szakmany, T. and Spernaes, I. and Muthuswamy, B. and Holborn, P.},
+    journal={Critical care explorations},
+    volume={2},
+    number={9},
+    year={2020},
+    publisher={Wolters Kluwer Health}
+  }
+
+  @article{Duguay2007311,
+    author={Duguay, Christine and Chetouane, Fatah},
+    title={Modeling and Improving Emergency Department Systems using Discrete Event Simulation},
+    year={2007},
+    journal={Simulation},
+    volume={83},
+    number={4},
+    pages={311--320},
+    doi={10.1177/0037549707083111},
+  }
+
+  @article{Getsios2010411,
+  	author={Getsios, Denis and Blume, Steve and Ishak, K. Jack and Maclaine, Grant D.H.},
+  	title={Cost effectiveness of donepezil in the treatment of mild to moderate Alzheimer's disease: A UK evaluation using discrete-event simulation},
+  	year={2010},
+  	journal={PharmacoEconomics},
+  	volume={28},
+  	number={5},
+  	pages={411--427},
+  	doi={10.2165/11531870-000000000-00000},
+  }
+
+
+
+
+  % Game theory in Healthcare
+
+  @article{sadat2015can,
+    title={Can hospitals compete on quality?},
+    author={Sadat, Somayeh and Abouee-Mehrizi, Hossein and Carter, Michael W},
+    journal={Health care management science},
+    volume={18},
+    number={3},
+    pages={376--388},
+    year={2015},
+    publisher={Springer}
+  }
+
+  @inproceedings{koutsoupias1999worst,
+    title={Worst-case equilibria},
+    author={Koutsoupias, Elias and Papadimitriou, Christos},
+    booktitle={Annual Symposium on Theoretical Aspects of Computer Science},
+    pages={404--413},
+    year={1999},
+    organization={Springer}
+  }
+
+  @article{TwoTierHealthcareSystem,
+    title={On two-tier healthcare system under capacity constraint},
+    author={Chen, Wuhua and Zhang, Zhe George and Chen, Xiaohong},
+    journal={International Journal of Production Research},
+    volume={58},
+    number={12},
+    pages={3744--3764},
+    year={2020},
+    publisher={Taylor \& Francis}
+  }
+
+  @article{EfficiencyQualityTradeOff,
+    title={Efficiency-quality trade-off in allocating resource to public healthcare systems},
+    author={Wang, Jinting and Wang, Zhongbin and Zhang, Zhe George and Wang, Fang},
+    journal={International Journal of Production Research},
+    pages={1--22},
+    year={2021},
+    publisher={Taylor \& Francis}
+  }
+
+  @article{deo2011centralized,
+    title={Centralized vs. decentralized ambulance diversion: A network perspective},
+    author={Deo, Sarang and Gurvich, Itai},
+    journal={Management Science},
+    volume={57},
+    number={7},
+    pages={1300--1319},
+    year={2011},
+    publisher={INFORMS}
+  }
+
+
+
+
+  % Game theory and Queueing theory
+
+  @article{FirmCompetition,
+    title={Price competition of make-to-order firms},
+    author={Chen, Hong and Wan, Yat-Wah},
+    journal={IIE Transactions},
+    volume={35},
+    number={9},
+    pages={817--832},
+    year={2003},
+    publisher={Taylor \& Francis}
+  }
+
+  @article{FirmCompetition2,
+    title={Capacity competition of make-to-order firms},
+    author={Chen, Hong and Wan, Yat-wah},
+    journal={Operations Research Letters},
+    volume={33},
+    number={2},
+    pages={187--194},
+    year={2005},
+    publisher={Elsevier}
+  }
+
+  @article{FirmCompetitionExtension,
+    title={Price and capacity competition of application services duopoly},
+    author={Cheng, Hsing Kenneth and Demirkan, Haluk and Koehler, Gary J},
+    journal={Information Systems and e-Business Management},
+    volume={1},
+    number={3},
+    pages={305--329},
+    year={2003},
+    publisher={Springer}
+  }
+
+  @article{fan2009short,
+    title={Short-term and long-term competition between providers of shrink-wrap software and software as a service},
+    author={Fan, Ming and Kumar, Subodha and Whinston, Andrew B},
+    journal={European Journal of Operational Research},
+    volume={196},
+    number={2},
+    pages={661--671},
+    year={2009},
+    publisher={Elsevier}
+  }
+
+  @article{d2015pure,
+    title={Pure threshold strategies for a two-node tandem network under partial information},
+    author={D'Auria, Bernardo and Kanta, Spyridoula},
+    journal={Operations Research Letters},
+    volume={43},
+    number={5},
+    pages={467--470},
+    year={2015},
+    publisher={Elsevier}
+  }
+
+  @article{burnetas2013customer,
+    title={Customer equilibrium and optimal strategies in Markovian queues in series},
+    author={Burnetas, Apostolos N},
+    journal={Annals of Operations Research},
+    volume={208},
+    number={1},
+    pages={515--529},
+    year={2013},
+    publisher={Springer}
+  }
+
+  @article{bacsar2002stackelberg,
+    title={A Stackelberg network game with a large number of followers},
+    author={Ba{\c{s}}ar, T and Srikant, R},
+    journal={Journal of optimization theory and applications},
+    volume={115},
+    number={3},
+    pages={479--490},
+    year={2002},
+    publisher={Springer}
+  }
+
+  @article{veltman2005equilibrium,
+    title={Equilibrium in queueing systems with complementary products},
+    author={Veltman, Ari and Hassin, Refael},
+    journal={Queueing Systems},
+    volume={50},
+    number={2},
+    pages={325--342},
+    year={2005},
+    publisher={Springer}
+  }
+
+  @article{sun2009equilibrium,
+    title={Equilibrium analysis in batch-arrival queues with complementary services},
+    author={Sun, Wei and Li, Shi-yong and Tian, Nai-shuo and Zhang, Hong-ke},
+    journal={Applied Mathematical Modelling},
+    volume={33},
+    number={1},
+    pages={224--241},
+    year={2009},
+    publisher={Elsevier}
+  }
+
+  @techreport{afeche2007decentralized,
+    title={Decentralized service supply chains with multiple time-sensitive customer segments: Pricing capacity decisions and coordination},
+    author={Afeche, Philipp},
+    year={2007},
+    institution={Working paper, University of Toronto}
+  }
+
+  @inproceedings{hagtvedt2009cooperative,
+    title={Cooperative strategies to reduce ambulance diversion},
+    author={Hagtvedt, Reidar and Ferguson, Mark and Griffin, Paul and Jones, Gregory Todd and Keskinocak, Pinar},
+    booktitle={Proceedings of the 2009 Winter Simulation Conference (WSC)},
+    pages={1861--1874},
+    year={2009},
+    organization={IEEE}
+  }
+
+  @article{cachon2007obtaining,
+    title={Obtaining fast service in a queueing system via performance-based allocation of demand},
+    author={Cachon, G{\'e}rard P and Zhang, Fuqiang},
+    journal={Management Science},
+    volume={53},
+    number={3},
+    pages={408--420},
+    year={2007},
+    publisher={INFORMS}
+  }
+
+  @article{kalai1992optimal,
+    title={Optimal service speeds in a competitive environment},
+    author={Kalai, Ehud and Kamien, Morton I and Rubinovitch, Michael},
+    journal={Management Science},
+    volume={38},
+    number={8},
+    pages={1154--1163},
+    year={1992},
+    publisher={INFORMS}
+  }
+
+
+
+
+  % Behavioural modelling
+
+  @book{hacking1983representing,
+    title={Representing and intervening: Introductory topics in the philosophy of natural science},
+    author={Hacking, Ian and others},
+    year={1983},
+    publisher={Cambridge university press}
+  }
+
+  @article{greasley2016behavior,
+   title={Behavior in models: A framework for representing human behavior},
+    author={Greasley, Andrew and Owen, Chris},
+    journal={Behavioral operational research: Theory, methodology and practice},
+    pages={47--63},
+    year={2016},
+    publisher={Springer}
+  }
+
+  @article{jackson2017agent,
+    title={Agent-based modeling: A guide for social psychologists},
+    author={Jackson, Joshua Conrad and Rand, David and Lewis, Kevin and Norton, Michael I and Gray, Kurt},
+    journal={Social Psychological and Personality Science},
+    volume={8},
+    number={4},
+    pages={387--395},
+    year={2017},
+    publisher={Sage Publications Sage CA: Los Angeles, CA}
+  }
+
+
+
+
+  % Agent-based modelling
+
+  @article{Zaidi2002335,
+    author={Zaidi, Syed Zahid Hassan and Abidi, Syed Sibte Raza and Manickam, Selvakumar},
+    title={Leveraging intelligent agents for knowledge discovery from heterogeneous healthcare data repositories},
+    year={2002},
+    journal={Studies in Health Technology and Informatics},
+    volume={90},
+    pages={335--340},
+    doi={10.3233/978-1-60750-934-9-335},
+  }
+
+  @misc{Giesen2009,
+  	author={Giesen, Erik and Ketter, Wolfgang and Zuidwijk, Rob},
+  	title={An agent-based approach to improving resource allocation in the dutch youth health care sector},
+  	year={2009},
+  	journal={17th European Conference on Information Systems, ECIS 2009},
+  }
+
+  @misc{Stainsby2009536,
+  	author={Stainsby, Hayden and Taboada, Manel and Luque, Emilio},
+  	title={Towards an agent-based simulation of hospital emergency departments},
+  	year={2009},
+  	journal={SCC 2009 - 2009 IEEE International Conference on Services Computing},
+  	pages={536--539},
+  	doi={10.1109/SCC.2009.53},
+  }
+
+  @article{Bilge2006699,
+    author={Bilge, Ugur and Saka, Osman},
+    title={Agent based simulations in healthcare},
+    year={2006},
+    journal={Studies in Health Technology and Informatics},
+    volume={124},
+    pages={699--704},
+  }
+
+  @misc{EscuderoMarin20111239,
+  	author={Escudero-Marin, Paula and Pidd, Michael},
+  	title={Using ABMS to simulate Emergency Departments},
+  	year={2011},
+  	journal={Proceedings - Winter Simulation Conference},
+  	pages={1239--1250},
+  	doi={10.1109/WSC.2011.6147773},
+  }
+
+
+
+
+  % Reinforcement learning
+
+  @book{sutton2018reinforcement,
+    title={Reinforcement learning: An introduction},
+    author={Sutton, Richard S and Barto, Andrew G},
+    year={2018},
+    publisher={MIT press}
+  }
+
+  @article{Iizuka20001075,
+    author={Iizuka, Hiroyuki and Suzuki, Keiji and Yamamoto, Masahito and Ohuchi, Azuma},
+    title={Learning of virtual words utilized in negotiation process between agents},
+    year={2000},
+    journal={IEICE Transactions on Fundamentals of Electronics, Communications and Computer Sciences},
+    volume={E83-A},
+    number={6},
+    pages={1075--1082},
+  }
+
+  @misc{Takadama200326,
+    author={Takadama, Keiki and Suematsu, Yutaka L. and Sugimoto, Norikazu and Nawa, Norberto E. and Shimohara, Katsunori},
+    title={Towards verification and validation in multiagent-based systems and simulations: Analyzing different learning bargaining agents},
+    year={2003},
+    journal={Lecture Notes in Artificial Intelligence (Subseries of Lecture Notes in Computer Science)},
+    volume={2927},
+    pages={26--42},
+  }
+
+  @article{Zou20047,
+    author={Zou, Bin and Yan, Maosong and Xie, Guangqian},
+    title={Comparisons among pricing methods in pool-based electricity market by agent-based simulation Part one model and algorithm},
+    year={2004},
+    journal={Dianli Xitong Zidonghua/Automation of Electric Power Systems},
+    volume={28},
+    number={15},
+    pages={7--14},
+  }
+
+  @misc{Tellidou2006228,
+    author={Tellidou, Athina and Bakirtzis, Anastasios},
+    title={A Q-learning agent-based model for the analysis of the power market dynamics},
+    year={2006},
+    journal={Series on Energy and Power Systems},
+    volume={2006},
+    pages={228--233},
+  }
+
+  @article{Takadama2007156,
+    author={Takadama, Keiki and Kawai, Tetsuro and Koyama, Yuhsuke},
+    title={Can agents acquire human-like behaviors in a sequential bargaining game? - Comparison of roth's and Q-learning agents},
+    year={2007},
+    journal={Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics)},
+    volume={4442 LNAI},
+    pages={156--171},
+    doi={10.1007/978-3-540-76539-4_12},
+  }
+
+  @article{Takadama2008,
+    author={Takadama, Keiki and Kawai, Tetsuro and Koyama, Yuhsuke},
+    title={Micro- and macro-level validation in agent-based simulation: Reproduction of human-like behaviors and thinking in a sequential bargaining game},
+    year={2008},
+    journal={JASSS},
+    volume={11},
+    number={2},
+  }
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% QUEUEING THEORETIC MODEL %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
   @book{kemeny1976markov,
     title={Markov chains},
@@ -14,26 +773,23 @@
 
 
   @article{2020NumPy-Array,
-    author  = {Harris, Charles R. and Millman, K. Jarrod and van der Walt, Stéfan J and Gommers, Ralf and Virtanen, Pauli and Cournapeau, David and Wieser, Eric and Taylor, Julian and Berg, Sebastian and Smith, Nathaniel J. and Kern, Robert and Picus, Matti and Hoyer, Stephan and van Kerkwijk, Marten H. and Brett, Matthew and Haldane, Allan and Fernández del Río, Jaime and Wiebe, Mark and Peterson, Pearu and Gérard-Marchant, Pierre and Sheppard, Kevin and Reddy, Tyler and Weckesser, Warren and Abbasi, Hameer and Gohlke, Christoph and Oliphant, Travis E.},
-    title   = {Array programming with {NumPy}},
-    journal = {Nature},
-    year    = {2020},
-    volume  = {585},
-    pages   = {357-362},
-    doi     = {10.1038/s41586-020-2649-2}
+    author={Harris, Charles R. and Millman, K. Jarrod and van der Walt, Stéfan J and Gommers, Ralf and Virtanen, Pauli and Cournapeau, David and Wieser, Eric and Taylor, Julian and Berg, Sebastian and Smith, Nathaniel J. and Kern, Robert and Picus, Matti and Hoyer, Stephan and van Kerkwijk, Marten H. and Brett, Matthew and Haldane, Allan and Fernández del Río, Jaime and Wiebe, Mark and Peterson, Pearu and Gérard-Marchant, Pierre and Sheppard, Kevin and Reddy, Tyler and Weckesser, Warren and Abbasi, Hameer and Gohlke, Christoph and Oliphant, Travis E.},
+    title={Array programming with {NumPy}},
+    journal={Nature},
+    year={2020},
+    volume={585},
+    pages={357-362},
+    doi={10.1038/s41586-020-2649-2}
   }
 
   @book{lapack99,
-    AUTHOR = {Anderson, E. and Bai, Z. and Bischof, C. and
-    Blackford, S. and Demmel, J. and Dongarra, J. and
-    Du Croz, J. and Greenbaum, A. and Hammarling, S. and
-    McKenney, A. and Sorensen, D.},
-    TITLE = {{LAPACK} Users' Guide},
-    EDITION = {Third},
-    PUBLISHER = {Society for Industrial and Applied Mathematics},
-    YEAR = {1999},
-    ADDRESS = {Philadelphia, PA},
-    ISBN = {0-89871-447-8 (paperback)} 
+    author={Anderson, E. and Bai, Z. and Bischof, C. and Blackford, S. and Demmel, J. and Dongarra, J. and Du Croz, J. and Greenbaum, A. and Hammarling, S. and McKenney, A. and Sorensen, D.},
+    title={{LAPACK} Users' Guide},
+    edition={Third},
+    publisher={Society for Industrial and Applied Mathematics},
+    year={1999},
+    address={Philadelphia, PA},
+    isbn={0-89871-447-8 (paperback)} 
   }
 
   @book{strang2006linear,
@@ -44,40 +800,27 @@
   }
 
   @article{2020SciPy-NMeth,
-    author  = {Virtanen, Pauli and Gommers, Ralf and Oliphant, Travis E. and
-              Haberland, Matt and Reddy, Tyler and Cournapeau, David and
-              Burovski, Evgeni and Peterson, Pearu and Weckesser, Warren and
-              Bright, Jonathan and {van der Walt}, St{\'e}fan J. and
-              Brett, Matthew and Wilson, Joshua and Millman, K. Jarrod and
-              Mayorov, Nikolay and Nelson, Andrew R. J. and Jones, Eric and
-              Kern, Robert and Larson, Eric and Carey, C J and
-              Polat, {\.I}lhan and Feng, Yu and Moore, Eric W. and
-              {VanderPlas}, Jake and Laxalde, Denis and Perktold, Josef and
-              Cimrman, Robert and Henriksen, Ian and Quintero, E. A. and
-              Harris, Charles R. and Archibald, Anne M. and
-              Ribeiro, Ant{\^o}nio H. and Pedregosa, Fabian and
-              {van Mulbregt}, Paul and {SciPy 1.0 Contributors}},
-    title   = {{{SciPy} 1.0: Fundamental Algorithms for Scientific
-              Computing in Python}},
-    journal = {Nature Methods},
-    year    = {2020},
-    volume  = {17},
-    pages   = {261--272},
-    adsurl  = {https://rdcu.be/b08Wh},
-    doi     = {10.1038/s41592-019-0686-2},
+    author={Virtanen, Pauli and Gommers, Ralf and Oliphant, Travis E. and Haberland, Matt and Reddy, Tyler and Cournapeau, David and Burovski, Evgeni and Peterson, Pearu and Weckesser, Warren and Bright, Jonathan and {van der Walt}, St{\'e}fan J. and Brett, Matthew and Wilson, Joshua and Millman, K. Jarrod and Mayorov, Nikolay and Nelson, Andrew R. J. and Jones, Eric and Kern, Robert and Larson, Eric and Carey, C J and Polat, {\.I}lhan and Feng, Yu and Moore, Eric W. and {VanderPlas}, Jake and Laxalde, Denis and Perktold, Josef and Cimrman, Robert and Henriksen, Ian and Quintero, E. A. and Harris, Charles R. and Archibald, Anne M. and Ribeiro, Ant{\^o}nio H. and Pedregosa, Fabian and {van Mulbregt}, Paul and {SciPy 1.0 Contributors}},
+    title={{{SciPy} 1.0: Fundamental Algorithms for Scientific Computing in Python}},
+    journal={Nature Methods},
+    year={2020},
+    volume={17},
+    pages={261--272},
+    adsurl={https://rdcu.be/b08Wh},
+    doi={10.1038/s41592-019-0686-2},
   }
 
   @article{lsoda_algorithm,
-    author = {Petzold, Linda},
-    title = {Automatic Selection of Methods for Solving Stiff and Nonstiff Systems of Ordinary Differential Equations},
-    journal = {SIAM Journal on Scientific and Statistical Computing},
-    volume = {4},
-    number = {1},
-    pages = {136-148},
-    year = {1983},
-    doi = {10.1137/0904010},
-    URL = {https://doi.org/10.1137/0904010},
-    eprint = {https://doi.org/10.1137/0904010}
+    author={Petzold, Linda},
+    title={Automatic Selection of Methods for Solving Stiff and Nonstiff Systems of Ordinary Differential Equations},
+    journal={SIAM Journal on Scientific and Statistical Computing},
+    volume={4},
+    number={1},
+    pages={136-148},
+    year={1983},
+    doi={10.1137/0904010},
+    URL={https://doi.org/10.1137/0904010},
+    eprint={https://doi.org/10.1137/0904010}
   }
 
   @article{backward_differentiation_formula,
@@ -118,37 +861,51 @@
     publisher={Elsevier}
   }
 
-%% Discrete Event Simulation
+  @article{banjevic1996recursive,
+    title={Recursive relations for the distribution of waiting times in a Markov chain},
+    author={Banjevic, Dragan},
+    journal={Journal of applied probability},
+    volume={33},
+    number={1},
+    pages={48--56},
+    year={1996},
+    publisher={Cambridge University Press}
+  }
+
+
+
+
+  % Discrete Event Simulation
 
   @misc{ciwpython,
-    author       = {{{The Ciw library developers}}},
-    title        = {Ciw: v2.3.1},
-    year         = 2022,
-    doi          = {10.5281/zenodo.6902233},
-    url          = {http://dx.doi.org/10.5281/zenodo.6902233}
+    author={{{The Ciw library developers}}},
+    title={Ciw: v2.3.1},
+    year=2022,
+    doi={10.5281/zenodo.6902233},
+    url={http://dx.doi.org/10.5281/zenodo.6902233}
   }
 
   @article{ciwarticle,
-    author    = {Geraint I. Palmer and Vincent A. Knight and Paul R. Harper and Asyl L. Hawa},
-    title     = {Ciw: An open-source discrete event simulation library},
-    journal   = {Journal of Simulation},
-    volume    = {13},
-    number    = {1},
-    pages     = {68-82},
-    year      = {2019},
-    publisher = {Taylor & Francis},
-    doi       = {10.1080/17477778.2018.1473909},
+    author={Geraint I. Palmer and Vincent A. Knight and Paul R. Harper and Asyl L. Hawa},
+    title={Ciw: An open-source discrete event simulation library},
+    journal={Journal of Simulation},
+    volume={13},
+    number={1},
+    pages={68-82},
+    year={2019},
+    publisher={Taylor & Francis},
+    doi={10.1080/17477778.2018.1473909},
   }
   
   @article{DESstewart,
-    author = {Robinson, Stewart},
-    year = {2005},
-    month = {06},
-    pages = {619-629},
-    title = {Discrete-event simulation: From the pioneers to the present, what next?},
-    volume = {56},
-    journal = {Journal of The Operational Research Society - J OPER RES SOC},
-    doi = {10.1057/palgrave.jors.2601864}
+    author={Robinson, Stewart},
+    year={2005},
+    month={06},
+    pages={619-629},
+    title={Discrete-event simulation: From the pioneers to the present, what next?},
+    volume={56},
+    journal={Journal of The Operational Research Society - J OPER RES SOC},
+    doi={10.1057/palgrave.jors.2601864}
   }
 
   @inbook{VinceGeraintBook,
@@ -171,7 +928,11 @@
     publisher={Springer}
   }
 
-  %% State-probs closed form approach
+  
+  
+  
+  % State-probs closed form approach
+
   @inproceedings{broder1989generating,
     title={Generating random spanning trees},
     author={Broder, Andrei Z},
@@ -244,12 +1005,45 @@
     year={2022}
   }
 
-%% Proportion of individuals within time
+  @article{yan2011enumeration,
+    title={Enumeration of spanning trees of graphs with rotational symmetry},
+    author={Yan, Weigen and Zhang, Fuji},
+    journal={Journal of Combinatorial Theory, Series A},
+    volume={118},
+    number={4},
+    pages={1270--1290},
+    year={2011},
+    publisher={Elsevier}
+  }
+
+  @article{sung2016enumeration,
+    title={Enumeration for spanning trees and forests of join graphs based on the combinatorial decomposition.},
+    author={Sung Sik U},
+    journal={Electron. J. Graph Theory Appl.},
+    volume={4},
+    number={2},
+    pages={171--177},
+    year={2016}
+  }
+
+  @inproceedings{uno1996algorithm,
+    title={An algorithm for enumerating all directed spanning trees in a directed graph},
+    author={Uno, Takeaki},
+    booktitle={Algorithms and Computation: 7th International Symposium, ISAAC'96 Osaka, Japan, December 16--18, 1996 Proceedings 7},
+    pages={166--173},
+    year={1996},
+    organization={Springer}
+  }
+
+  
+  
+  
+  % Proportion of individuals within time
 
   @article{Akkouchi2008,
     title={On the convolution of exponential distributions},
     author={Akkouchi, Mohamed},
-    journal={J. Chungcheong Math. Soc},
+    journal={Journal Chungcheong Mathematical Society},
     volume={21},
     number={4},
     pages={501--510},
@@ -286,7 +1080,6 @@
     publisher={Springer}
   }
 
-
   @article{Legros2015,
     title={A linear algebraic approach for the computation of sums of Erlang random variables},
     author={Legros, Benjamin and Jouini, Oualid},
@@ -310,7 +1103,10 @@
   }
 
 
-% GAME THEORETIC MODEL %
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% GAME THEORETIC MODEL %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
 
   @inbook{osborne2004_normal_form_games,
     title={An introduction to game theory},
@@ -343,24 +1139,24 @@
   }
 
   @article{Berwanger2008,
-    author = {Berwanger, Dietmar and Doyen, Laurent},
-    file = {:C\:/Users/micha/Desktop/08004.BerwangerDietmar.1742.pdf:pdf},
-    isbn = {9783939897088},
-    issn = {18688969},
-    journal = {Leibniz International Proceedings in Informatics, LIPIcs},
-    keywords = {Imperfect information,Infinite games,game theory,imperfect information},
-    mendeley-tags = {game theory,imperfect information},
-    pages = {73--82},
-    title = {{On the power of imperfect information}},
-    volume = {2},
-    year = {2008}
+    author={Berwanger, Dietmar and Doyen, Laurent},
+    file={:C\:/Users/micha/Desktop/08004.BerwangerDietmar.1742.pdf:pdf},
+    isbn={9783939897088},
+    issn={18688969},
+    journal={Leibniz International Proceedings in Informatics, LIPIcs},
+    keywords={Imperfect information,Infinite games,game theory,imperfect information},
+    mendeley-tags={game theory,imperfect information},
+    pages={73--82},
+    title={{On the power of imperfect information}},
+    volume={2},
+    year={2008}
   }
 
   @book{Maschler2013,
-    author = {Maschler, Michael and Solan, Eilon and Zamir, Eilon},
-    title = {Game Theory},
-    publisher = {Cambridge University Press},
-    year = {2013}
+    author={Maschler, Michael and Solan, Eilon and Zamir, Eilon},
+    title={Game Theory},
+    publisher={Cambridge University Press},
+    year={2013}
   }
 
   @book{watson2002strategy,
@@ -478,7 +1274,7 @@
   }
 
   @article{degenerategames,
-    title={On the structure of the set of Nash equilibriaof weakly nondegenerate bimatrix games},
+    title={On the structure of the set of Nash equilibria of weakly nondegenerate bimatrix games},
     author={Keiding, Hans},
     journal={Annals of Operations Research},
     volume={84},
@@ -533,10 +1329,11 @@
     publisher={Wiley Online Library}
   }
 
-  @incollection{accinelli2011evolutionarily,
+  @article{accinelli2011evolutionarily,
     title={Evolutionarily stable strategies and replicator dynamics in asymmetric two-population games},
-    author={Accinelli, Elvio and Carrera, Edgar J S{\'a}nchez},
-    booktitle={Dynamics, Games and Science I},
+    author={Accinelli, Elvio and Carrera, Edgar J S{\'a}nchez and others},
+    journal={Dynamics, games and science i},
+    volume={1},
     pages={25--35},
     year={2011},
     publisher={Springer}
@@ -596,7 +1393,10 @@
   }
 
 
-  % NUMERICAL RESULTS %
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%% NUMERICAL RESULTS %%
+%%%%%%%%%%%%%%%%%%%%%%%
 
   @misc{michalis_panayides_2023_7555285,
     author={Michalis Panayides},
@@ -673,7 +1473,9 @@
     publisher={The Royal Society}
   }
 
-% AGENT-BASED EXTENSION %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% AGENT-BASED EXTENSION %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
   
   @article{de2014agent,
     title={Agent-based models},
