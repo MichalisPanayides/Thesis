@@ -1,13 +1,25 @@
 \chapter{Numerical Results}\label{sec:numerical_results}
 
+\section{Introduction}
+
 This chapter presents the results of the numerical experiments conducted to
 study the behavioural patterns that can emerge from the interaction between the
 two EDs and the EMS.
-This chapter consists of a \textit{Data Collection} section, which describes the
-data collection process, and a \textit{What if scenarios} section, which
-presents the results of the numerical experiments.
+Additional numerical experiments can also be found in appendix.
+%TODO: reference appendix section ~\ref{appendix:more_game_results}.
+This chapter consists of the following sections:
+\begin{itemize}
+    \item Section~\ref{sec:data_collection} describes the data collection
+    process.
+    \item Section~\ref{sec:dataset_description} gives an overview and some
+    descriptive statistics of the data.
+    \item Section~\ref{sec:results_what_if} presents the results of the
+    numerical experiments and discusses the implications of the results.
+\end{itemize}
+
 Note that the data presented in this chapter are archived and can be found
 in~\cite{michalis_panayides_2023_7555285}.
+This chapter extends the results presented in~\cite{panayides2023game}.
 
 
 \input{chapters/05_numerical_results/01_data_collection/main.tex}
@@ -15,3 +27,36 @@ in~\cite{michalis_panayides_2023_7555285}.
 \input{chapters/05_numerical_results/02_data_description/main.tex}
 
 \input{chapters/05_numerical_results/03_what_if/main.tex}
+
+
+\section{Chapter summary}
+
+This chapter presents the results of the numerical experiments conducted to
+study the behavioural patterns that can emerge from the interaction between the
+two EDs and the EMS.
+Matrices \(A\), \(B\) (the payoff matrices of the two EDs) and \(R\) (the
+routing matrix of the EMS) were generated and analysed for different values of
+the parameters to study the behaviour that emerges from playing the game.
+Additional numerical experiments can also be found in appendix.
+% TODO: reference appendix section ~\ref{appendix:more_game_results}.
+
+Section~\ref{sec:data_collection} describes the data collection process.
+The parameter sets that were used to generate the dataset are presented in
+along with the structure of the repository that contains all data.
+Section~\ref{sec:dataset_description} gives an overview and some descriptive
+statistics of the data.
+Some plots are also presented to give a visual representation of the data and
+to highlight some interesting patterns.
+
+Section~\ref{sec:results_what_if} presents the results of the numerical
+experiments and discusses the implications of the results.
+More specifically, matrices \(A\), \(B\) and \(R\) are used to run the
+asymmetric replicator dynamics algorithm.
+Several what-if scenarios are presented and discussed where the system is
+flooded with individuals.
+Such scenarios include the effect of increasing arrival rates, the effect of
+increasing the number of available servers, the effect of increasing the
+different capacities and a certain incentivisation approach.
+The incentivisation approach is based on the idea carefully penalising some of
+the EDs strategies could lead them to choose strategies that are more
+cooperative and can help reduce the overall blocking time.

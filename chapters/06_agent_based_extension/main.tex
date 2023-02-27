@@ -1,4 +1,6 @@
-\chapter{Extending to agent-based extension}
+\chapter{Extending to agent-based model}\label{sec:agent_based_extension}
+
+\section{Introduction}
 
 This chapter aims to explore an extension to the game described earlier.
 The extension is based on the idea of an agent-based
@@ -22,13 +24,26 @@ studies~\cite{allen2004understanding} have shown that some cooperation and
 empathy can be found among staff in such gaming environment.
 The motivation for this chapter was initiated by these insights.
 
-This chapter is structured in such a way that the first section describes a
-state-dependent version of the queueing system described in
-Section~\ref{sec:queueing_section}, the second section describes
-a server-dependent variant and the third section combines them together and
-formulate a reinforcement learning algorithm that works on finding the best
-policies for the servers so that they can maximise their own utility.
-
+This chapter consists of the following sections:
+\begin{itemize}
+    \item Section~\ref{sec:state_dependent} describes a variant of the queueing
+    system described in Chapter~\ref{sec:queueing_section} where the service
+    rate of the servers is dependent on the state of the system.
+    \item Section~\ref{sec:server_dependent} describes another variant of the
+    queueing system of Chapter~\ref{sec:queueing_section} where the service
+    rate of each server can be different.
+    \item Section~\ref{sec:state_server_dependent_model} combines the concepts
+    described in Sections~\ref{sec:state_dependent}
+    and~\ref{sec:server_dependent} to create a different variation of the
+    queueing system where the rates of the servers are both dependent on the
+    state of the system and the servers itself.
+    \item Section~\ref{sec:agent_based_model} uses the state and
+    server-dependent model to create an agent based model where the servers
+    can choose their own service rate in order to maximise their own utility.
+    \item Section~\ref{sec:reinforcement_learning} uses the agent-based model
+    to create a reinforcement learning model where the servers can learn to
+    choose their own service rate in order to maximise their own utility.
+\end{itemize}
 
 
 \input{chapters/06_agent_based_extension/01_state_dependent/main.tex}
@@ -40,3 +55,48 @@ policies for the servers so that they can maximise their own utility.
 \input{chapters/06_agent_based_extension/04_agent_based/main.tex}
 
 \input{chapters/06_agent_based_extension/05_reinforcement_learning/main.tex}
+
+
+\section{Chapter summary}
+
+This chapter aims to explore an extension to the queueing network described in
+Section~\ref{sec:queueing_section}.
+The proposed model is an agent-based model where the servers can choose their
+own service rate.
+In addition, a reinforcement learning algorithm is implemented to allow the
+servers to learn their own service rate so that they maximise their own utility
+function.
+
+Section~\ref{sec:state_dependent} describes a variant of the queueing system
+described in Chapter~\ref{sec:queueing_section} where the service rate of the
+servers is dependent on the state of the system.
+In this model there is a service rate for each particular state of the system.
+This modification attempts to capture the idea that the servers might be more
+likely to serve patients faster when the system is under pressure.
+In addition, Section~\ref{sec:server_dependent} describes another variant of
+the queueing system where the service rate can be dependent on the server.
+This can be used to capture the individual behaviour of servers, where some
+servers might be more likely to serve patients faster than others.
+Finally, Section~\ref{sec:state_server_dependent_model} combines the two
+concepts into a model where the service rate of the servers is dependent on
+both the servers and the state of the system.
+An example of combining the state and server-dependent model with the game
+theoretic model described in Chapter~\ref{sec:game_theoretic_model} is also
+given.
+
+Section~\ref{sec:agent_based_model} then proceeds to use the state and
+server-dependent model to create an agent-based model where the servers can
+choose their own service rate to maximise a utility function.
+Some possible utility functions are given and a case study is described where
+one of the utility functions is used to model the behaviour of the servers.
+Finally, Section~\ref{sec:reinforcement_learning} uses the agent-based model
+to create a reinforcement learning model where the servers can learn to choose
+their own service rate in order to maximise their own utility function.
+Some numerical results are also given to show how the change in the servers'
+behaviour can affect the overall performance of the system.
+A particular scenario is investigated where the reinforcement learning
+algorithm is used to train the servers and when the servers have reached a
+stable service rate, the system is flooded with individuals.
+The results show how the servers are able to adapt to the new situation and
+when the system is no longer flooded, the servers are able to return to their
+pre-learned service rates.

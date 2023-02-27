@@ -1,4 +1,4 @@
-\subsection{Closed-form approach}
+\subsection{Closed-form approach}\label{sec:state_probs_closed_form}
 
 This section aims to explore alternative ways of calculating the steady state
 probabilities using the connection between Markov chains and graph
@@ -12,8 +12,10 @@ Every edge is expressed as \(e = (v_i, v_j)\) where \(v_i, v_j \in V\).
 
 \begin{figure}[H]
     \centering
-    \input{chapters/03_queueing_model/img/graph_theory_examples/graph.tex}
-    \caption{Example of a graph}
+    \input{chapters/03_queueing_model/Bin/graph_theory_examples/graph.tex}
+    % <!-- alex ignore simple -->
+    \caption{An example of a simple undirected graph with \(5\) vertices and
+    \(7\) edges.}
     \label{fig:example_of_graph}
 \end{figure}
 
@@ -24,8 +26,9 @@ In this case, the edges are expressed as \(e = (v_i, v_j)\) where \(v_i, v_j
 
 \begin{figure}[H]
     \centering
-    \input{chapters/03_queueing_model/img/graph_theory_examples/directed_graph.tex}
-    \caption{Example of a graph}
+    \input{chapters/03_queueing_model/Bin/graph_theory_examples/directed_graph.tex}
+    \caption{An example of a directed graph with \(5\) vertices and \(7\)
+    edges.}
     \label{fig:example_of_directed_graph}
 \end{figure}
 
@@ -36,15 +39,16 @@ In this case, the edges are expressed as \(e = (v_i, v_j, w)\) where \(v_i, v_j
 
 \begin{figure}[H]
     \centering
-    \input{chapters/03_queueing_model/img/graph_theory_examples/weighted_directed_graph.tex}
-    \caption{Example of a graph}
+    \input{chapters/03_queueing_model/Bin/graph_theory_examples/weighted_directed_graph.tex}
+    \caption{An example of a weighted directed graph with \(5\) vertices and
+    \(7\) edges.}
     \label{fig:example_of_weighted_directed_graph}
 \end{figure}
 
 \subsubsection{A graph theoretic model underlying the Markov chain}
 It can be assumed that a Markov chain model \(M\) can be translated as a
 weighted directed graph \(G_M = (V, E)\) where \(V=S\) from
-equation~(\ref{eq:definition_of_S_as_disjoint_union}) and \((v_i, v_j)\in E\) if
+equation~\eqref{eq:definition_of_S_as_disjoint_union} and \((v_i, v_j)\in E\) if
 and only if \(q_{v_i, v_j}>0\), where \(v_i, v_j \in V\).
 Furthermore, the weight of each edge is given by:
 
@@ -76,7 +80,7 @@ More specifically, the way these parameters are translated into the model are:
     \begin{equation*}
         w_{(v_i, v_j)} = q_{v_i, v_j}
     \end{equation*}
-    where \(q_{i,j}\) is defined in equation~(\ref{eq:markov_transition_rate}).
+    where \(q_{i,j}\) is defined in equation~\eqref{eq:markov_transition_rate}.
     Thus, the coefficients of the service rate have a lower bound of \(1\) and
     an upper bound of \(C\).
     \item \textbf{Threshold (\(T\)):} Determines the length of the left
@@ -95,9 +99,9 @@ More specifically, the way these parameters are translated into the model are:
 \begin{figure}[H]
     \centering
     \scalebox{0.7}{
-        \input{chapters/03_queueing_model/img/example_model_1352/main.tex}
+        \input{chapters/03_queueing_model/Bin/example_model_1352/main.tex}
         }
-    \caption{\(C=1, T=3, N=5, M=2\)}
+    \caption{Example of a Markov model with \(C=1, T=3, N=5, M=2\)}
     \label{fig:Markov_1352_example_for_closed_form}
 \end{figure}
 
@@ -136,7 +140,9 @@ The graph points out a spanning tree that is rooted at vertex 3.
         \draw[->, thick] (u6) -- (u5);
         \draw[->, thick] (u7) -- (u6);
     \end{tikzpicture}
-    \caption{Spanning tree of a graph rooted at vertex 3}
+    \caption{Example of one of the spanning trees rooted at vertex 3 of the
+    directed graph. Note that the graph corresponds to a Markov model with
+    parameters \(T=1, N=3, M=1\).}
     \label{fig:example_spanning_tree}
 \end{figure}
 
@@ -151,7 +157,7 @@ of the edges it contains~\cite{williams2022combinatorics}:
 \]
 
 
-\textbf{Theorem: Markov chain tree theorem}~\cite{broder1989generating}:\newline
+{\definition Markov chain tree theorem~\cite{broder1989generating}}:
 \textit{Let M be an irreducible Markov chain on n states with stationary
 distribution \(\pi_1, \pi_2, \dots, \pi_n\).
 Let \(G_M\) be the directed graph associated with \(M\).
@@ -169,10 +175,13 @@ numerator denoted as \(\tilde{\pi}_i=\sum_{t \in T_i(G_M)} w(t)\).
 Another useful theorem that can be utilised is Kirchhoff's theorem that gives
 some useful insights on the number of spanning trees of a graph.
 
-\textbf{Theorem: Kirchhoff's theorem}~\cite{chaiken1978matrix}:\newline
+{\definition Kirchhoff's theorem~\cite{chaiken1978matrix}}:
 \textit{The number of directed spanning trees rooted at a state \(i\) can be
 found by calculating the determinant of the Laplacian matrix \(Q\) of the
 directed graph and removing row \(i\) and column \(i\).}
+
+Some additional research papers that on directed spanning trees enumeration
+are~\cite{yan2011enumeration, sung2016enumeration, uno1996algorithm}.
 
 
 \subsubsection{Spanning Trees rooted at (0,0)}
@@ -188,12 +197,12 @@ As well as this, the sum of all the weights of the spanning trees denoted by
 
 \begin{figure}[H]
     \centering
-    \input{chapters/03_queueing_model/img/example_model_1121/main.tex}
+    \input{chapters/03_queueing_model/Bin/example_model_1121/main.tex}
 \end{figure}
 
 \begin{multicols}{2}
     \begin{center}
-        \input{chapters/03_queueing_model/img/spanning_trees_1121/main_0.tex}
+        \input{chapters/03_queueing_model/Bin/spanning_trees_1121/main_0.tex}
     \end{center}
 
     \begin{flalign*}
@@ -204,7 +213,7 @@ As well as this, the sum of all the weights of the spanning trees denoted by
 
 \begin{multicols}{2}
     \begin{center}
-        \input{chapters/03_queueing_model/img/spanning_trees_1121/main_1.tex}
+        \input{chapters/03_queueing_model/Bin/spanning_trees_1121/main_1.tex}
     \end{center}
 
     \begin{flalign*}
@@ -216,10 +225,11 @@ As well as this, the sum of all the weights of the spanning trees denoted by
     \tilde{\pi}_{(0,0)} = \mu^4 + \lambda_2 \mu^3
 \end{equation*}
 
+\newpage
 
 \begin{figure}[H]
     \centering
-    \input{chapters/03_queueing_model/img/example_model_1131/main.tex}
+    \input{chapters/03_queueing_model/Bin/example_model_1131/main.tex}
 \end{figure}
 
 
@@ -227,7 +237,7 @@ As well as this, the sum of all the weights of the spanning trees denoted by
     \begin{figure}[H]
         \centering
         \scalebox{0.7}{
-            \input{chapters/03_queueing_model/img/spanning_trees_1131/main_0.tex}}
+            \input{chapters/03_queueing_model/Bin/spanning_trees_1131/main_0.tex}}
     \end{figure}
 
     \begin{flalign*}
@@ -239,7 +249,7 @@ As well as this, the sum of all the weights of the spanning trees denoted by
     \begin{figure}[H]
         \centering
         \scalebox{0.7}{
-            \input{chapters/03_queueing_model/img/spanning_trees_1131/main_1.tex}}
+            \input{chapters/03_queueing_model/Bin/spanning_trees_1131/main_1.tex}}
     \end{figure}
 
     \begin{flalign*}
@@ -251,7 +261,7 @@ As well as this, the sum of all the weights of the spanning trees denoted by
     \begin{figure}[H]
         \centering
         \scalebox{0.7}{
-            \input{chapters/03_queueing_model/img/spanning_trees_1131/main_2.tex}}
+            \input{chapters/03_queueing_model/Bin/spanning_trees_1131/main_2.tex}}
     \end{figure}
 
     \begin{flalign*}
@@ -263,7 +273,7 @@ As well as this, the sum of all the weights of the spanning trees denoted by
     \begin{figure}[H]
         \centering
         \scalebox{0.7}{
-            \input{chapters/03_queueing_model/img/spanning_trees_1131/main_3.tex}}
+            \input{chapters/03_queueing_model/Bin/spanning_trees_1131/main_3.tex}}
     \end{figure}
 
     \begin{flalign*}
@@ -275,7 +285,7 @@ As well as this, the sum of all the weights of the spanning trees denoted by
     \begin{figure}[H]
         \centering
         \scalebox{0.7}{
-            \input{chapters/03_queueing_model/img/spanning_trees_1131/main_4.tex}}
+            \input{chapters/03_queueing_model/Bin/spanning_trees_1131/main_4.tex}}
     \end{figure}
 
     \begin{flalign*}
@@ -291,14 +301,14 @@ As well as this, the sum of all the weights of the spanning trees denoted by
 
 \begin{figure}[H]
     \centering
-    \input{chapters/03_queueing_model/img/example_model_1122/main.tex}
+    \input{chapters/03_queueing_model/Bin/example_model_1122/main.tex}
 \end{figure}
 
 \begin{multicols}{4}
     \begin{figure}[H]
         \centering
         \scalebox{0.48}{
-            \input{chapters/03_queueing_model/img/spanning_trees_1122/main_0.tex}}
+            \input{chapters/03_queueing_model/Bin/spanning_trees_1122/main_0.tex}}
     \end{figure}
     \vspace*{\fill}
     \columnbreak
@@ -311,7 +321,7 @@ As well as this, the sum of all the weights of the spanning trees denoted by
     \begin{figure}[H]
         \centering
         \scalebox{0.48}{
-            \input{chapters/03_queueing_model/img/spanning_trees_1122/main_1.tex}}
+            \input{chapters/03_queueing_model/Bin/spanning_trees_1122/main_1.tex}}
     \end{figure}
     \vspace*{\fill}
     \columnbreak
@@ -321,13 +331,11 @@ As well as this, the sum of all the weights of the spanning trees denoted by
     \end{equation*}
 \end{multicols}
 
-\newpage
-
 \begin{multicols}{4}
     \begin{figure}[H]
         \centering
         \scalebox{0.48}{
-            \input{chapters/03_queueing_model/img/spanning_trees_1122/main_2.tex}}
+            \input{chapters/03_queueing_model/Bin/spanning_trees_1122/main_2.tex}}
     \end{figure}
     \vspace*{\fill}
     \columnbreak
@@ -340,7 +348,7 @@ As well as this, the sum of all the weights of the spanning trees denoted by
     \begin{figure}[H]
         \centering
         \scalebox{0.48}{
-            \input{chapters/03_queueing_model/img/spanning_trees_1122/main_3.tex}}
+            \input{chapters/03_queueing_model/Bin/spanning_trees_1122/main_3.tex}}
     \end{figure}
     \vspace*{\fill}
     \columnbreak
@@ -362,27 +370,17 @@ the same threshold \(T=1\), the same node 1 capacity \(N=2\) but
 \(M\in\{1, 2, 3\}\).
 
 
-\begin{multicols}{3}
-    \begin{figure}[H]
-        \centering
-        \scalebox{0.65}{
-            \input{chapters/03_queueing_model/img/example_model_1121/main.tex}}
-        \caption{\(M=1\)}
-    \end{figure}
-    \columnbreak
-    \begin{figure}[H]
-        \centering
-        \scalebox{0.65}{
-            \input{chapters/03_queueing_model/img/example_model_1122/main.tex}}
-        \caption{\(M=2\)}
-    \end{figure}
-    \begin{figure}[H]
-        \centering
-        \scalebox{0.65}{
-            \input{chapters/03_queueing_model/img/example_model_1123/main.tex}}
-        \caption{\(M=3\)}
-    \end{figure}
-\end{multicols}
+\begin{figure}[H]
+    \centering
+    \scalebox{0.65}{
+        \input{chapters/03_queueing_model/Bin/example_model_1121/main.tex}}
+    \scalebox{0.65}{
+        \input{chapters/03_queueing_model/Bin/example_model_1122/main.tex}}
+    \scalebox{0.65}{
+        \input{chapters/03_queueing_model/Bin/example_model_1123/main.tex}}
+    \caption{Examples of Markov chain models with different values of \(M\),
+    where \(M=1\) (left), \(M=2\) (middle) and \(M=3\) (right).}
+\end{figure}
 
 By increasing the node 2 capacity of the system it can be observed that
 \(|T_{(0,0)}(G)|\) increases as well since more combinations of paths can be
@@ -402,14 +400,14 @@ The corresponding values of \(\tilde{\pi}_{(0,0)}\) of the three systems are:
     &= \mu^5 (\mu + \lambda_2) ^ 3 \label{eq:rows_conjecture_3}
 \end{align}
 
-Note that in equations~(\ref{eq:rows_conjecture_1}),(\ref{eq:rows_conjecture_2})
-and (\ref{eq:rows_conjecture_3}), the following equation holds:
+Note that in equations~\eqref{eq:rows_conjecture_1},\eqref{eq:rows_conjecture_2}
+and~\eqref{eq:rows_conjecture_3}, the following equation holds:
 
 \begin{equation}\label{eq:rows_conjecture_general}
     \tilde{\pi}_{(0,0)} = \mu^{(N+M)} (\mu + \lambda_2)^M
 \end{equation}
 
-A generalisation of equation~(\ref{eq:rows_conjecture_general}), where \(N \geq
+A generalisation of equation~\eqref{eq:rows_conjecture_general}, where \(N \geq
 1\), is given in terms of an unknown function \(k(C,T,N)\) as:
 
 \begin{equation}
@@ -429,13 +427,13 @@ of modifying other parameters on \(k(C, T, N)\).
     \begin{figure}[H]
         \centering
         \scalebox{0.8}{
-            \input{chapters/03_queueing_model/img/example_model_1121/main.tex}}
+            \input{chapters/03_queueing_model/Bin/example_model_1121/main.tex}}
     \end{figure}
     \columnbreak
     \begin{figure}[H]
         \centering
         \scalebox{0.7}{
-            \input{chapters/03_queueing_model/img/example_model_1131/main.tex}}
+            \input{chapters/03_queueing_model/Bin/example_model_1131/main.tex}}
     \end{figure}
 \end{multicols}
 \vspace{-0.5cm}
@@ -449,7 +447,7 @@ of modifying other parameters on \(k(C, T, N)\).
 \begin{figure}[H]
     \centering
     \scalebox{0.8}{
-        \input{chapters/03_queueing_model/img/example_model_1141/main.tex}}
+        \input{chapters/03_queueing_model/Bin/example_model_1141/main.tex}}
 \end{figure}
 \begin{equation}\label{eq:00_rate_1141}
     \tilde{\pi}_{(0,0)} = \mu^5[(\lambda_2)^3 + 2(\lambda_2)^2 \lambda_1 +
@@ -460,7 +458,7 @@ of modifying other parameters on \(k(C, T, N)\).
 \begin{figure}[H]
     \centering
     \scalebox{0.8}{
-        \input{chapters/03_queueing_model/img/example_model_1151/main.tex}}
+        \input{chapters/03_queueing_model/Bin/example_model_1151/main.tex}}
 \end{figure}
 \begin{align}\label{eq:00_rate_1151}
     \tilde{\pi}_{(0,0)} =& \mu^6[(\lambda_2)^4 + 3(\lambda_2)^3 \lambda_1 +
@@ -472,7 +470,7 @@ of modifying other parameters on \(k(C, T, N)\).
 \end{align}
 
 
-As explained in equation~(\ref{eq:rows_conjecture_general}) the expressions
+As explained in equation~\eqref{eq:rows_conjecture_general} the expressions
 defined above can be reduced to a general form equation of the form
 \(\tilde{\pi}_{(0,0)} = \mu^{(N+M)} (k(C,T,N))^M\).
 The only thing missing is an expression for \(k(C,T,N)\).
@@ -486,7 +484,7 @@ An initial attempt to get such an expression can be seen below:
     (\lambda_2)^{p_1} (\lambda_1)^{p_2} \mu^{C-p_1-p_2-1}
 \end{align}
 
-In equation~(\ref{eq:columns_conjecture_general}) the coefficient function
+In equation~\eqref{eq:columns_conjecture_general} the coefficient function
 \(R(p_1,p_2,p_3)\) is introduced were takes as arguments the powers of
 \(\lambda_2, \lambda_1 \text{ and } \mu\).
 Note here that \(p_3\), the power of \(\mu\), is defined as \(p_3=C-p_1-p_2-1\)
@@ -527,30 +525,30 @@ from the equations above:
 \tiny
 \begin{multicols}{2}
     \begin{itemize}
-        \item (\ref{eq:00_rate_1131}) \( \Rightarrow (\lambda_2)^2\):
+        \item \eqref{eq:00_rate_1131} \( \Rightarrow (\lambda_2)^2\):
         \(R(2,0,0) = \binom{2+0}{0} = 1\)
-        \item (\ref{eq:00_rate_1131}) \( \Rightarrow \lambda_2 \lambda_1\):
+        \item \eqref{eq:00_rate_1131} \( \Rightarrow \lambda_2 \lambda_1\):
         \(R(1,1,0) = \binom{1+1-1}{1} = 1\)
-        \item (\ref{eq:00_rate_1131}) \( \Rightarrow 2 \lambda_2 \mu\):
+        \item \eqref{eq:00_rate_1131} \( \Rightarrow 2 \lambda_2 \mu\):
         \(R(1,0,1) = \binom{1+1}{1} = 2\)
-        \item (\ref{eq:00_rate_1131}) \( \Rightarrow \mu^2\): \(R(0,0,2) = 1\)
-        \item (\ref{eq:00_rate_1141}) \( \Rightarrow 2(\lambda_2)^2 \lambda_1\):
+        \item \eqref{eq:00_rate_1131} \( \Rightarrow \mu^2\): \(R(0,0,2) = 1\)
+        \item \eqref{eq:00_rate_1141} \( \Rightarrow 2(\lambda_2)^2 \lambda_1\):
         \(R(2,1,0) = \binom{2+1-1}{1} = 2\)
-        \item (\ref{eq:00_rate_1141}) \( \Rightarrow 3(\lambda_2)^2 \mu\):
+        \item \eqref{eq:00_rate_1141} \( \Rightarrow 3(\lambda_2)^2 \mu\):
         \(R(2,0,1) = \binom{2+1}{1} = 3\)
-        \item (\ref{eq:00_rate_1141}) \( \Rightarrow 3 \lambda_2 \mu^2\):
+        \item \eqref{eq:00_rate_1141} \( \Rightarrow 3 \lambda_2 \mu^2\):
         \(R(1,0,2) = \binom{1+2}{2} = 3\)
-        \item (\ref{eq:00_rate_1151}) \( \Rightarrow 3 (\lambda_2)^3
+        \item \eqref{eq:00_rate_1151} \( \Rightarrow 3 (\lambda_2)^3
         \lambda_1\): \(R(3,1,0) = \binom{3+1-1}{1} = 3\)
-        \item (\ref{eq:00_rate_1151}) \( \Rightarrow 3 (\lambda_2)^2
+        \item \eqref{eq:00_rate_1151} \( \Rightarrow 3 (\lambda_2)^2
         (\lambda_1)^2 \): \(R(2,2,0) = \binom{3}{2} = 3\)
-        \item (\ref{eq:00_rate_1151}) \( \Rightarrow 6 (\lambda_2)^2 \mu ^ 2\):
+        \item \eqref{eq:00_rate_1151} \( \Rightarrow 6 (\lambda_2)^2 \mu ^ 2\):
         \(R(2,0,2) = \binom{2+2}{2} = 6\)
     \end{itemize}
 \end{multicols}
 
 \begin{itemize}
-    \item (\ref{eq:00_rate_1151}) \( \Rightarrow 6 (\lambda_2)^2 \lambda_1 \mu\):
+    \item \eqref{eq:00_rate_1151} \( \Rightarrow 6 (\lambda_2)^2 \lambda_1 \mu\):
     \(R(2,1,1) = \binom{2+1+1}{2} + 1\binom{2+1}{1+1} - \binom{2+1}{1} =
     6 + 3 - 3 = 6\)
 \end{itemize}
@@ -598,23 +596,23 @@ Consider the following Markov model and the spanning trees rooted at state
 \begin{figure}[H]
     \centering
     \scalebox{0.8}{
-        \input{chapters/03_queueing_model/img/example_model_1131/main.tex}}
+        \input{chapters/03_queueing_model/Bin/example_model_1131/main.tex}}
         \vspace{0.8cm} \\
     \scalebox{0.6}{
-        \input{chapters/03_queueing_model/img/spanning_trees_1131/main_0.tex}}
+        \input{chapters/03_queueing_model/Bin/spanning_trees_1131/main_0.tex}}
         \hspace{0.7cm}
     \scalebox{0.6}{
-        \input{chapters/03_queueing_model/img/spanning_trees_1131/main_1.tex}}
+        \input{chapters/03_queueing_model/Bin/spanning_trees_1131/main_1.tex}}
         \vspace{0.4cm} \\
     \scalebox{0.6}{
-        \input{chapters/03_queueing_model/img/spanning_trees_1131/main_2.tex}}
+        \input{chapters/03_queueing_model/Bin/spanning_trees_1131/main_2.tex}}
         \hspace{0.7cm}
     \scalebox{0.6}{
-        \input{chapters/03_queueing_model/img/spanning_trees_1131/main_3.tex}}
+        \input{chapters/03_queueing_model/Bin/spanning_trees_1131/main_3.tex}}
         \vspace{0.4cm} \\
     \scalebox{0.6}{
-        \input{chapters/03_queueing_model/img/spanning_trees_1131/main_4.tex}}
-    \caption{Markov chain model with \(C=1, T=1, N=3, M=1\) with its
+        \input{chapters/03_queueing_model/Bin/spanning_trees_1131/main_4.tex}}
+    \caption{Markov chain model with \(C=1, T=1, N=3, M=1\) with all of its
     equivalent spanning trees rooted at \((0,0)\)}
     \label{fig:example_spanning_trees_1131}
 \end{figure}
@@ -708,7 +706,7 @@ Rule \ref{rule2} makes sure that there are no neighbour states that point to
 each other since that would create a cycle and would not generate a valid
 spanning tree.
 
-
+\begin{minipage}{\linewidth}
 \begin{multicols}{2}
     \begin{figure}[H]
         \centering
@@ -753,11 +751,13 @@ spanning tree.
                 \draw[->](u0v3) edge[bend left] node {} (u0v2);
             \end{tikzpicture}
         }
+        % TODO: Fix potential overfull hbox here
         \caption{Example of a permutation that does not produce a valid spanning
         tree based on Rule 2}
         \label{fig:state_probs_closed_form_rule_2_visualised}
     \end{figure}    
 \end{multicols}
+\end{minipage}
 
 Shown below, are all possible permutations of the DRL array along with the
 excluded cases.
@@ -783,73 +783,83 @@ them not valid.
 \subsubsection{
     Examples of mappings of directed spanning trees to permutation arrays}
 
+\begin{minipage}{\linewidth}
+    \begin{multicols}{2}
+        \begin{figure}[H]
+            \centering
+            \scalebox{0.6}{
+                \input{chapters/03_queueing_model/Bin/spanning_trees_1131/main_0.tex}}
+        \end{figure}
+    
+        \begin{flalign*}
+            \hspace*{-3cm} \xrightarrow{\hspace*{2cm}} \hspace{1cm} [D, D]
+        \end{flalign*}
+    \end{multicols}
+\end{minipage}
+
+\begin{minipage}{\linewidth}
 \begin{multicols}{2}
     \begin{figure}[H]
         \centering
         \scalebox{0.6}{
-            \input{chapters/03_queueing_model/img/spanning_trees_1131/main_0.tex}}
-    \end{figure}
-
-    \begin{flalign*}
-        \hspace*{-3cm} \xrightarrow{\hspace*{2cm}} \hspace{1cm} [D, D]
-    \end{flalign*}
-\end{multicols}
-
-\begin{multicols}{2}
-    \begin{figure}[H]
-        \centering
-        \scalebox{0.6}{
-            \input{chapters/03_queueing_model/img/spanning_trees_1131/main_1.tex}}
+            \input{chapters/03_queueing_model/Bin/spanning_trees_1131/main_1.tex}}
     \end{figure}
 
     \begin{flalign*}
         \hspace*{-3cm} \xrightarrow{\hspace*{2cm}} \hspace{1cm} [L, D]
     \end{flalign*}
 \end{multicols}
+\end{minipage}
 
+\begin{minipage}{\linewidth}
 \begin{multicols}{2}
     \begin{figure}[H]
         \centering
         \scalebox{0.6}{
-            \input{chapters/03_queueing_model/img/spanning_trees_1131/main_2.tex}}
+            \input{chapters/03_queueing_model/Bin/spanning_trees_1131/main_2.tex}}
     \end{figure}
 
     \begin{flalign*}
         \hspace*{-3cm} \xrightarrow{\hspace*{2cm}} \hspace{1cm} [D, L]
     \end{flalign*}
 \end{multicols}
+\end{minipage}
 
+\begin{minipage}{\linewidth}
 \begin{multicols}{2}
     \begin{figure}[H]
         \centering
         \scalebox{0.6}{
-            \input{chapters/03_queueing_model/img/spanning_trees_1131/main_3.tex}}
+            \input{chapters/03_queueing_model/Bin/spanning_trees_1131/main_3.tex}}
     \end{figure}
 
     \begin{flalign*}
         \hspace*{-3cm} \xrightarrow{\hspace*{2cm}} \hspace{1cm} [R, D]
     \end{flalign*}
 \end{multicols}
+\end{minipage}
 
+\begin{minipage}{\linewidth}
 \begin{multicols}{2}
     \begin{figure}[H]
         \centering
         \scalebox{0.6}{
-            \input{chapters/03_queueing_model/img/spanning_trees_1131/main_4.tex}}
+            \input{chapters/03_queueing_model/Bin/spanning_trees_1131/main_4.tex}}
     \end{figure}
 
     \begin{flalign*}
         \hspace*{-3cm} \xrightarrow{\hspace*{2cm}} \hspace{1cm} [L, L]
     \end{flalign*}
 \end{multicols}
+\end{minipage}
 
-\subsubsection{Closed-form formula for state probabilities}
+\subsubsection{Closed-form approach for state probabilities}
 A general formula for finding all such permutations can be found, where the
 inputs are \( p_1\), \(p_2\) and \(p_3\) that correspond to the number of \(D\),
 \(R\) and \(L\) respectively and the output would be the coefficient of the term
 \((\lambda_2)^{p_1} (\lambda_1)^{p_2} \mu^{p_3}\).
-For instance, by applying such a formula to the example in equation
-(\ref{eq:pi_00_rate_example}), the desired output should be:
+For instance, by applying such a formula to the example in
+equation~\eqref{eq:pi_00_rate_example}, the desired output should be:
 
 \begin{itemize}
     \item \((\lambda_2)^2 \hspace{0.9cm} \rightarrow \hspace{0.9cm}
@@ -867,10 +877,10 @@ For instance, by applying such a formula to the example in equation
 \end{itemize}
 
 Thus, given all possible and valid combinations of powers among \(\lambda_2,
-\lambda_1 \text{ and } \mu\) (i.e. \(p_1,p_2,p_3\)) generated by equation
-(\ref{eq:columns_conjecture_general}), an alternative and improved form of the
-value of \(R(p_1, p_2, p_3)\) described in
-equation~(\ref{eq:coefficient_function}) is given by:
+\lambda_1 \text{ and } \mu\) (i.e. \(p_1,p_2,p_3\)) generated by
+equation~\eqref{eq:columns_conjecture_general}, an alternative and improved form
+of the value of \(R(p_1, p_2, p_3)\) described in
+equation~\eqref{eq:coefficient_function} is given by:
 
 \begin{align}\label{eq:permutation formula}
     R(p_1, p_2, p_3) = T(p_1, p_2, p_3) & - E_R(p_1, p_2, p_3)
@@ -903,11 +913,15 @@ coefficient is obtained.
         \end{scope}
         
     \end{tikzpicture}
-    \caption{The two sets that should not be considered in the calculation}
+    \caption{The two sets of permutations that should not be considered in the
+    calculation of \(R(p_1, p_2, p_3)\). The left-most set consists of all the
+    permutations that are excluded by Rule 1 and the right-most are excluded
+    by Rule 2}
     \label{fig:venn_diagram_with_rules}
 \end{figure}
 
-The difficulty with this formulation is that the highlighted intersection will
+The difficulty with this formulation is that the highlighted intersection from
+Figure~\ref{fig:venn_diagram_with_rules} will
 be counted twice and is hard to identify how many such terms there are.
 An alternative approach is to break down the Rule 2 subset into three parts as
 show in Figure~\ref{fig:venn_diagram_with_subsets}.
@@ -926,8 +940,8 @@ show in Figure~\ref{fig:venn_diagram_with_subsets}.
         \draw (1.4, -0.5) --(3.2, -0.5);
         \node at (2, -0.8) {$E_{RL}$};
     \end{tikzpicture}
-    \caption{Splitting rule 1 and rule 2 into multiple subsets without any
-    intersections}
+    \caption{All permutations that are excluded by Rule 1 and Rule 2
+    partitioned into four disjoint subsets.}
     \label{fig:venn_diagram_with_subsets}
 \end{figure}
 

@@ -7,8 +7,8 @@ In other words, each server can have a different service rate for every
 possible scenario that the system can be in.
 
 The new service rate \(\mu\) that will be used in this scenario is defined as
-a combination of equations~(\ref{eq:state_dependent_service_rate})
-and~(\ref{eq:server_dependent_service_rate}) where:
+a combination of equations~\eqref{eq:state_dependent_service_rate}
+and~\eqref{eq:server_dependent_service_rate} where:
 
 \begin{equation}\label{eq:state_server_dependent_service_rate}
     \mu =
@@ -33,7 +33,7 @@ Consider an example where the number of servers is set to \(C = 2\), the
 threshold is set to \(T = 1\), node 1 capacity is \(N = 3\) and node 2 capacity
 is \(M = 1\).
 For this particular example the possible values that \(\mu\) can take shown
-by equation~(\ref{eq:state_server_dependent_service_rate_example}).
+by equation~\eqref{eq:state_server_dependent_service_rate_example}.
 
 \begin{equation}\label{eq:state_server_dependent_service_rate_example}
     \mu =
@@ -65,14 +65,19 @@ combination of the state-dependent and server-dependent models' implementation.
 Once again the implementation is done using the python library \(\texttt{ciw}\)
 library.
 The distribution for the state and server-dependent model is defined as a
-class that inherits from the \texttt{ciw}'s class
-\texttt{ciw.dists.Distribution}.
+class that inherits from \texttt{ciw}'s class \texttt{Distribution} from
+the \texttt{dists} module.
 Note that as opposed to the classes defined earlier an additional method id
 defined in this class.
 Method \texttt{update\_server\_attributes} adds additional attributes to the
 server objects to allow for further analysis of each server's performance.
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Example of the state and server-dependent variation of the
+    queueing system},
+    label={lst:state_server_dependent_example},
+]
 >>> import random
 >>> import ciw
 >>> class StateServerDependentExponential(
@@ -141,7 +146,12 @@ Let the service rates be defined in such a way where:
 The following code snippet shows how to define the model and run the simulation
 for \(1000\) time units.
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Example code of the state and server-dependent variation of the
+    queueing system},
+    label={lst:state_server_dependent_example_code},
+]
 >>> import ambulance_game as abg
 >>> import numpy as np
 >>>
@@ -184,17 +194,23 @@ Server 2: 0.87253758
 
 \end{lstlisting}
 
-Note that, in the implementation above the individuals are paired with a server
+Note that, in the implementation shown in code
+snippet~\ref{lst:state_server_dependent_example_code} the individuals are
+paired with a server
 in an ``unfair'' way since the default behaviour of \texttt{ciw} does not
 focus on the fairness of server allocation.
 Server 1 is always assigned an individual if they are free, while Server 2 is
 only assigned an individual if Server 1 is busy.
 For the purposes of this project though, it is important to have a more
 ``fair'' allocation of individuals to servers.
-This can be done by using the server\_priority\_function argument of the
-\texttt{simulate\_model} function.
+This can be done by using the \texttt{server\_priority\_function} argument of
+the \texttt{simulate\_model} function.
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Example of using fair allocation of individuals to servers},
+    label={lst:fair_allocation_example_code},
+]
 >>> Q = abg.simulation.simulate_model(
 ...     lambda_1=lambda_1,
 ...     lambda_2=lambda_2,
@@ -227,7 +243,8 @@ theoretic model is only implemented using Discrete Event Simulation (DES) it is
 not possible to use the Markov chain model here.
 Thus, the implementation of the game was modified so that it can be used with
 the DES model as well.
-More details on the code can be found in appendix~\ref{appendix:ambulance_game}.
+More details on the code can be found in appendix.
+% TODO: reference appendix section ~\ref{appendix:ambulance_game}.
 At its core the only metric that is needed from the Markov model are the
 performance measures of the queue (blocking time and proportion of individuals
 within target) which can also be obtained using the DES model.
@@ -332,7 +349,7 @@ model.
 Consider a small change to the parameter values defined earlier, where the
 service rate is now state and server dependent.
 Let the service rate for queueing system \(1\) be \(\mu^{(1)} = 6\) only for
-server \(1\) if there are \(4\) or more individuals individuals in the system
+server \(1\) if there are \(4\) or more individuals in the system
 and \(\mu^{(1)} = 2\) otherwise.
 Additionally, let the service rate for queueing system \(2\) be
 \(\mu^{(2)} = 8\) only for server \(1\) if there are \(3\) or more

@@ -47,54 +47,6 @@ fields.
 Some of these fields are healthcare, transportation, logistics, manufacturing,
 finance and many more.
 
-\subsection{History of Operational Research}
-
-The history of OR can be traced back to the 1940s during Would War II when the
-US Army Air Corps (USAAF) started to use OR techniques to optimise the use of
-their aircraft.
-At the time, many strategic problems were too complicated to solve by any one
-person or a single discipline.
-Scientists and mathematicians from different fields were brought together to
-solve problems such as finding the best strategies of air defence, minimising
-losses from submarines and radar deployment.
-These teams were called \textit{Operational Research teams} or
-\textit{Operations Research teams} and the collection of techniques that they
-used were later used to form the discipline of
-OR~\cite{ravindran2008operations}.
-
-After the war, the discipline of OR started to grow and spread to other
-industries and fields.
-Universities started advancing the field by developing new techniques and
-methods and later started to offer undergraduate and postgraduate courses on it.
-Additionally, the introduction of electronic computers allowed OR techniques to
-be used in more complex problems~\cite{ravindran2008operations}.
-The first formal definition of OR was given by the British Operational
-Research Society:
-
-\begin{quotation}
-    ``Operational research is the application of the methods of science to
-    complex problems arising in the direction and management of large systems of
-    % <!-- alex ignore gals-man --> 
-    men, machines, materials and money in industry, business, government, and
-    defence.
-    The distinctive approach is to develop a scientific model of the system,
-    incorporating measurement of factors such as chance and risk, with which to
-    predict and compare the outcomes of alternative decisions, strategies or
-    controls.
-    Th purpose is to help management determine its policy and actions
-    scientifically''~\cite{or_for_multi_organizations}.
-\end{quotation}
-
-
-There are numerous methods and techniques that form the discipline of OR.
-Some of the most common ones are mathematical programming, queueing theory,
-game theory, decision theory, data mining and statistical analysis.
-The main OR techniques that are used in this thesis are queueing theoretic
-models and game theoretic models.
-A more detailed review of the literature on game theoretic models applied to
-healthcare systems is provided in
-Section~\ref{sec:lit_review_game_theory_in_healthcare}.
-
 
 \subsection{Operational Research models in Healthcare}
 
@@ -413,7 +365,7 @@ They used an agent-based model to provide insights into how spatial structure,
 number of hospitals and different policies contribute to cooperation in
 avoiding ambulance diversion.
 In essence, the agent based model was used to assess whether partial diversion
-of ambulances would be be a viable option for the ambulance service where it
+of ambulances would be a viable option for the ambulance service where it
 was shown at the end that it was not.
 Furthermore, the authors of~\cite{Giesen2009} also make use of agent-based
 modelling to model the different queuing strategies in the youth health care
@@ -519,3 +471,40 @@ In this thesis reinforcement learning is used to train the servers of a
 queueing system to pick their service rates in order to maximise their
 utility.
 
+\section{Chapter summary}
+
+This chapter has provided an overview of the literature around Operational
+Research (OR) in healthcare systems.
+More specifically, Section~\ref{sec:lit_review_OR_healthcare} provides a
+brief overview of the history of OR and some examples of OR techniques that
+have been applied in healthcare.
+In particular the main techniques that has been reviewed are Markov modelling
+and discrete event simulation.
+Chapter~\ref{sec:queueing_section} of this thesis introduces a novel queueing
+network that is modelled using both discrete event simulation and Markov
+chains.
+In Section~\ref{sec:queueing_ems_ed_application} the proposed model is applied
+to a healthcare scenario to model the setting of an emergency department that
+receives patients from an ambulance service.
+
+In Sections~\ref{sec:lit_review_game_and_queueing_theory}
+and~\ref{sec:lit_review_game_theory_in_healthcare} the literature around
+the combination of queueing theory and game theory and the literature around
+game theoretic techniques applied in healthcare is reviewed.
+Chapter~\ref{sec:game_theoretic_model} of this thesis introduces a novel
+game theoretic model that is applied to the queueing network model introduced
+in Section~\ref{sec:queueing_section}.
+The game theoretic model is used to model the scenario where two queueing
+systems and a patient distribution service compete in a 3-player game to
+maximise their own utilities.
+Subsequently, Section~\ref{sec:game_ems_ed_application} describes how the
+game theoretic model is applied to the healthcare scenario where the players
+are an ambulance service, and two emergency departments.
+
+Section~\ref{sec:lit_review_behavioural_modelling} of this chapter
+provides a brief overview of the literature around behavioural modelling.
+One of the main techniques that has been reviewed is agent-based modelling and
+reinforcement learning.
+These two techniques are used in Chapter~\ref{sec:agent_based_model} to
+extend the model introduced in Section~\ref{sec:queueing_section} and
+observe the model from a more behavioural perspective.

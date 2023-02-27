@@ -9,7 +9,7 @@ individuals, and the overall mean waiting time.
 \subsubsection{Recursive approach}\label{sec:recursive_waiting_time}
 
 The first approach to be considered is a recursive approach to getting the
-mean waiting time.
+mean waiting time~\cite{banjevic1996recursive}.
 To calculate the mean waiting time of type 1 individuals one must first
 identify the set of states \((u, v)\) where a wait can occur.
 For this particular Markov chain, these are all states that satisfy \(v > C\)
@@ -30,8 +30,10 @@ Figure~\ref{fig:markov_variation_no_arrivals} shows this new Markov chain model.
 
 \begin{figure}[H]
     \centering
-    \input{chapters/03_queueing_model/img/markov_model_variation_no_arrivals.tex}
-    \caption{Variation of Markov chain model where all arrivals are removed}
+    \input{chapters/03_queueing_model/Bin/markov_model_variation_no_arrivals.tex}
+    \caption{Variation of Markov chain model where all arrivals are removed.
+    This diagram is used as a visualisation aid to illustrate how the recursive
+    algorithm works.}
     \label{fig:markov_variation_no_arrivals}
 \end{figure}
 
@@ -60,7 +62,7 @@ This is done to capture the trip thorough the Markov chain from the perspective
 of type 1 individuals.
 Meaning that individuals visit all states of the threshold column but only the
 one in the first row will return a non-zero waiting time.
-Additionally, in equation (\ref{eq:waiting_time_state_type_1}) the service rate
+Additionally, in equation~\eqref{eq:waiting_time_state_type_1} the service rate
 \(\mu\) is multiplied by the minimum of \(v\) and \(C\) since, when the system
 is at a state \((u,v)\) where \(v \geq C\), the maximum out-flow service rate
 of \( C \mu \) is reached.
@@ -82,10 +84,10 @@ Thus, the waiting time at each state for type 2 individuals can be expressed as:
 \end{equation}
 
 
-Thus using the set of waiting states defined in (\ref{eq:waiting_states}) and
-equations (\ref{eq:waiting_time_state_type_1}) and
-(\ref{eq:waiting_time_state_type_2}) the following recursive formula can be used
-to get the mean waiting time spent in each state.
+Using the set of waiting states defined in~\eqref{eq:waiting_states} and
+equations~\eqref{eq:waiting_time_state_type_1}
+and~\eqref{eq:waiting_time_state_type_2} the following recursive formula can be
+used to get the mean waiting time spent in each state.
 The formula goes through all states from right to left recursively and adds the
 total expected waiting time of all these states together until it reaches a
 state that is not in the set of waiting states.
@@ -176,8 +178,8 @@ individuals may become lost to the system.
 Thus, one should account for the probability that an individual is lost to the
 system.
 This probability can be calculated by using the two sets of accepting
-states \(S_A^{(2)}\) and \(S_A^{(1)}\) defined earlier in
-(\ref{eq:accepting_states_type_1}) and (\ref{eq:accepting_states_type_2}).
+states \(S_A^{(2)}\) and \(S_A^{(1)}\) defined earlier
+in~\eqref{eq:accepting_states_type_1} and~\eqref{eq:accepting_states_type_2}.
 Let us define the probability that an individual of type \(i\) is not lost
 to the system as \(P(L'_i)\):
 
@@ -197,8 +199,8 @@ and type 2 individuals in the model.
     \theta_2 = \frac{\lambda_2 P(L'_2)}{\lambda_2 P(L'_2) + \lambda_1 P(L'_1)}
 \end{equation}
 
-Thus, by using these values as the coefficient of equation
-(\ref{eq:overall_waiting_time_coeff})
+Thus, by using these values as the coefficient of
+equation~\eqref{eq:overall_waiting_time_coeff}
 the resultant equation can be used to get the overall waiting time.
 
 \begin{equation}\label{eq:overall_waiting_time}
@@ -212,10 +214,14 @@ the resultant equation can be used to get the overall waiting time.
 Implementing the recursive approach for the waiting time in python uses the
 same logical structure as described in Section~\ref{sec:recursive_waiting_time}.
 The first function needed is one that checks if a state belongs in the
-set of waiting states that corresponds to the set defined in
-(\ref{eq:waiting_states}).
+set of waiting states that corresponds to the set defined
+in~\eqref{eq:waiting_states}.
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Function that checks if a state is a waiting state.},
+    label={lst:is_waiting_state},
+]
 >>> def is_waiting_state(state, num_of_servers):
 ...     """Checks if waiting occurs in the given state. In essence, all
 ...     states (u,v) where v > C are considered waiting states.
@@ -239,12 +245,16 @@ True
 \end{lstlisting}
 
 Similarly a function that calculates the expected wait in each state is needed
-that corresponds to equations (\ref{eq:waiting_time_state_type_1}) and
-(\ref{eq:waiting_time_state_type_2}).
+that corresponds to equations~\eqref{eq:waiting_time_state_type_1}
+and~\eqref{eq:waiting_time_state_type_2}.
 Note here that the following function takes the individuals type as an argument
 and thus only one function is needed for both expressions.
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Function for the expected waiting time in a state.},
+    label={lst:expected_waiting_time_in_state},
+]
 >>> def expected_time_in_markov_state_ignoring_arrivals(
 ...     state,
 ...     class_type,
@@ -293,13 +303,18 @@ and thus only one function is needed for both expressions.
 
 \end{lstlisting}
 
-The following block of code is the implementation of equation
-(\ref{eq:recursive_waiting_time_for_state}), where it returns the waiting time
-of an individual when they arrive at a given state until they leave that
-particular state.
+The following block of code is the implementation of
+equation~\eqref{eq:recursive_waiting_time_for_state}, where it returns the
+waiting time of an individual when they arrive at a given state until they
+leave that particular state.
 Note that this function uses both of the functions defined earlier.
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Function for the overall expected waiting time in a state using
+    recursion.},
+    label={lst:expected_waiting_time_in_state_recursively},
+]
 >>> def get_waiting_time_for_each_state_recursively(
 ...     state,
 ...     class_type,
@@ -393,11 +408,15 @@ Note that this function uses both of the functions defined earlier.
 \end{lstlisting}
 
 Additionally, before getting the mean waiting time for each type of individuals,
-a function for the set of accepting states described in
-(\ref{eq:accepting_states_type_1}) and (\ref{eq:accepting_states_type_1}) needs
-to be constructed.
+a function for the set of accepting states described
+in~\eqref{eq:accepting_states_type_1} and~\eqref{eq:accepting_states_type_1}
+needs to be constructed.
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Function to check if a state is an accepting state.},
+    label={lst:is_accepting_state},
+]
 >>> def is_accepting_state(
 ...     state, class_type, threshold, system_capacity, buffer_capacity
 ... ):
@@ -441,10 +460,16 @@ to be constructed.
 
 The only thing left to do is to find the weighted average of the waiting times
 for all states using the steady state probabilities.
-The function following function corresponds to the expression for \(W^{(i)}\)
-defined in equation (\ref{eq:recursive_waiting_time_for_type_i}).
+The function defined in~\ref{lst:mean_waiting_time_recursive}
+corresponds to the expression for \(W^{(i)}\)
+defined in equation~\eqref{eq:recursive_waiting_time_for_type_i}.
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Function to get the mean waiting time recursively for a specific
+    individual type.},
+    label={lst:mean_waiting_time_recursive},
+]
 >>> import ambulance_game as abg
 >>> import numpy as np
 >>> def mean_waiting_time_formula_using_recursive_approach(
@@ -551,9 +576,13 @@ defined in equation (\ref{eq:recursive_waiting_time_for_type_i}).
 
 Finally the overall waiting time for both individuals can be calculated by
 taking the weighted average of the waiting times for each type of individual
-as described in equation (\ref{eq:overall_waiting_time}).
+as described in equation~\eqref{eq:overall_waiting_time}.
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Function for the overall waiting time formula.},
+    label={lst:overall_waiting_time_formula},
+]
 >>> def overall_waiting_time_formula(
 ...     all_states,
 ...     pi,
@@ -661,7 +690,7 @@ as described in equation (\ref{eq:overall_waiting_time}).
 The direct approach uses similar concepts to the recursive approach of
 Section~\ref{sec:recursive_waiting_time}.
 Instead of using recursion, a linear system of the set of equations generated by
-equation (\ref{eq:recursive_waiting_time_for_state}) for every state \((u,v)\)
+equation~\eqref{eq:recursive_waiting_time_for_state} for every state \((u,v)\)
 is solved.
 The set of equations that need to be solved for individuals of type \(i\) are
 all \( w^{(i)}(u, v) \) for all possible states \((u,v) \in S\).
@@ -678,14 +707,15 @@ all \( w^{(i)}(u, v) \) for all possible states \((u,v) \in S\).
 \end{equation*}
 
 Consider a relatively small model where \(C=1, T=2, N=3, M=1\).
-All possible equations \(w^{(i)}(u,v)\) are given by equations
-(\ref{eq:first_eq_of_waiting_example} - \ref{eq:last_eq_of_waiting_example}).
+All possible equations \(w^{(i)}(u,v)\) are given by
+equations~\eqref{eq:first_eq_of_waiting_example}
+-~\eqref{eq:last_eq_of_waiting_example}.
 
 \begin{minipage}{0.45\textwidth}
     \begin{figure}[H]
         \centering
-        \scalebox{0.65}{\input{chapters/03_queueing_model/img/example_model_1231/main.tex}}
-        \caption{Markov chain example}
+        \scalebox{0.65}{\input{chapters/03_queueing_model/Bin/example_model_1231/main.tex}}
+        \caption{Markov chain example with \(C=1, T=2, N=3, M=1\)}
         \label{fig:example_algeb_waiting}
     \end{figure}
 \end{minipage}
@@ -735,8 +765,8 @@ the form \(Zx=y\) where:
     \end{pmatrix}
 \end{equation}
 
-A more generalised form of the equations in
-(\ref{eq:example_direct_approach_waiting_time}) can be given for any value of
+A more generalised form of the equations
+in~\eqref{eq:example_direct_approach_waiting_time} can be given for any value of
 \(C,T,N,M\) by:
 
 \begin{align}
@@ -757,8 +787,9 @@ A more generalised form of the equations in
     \label{eq:last_eq_of_waiting_general}
 \end{align}
 
-The equivalent matrix form of the linear system of equations
-(\ref{eq:first_eq_of_waiting_general} - \ref{eq:last_eq_of_waiting_general})
+The equivalent matrix form of the linear system of
+equations~\eqref{eq:first_eq_of_waiting_general}
+-~\eqref{eq:last_eq_of_waiting_general}
 is given by \(Zx=y\), where:
 
 \newcommand{\allthedots}{\vdots & \vdots & \vdots & \ddots & \vdots & \vdots &
@@ -825,10 +856,11 @@ is given by \(Zx=y\), where:
 
 Thus, solving for \(x\) gets the values of all \(w^{(i)}(u,v)\) for all states
 \((u,v) \in S\).
-These values can then be used with equation
-(\ref{eq:recursive_waiting_time_for_type_i}) to compute the mean waiting time
-for type \(i\) individuals \(W^{(i)}\).
-Now, having \(W^{(1)}\) and \(W^{(2)}\), equation (\ref{eq:overall_waiting_time})
+These values can then be used with
+equation~\eqref{eq:recursive_waiting_time_for_type_i} to compute the mean
+waiting time for type \(i\) individuals \(W^{(i)}\).
+Now, having \(W^{(1)}\) and \(W^{(2)}\),
+equation~\eqref{eq:overall_waiting_time}
 can be utilised once more to compute the overall mean waiting time for both
 individual types.
 
@@ -837,19 +869,24 @@ individual types.
 
 Similar to the implementation of the recursive approach from
 Section~\ref{sec:waiting_recursive_implementation} the functions that correspond
-to equations (\ref{eq:waiting_states}), (\ref{eq:waiting_time_state_type_1}),
-(\ref{eq:waiting_time_state_type_2}), (\ref{eq:accepting_states_type_1}),
-(\ref{eq:accepting_states_type_2}) will be used again.
+to equations~\eqref{eq:waiting_states}, \eqref{eq:waiting_time_state_type_1},
+\eqref{eq:waiting_time_state_type_2}, \eqref{eq:accepting_states_type_1},
+\eqref{eq:accepting_states_type_2} will be used again.
 For the implementation of the direct approach the aim is to construct matrix
 \(Z\) and vector \(y\) as described in Section
 \ref{sec:direct_waiting_time} in order to solve the system of linear
-equations described in (\ref{eq:general_direct_approach_waiting_time}).
+equations described in~\eqref{eq:general_direct_approach_waiting_time}.
 
-The following block of code Returns the values of one row of matrix \(Z\) that
-corresponds to the state \((u,v)\) and the value of vector \(y\) that
-correspond to the state \((u,v)\).
+The block of code in~\ref{lst:get_coefficients_row_for_state} returns the
+values of one row of matrix \(Z\) that corresponds to the state \((u,v)\) and
+the value of vector \(y\) that correspond to the state \((u,v)\).
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Function to get a row of the coefficients matrix and the
+    corresponding value of the right hand side vector.},
+    label={lst:get_coefficients_row_for_state},
+]
 >>> import itertools
 >>> def get_coefficients_row_of_array_for_state(
 ...     state,
@@ -910,12 +947,19 @@ correspond to the state \((u,v)\).
 
 \end{lstlisting}
 
-In the above code, the function returns a tuple with two elements; the row of
+In code snippet~\ref{lst:get_coefficients_row_for_state}, the function returns
+a tuple with two elements; the row of
 matrix \(Z\) and the value of vector \(y\) that corresponds to state \((2,3)\).
-Using the function above, the matrix \(Z\) and vector \(y\) can be constructed
+Using the function defined in~\ref{lst:get_coefficients_row_for_state}
+the matrix \(Z\) and vector \(y\) can be constructed
 by considering all states of the Markov chain.
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Function that formulates (but does not solve) the linear system
+    needed to get the waiting time.},
+    label={lst:get_waiting_time_linear_system},
+]
 >>> def get_waiting_time_linear_system(
 ...     class_type,
 ...     mu,
@@ -982,14 +1026,20 @@ array([[-1.,  0.,  0.,  0.,  0.,  0.,  0.,  0.],
 
 \end{lstlisting}
 
-The following piece of code solves the linear system \(Z X = y\) to obtain the
+The piece of code in~\ref{lst:waiting_time_for_each_state_direct_approach}
+solves the linear system \(Z X = y\) to obtain the
 vector \(X\) containing the waiting times for all states of the Markov chain.
 After solving the linear system for vector \(X\) it also converts the
 1-dimensional array into a 2-dimensional array where the entry at row \(u\) and
 column \(v\) corresponds to the expected waiting time that an individual will
 have to wait when arriving and the Markov chain is at state \((u,v)\).
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Functions to solve the linear system and get waiting time for
+    each state},
+    label={lst:waiting_time_for_each_state_direct_approach},
+]
 >>> def convert_solution_to_correct_array_format(
 ...     array, all_states, system_capacity, buffer_capacity
 ... ):
@@ -1060,10 +1110,16 @@ array([[-0.  , -0.  ,  0.25,  0.5 ],
 \end{lstlisting}
 
 Finally, similar to Section~\ref{sec:waiting_recursive_implementation}, using
-equation (\ref{eq:recursive_waiting_time_for_type_i}) the mean waiting time
-for either type of individuals can be calculated as follows:
+equation~\eqref{eq:recursive_waiting_time_for_type_i} the mean waiting time
+for either type of individuals can be calculated as shown
+in~\ref{lst:get_mean_waiting_time_direct_approach}.
 
-\begin{lstlisting}[style=pystyle] 
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Function to calculate the mean waiting time for a given individual
+    type using the direct approach},
+    label={lst:get_mean_waiting_time_direct_approach},
+] 
 >>> def mean_waiting_time_formula_using_direct_approach(
 ...     all_states,
 ...     pi,
@@ -1166,16 +1222,22 @@ The mean waiting time of type 2 individuals:
     \in S_A^{(2)}} \pi(u,v)}
 \end{equation}
 
-Having \(W^{(1)}\) and \(W^{(2)}\), equation (\ref{eq:overall_waiting_time}) can
+Having \(W^{(1)}\) and \(W^{(2)}\), equation~\eqref{eq:overall_waiting_time} can
 then be used to compute \(W\), the overall mean waiting time for both types.
 
 
 \paragraph{Implementation}\label{sec:waiting_closed_form_implementation}
 
-The closed-form formula can be implemented in one function.
-The functions is broken down in two parts for the case of each individual type.
+The closed-form method can be implemented in one function shown
+in code snippet~\ref{lst:mean_waiting_time_closed_form_approach}.
+The function is broken down in two parts for the case of each individual type.
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Function to calculate the mean waiting time for a given individual
+    type using the closed-form approach},
+    label={lst:mean_waiting_time_closed_form_approach},
+]
 >>> def mean_waiting_time_formula_using_closed_form_approach(
 ...     all_states,
 ...     pi,
@@ -1188,7 +1250,7 @@ The functions is broken down in two parts for the case of each individual type.
 ...     **kwargs,
 ... ):
 ...     """
-...     Get the mean waiting time by using a closed-form formula.
+...     Get the mean waiting time by using a closed-form method.
 ...     """
 ...     sojourn_time = 1 / (num_of_servers * mu)
 ...     if class_type == 0:
@@ -1288,5 +1350,4 @@ The functions is broken down in two parts for the case of each individual type.
 \end{lstlisting}
 
 A numeric comparison of the 3 approaches used to compute the mean waiting time
-can be found in Section 
-% TODO: reference numeric examples section
+can be found in Section~\ref{sec:waiting_time_approach_comparison}.

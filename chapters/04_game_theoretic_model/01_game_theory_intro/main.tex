@@ -6,7 +6,7 @@ of the scenario studied in this research project.
 The first one is normal form games the second one is perfect information
 extensive form games and the third one is extensive form games with imperfect
 information.
-The documentation of the python library \lstinline[style=pystyle]{nashpy} can
+The documentation of the python library \texttt{nashpy} can
 be used to find more information about the different types of games and concepts
 that are discussed throughout this section.
 
@@ -37,15 +37,16 @@ for each player) to a payoff for player \(k\).
 The payoff for player \(k\) is given by \(u_k(\sigma^1, \sigma^2, \dots,
 \sigma^n)\) where each \(\sigma^i\) represents a player. 
 
-For example, consider the Prisoner's Dilemma game illustrated in
-Table~\ref{tab:prisoners_dilemma}~cite{glynatsi2021bibliometric}.
+For example, consider the Prisoner's Dilemma game shown in
+Table~\ref{tab:prisoners_dilemma}~\cite{glynatsi2021bibliometric}.
 In this game, player 1 can choose to either \textit{Cooperate} (C) or
 \textit{Defect} (D) and player 2 can also choose to either \textit{Cooperate}
 (C) or \textit{Defect} (D).
 
 \begin{table}[H]
     \centering
-    \caption{The Prisoner's Dilemma game}
+    \caption{A game theoretic matrix representation of the Prisoner's Dilemma
+    game}
     \begin{tabular}{|c|c|c|}
         \hline
         \backslashbox{Player 1}{Player 2} & Cooperate & Defect \\
@@ -59,7 +60,7 @@ In this game, player 1 can choose to either \textit{Cooperate} (C) or
 \end{table}
 
 An alternative way to represent the Prisoner's Dilemma game is by using the
-payoff matrices in~(\ref{eq:prisoners_dilemma}).
+payoff matrices in~\eqref{eq:prisoners_dilemma}.
 The payoff matrix \(A\) shows the payoffs for player 1 and the payoff matrix
 \(B\) shows the payoffs for player 2.
 \begin{align}
@@ -94,7 +95,7 @@ to \textit{Cooperate} then player 1 receives a payoff of \(u_1 = 0\) and player
 
 Equivalently, a 3-player normal form game is represented by three 3-dimensional
 matrices \(A\), \(B\) and \(C\).
-The the rows of each matrix correspond to the actions of player 1, the columns
+The rows of each matrix correspond to the actions of player 1, the columns
 of each matrix correspond to the actions of player 2 and the third dimension of
 each matrix corresponds to the actions of player 3.
 
@@ -137,7 +138,7 @@ Consider the pig and piglet game where there are two players, the pig and the
 piglet and two strategies each, to \textit{Push} (P) a lever or
 \textit{Don't push} it (D).
 The payoff matrices \(A\) and \(B\) for this game are shown
-in~(\ref{eq:pig_piglet_payoff}).
+in~\eqref{eq:pig_piglet_payoff}.
 \begin{align}
     & \quad P \; D \nonumber \\
     A =
@@ -208,13 +209,18 @@ algorithm performs the following steps:
 \end{enumerate}
 Repeat steps 3 and 4 until there are no duplicate labels.
 
-The Lemke-Howson algorithm is implemented using the
-\lstinline[style=pystyle]{nashpy} python library~\cite{thenashpyproject}.
-The following code snippet shows how to use the Lemke-Howson algorithm to find
-the Nash equilibrium of the pig and piglet game described in
-equation~(\ref{eq:pig_piglet_payoff}).
+The Lemke-Howson algorithm is implemented using
+\texttt{nashpy}~\cite{thenashpyproject}, which is a game theoretic python
+library.
+The code snippet in~\ref{lst:lemke_howson_pig_piglet_game} shows how to use the Lemke-Howson
+algorithm to find the Nash equilibrium of the pig and piglet game described in
+equation~\eqref{eq:pig_piglet_payoff}.
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Lemke-Howson python code for the pig and piglet game.},
+    label={lst:lemke_howson_pig_piglet_game}
+]
 >>> import nashpy as nash
 >>> import numpy as np
 >>> A = np.array([[4, 2], [6, 0]])
@@ -233,7 +239,7 @@ The outcome indicates that the Nash equilibrium of the pig and piglet game is
 That is, the pig should always push the lever and the piglet should never push
 the lever.
 Consider the game of Rock-Paper-Scissors now where the payoff matrices are
-shown in~(\ref{eq:rock_paper_scissors_payoff}).
+shown in~\eqref{eq:rock_paper_scissors_payoff}.
 \begin{align}
     & \quad \ R \quad \ P \quad \ S \nonumber \\
     A =
@@ -259,7 +265,11 @@ shown in~(\ref{eq:rock_paper_scissors_payoff}).
 By implementing the Lemke-Howson algorithm on the Rock-Paper-Scissors game, one
 Nash equilibrium can be found.
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Lemke-Howson python code for the Rock-Paper-Scissors game.},
+    label={lst:lemke_howson_pig_piglet_game_rock_paper_scissors}
+]
 >>> A = np.array([
 ...     [1, -1, 0],
 ...     [0, 1, -1],
@@ -308,9 +318,9 @@ return all pairs of best responses in a game with payoff matrices \(A\) and
 \end{enumerate}
 
 The support enumeration algorithm is implemented using the
-\lstinline[style=pystyle]{nashpy} python library~\cite{thenashpyproject}.
+\texttt{nashpy}~\cite{thenashpyproject} python library.
 Consider the payoff matrices for the game of coordination shown
-in~(\ref{eq:coordination_payoff}), where the two players would prefer to
+in~\eqref{eq:coordination_payoff}, where the two players would prefer to
 perform the same action if possible, but player 1 has a slight preference
 for action \(S_1\) and player 2 has a slight preference for action \(S_2\).
 \begin{align}
@@ -332,10 +342,15 @@ for action \(S_1\) and player 2 has a slight preference for action \(S_2\).
     \label{eq:coordination_payoff}
 \end{align}
 
-The following piece of code implements the support enumeration algorithm on the
+The piece of code in~\ref{lst:support_enumeration_game_coordination} implements
+the support enumeration algorithm on the
 coordination game and returns all Nash equilibria of the game.
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Support enumeration python code for the coordination game.},
+    label={lst:support_enumeration_game_coordination},
+]
 >>> A = np.array([
 ...     [3, 1],
 ...     [0, 2]
@@ -406,11 +421,15 @@ previous actions of the opposing player.
 In other words the players play a best response to their opponent's
 empirical frequency of actions.
 
-Once again, using the \lstinline[style=pystyle]{nashpy} python
+Once again, using the \texttt{nashpy} python
 library~\cite{thenashpyproject} the fictitious play algorithm can be
-implemented on the following game.
+implemented on the game shown in~\ref{lst:fictitious_play_custom_game}.
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Fictitious play python code for a 2-player game.},
+    label={lst:fictitious_play_custom_game},
+]
 >>> A = np.array([
 ...     [4, 1, 3],
 ...     [2, 0, 2],
@@ -440,9 +459,10 @@ algorithm and how the players converge to a Nash equilibrium.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.45\textwidth]{chapters/04_game_theoretic_model/img/learning_algorithms_example/fictitious_row.pdf}
-    \includegraphics[width=0.45\textwidth]{chapters/04_game_theoretic_model/img/learning_algorithms_example/fictitious_col.pdf}
-    \caption{Fictitious play algorithm converging to a Nash equilibrium.}
+    \includegraphics[width=0.45\textwidth]{chapters/04_game_theoretic_model/Bin/learning_algorithms_example/fictitious_row.pdf}
+    \includegraphics[width=0.45\textwidth]{chapters/04_game_theoretic_model/Bin/learning_algorithms_example/fictitious_col.pdf}
+    \caption{Example of fictitious play algorithm run for \(1000\) iterations
+    that converges to a Nash equilibrium.}
     \label{fig:fictitious_play}
 \end{figure}
 
@@ -456,7 +476,11 @@ where \(\epsilon_i \in [0, \bar{\epsilon}]\) where \(\bar{\epsilon}\) is a
 parameter needed for the algorithm.
 
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Stochastic fictitious play python code for a 2-player game.},
+    label={lst:stochastic_fictitious_play_custom_game},
+]
 >>> A = np.array([
 ...     [4, 1, 3],
 ...     [2, 0, 2],
@@ -491,9 +515,10 @@ equilibrium.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.45\textwidth]{chapters/04_game_theoretic_model/img/learning_algorithms_example/stochastic_row.pdf}
-    \includegraphics[width=0.45\textwidth]{chapters/04_game_theoretic_model/img/learning_algorithms_example/stochastic_col.pdf}
-    \caption{Stochastic fictitious play algorithm converging to a Nash equilibrium.}
+    \includegraphics[width=0.45\textwidth]{chapters/04_game_theoretic_model/Bin/learning_algorithms_example/stochastic_row.pdf}
+    \includegraphics[width=0.45\textwidth]{chapters/04_game_theoretic_model/Bin/learning_algorithms_example/stochastic_col.pdf}
+    \caption{Example of stochastic fictitious play algorithm for \(1000\)
+    iterations that converges to a Nash equilibrium.}
     \label{fig:stochastic_fictitious_play}
 \end{figure}
 
@@ -545,13 +570,17 @@ equations:
 \end{align}
 
 Asymmetric replicator dynamics is implemented by using the python
-\lstinline[style=pystyle]{nashpy} library.
-The following code snippet shows how to use the asymmetric replicator dynamics
+\texttt{nashpy} library.
+Code snippet~\ref{lst:asymmetric_replicator_dynamics_custom_game} shows how to
+use the asymmetric replicator dynamics
 algorithm to find the Nash equilibrium of a two-player game.
-Consider the rock-paper-scissors game defined by the matrices
-in~(\ref{eq:rock_paper_scissors_payoff}).
 
-\begin{lstlisting}[style=pystyle]
+
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Asymmetric replicator dynamics python code for a 2-player game.},
+    label={lst:asymmetric_replicator_dynamics_custom_game},
+]
 >>> A = np.array([
 ...     [4, 1, 3],
 ...     [2, 0, 2],
@@ -585,9 +614,10 @@ have in fact not reached a steady state.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.45\textwidth]{chapters/04_game_theoretic_model/img/learning_algorithms_example/asymmetric_rd_row.pdf}
-    \includegraphics[width=0.45\textwidth]{chapters/04_game_theoretic_model/img/learning_algorithms_example/asymmetric_rd_col.pdf}
-    \caption{Asymmetric replicator dynamics algorithm - non-converging example}
+    \includegraphics[width=0.45\textwidth]{chapters/04_game_theoretic_model/Bin/learning_algorithms_example/asymmetric_rd_row.pdf}
+    \includegraphics[width=0.45\textwidth]{chapters/04_game_theoretic_model/Bin/learning_algorithms_example/asymmetric_rd_col.pdf}
+    \caption{Example of asymmetric replicator dynamics algorithm that does
+    not converge.}
     \label{fig:asymmetric_replicator_dynamics}
 \end{figure}
 
@@ -597,7 +627,12 @@ This game cannot reach a steady state given the uniform initial distribution of
 the strategies.
 Consider a different game where the steady strategy choice can be reached.
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Asymmetric replicator dynamics run on a game that is able to reach
+    steady state},
+    label={lst:asymmetric_replicator_dynamics_steady_state},
+]
 >>> A = np.array([
 ...     [4, 1],
 ...     [2, 5],
@@ -635,9 +670,9 @@ to take over the population.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.45\textwidth]{chapters/04_game_theoretic_model/img/learning_algorithms_example/asymmetric_rd_2_row.pdf}
-    \includegraphics[width=0.45\textwidth]{chapters/04_game_theoretic_model/img/learning_algorithms_example/asymmetric_rd_2_col.pdf}
-    \caption{Asymmetric replicator dynamics algorithm - converging example}
+    \includegraphics[width=0.45\textwidth]{chapters/04_game_theoretic_model/Bin/learning_algorithms_example/asymmetric_rd_2_row.pdf}
+    \includegraphics[width=0.45\textwidth]{chapters/04_game_theoretic_model/Bin/learning_algorithms_example/asymmetric_rd_2_col.pdf}
+    \caption{Example of asymmetric replicator dynamics algorithm that converges}
     \label{fig:asymmetric_replicator_dynamics_steady}
 \end{figure}
 
@@ -670,8 +705,9 @@ game.
 
 \begin{figure}[H]
     \centering
-    \input{chapters/04_game_theoretic_model/img/extensive_form_games/perfect_information.tex}
-    \caption{An example of a perfect information extensive form game}
+    \input{chapters/04_game_theoretic_model/Bin/extensive_form_games/perfect_information.tex}
+    \caption{Example of a perfect information extensive form game with \(2\)
+    players and \(4\) terminal nodes.}
     \label{fig:extensive_form_game}
 \end{figure}
 
@@ -700,8 +736,9 @@ form game.
 
 \begin{figure}[H]
     \centering
-    \input{chapters/04_game_theoretic_model/img/extensive_form_games/imperfect_information.tex}
-    \caption{An example of a perfect information extensive form game}
+    \input{chapters/04_game_theoretic_model/Bin/extensive_form_games/imperfect_information.tex}
+    \caption{An example of an imperfect information extensive form game with
+    \(2\) players and \(4\) terminal nodes.}
     \label{fig:imperfect_extensive_form_game}
 \end{figure}
 
@@ -716,7 +753,7 @@ and hence their own position on the tree.
 The final nodes of the tree represent the outcome of the game.
 This game can also be represented by a normal form game since both players end
 up being completely unaware of the actions taken by the other player.
-The payoff matrices in~(\ref{eq:imperfect_to_normal_form}) show the normal form
+The payoff matrices in~\eqref{eq:imperfect_to_normal_form} show the normal form
 game representation of the imperfect information extensive form game shown in
 Figure~\ref{fig:imperfect_extensive_form_game}.
 \begin{align}\label{eq:imperfect_to_normal_form}

@@ -46,10 +46,13 @@ The server-dependent variation of the queueing system is implemented in a
 similar way as the state-dependent implementation.
 Using the python library \texttt{ciw} the server-dependent service time
 distribution is defined as a class that inherits from the
-\texttt{ciw.dists.Distribution} class.
-The class is defined as follows:
+\texttt{Distribution} class shown in~\ref{lst:server_dependent_class}.
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Server-dependent service time distribution class.},
+    label={lst:server_dependent_class},
+]
 >>> import random
 >>> import ciw
 >>> class ServerDependentExponential(
@@ -76,7 +79,11 @@ The main difference from the state-dependent case is that the service rate
 \(\mu\) is now a dictionary with the server's id as the key and the service
 rate of that server as the value.
 
-\begin{lstlisting}[style=pystyle]
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Example of the server-dependent variation of the queueing system.},
+    label={lst:server_dependent_example},
+]
 >>> import ambulance_game as abg
 >>> import ciw
 >>> import numpy as np
