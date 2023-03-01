@@ -1,9 +1,17 @@
 \subsection{Discrete Event Simulation}
 
-The discrete event simulation (DES) representation of the hospital network
-discussed in this thesis (see Chapter~\ref{sec:queueing_section}) is
-implemented in the \texttt{simulation} module of the \texttt{ambulance\_game}
-library.
+For the purposes of this study, a discrete event simulation (DES) model was
+constructed to support the Markov chain version described in
+section~\ref{sec:queueing_section}.
+The queueing model was built in python using the Ciw
+library~\cite{ciwpython}.
+
+The same performance measures described in Section~\ref{sec:waiting_time},
+Section~\ref{sec:blocking_time} and
+Section~\ref{sec:proportion_of_individuals_within_time} can also be
+calculated using the DES model.
+The simulation can be ran a number of times to eliminate stochasticity and the
+outcomes of the two methods can be directly comparable.
 
 The DES representation of the hospital network is a discrete event simulation
 that is implemented using the \texttt{ciw} library~\cite{ciwpython}.
