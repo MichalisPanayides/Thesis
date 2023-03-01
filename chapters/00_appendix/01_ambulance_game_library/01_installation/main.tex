@@ -1,0 +1,48 @@
+\section{Installation}\label{sec:ambulance_game_installation}
+
+The \texttt{ambulance\_game} library is published on PyPI~\cite{pypi}
+and can be installed using the \texttt{pip} package manager:
+
+\definecolor{bashcol}{RGB}{211, 211, 211}
+\begin{lstlisting}[
+    language=bash,
+    basicstyle=\ttfamily\scriptsize,
+    backgroundcolor=\color{bashcol},
+    frame=shadowbox,
+    mathescape=false,
+]
+$ python -m pip install ambulance_game
+\end{lstlisting}
+
+Alternatively, a development version of the library can be installed from
+GitHub.
+The following commands clone the repository, install the \texttt{flit}
+package manager and install the library in development mode: 
+
+\begin{lstlisting}[
+    language=bash,
+    basicstyle=\ttfamily\scriptsize,
+    backgroundcolor=\color{bashcol},
+    frame=shadowbox,
+    mathescape=false,
+]
+$ git clone https://github.com/MichalisPanayides/AmbulanceDecisionGame.git
+$ cd AmbulanceDecisionGame
+$ python -m pip install flit
+$ python -m flit install --symlink
+\end{lstlisting}
+
+To make sure that the library is installed correctly, and to check that the
+tests pass, the following command install the \texttt{tox} package manager
+and runs the tests:
+
+\begin{lstlisting}[
+    language=bash,
+    basicstyle=\ttfamily\scriptsize,
+    backgroundcolor=\color{bashcol},
+    frame=shadowbox,
+    mathescape=false,
+]
+$ python -m pip install tox
+$ python -m tox
+\end{lstlisting}
