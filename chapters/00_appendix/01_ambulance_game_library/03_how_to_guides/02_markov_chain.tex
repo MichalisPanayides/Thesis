@@ -24,7 +24,7 @@ Section~\ref{sec:queueing_section}.
 
 \end{lstlisting}
 
-This section focuses on the $\texttt{markov}$ module of the ambulance\_game
+This section focuses on the \texttt{markov} module of the ambulance\_game
 library which focuses on the Markov model.
 Function \texttt{build\_states} takes in the \texttt{threshold}, the
 \texttt{system\_capacity} and the \texttt{buffer\_capacity} variables and
@@ -67,8 +67,7 @@ function can be used.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{chapters/00_appendix/01_ambulance_game_library/Bin/visualise_markov.pdf}
-    
+    \includegraphics[width=\textwidth]{chapters/00_appendix/01_ambulance_game_library/Bin/visualise_markov.eps}
 \end{figure}
 
 The function \texttt{get\_transition\_matrix} builds the transition matrix
@@ -182,10 +181,10 @@ shown in Listing~\ref{lst:abg_how_to_markov_waiting} can be used.
 
 \end{lstlisting}
 
-Note that an additional argument \texttt{class_type} can be used to get the
+Note that an additional argument \texttt{class\_type} can be used to get the
 mean waiting time of type 1 or type 2 individuals that takes values \(0\) and
 \(1\), respectively.
-The default value of \texttt{class_type} is set to \texttt{None} which
+The default value of \texttt{class\_type} is set to \texttt{None} which
 returns the mean waiting time of all individuals.
 
 To get the mean blocking time of type 2 patients in the system (ambulance
