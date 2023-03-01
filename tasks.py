@@ -49,7 +49,17 @@ def spellcheck(c):
 @task
 def proselint(c):
     """
-    Check the spelling of all .tex files
+    Check the prose of all .tex files using the proselint tool. The steps that
+    this function performs are:
+        1. Open the .proselint.yaml file and read in what errors should be
+        ignored and what files should be ignored.
+        2. Find all .tex files and remove the files that should be ignored.
+        3. For each .tex file:
+            a. Read in the file
+            b. Remove all unnecessary lines that should not be checked
+            c. Get the errors from proselint
+            d. Remove the errors that were expected
+            e. Print the errors
     """
 
     def remove_expected_errors(path, errors, errors_to_ignore):
