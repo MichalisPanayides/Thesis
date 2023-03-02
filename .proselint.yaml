@@ -3,7 +3,6 @@
       ["typography.symbols.copyright", chapters\04_game_theoretic_model\01_game_theory_intro\main.tex],
       # Several comments in the tex files (TODOs, etc.)
       # TODO: Remove these once all the todos are done 
-      ["annotations.misc", chapters\00_appendix\01_ambulance_game_library\main.tex],
       ["annotations.misc", chapters\04_game_theoretic_model\02_formulation\main.tex],
       ["annotations.misc", chapters\01_introduction\main.tex],
       ["annotations.misc", chapters\00_appendix\04_steady_state_probs_closed_form\main.tex],

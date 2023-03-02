@@ -35,6 +35,7 @@ Listing~\ref{lst:abg_how_to_game_parameters}.
 The parameters \texttt{threshold\_1} and \texttt{threshold\_2} will only be
 used in code snippet~\ref{lst:abg_how_to_game_best_response} to determine the
 best response of the ambulance service, given the strategies of the hospitals.
+This relates to the concepts described in Section~\ref{sec:game_methodology}.
 
 \begin{lstlisting}[
     style=pystyle,
@@ -71,6 +72,8 @@ This can also be done for all possible strategies of the hospitals.
 The code shown in Listing~\ref{lst:abg_how_to_game_routing} calculates the
 best response of the ambulance service for all possible strategies of the
 hospitals and stores the results in a \texttt{numpy} array.
+For more information on the routing matrix see
+Section~\ref{sec:routing_matrix}.
 
 \begin{lstlisting}[
     style=pystyle,
@@ -108,6 +111,8 @@ of \(T_2 = 1\), and so on.
 Finally, the code shown in Listing~\ref{lst:abg_how_to_game_payoff} creates the
 game using \texttt{nashpy} and calculates a Nash equilibrium of the game
 using the Lemke-Howson algorithm that is implemented in \texttt{nashpy}.
+For more information on the \(2\)-player normal form game that is created
+see Section~\ref{sec:game_methodology}.
 
 \begin{lstlisting}[
     style=pystyle,

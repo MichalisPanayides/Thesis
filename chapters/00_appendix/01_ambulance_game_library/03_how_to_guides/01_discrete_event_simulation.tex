@@ -1,8 +1,8 @@
 \subsection{Discrete Event Simulation}
 
 For the purposes of this study, a discrete event simulation (DES) model was
-constructed to support the Markov chain version described in
-section~\ref{sec:queueing_section}.
+constructed that is also described in
+Section~\ref{sec:discrete_event_simulation}.
 The queueing model was built in python using the Ciw
 library~\cite{ciwpython}.
 
@@ -215,12 +215,12 @@ dependent, server dependent or both.
 This feature was implemented to accompany
 Chapter~\ref{sec:agent_based_extension} of this thesis.
 The state-dependent service rate is defined as a dictionary with the keys
-being the states.
+being the states (see Section~\ref{sec:state_dependent}).
 The server-dependent service rate is defined as a dictionary with the keys
-being the servers.
+being the servers (see Section~\ref{sec:server_dependent}).
 The state and server dependent service rate is defined as a dictionary with
 the keys being the servers and the values being dictionaries with the keys
-being the states.
+being the states (see Section~\ref{sec:state_server_dependent_model}).
 The code snippet in Listing~\ref{lst:state_server_dependent_service_rate} shows
 examples of how to define these service rates.
 
