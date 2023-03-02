@@ -4,3 +4,184 @@
 % - List of all functions in the library
 % - List of all classes in the library
 % - Maybe in the form of a doctree where modules are the top level
+
+The \texttt{ambulance\_game} library is structured as shown in
+Figure~\ref{fig:ambulance_game_structure}.
+
+\begin{figure}[H]
+    \dirtree{%
+        .1 ambulance\_game.
+        .2 markov/.
+        .3 \_\_init\_\_.py.
+        .3 blocking.py.
+        .3 graphical.py. 
+        .3 markov.py. 
+        .3 proportion.py. 
+        .3 tikz.py. 
+        .3 utils.py. 
+        .3 waiting.py.
+        .2 simulation.
+        .3 \_\_init\_\_.py.
+        .3 dists.py.
+        .3 simulation.py.
+        .2 comparisons.py.
+        .2 game.py.
+        .2 queue.py.
+    }
+    \caption{Structure of the modules in the \texttt{ambulance\_game} library}
+    \label{fig:ambulance_game_structure}
+\end{figure}
+
+
+Below is a list of all the functions in the \texttt{ambulance\_game} library
+sorted by the modules they are in.
+The entries that start with a capital letter are classes and the rest are
+functions.
+
+\scriptsize
+\begin{itemize}
+    \item \texttt{blocking.py}
+    \begin{itemize}
+        \item \texttt{get\_coefficients\_row\_of\_array\_associated\_with\_state}
+        \item \texttt{get\_blocking\_time\_linear\_system}
+        \item \texttt{convert\_solution\_to\_correct\_array\_format}
+        \item \texttt{get\_blocking\_times\_of\_all\_states\_using\_direct\_approach}
+        \item \texttt{mean\_blocking\_time\_formula\_using\_direct\_approach}
+        \item \texttt{mean\_blocking\_time\_formula\_using\_closed\_form\_approach}
+        \item \texttt{get\_mean\_blocking\_time\_using\_markov\_state\_probabilities}
+        \item \texttt{get\_mean\_blocking\_difference\_using\_markov}
+    \end{itemize}
+    \item \texttt{graphical.py}
+    \begin{itemize}
+        \item \texttt{reset\_L\_and\_R\_in\_array}
+        \item \texttt{find\_next\_permutation\_over}
+        \item \texttt{find\_next\_permutation\_over\_L\_and\_R}
+        \item \texttt{generate\_next\_permutation\_of\_edges}
+        \item \texttt{check\_permutation\_is\_valid}
+        \item \texttt{get\_rate\_of\_state\_00\_graphically}
+        \item \texttt{get\_all\_permutations}
+        \item \texttt{get\_permutations\_ending\_in\_R}
+        \item \texttt{get\_permutations\_ending\_in\_D\_where\_any\_RL\_exists}
+        \item \texttt{get\_permutations\_ending\_in\_L\_where\_any\_RL\_exists}
+        \item \texttt{get\_permutations\_ending\_in\_RL\_where\_RL\_exists\_only\_at\_the\_end}
+        \item \texttt{get\_coefficient}
+    \end{itemize}
+    \item \texttt{markov.py}
+    \begin{itemize}
+        \item \texttt{build\_states}
+        \item \texttt{visualise\_markov\_chain}
+        \item \texttt{get\_transition\_matrix\_entry}
+        \item \texttt{get\_symbolic\_transition\_matrix}
+        \item \texttt{get\_transition\_matrix\_by\_iterating\_through\_all\_entries}
+        \item \texttt{get\_all\_pairs\_of\_states\_with\_non\_zero\_entries}
+        \item \texttt{state\_after\_threshold}
+        \item \texttt{state\_before\_threshold}
+        \item \texttt{state\_at\_threshold}
+        \item \texttt{get\_transition\_matrix}
+        \item \texttt{convert\_symbolic\_transition\_matrix}
+        \item \texttt{is\_steady\_state}
+        \item \texttt{get\_steady\_state\_numerically}
+        \item \texttt{get\_steady\_state\_algebraically}
+        \item \texttt{get\_markov\_state\_probabilities}
+        \item \texttt{get\_mean\_number\_of\_individuals\_in\_system}
+        \item \texttt{get\_mean\_number\_of\_individuals\_in\_service\_area}
+        \item \texttt{get\_mean\_number\_of\_individuals\_in\_buffer\_center}
+    \end{itemize}
+    \item \texttt{proportion.py}
+    \begin{itemize}
+        \item \texttt{product\_of\_all\_elements}
+        \item \texttt{general\_psi\_function}
+        \item \texttt{specific\_psi\_function}
+        \item \texttt{hypoexponential\_cdf}
+        \item \texttt{erlang\_cdf}
+        \item \texttt{get\_probability\_of\_waiting\_time\_in\_system\_less\_than\_target\_for\_state}
+        \item \texttt{get\_proportion\_of\_individuals\_within\_time\_target}
+        \item \texttt{overall\_proportion\_of\_individuals\_within\_time\_target}
+        \item \texttt{proportion\_within\_target\_using\_markov\_state\_probabilities}
+    \end{itemize}
+    \item \texttt{tikz.py}
+    \begin{itemize}
+        \item \texttt{generate\_code\_for\_tikz\_figure}
+        \item \texttt{build\_body\_of\_tikz\_spanning\_tree}
+        \item \texttt{get\_tikz\_code\_for\_permutation}
+        \item \texttt{generate\_code\_for\_tikz\_spanning\_trees\_rooted\_at\_00}
+    \end{itemize}
+    \item \texttt{utils.py}
+    \begin{itemize}
+        \item \texttt{is\_waiting\_state}
+        \item \texttt{is\_blocking\_state}
+        \item \texttt{is\_accepting\_state}
+        \item \texttt{expected\_time\_in\_markov\_state\_ignoring\_arrivals}
+        \item \texttt{expected\_time\_in\_markov\_state\_ignoring\_class\_2\_arrivals}
+        \item \texttt{prob\_service}
+        \item \texttt{prob\_class\_1\_arrival}
+        \item \texttt{get\_probability\_of\_accepting}
+        \item \texttt{get\_proportion\_of\_individuals\_not\_lost}
+        \item \texttt{get\_accepting\_proportion\_of\_class\_2\_individuals}
+        \item \texttt{get\_accepting\_proportion\_of\_individuals}
+    \end{itemize}
+    \item \texttt{waiting.py}
+    \begin{itemize}
+        \item \texttt{get\_waiting\_time\_for\_each\_state\_recursively}
+        \item \texttt{mean\_waiting\_time\_formula\_using\_recursive\_approach}
+        \item \texttt{get\_coefficients\_row\_of\_array\_for\_state}
+        \item \texttt{get\_waiting\_time\_linear\_system}
+        \item \texttt{convert\_solution\_to\_correct\_array\_format}
+        \item \texttt{get\_waiting\_times\_of\_all\_states\_using\_direct\_approach}
+        \item \texttt{mean\_waiting\_time\_formula\_using\_direct\_approach}
+        \item \texttt{mean\_waiting\_time\_formula\_using\_closed\_form\_approach}
+        \item \texttt{overall\_waiting\_time\_formula}
+        \item \texttt{get\_mean\_waiting\_time\_using\_markov\_state\_probabilities}
+    \end{itemize}
+    \item \texttt{simulation.py}
+    \begin{itemize}
+        \item \texttt{build\_model}
+        \item \texttt{build\_custom\_node}
+        \item \texttt{simulate\_model}
+        \item \texttt{extract\_times\_from\_records}
+        \item \texttt{extract\_times\_from\_individuals}
+        \item \texttt{get\_list\_of\_results}
+        \item \texttt{get\_multiple\_runs\_results}
+        \item \texttt{extract\_total\_individuals\_and\_the\_ones\_within\_target\_for\_both\_classes}
+        \item \texttt{get\_mean\_proportion\_of\_individuals\_within\_target\_for\_multiple\_runs}
+        \item \texttt{get\_simulated\_state\_probabilities}
+        \item \texttt{get\_average\_simulated\_state\_probabilities}
+        \item \texttt{get\_mean\_blocking\_difference\_between\_two\_systems}
+    \end{itemize}
+    \item \texttt{dists.py}
+    \begin{itemize}
+        \item \texttt{StateDependentExponential}
+        \item \texttt{ServerDependentExponential}
+        \item \texttt{StateServerDependentExponential}
+        \item \texttt{is\_state\_dependent}
+        \item \texttt{is\_server\_dependent}
+        \item \texttt{is\_state\_server\_dependent}
+        \item \texttt{get\_service\_distribution}
+        \item \texttt{get\_arrival\_distribution}
+    \end{itemize}
+    \item \texttt{comparisons.py}
+        \item \texttt{get\_heatmaps}
+        \item \texttt{get\_mean\_waiting\_time\_from\_simulation\_state\_probabilities}
+        \item \texttt{get\_mean\_blocking\_time\_from\_simulation\_state\_probabilities}
+        \item \texttt{get\_proportion\_within\_target\_from\_simulation\_state\_probabilities}
+        \item \texttt{get\_waiting\_time\_comparisons}
+        \item \texttt{get\_blocking\_time\_comparisons}
+        \item \texttt{get\_proportion\_comparison}
+        \item \texttt{get\_simulation\_and\_markov\_outputs}
+        \item \texttt{plot\_output\_comparisons}
+    \item \texttt{game.py}
+    \begin{itemize}
+        \item \texttt{calculate\_class\_2\_individuals\_best\_response}
+        \item \texttt{get\_routing\_matrix}
+        \item \texttt{get\_individual\_entries\_of\_matrices}
+        \item \texttt{compute\_tasks}
+        \item \texttt{build\_matrices\_from\_computed\_tasks}
+        \item \texttt{get\_payoff\_matrices}
+        \item \texttt{build\_game\_using\_payoff\_matrices}
+    \end{itemize}
+    \item \texttt{queue.py}
+    \begin{itemize}
+        \item \texttt{Queue}
+    \end{itemize}
+\end{itemize}
+\normalsize
