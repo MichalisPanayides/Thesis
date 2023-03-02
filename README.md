@@ -15,7 +15,7 @@ $ git clone https://github.com/MichalisPanayides/Thesis.git
 ## Create the virtual environment
 
 All code for the research and testing of this thesis is written in `Python` and
-the libraries used are specified in environment.yml.
+the libraries used are specified in `environment.yml`.
 To create and activate the environment run the following commands in the
 terminal:
 
@@ -55,8 +55,9 @@ Note that `aspell` is currently only available for Linux and Mac OS X.
 
 ## Proselint
 
-To run the `proselint` checker for language linting run the following command
-in the terminal:
+`Proselint` is a linter for prose. It checks the text for stylistic errors,
+consistency issues, and common grammar mistakes.
+To run the `proselint` checker run the following command in the terminal:
 
 ```bash
 $ inv proselint
