@@ -61,19 +61,22 @@ also stored in each sub-directory.
 The code snippet in~\ref{lst:compressed_data} shows an example of how the data
 are stored and loaded using numpy.
 
-% TODO: Somehow remove np.savez_compressed from doctesting
+\definecolor{invisiblecomments}{RGB}{253, 246, 220}
 \begin{lstlisting}[
     style=pystyle,
     caption={Example of saving and loading compressed data},
     label={lst:compressed_data},
+    commentstyle=\color{invisiblecomments}
 ]
 >>> import numpy as np
 >>> array_1, array_2 = np.arange(10), np.arange(10, 20)
->>> np.savez_compressed("demo", array_1=array_1, array_2=array_2)
->>> loaded_file = np.load("demo.npz")
->>> loaded_file["array_1"]
+>>> np.savez_compressed(
+...     "demo", array_1=array_1, array_2=array_2
+... ) # doctest: +SKIP
+>>> loaded_file = np.load("demo.npz") # doctest: +SKIP
+>>> loaded_file["array_1"] # doctest: +SKIP
 array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
->>> loaded_file["array_2"]
+>>> loaded_file["array_2"] # doctest: +SKIP
 array([10, 11, 12, 13, 14, 15, 16, 17, 18, 19])
 
 \end{lstlisting}

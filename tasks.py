@@ -159,6 +159,8 @@ def proselint(c):
             for error in errors:
                 print(error)
             exit_codes.append(1)
+        else:
+            print(f"No errors found in {path}")
     sys.exit(max(exit_codes))
 
 

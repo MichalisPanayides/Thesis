@@ -5,7 +5,7 @@ This section aims to explore alternative ways of calculating the steady state
 probabilities using the connection between Markov chains and graph
 theory.
 
-\subsubsection{Graph Theory}
+\section{Graph Theory}
 In mathematics a graph \(G = (V, E)\) is a structure that consists of a set of
 vertices \(V = \{v_1, v_2, \dots, v_n\}\) and a set of edges \(E = \{e_1, e_2,
 \dots, e_m\}\) that connect the vertices together~\cite{bender2010lists}.
@@ -46,7 +46,7 @@ In this case, the edges are expressed as \(e = (v_i, v_j, w)\) where \(v_i, v_j
     \label{fig:example_of_weighted_directed_graph}
 \end{figure}
 
-\subsubsection{A graph theoretic model underlying the Markov chain}
+\section{A graph theoretic model underlying the Markov chain}
 It can be assumed that a Markov chain model \(M\) can be translated as a
 weighted directed graph \(G_M = (V, E)\) where \(V=S\) from
 equation~\eqref{eq:definition_of_S_as_disjoint_union} and \((v_i, v_j)\in E\) if
@@ -112,7 +112,7 @@ arm} of the model has a length of \(3\), \(N=5\) that indicates that the
 right-most states \((u,v)\) are of the form \((u,5)\) and \(M=2\) that
 equivalently shows that the bottom states are of the form \((2,v)\).
 
-\subsubsection{Spanning trees}
+\section{Spanning trees}
 
 A \textit{spanning tree} is defined as a subset of the graph that visits all
 the vertices of the graph and does not include any
@@ -185,7 +185,7 @@ Some additional research papers that on directed spanning trees enumeration
 are~\cite{yan2011enumeration, sung2016enumeration, uno1996algorithm}.
 
 
-\subsubsection{Spanning Trees rooted at (0,0)}
+\section{Spanning Trees rooted at (0,0)}
 
 Let us now consider some examples of spanning trees that are rooted at
 \((0,0)\).
@@ -203,7 +203,9 @@ As well as this, the sum of all the weights of the spanning trees denoted by
 
 \begin{multicols}{2}
     \begin{center}
-        \input{chapters/03_queueing_model/Bin/spanning_trees_1121/main_0.tex}
+        \scalebox{0.9}{
+            \input{chapters/03_queueing_model/Bin/spanning_trees_1121/main_0.tex}
+        }
     \end{center}
 
     \begin{flalign*}
@@ -214,7 +216,9 @@ As well as this, the sum of all the weights of the spanning trees denoted by
 
 \begin{multicols}{2}
     \begin{center}
-        \input{chapters/03_queueing_model/Bin/spanning_trees_1121/main_1.tex}
+        \scalebox{0.9}{
+            \input{chapters/03_queueing_model/Bin/spanning_trees_1121/main_1.tex}
+        }
     \end{center}
 
     \begin{flalign*}
@@ -225,8 +229,6 @@ As well as this, the sum of all the weights of the spanning trees denoted by
 \begin{equation*}
     \tilde{\pi}_{(0,0)} = \mu^4 + \lambda_2 \mu^3
 \end{equation*}
-
-\newpage
 
 \begin{figure}[H]
     \centering
@@ -340,7 +342,6 @@ As well as this, the sum of all the weights of the spanning trees denoted by
     \end{figure}
     \vspace*{\fill}
     \columnbreak
-    % \vspace*{0.3cm}
     \begin{equation*}
         \lambda_2 \mu^5
     \end{equation*}
@@ -353,7 +354,6 @@ As well as this, the sum of all the weights of the spanning trees denoted by
     \end{figure}
     \vspace*{\fill}
     \columnbreak
-    % \vspace*{0.3cm}
     \begin{equation*}
         \mu^6
     \end{equation*}
@@ -364,7 +364,7 @@ As well as this, the sum of all the weights of the spanning trees denoted by
     \tilde{\pi}_{(0,0)} = (\lambda_2)^2 \mu^4 + 2 \lambda_2 \mu^5 + \mu^6
 \end{equation*}
 
-\subsubsection{Conjecture of adding rows}
+\section{Conjecture of adding rows}
 
 Let us consider three Markov models with the same number of servers \(C=1\),
 the same threshold \(T=1\), the same node 1 capacity \(N=2\) but
@@ -419,7 +419,7 @@ Thus, having investigated the effect of adding rows (increasing \(M\)) the
 next thing to investigate is the effect of adding columns (increasing \(N\))
 and finding an expression for \(k(C,T,N)\).
 
-\subsubsection{The effect of increasing N}
+\section{The effect of increasing N}
 In this section we will consider a node 2 capacity of \(M=1\) and see the
 effect
 of modifying other parameters on \(k(C, T, N)\).
@@ -563,7 +563,7 @@ from the equations above:
 \end{align}
 \normalsize
 
-\subsubsection{Unknown terms}
+\section{Unknown terms}
 
 The terms that are still unknown are the terms where \(p_1, p_2, p_3 \geq 2\).
 Here are some of these values with the corresponding values of the
@@ -584,7 +584,7 @@ Here are some of these values with the corresponding values of the
     \end{itemize}
 \end{multicols}
 
-\subsubsection{DRL arrays}
+\section{DRL arrays}
 
 In this section a new combinatorial object is defined: DRL arrays.
 It will be shown that there is a bijection between DRL arrays and the spanning
@@ -752,7 +752,6 @@ spanning tree.
                 \draw[->](u0v3) edge[bend left] node {} (u0v2);
             \end{tikzpicture}
         }
-        % TODO: Fix potential overfull hbox here
         \caption{Example of a permutation that does not produce a valid spanning
         tree based on Rule 2}
         \label{fig:state_probs_closed_form_rule_2_visualised}
@@ -781,7 +780,7 @@ them not valid.
     \end{itemize}
 \end{multicols}
 
-\subsubsection{
+\section{
     Examples of mappings of directed spanning trees to permutation arrays}
 
 \begin{minipage}{\linewidth}
@@ -854,7 +853,7 @@ them not valid.
 \end{multicols}
 \end{minipage}
 
-\subsubsection{Closed-form approach for state probabilities}
+\section{Closed-form approach for state probabilities}
 A general formula for finding all such permutations can be found, where the
 inputs are \( p_1\), \(p_2\) and \(p_3\) that correspond to the number of \(D\),
 \(R\) and \(L\) respectively and the output would be the coefficient of the term
@@ -1008,7 +1007,7 @@ Here's the expression for each of these terms:
     & - E_L(p_1, p_2, p_3) - E_{RL}(p_1, p_2, p_3)
 \end{align*}
 
-\subsubsection{Example of the permutation algorithm}
+\section{Example of the permutation algorithm}
 Consider the term \((\lambda_2) (\lambda_1) \mu^2\) and the above expressions.
 In order to get the coefficient of that term the permutation algorithm needs to
 be applied with an input of \(p_1=1, p_2=1, p_3=2\), i.e. 1 \(D\), 1 \(R\) and 2
