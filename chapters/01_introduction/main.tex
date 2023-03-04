@@ -1,8 +1,9 @@
 \chapter{Introduction}\label{sec:introduction}
 
-This thesis focuses on the application of OR to healthcare systems and in
-particular to the Emergency Department (ED) and Emergency Medical Services
-(EMS) interface.
+This thesis focuses on the application of Operational Research (OR) to
+healthcare systems and in
+particular at the interface of Emergency Departments (EDs) and Emergency
+Medical Services (EMS).
 OR models have been used a lot in the past in conjunction with healthcare
 systems to better inform the decision-making of healthcare managers and
 policy makers.
@@ -10,7 +11,7 @@ The use of OR in healthcare systems can be particularly useful in situations
 where improvements in the system are needed to cope with the demand for
 healthcare services.
 
-Operational Research (OR) is a field of study that makes use of mathematical
+OR is a field of study that makes use of mathematical
 and computational techniques to solve problems in a wide range of areas, such
 as healthcare, business, engineering, and the military.
 The core of OR has been to help decision makers make better decisions by
@@ -35,15 +36,17 @@ The introductory Chapter is structured in the following way:
     \item Section~\ref{sec:intro_research} presents the research questions and
     objectives of this thesis, along with the overall structure of the thesis.
     \item Section~\ref{sec:intro_software} provides an overview of the software
-    development tools and best practices that were used in this thesis.
+    development tools and best practices that were used in this research.
 \end{itemize}
 
 
 \section{History of Operational Research}\label{sec:intro_or_history}
 
 The history of OR can be traced back to the 1940s during Would War II when the
-US Army Air Corps (USAAF) started to use OR techniques to optimise the use of
-their aircraft.
+UK forces started to use OR techniques to optimise the use of their aircrafts.
+Patrick Blackett was a British physicist and a mathematician and was one of the
+first people to use OR techniques to solve problems in the military and was
+later referred to as the \textit{father of OR}~\cite{blackett1962studies}.
 At the time, many strategic problems were too complicated to solve by any one
 person or a single discipline.
 Scientists and mathematicians from different fields were brought together to
@@ -73,7 +76,7 @@ Research Society:
     incorporating measurement of factors such as chance and risk, with which to
     predict and compare the outcomes of alternative decisions, strategies or
     controls.
-    Th purpose is to help management determine its policy and actions
+    The purpose is to help management determine its policy and actions
     scientifically''~\cite{or_for_multi_organizations}.
 \end{quotation}
 
@@ -154,8 +157,7 @@ them~\cite{southwalesargus}.
 Some even mention the negative effect that this has on the morale of ambulance
 paramedics~\cite{bbcwales}.
 
-In the United Kingdom, the National Heath Services (NHS) sets some regulations
-on ED performance.
+In the United Kingdom, the NHS sets some regulations on ED performance.
 One of these regulations is that 95\% of patients that arrive at the ED should
 be admitted, transferred or discharged within four hours.
 This is where gaming behaviour might be observed between the EDs and the EMS.
@@ -203,7 +205,7 @@ model between two queueing systems and a service that distributes individuals
 to them.
 The resultant model is used to explore the emergent dynamics between the three
 players.
-This study explores two new concepts: getting performance measures for a new
+This study explores two new concepts: obtaining performance measures for a new
 queueing theoretic model with a service centre and a buffer space and, and
 using a learning algorithm to model the emergence of behaviour.
 The developed theoretical model is illustrated through the application to
@@ -244,11 +246,11 @@ Overall, the thesis is structured as follows:
 \begin{itemize}
     \item Chapter~\ref{sec:introduction} introduces the problem and
     motivation behind the research presented in this thesis.
-    A background of Operational Research as well as an overview of the
+    A background of OR as well as an overview of the
     software development process and best practices are also presented.
     \item Chapter~\ref{sec:lit_review} presents a literature review of the
-    relevant research that has been done.
-    This includes a review of the literature on Operational Research models
+    relevant research.
+    This includes a review of the literature on OR models
     applied to healthcare systems, a review of the conjunction of queueing
     theory and game theory and a review of the literature on game theoretic
     models applied to healthcare systems.
@@ -256,7 +258,7 @@ Overall, the thesis is structured as follows:
     some context for the agent-based model that is presented in this thesis.
     \item Chapter~\ref{sec:queueing_section} introduces a queueing network
     model that accepts two types of individuals and has two waiting spaces.
-    Two modelling approaches are outlined; Discrete Event Simulation (DES) and
+    Two modelling approaches are discussed; Discrete Event Simulation (DES) and
     the Markov chain (MC) approach.
     The chapter mainly focuses on the MC approach and presents how the steady
     state probabilities of and certain performance measures can be obtained
@@ -272,7 +274,7 @@ Overall, the thesis is structured as follows:
     The model is then mapped to a 3-player game between the EMS and two EDs.
     \item Chapter~\ref{sec:numerical_results} presents an overview of the
     numerical results of the game theoretic model.
-    The chapter fives an overview of the data collection process as well as a
+    The chapter gives an overview of the data collection process as well as a
     brief description of the data parameters explored.
     The results of the numerical experiments are then presented and discussed.
     \item Chapter~\ref{sec:agent_based_extension} presents an extension to the
@@ -280,7 +282,7 @@ Overall, the thesis is structured as follows:
     The queueing model is extended to use state-dependent and server-dependent
     service times instead of the constant service times that were previously
     used.
-    Thus, an agent-based model is constructed where there are different service
+    An agent-based model is constructed where there are different service
     times for each server and each state of the system.
     A reinforcement learning algorithm is then used to observe the learning
     that takes place when servers choose the speed at which they serve
@@ -288,7 +290,7 @@ Overall, the thesis is structured as follows:
     \item Chapter~\ref{sec:conclusion} presents an overall summary of the
     research presented in this thesis.
     The chapter also lists the main contributions of this thesis and presents
-    some future work that could be done.
+    some suggestions for future work.
 \end{itemize}
 
 
@@ -378,7 +380,7 @@ The local copy of the software is then synchronised with a central repository
 where the changes are made~\cite{zolkifli2018version}.
 Some examples of distributed VCS are Git, Mercurial and Bazaar.
 For the purposes of this thesis, the distributed VCS
-\textit{Git}~\cite{spinellis2012git} is used.
+Git~\cite{spinellis2012git} is used.
 
 Git is a distributed VCS that is used to track changes in source code during
 software development.
@@ -388,7 +390,7 @@ The importance of using a Git server is that it allows for collaboration and
 makes, not only the code, but also the history of the code available to
 everyone.
 Some examples of Git servers are GitHub, GitLab and BitBucket.
-For the purposes of this thesis, the Git server \textit{GitHub} is used.
+For the purposes of this thesis, the Git server GitHub is used.
 
 GitHub has several features that make it a good choice for hosting Git
 repositories.
