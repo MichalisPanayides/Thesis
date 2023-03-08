@@ -46,7 +46,7 @@ The parameters of the described queueing model are:
 
 In Section~\ref{sec:queueing_ems_ed_application} this queueing network will be
 used to model the emergent behaviour between
-Emergency Departments (EDs) and the Emergency Medical Systems (EMS).
+Emergency Departments (EDs) and the Emergency Medical System (EMS).
 This chapter extends the concepts described in~\cite{panayides2023game} and
 consists of the following sections:
 
@@ -92,28 +92,30 @@ pre-determined threshold \(T\).
 
 Two modelling approaches were used to model the queueing network.
 Section~\ref{sec:discrete_event_simulation} gives an overview of the first
-approach that was used to model the queueing network; the discrete event
+approach that was used to model the queueing network with a discrete event
 simulation (DES) model.
 The DES model was also used to extract certain performance measures of the
 system.
 The implementation of this approach was written in \texttt{Python} and uses the
 \texttt{Ciw} library.
 The second approach that was used to model the queueing network
-was the Markov chain model.
+was a Markov chain model.
 Section~\ref{sec:markov_model} introduces the Markov chain model that was
 used to model the queueing network and describes several approaches that
 were used to extract the steady state probabilities of the system
 (Section~\ref{sec:steady_state_probabilities}).
 The steady state probabilities of the system are calculated using numerical
 integration, linear algebra and a least squares approach.
-An attempt to come up with a closed form solution for the steady state
+An attempt to derive a closed form solution for the steady state
 probabilities was also made using concepts from graph theory and
-combinatorics.
+combinatorics and is described in
+Appendix~\ref{app:steady_state_probs_closed_form}.
 The Markov chain model was also implemented in \texttt{Python}.
 
 Section~\ref{sec:queueing_performance_measures} describes several algorithms
 that were used to extract performance measures from the Markov chain model.
-There are three key performance metrics that are of interest in this thesis.
+There are three key performance metrics that are of particular interest in this
+thesis.
 These are the average waiting time of individuals in the system, the average
 blocking time of individuals in node 2 and the proportion of individuals that
 are able to be served within a certain time target.
@@ -125,7 +127,7 @@ Such methods were a recursive approach
 (Section~\ref{sec:closed_form_waiting_time}).
 For the mean blocking time of individuals in node 2 only a direct approach
 was developed (Section~\ref{sec:blocking_time}).
-Because of the nature of arrivals in the system a recursive approach was not
+Because of the nature of arrivals in the system, a recursive approach was not
 formulated and neither was a closed form approach.
 The final performance measure that was considered was the proportion of
 individuals that are able to be served within a certain time target.
@@ -148,9 +150,9 @@ individuals in the system and it is observed that the three approaches return
 the same results for a particular example of parameters.
 In addition, the computation time of the three approaches is compared for
 different values of the system's capacity.
-It is observed that, while for small values of \(N\) and \(M\) the all
-approaches take a similar amount of time to compute the average waiting time,
-as the values of \(N\) and \(M\) increase the direct approach takes a
+It is observed that, for small values of \(N\) and \(M\) all
+approaches take a similar amount of time to compute the average waiting time.
+As the values of \(N\) and \(M\) increase the direct approach takes a
 considerably longer time to compute the average waiting time.
 Subsection~\ref{sec:accuracy_of_steady_state_probabilities} compares the
 value of steady state probability vector that is obtained using the
@@ -171,3 +173,9 @@ queueing network can be used in a healthcare scenario.
 The queueing structure is mapped to an ED that accepts two types of patients;
 non-urgent patients from the EMS and patients form other sources
 (walk-ins, urgent patients from the EMS, etc).
+
+Overall, this Chapter has introduced a novel queueing network model that can
+be used to represent an ED that accepts patients from the EMS and other
+sources.
+This model will be used in the Chapter~\ref{sec:game_theoretic_model} to
+model the emergent behaviour between EDs and the EMS.
