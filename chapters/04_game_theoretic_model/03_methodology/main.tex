@@ -562,6 +562,119 @@ Figure~\ref{fig:brent_method_diffs} crosses the \(x\)-axis.
 \end{lstlisting}
 
 
+\subsubsection{Brent's algorithm - tolerance sensitivity analysis}
+\label{sec:brent_tolerance}
+
+The implementation of Brent's algorithm uses the \texttt{brentq} function
+from \texttt{SciPy}.
+The function receives two essential arguments; another function for
+which to find the root of, and the interval in which the root is located.
+In addition to these two arguments, the function also receives two optional
+arguments; \texttt{xtol} and
+\texttt{rtol}~\cite{2020SciPy-NMeth}.
+These two parameters are the ones that define the tolerance of the algorithm.
+In other words, the smaller the tolerance parameters are, the more accurate
+the result will be.
+However, the smaller the tolerance parameters are, the more iterations will
+be needed to find the root.
+Therefore, the tolerance parameters are a trade-off between accuracy and
+computation time.
+
+The documentation of the~\texttt{brentq} function states
+that the default values of the tolerance parameters are
+\texttt{xtol=2e-12} and
+\texttt{rtol=8.881784197001252e-16}.
+Within the~\texttt{brentq} function these two parameters
+are used to ensure that
+\texttt{allclose(x, x0, atol=xtol, rtol=rtol) = True}.
+Function \texttt{allclose} is implemented by the
+\texttt{numpy} library~\cite{2020NumPy-Array}.
+and checks if two arrays are element-wise similar given a certain tolerance.
+The way the internal mechanisms of the~\texttt{allclose}
+function work is that given two values \(a\) and \(b\), with some absolute
+tolerance (atol) and relative tolerance (rtol) parameters, the function returns
+\texttt{True} if:
+
+\begin{equation}
+    |a - b| \leq (\text{atol} + \text{rtol} \times |b|)
+\end{equation}
+
+These tolerance parameters are the once used by Brent's algorithm to determine
+if the root has been found.
+In the remainder of this subsection the effect of the absolute tolerance
+parameter \texttt{xtol} will be analysed.
+To determine the effect of the absolute tolerance parameters on the accuracy and
+computation time of Brent's algorithm, the algorithm was ran for different set
+of parameters and different values of the absolute tolerance parameter.
+The two parameter sets that were used for these experiments are:
+
+\begin{center}
+    \small
+    \begin{tabular}{||c|c|c|c|c|c|c|c|c|c|c|c|c||}
+        \hline
+        \(\lambda_2\) & \(\lambda_1^A\) & \(\lambda_1^B\) & \(T^A\) & \(T^B\) &
+        \(\mu^A\) & \(\mu^B\) & \(C^A\) & \(C^B\) & \(N^A\) & \(N^B\) & \(M^A\) &
+        \(M^B\) \\
+        \hline\hline
+        4 & 3 & 3 & 4 & 5 & 4 & 3 & 2 & 3 & [8,25] & 8 & 8 & 8 \\
+        \hline
+        5 & 2 & 2 & 7 & 10 & 3 & 2 & 3 & 4 & [7,24] & 15 & 10 & 10 \\
+        \hline
+    \end{tabular}
+\end{center}
+    
+Note the system capacity of queueing system \(A\) varies for both parameter sets.
+For every value of \(N_A\) Brent's algorithm was run for different values of
+the absolute tolerance parameter \texttt{xtol}.
+The values of the absolute tolerance parameter that were used are:
+\texttt{xtol = [1e-10, 1e-9, 1e-8, 1e-7, 1e-6, 1e-5, 0.0001, 0.001, 0.01, 0.1]}.
+For each value of the absolute tolerance parameter, the algorithm was run 200
+times and the computation time was recorded for each run.
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/Bin/brents_method/tolerance/tolerance_violinplots_1.pdf}
+    \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/Bin/brents_method/tolerance/tolerance_violinplots_2.pdf}
+    \caption{
+        Violinplots of the duration of Brent's algorithm for different values of
+        \(N_A\) for two parameter sets.
+    }
+    \label{fig:tolerance_violinplots}
+\end{figure}
+
+It can be seen that for both parameter sets in
+Figure~\ref{fig:tolerance_violinplots} the duration of the algorithm is
+increasing as \(N^A\) increases.
+Note that the violinplots include all values of the tolerance parameters
+\texttt{xtol} that were used.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/Bin/brents_method/tolerance/tolerance_lineplots_1.pdf}
+    \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/Bin/brents_method/tolerance/tolerance_lineplots_2.pdf}
+    \caption{
+        Line plots of the duration of Brent's algorithm for different values of
+        \(N_A\) over different values of the absolute tolerance parameter xtol
+        for two parameter sets.
+    }
+    \label{fig:tolerance_lineplots}
+\end{figure}
+
+The plots of Figure~\ref{fig:tolerance_lineplots} show for each value of \(N^A\)
+how the duration of the algorithm changes as the absolute tolerance parameter
+\texttt{xtol} increases.
+It can be seen that for both parameter sets the duration of the algorithm
+on most cases the computational time decreases as the tolerance parameter
+increases.
+There are some cases that do not follow this trend though.
+For example, for parameter set 1 when \(N^A=20\), the duration of the algorithm
+increases, rather than decreasing, from \texttt{xtol=1e-05}
+to \texttt{xtol=0.0001}.
+
+
+
+
 \subsection{Routing Matrix}\label{sec:routing_matrix}
 
 Section~\ref{sec:brent_method_example} showed how Brent's algorithm can be used
@@ -811,117 +924,6 @@ array([[0.58864276, 0.22335975, 0.15533059, 0.15265663, 0.15078926,
         0.87136701, 0.84412235, 0.81814844, 0.78822172, 0.73774973]])
 
 \end{lstlisting}
-
-
-\subsubsection{Brent's algorithm - tolerance sensitivity analysis}
-\label{sec:brent_tolerance}
-
-The implementation of Brent's algorithm uses the \texttt{brentq} function
-from \texttt{SciPy}.
-The function receives two essential arguments; another function for
-which to find the root of, and the interval in which the root is located.
-In addition to these two arguments, the function also receives two optional
-arguments; \texttt{xtol} and
-\texttt{rtol}~\cite{2020SciPy-NMeth}.
-These two parameters are the ones that define the tolerance of the algorithm.
-In other words, the smaller the tolerance parameters are, the more accurate
-the result will be.
-However, the smaller the tolerance parameters are, the more iterations will
-be needed to find the root.
-Therefore, the tolerance parameters are a trade-off between accuracy and
-computation time.
-
-The documentation of the~\texttt{brentq} function states
-that the default values of the tolerance parameters are
-\texttt{xtol=2e-12} and
-\texttt{rtol=8.881784197001252e-16}.
-Within the~\texttt{brentq} function these two parameters
-are used to ensure that
-\texttt{allclose(x, x0, atol=xtol, rtol=rtol) = True}.
-Function \texttt{allclose} is implemented by the
-\texttt{numpy} library~\cite{2020NumPy-Array}.
-and checks if two arrays are element-wise similar given a certain tolerance.
-The way the internal mechanisms of the~\texttt{allclose}
-function work is that given two values \(a\) and \(b\), with some absolute
-tolerance (atol) and relative tolerance (rtol) parameters, the function returns
-\texttt{True} if:
-
-\begin{equation}
-    |a - b| \leq (\text{atol} + \text{rtol} \times |b|)
-\end{equation}
-
-These tolerance parameters are the once used by Brent's algorithm to determine
-if the root has been found.
-In the remainder of this subsection the effect of the absolute tolerance
-parameter \texttt{xtol} will be analysed.
-To determine the effect of the absolute tolerance parameters on the accuracy and
-computation time of Brent's algorithm, the algorithm was ran for different set
-of parameters and different values of the absolute tolerance parameter.
-The two parameter sets that were used for these experiments are:
-
-\begin{center}
-    \small
-    \begin{tabular}{||c|c|c|c|c|c|c|c|c|c|c|c|c||}
-        \hline
-        \(\lambda_2\) & \(\lambda_1^A\) & \(\lambda_1^B\) & \(T^A\) & \(T^B\) &
-        \(\mu^A\) & \(\mu^B\) & \(C^A\) & \(C^B\) & \(N^A\) & \(N^B\) & \(M^A\) &
-        \(M^B\) \\
-        \hline\hline
-        4 & 3 & 3 & 4 & 5 & 4 & 3 & 2 & 3 & [8,25] & 8 & 8 & 8 \\
-        \hline
-        5 & 2 & 2 & 7 & 10 & 3 & 2 & 3 & 4 & [7,24] & 15 & 10 & 10 \\
-        \hline
-    \end{tabular}
-\end{center}
-    
-Note the system capacity of queueing system \(A\) varies for both parameter sets.
-For every value of \(N_A\) Brent's algorithm was run for different values of
-the absolute tolerance parameter \texttt{xtol}.
-The values of the absolute tolerance parameter that were used are:
-\texttt{xtol = [1e-10, 1e-9, 1e-8, 1e-7, 1e-6, 1e-5, 0.0001, 0.001, 0.01, 0.1]}.
-For each value of the absolute tolerance parameter, the algorithm was run 200
-times and the computation time was recorded for each run.
-
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/Bin/brents_method/tolerance/tolerance_violinplots_1.pdf}
-    \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/Bin/brents_method/tolerance/tolerance_violinplots_2.pdf}
-    \caption{
-        Violinplots of the duration of Brent's algorithm for different values of
-        \(N_A\) for two parameter sets.
-    }
-    \label{fig:tolerance_violinplots}
-\end{figure}
-
-It can be seen that for both parameter sets in
-Figure~\ref{fig:tolerance_violinplots} the duration of the algorithm is
-increasing as \(N^A\) increases.
-Note that the violinplots include all values of the tolerance parameters
-\texttt{xtol} that were used.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/Bin/brents_method/tolerance/tolerance_lineplots_1.pdf}
-    \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/Bin/brents_method/tolerance/tolerance_lineplots_2.pdf}
-    \caption{
-        Line plots of the duration of Brent's algorithm for different values of
-        \(N_A\) over different values of the absolute tolerance parameter xtol
-        for two parameter sets.
-    }
-    \label{fig:tolerance_lineplots}
-\end{figure}
-
-The plots of Figure~\ref{fig:tolerance_lineplots} show for each value of \(N^A\)
-how the duration of the algorithm changes as the absolute tolerance parameter
-\texttt{xtol} increases.
-It can be seen that for both parameter sets the duration of the algorithm
-on most cases the computational time decreases as the tolerance parameter
-increases.
-There are some cases that do not follow this trend though.
-For example, for parameter set 1 when \(N^A=20\), the duration of the algorithm
-increases, rather than decreasing, from \texttt{xtol=1e-05}
-to \texttt{xtol=0.0001}.
 
 
 
