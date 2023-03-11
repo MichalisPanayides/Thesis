@@ -169,7 +169,7 @@ def alex(c):
     """
     Check for inconsiderate and insensitive writing of all .tex files
     """
-    exception_files = ["packages.tex"]
+    exception_files = ["packages.tex", "Frontmatter\\acknowledgements.tex"]
     all_tex_files = list(pathlib.Path().glob("**/*.tex"))
     for file in all_tex_files:
         if str(file) not in exception_files:

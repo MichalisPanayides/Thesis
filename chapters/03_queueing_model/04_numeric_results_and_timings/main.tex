@@ -250,7 +250,7 @@ Table \ref{tab:truncation_effect_timings_old} shows the relative timings of the
 different approaches used to get the performance measures for different values
 of \(N\) and \(M\).
 Note that \(N\) and \(M\) have the same value throughout the table.
-Simulation is ran for a runtime of \(10^4\) time units and the displayed
+The simulation has a runtime of \(10^4\) time units and the displayed
 durations are for a single run of the simulation and similarly for 100 runs of
 the simulation.
 For getting the performance measures using the finite state Markov chain each
@@ -291,7 +291,7 @@ equation~\eqref{eq:markov_transition_rate}.
 For example, for \(N = M = 50\) the state space of the Markov chain consists
 of approximately \(2500\) states (depending on the value of \(T\)).
 Thus, the generator matrix, that consists of the rates from each state to every
-other state, has approximately \(2500^2 = 6250000\) entries.
+other state, has approximately \(2500^2 = 6,\!250,\!000\) entries.
 For larger values of \(N\) and \(M\), the creation of this matrix is the most
 time consuming part of the Markov chain approach, even though most entries in
 the matrix are zero.

@@ -2,9 +2,9 @@
 
 In game theory there are several different forms of games.
 This section outlines only the ones necessary for the formulation
-of the scenario studied in this research project.
-The first one is normal form games the second one is perfect information
-extensive form games and the third one is extensive form games with imperfect
+of the scenario studied in this research.
+The first one is normal form games, the second is perfect information
+extensive form games, and the third is extensive form games with imperfect
 information.
 The documentation of the python library \texttt{nashpy} can
 be used to find more information about the different types of games and concepts
@@ -138,13 +138,14 @@ Consider the pig and piglet game where there are two players, the pig and the
 piglet and two strategies each, to \textit{Push} (P) a lever or
 \textit{Don't push} it (D).
 The payoff matrices \(A\) and \(B\) for this game are shown
-in~\eqref{eq:pig_piglet_payoff}.
+in~\eqref{eq:pig_piglet_payoff} where matrix \(A\) corresponds to the pig's
+payoff and matrix \(B\) corresponds to the piglet's payoff.
 \begin{align}
     & \quad P \; D \nonumber \\
     A =
     \begin{pmatrix}
-        3 & 0 \\
-        5 & 1
+        4 & 2 \\
+        5 & 0
     \end{pmatrix}
     \begin{matrix}
         P \\
@@ -152,8 +153,8 @@ in~\eqref{eq:pig_piglet_payoff}.
     \end{matrix} \qquad
     B =&
     \begin{pmatrix}
-        3 & 5 \\
-        0 & 1
+        2  & 3 \\
+        -1 & 0
     \end{pmatrix}
     \label{eq:pig_piglet_payoff}
 \end{align}
@@ -422,7 +423,7 @@ In other words the players play a best response to their opponent's
 empirical frequency of actions.
 
 Once again, using the \texttt{nashpy} python
-library~\cite{thenashpyproject} the fictitious play algorithm can be
+library~\cite{thenashpyproject}, the fictitious play algorithm can be
 implemented on the game shown in~\ref{lst:fictitious_play_custom_game}.
 
 \begin{lstlisting}[
@@ -467,7 +468,7 @@ algorithm and how the players converge to a Nash equilibrium.
 \end{figure}
 
 
-\subsubsection{Stochastic fictitious play}s
+\subsubsection{Stochastic fictitious play}
 Another similar learning algorithm is called stochastic fictitious
 play~\cite{hofbauerstochasticfictitous, fudenberg1998theory}.
 Stochastic fictitious play is a variation of the fictitious play algorithm
@@ -701,8 +702,8 @@ Backgammon~\cite{hart1992games}.
 Perfect information extensive form games are represented by a tree where the
 nodes of the tree are the terminal nodes and represent the outcome of the
 game.
-The following figure shows an example of a perfect information extensive form
-game.
+Figure~\ref{fig:extensive_form_game} shows an example of a perfect information
+extensive form game.
 
 \begin{figure}[H]
     \centering
@@ -715,12 +716,11 @@ game.
 Figure~\ref{fig:extensive_form_game} shows an example of a perfect information
 extensive form game.
 The game starts at the root node and the players take turns to make a move.
-Player 1 can choose to either action A or action B.
-Once player 1 has made a move, player 2 can choose to either action C or action
-D, while having complete awareness of the action taken by player 1 and hence
-their own position on the tree.
+Player \(1\) can choose to either perform action \(A\) or action \(B\).
+Once player \(1\) has made a move, player \(2\) can choose to either action
+\(C\) or action \(D\), while having complete awareness of the action taken by
+player \(1\) and hence their own position on the tree.
 The final nodes of the tree represent the outcome of the game.
-In this example, the outcome of the game is either 
 
 \subsection{Imperfect-information extensive form game}
 \label{sec:game_imperfect_information}
@@ -732,8 +732,8 @@ In other words, when making a decision, the players might not know their exact
 position on the tree.
 Similar to perfect information, imperfect information games are also represented
 by a tree.
-The following figure shows an example of an imperfect information extensive
-form game.
+Figure~\ref{fig:imperfect_extensive_form_game} shows an example of an imperfect
+information extensive form game.
 
 \begin{figure}[H]
     \centering

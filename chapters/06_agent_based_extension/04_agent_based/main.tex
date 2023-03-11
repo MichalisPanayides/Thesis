@@ -11,7 +11,7 @@ based on some utility function that they aim to maximise.
 This would mean that the servers would be able to choose and update their own
 speed at which they serve individuals while the system is running.
 Such decisions could be based on a number of factors, such as minimising the
-number of customers in the system, minimising the proportion of patients lost
+number of patients in the system, minimising the proportion of patients lost
 to the system, maximising their own idle time and so on.
 
 \subsection{Utility functions}
@@ -79,7 +79,7 @@ Some examples of utility functions that could be used are the following:
     \label{eq:utility_2} \\
     U_k^{(3)} &= e \, \bar{m}^{(k)} + (1 - e) \, (R - B^{(k)})
     \label{eq:utility_3} \\
-    U_k^{(4)} &= e \, \frac{1}{\bar{m}^{(k)}} + (1 - e) \, (R - B^{(k)})
+    U_k^{(4)} &= e \, \bar{\mu}^{(k)} + (1 - e) \, (R - B^{(k)})
     \label{eq:utility_4} \\
     U_k^{(5)} &= e \, \frac{I_s^{(k)}}{I_s} + (1 - e) \, \bar{m}^{(k)}
     \label{eq:utility_5} \\ 
@@ -93,6 +93,45 @@ where \(U_k^{(i)}\) is utility \(i\) of server \(k\) and \(e\) is a parameter th
 can be used to weight the importance of each measure.
 For example, \(e = 0.5\) would mean that the two measures are equally important
 for the agent.
+Table~\ref{tab:utility_functions_description} gives a brief description of each
+utility function.
+
+\begin{table}[htbp]
+\centering
+\caption{Utility functions that can be used to measure each server's
+happiness}
+\label{tab:utility_functions_description}
+\begin{tabular}{|c|c|}
+    \hline
+    \textbf{Utility function} & \textbf{Description} \\
+    \hline
+    \hline
+    \(U_k^{(1)}\)   & Weighted average between the number of served \\ 
+                    & individuals by server \(k\) and idle time of server \(k\) \\
+    \hline
+    \(U_k^{(2)}\)   & Weighted average between overall proportion of served \\
+                    & individuals by server \(k\) and proportion of idle \\
+                    & time of server \(k\) \\
+    \hline
+    \(U_k^{(3)}\)   & Weighted average between mean service time of \\
+                    & server \(k\) and idle time of server \(k\) \\
+    \hline
+    \(U_k^{(4)}\)   & Weighted average between mean service rate of \\
+                    & server \(k\) and idle time of server \(k\) \\
+    \hline
+    \(U_k^{(5)}\)   & Weighted average between proportion of served \\
+                    & individuals by server \(k\) and mean service time of
+                    server \(k\) \\
+    \hline
+    \(U_k^{(6)}\)   & Weighted average between proportion of served \\
+                    & individuals by server \(k\) and inverse of mean \\
+                    & service time of server \(k\) \\
+    \hline
+    \(U_k^{(7)}\)   & Weighted average between overall proportion of served \\
+                    & individuals and proportion of idle time of server \(k\) \\
+    \hline
+\end{tabular}
+\end{table}
 
 \subsection{Case study}\label{sec:agent_based_case_study}
 
@@ -161,7 +200,7 @@ More specifically, the service rates for the ``experienced'' server is
 multiplied by a factor of \(1.2\) and the service rates for the ``intern''
 server is multiplied by a factor of \(0.8\), while the ``moderate'' servers
 stay unchanged.
-This might not be a realistic example, but it is used here to demonstrate the
+Whilst this might not be a realistic example, it is used here to demonstrate the
 utilities in this agent-based model.
 
 Because of the way the queueing system described in
@@ -206,7 +245,7 @@ Therefore the complete set of parameters for the queueing system are:
     \end{minipage}
 \end{center}
 
-Running the simulation for \(100,000\) time units each server's utilisation
+Running the simulation for \(100,\!000\) time units each server's utilisation
 (i.e. what percentage of time they were busy), the proportion of individuals
 that they served and their mean service time were recorded.
 
@@ -403,7 +442,9 @@ show the utility functions for each server for different values of \(e\).
     \end{adjustbox}
 \end{table}
 
-The above tables show the range of values of the utility functions can take
+Tables~\ref{tab:case_study_server_metrics}
+-~\ref{tab:case_study_utility_7_all_servers}
+show the range of values that the utility functions can take
 for the different servers and different values of \(e\).
 Throughout the rest of this section, these utility functions will be used
 as the key performance indicators that the servers will use to make decisions

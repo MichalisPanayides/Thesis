@@ -16,16 +16,16 @@ and~\eqref{eq:server_dependent_service_rate} where:
         \mu_{1, (0,0)}, & \text{for server } 1 \text{ if } (u, v) = (0, 0) \\
         \mu_{1, (0,1)}, & \text{for server } 1 \text{ if } (u, v) = (0, 1) \\
         \quad \vdots & \qquad \qquad \vdots \\
-        \mu_{1, (N,M)}, & \text{for server } 1 \text{ if } (u, v) = (M, N) \\
+        \mu_{1, (M,N)}, & \text{for server } 1 \text{ if } (u, v) = (M, N) \\
         \mu_{2, (0,0)}, & \text{for server } 2 \text{ if } (u, v) = (0, 0) \\
         \mu_{2, (0,1)}, & \text{for server } 1 \text{ if } (u, v) = (0, 1) \\
         \quad \vdots & \qquad \qquad \vdots \\
-        \mu_{2, (N,M)}, & \text{for server } 2 \text{ if } (u, v) = (M, N) \\
+        \mu_{2, (M,N)}, & \text{for server } 2 \text{ if } (u, v) = (M, N) \\
         \quad \vdots & \qquad \qquad \vdots \\
         \mu_{C, (0,0)}, & \text{for server } C \text{ if } (u, v) = (0, 0) \\
         \mu_{C, (0,1)}, & \text{for server } C \text{ if } (u, v) = (0, 1) \\
         \quad \vdots & \qquad \qquad \vdots \\
-        \mu_{C, (N,M)}, & \text{for server } C \text{ if } (u, v) = (M, N)
+        \mu_{C, (M,N)}, & \text{for server } C \text{ if } (u, v) = (M, N)
     \end{cases}
 \end{equation}
 
@@ -236,16 +236,16 @@ Server 2: 1.02142722
 
 \subsection{Game theoretic model}
 
-In fact the state and server dependent model can be used in the game theoretic
+The state and server dependent model can be used in the game theoretic
 model described from Section~\ref{sec:game_theoretic_model}.
-Although, since the state and server dependent model variant of the queueing
-theoretic model is only implemented using Discrete Event Simulation (DES) it is
+However, since the state and server dependent model variant of the queueing
+theoretic model is only implemented using Discrete Event Simulation (DES), it is
 not possible to use the Markov chain model here.
 Thus, the implementation of the game was modified so that it can be used with
 the DES model as well.
 More details on the code can be found in
 Appendix~\ref{appendix:ambulance_game}.
-At its core the only metric that is needed from the Markov model are the
+At its core, the only metric that is needed from the Markov model are the
 performance measures of the queue (blocking time and proportion of individuals
 within target) which can also be obtained using the DES model.
 Consequently, the payoff matrices can be calculated using these performance
@@ -253,11 +253,17 @@ measures.
 
 Something that needs to be taken into consideration here is whether the results
 of the game are the same when using the DES model and the Markov chain model.
-In fact using the DES approach several other parameters are introduced that
+In fact using the DES approach, several other parameters are introduced that
 can affect the results of the game.
 Such parameters are the runtime, the warm up time and the cooldown time of the
 simulation.
-The one that is of most interest here is the runtime.
+The runtime of the simulation is the total time that the simulation is run for,
+the warm up time is the time that the simulation is run for before the
+data collection starts and the cooldown time is the time that the simulation is
+run for after the data collection has finished.
+The runtime of the simulation is the parameter that is most likely to affect
+the performance measures of the queue, since the longer the simulation is run
+for, the better the estimates of the performance measures will be.
 
 Consider a game with the following parameters:
 
