@@ -5,6 +5,7 @@
   ],
   "files_to_ignore": [
       "\\Bin\\",
-      "packages.tex"
+      "packages.tex",
+      "Frontmatter\\acknowledgements.tex",
   ]
 }
