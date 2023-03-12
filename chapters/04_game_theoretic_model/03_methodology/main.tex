@@ -102,24 +102,28 @@ in equation~\eqref{eq:obj_distributor_2}.
 Consider a distribution service whose arrival rate of type 2 individuals is
 \(\lambda_2 = 4\) and the `weight' is \(\alpha = 0.2\).
 Additionally, let queueing system \(A\) and queueing system \(B\) have the
-following parameters:
+parameters shown in Table~\ref{tab:parameters_example_brent_method}.
 
-\begin{multicols}{2}
-    \begin{itemize}
-        \item \(\lambda_1^A = 2\)
-        \item \(\mu^A = 3\)
-        \item \(C^A = 3\)
-        \item \(T^A = 8\)
-        \item \(N^A = 15\)
-        \item \(M^A = 10\)
-        \item \(\lambda_1^B = 1\)
-        \item \(\mu^B = 1\)
-        \item \(C^B = 3\)
-        \item \(T^B = 10\)
-        \item \(N^B = 10\)
-        \item \(M^B = 5\)
-    \end{itemize}
-\end{multicols}
+\begin{table}[H]
+    \small
+    \caption{Parameter values for Brent's method examples.}
+    \begin{center}
+        \begin{tabular}{||c|c||c|c|c|c|c|c||c|c|c|c|c|c||}
+            \hline
+            \multicolumn{2}{||c||}{\textbf{\(D\)}} &
+            \multicolumn{6}{c||}{\textbf{Queueing system \(A\)}} &
+            \multicolumn{6}{c||}{\textbf{Queueing system \(B\)}} \\
+            \hline
+            \(\lambda_2\) & \(\alpha\) &
+            \(\lambda_1^A\) & \(\mu^A\) & \(C^A\) & \(T^A\) & \(N^A\) & \(M^A\) &
+            \(\lambda_1^B\) & \(\mu^B\) & \(C^B\) & \(T^B\) & \(N^B\) & \(M^B\) \\
+            \hline
+            4 & 0.2 & 2 & 3 & 3 & 8 & 15 & 10 & 1 & 1 & 3 & 10 & 10 & 5 \\
+            \hline
+        \end{tabular}
+    \end{center}
+    \label{tab:parameters_example_brent_method}
+\end{table}
 
 The distribution service's best response for this particular example can be
 found at the intersection of the two decision values of the two queueing
@@ -236,6 +240,8 @@ Function \texttt{get\_mean\_blocking\_difference\_using\_markov}
 defined in~\ref{lst:get_mean_blocking_difference_using_markov}
 is the python implementation of the first part of
 equation~\eqref{eq:obj_distributor_2}.
+
+\vspace{0.5cm}
 
 \begin{lstlisting}[
     style=pystyle,
@@ -562,6 +568,147 @@ Figure~\ref{fig:brent_method_diffs} crosses the \(x\)-axis.
 \end{lstlisting}
 
 
+\subsubsection{Brent's algorithm - tolerance sensitivity analysis}
+\label{sec:brent_tolerance}
+
+The implementation of Brent's algorithm uses the \texttt{brentq} function
+from \texttt{SciPy}.
+The function receives two essential arguments; another function for
+which to find the root of, and the interval in which the root is located.
+In addition to these two arguments, the function also receives two optional
+arguments; \texttt{xtol} and
+\texttt{rtol}~\cite{2020SciPy-NMeth}.
+These two parameters are the ones that define the tolerance of the algorithm.
+In other words, the smaller the tolerance parameters are, the more accurate
+the result will be.
+However, the smaller the tolerance parameters are, the more iterations will
+be needed to find the root.
+Therefore, the tolerance parameters are a trade-off between accuracy and
+computation time.
+
+The documentation of the~\texttt{brentq} function states
+that the default values of the tolerance parameters are
+\texttt{xtol=2e-12} and
+\texttt{rtol=8.881784197001252e-16}.
+Within the~\texttt{brentq} function these two parameters
+are used to ensure that
+\texttt{allclose(x, x0, atol=xtol, rtol=rtol) = True}.
+Function \texttt{allclose} is implemented by the
+\texttt{numpy} library~\cite{2020NumPy-Array}.
+and checks if two arrays are element-wise similar given a certain tolerance.
+The way the internal mechanisms of the~\texttt{allclose}
+function work is that given two values \(a\) and \(b\), with some absolute
+tolerance (atol) and relative tolerance (rtol) parameters, the function returns
+\texttt{True} if:
+
+\begin{equation}
+    |a - b| \leq (\text{atol} + \text{rtol} \times |b|)
+\end{equation}
+
+These tolerance parameters are the once used by Brent's algorithm to determine
+if the root has been found.
+In the remainder of this subsection the effect of the absolute tolerance
+parameter \texttt{xtol} will be analysed.
+To determine the effect of the absolute tolerance parameters on the accuracy and
+computation time of Brent's algorithm, the algorithm was ran for different set
+of parameters and different values of the absolute tolerance parameter.
+The two parameter sets that were used for these experiments are shown in
+Table~\ref{tab:tolerance_sensitivity_parameters}.
+
+\begin{table}[H]
+    \caption{Parameter sets that were used for the tolerance
+    sensitivity analysis.}
+    \begin{center}
+        \small
+        \begin{tabular}{||c|c|c|c||c|c|c|c|c||c|c|c|c|c||}
+            \hline
+            \multicolumn{4}{||c||}{\textbf{Distributor}} &
+            \multicolumn{5}{c||}{\textbf{Queueing system \(A\)}} &
+            \multicolumn{5}{c||}{\textbf{Queueing system \(B\)}} \\
+            \hline
+            \(\lambda_2\) & \(\alpha\) &
+            \(\lambda_1^A\) & \(\mu^A\) & \(C^A\) & \(T^A\) & \(N^A\) & \(M^A\) &
+            \(\lambda_1^B\) & \(\mu^B\) & \(C^B\) & \(T^B\) & \(N^B\) & \(M^B\) \\
+            \hline
+            4 & 0.2 & 3 & 4 & 2 & 4 & [8, 25] & 8 & 3 & 3 & 3 & 5 & 8 & 8 \\
+            \hline
+            5 & 0.2 & 2 & 3 & 3 & 7 & [7, 24] & 10 & 2 & 2 & 4 & 10 & 15 & 10 \\
+            \hline
+        \end{tabular}
+    \end{center}
+    \label{tab:tolerance_sensitivity_parameters}
+\end{table}
+
+Note the system capacity of queueing system \(A\) varies for both parameter sets.
+For every value of \(N_A\) Brent's algorithm was run for different values of
+the absolute tolerance parameter \texttt{xtol}.
+The values of the absolute tolerance parameter that were used are:
+\texttt{xtol = [1e-10, 1e-9, 1e-8, 1e-7, 1e-6, 1e-5, 0.0001, 0.001, 0.01, 0.1]}.
+For each value of the absolute tolerance parameter, the algorithm was run 200
+times and the computation time was recorded for each run.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/Bin/brents_method/tolerance/tolerance_violinplots_1.pdf}
+    \caption{
+        Violinplots of the duration of Brent's algorithm for different values of
+        \(N_A\) for the first parameter set.}
+    \label{fig:tolerance_violinplots_1}
+\end{figure}
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/Bin/brents_method/tolerance/tolerance_violinplots_2.pdf}
+    \caption{
+        Violinplots of the duration of Brent's algorithm for different values of
+        \(N_A\) for the second parameter set.}
+    \label{fig:tolerance_violinplots_2}
+\end{figure}
+
+It can be seen that for both parameter sets in
+Figures~\ref{fig:tolerance_violinplots_1} and~\ref{fig:tolerance_violinplots_2}
+the duration of the algorithm is increasing as \(N^A\) increases.
+Note that the violinplots include all values of the tolerance parameters
+\texttt{xtol} that were used.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/Bin/brents_method/tolerance/tolerance_lineplots_1.pdf}
+    \caption{
+        Line plots of the duration of Brent's algorithm for different values of
+        \(N_A\) over different values of the absolute tolerance parameter xtol
+        for the first parameter set.
+    }
+    \label{fig:tolerance_lineplots_1}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/Bin/brents_method/tolerance/tolerance_lineplots_2.pdf}
+    \caption{
+        Line plots of the duration of Brent's algorithm for different values of
+        \(N_A\) over different values of the absolute tolerance parameter xtol
+        for the second parameter set.
+    }
+    \label{fig:tolerance_lineplots_2}
+\end{figure}
+
+The plots of Figure~\ref{fig:tolerance_lineplots_1}
+and~\ref{fig:tolerance_lineplots_2} show for each value of \(N^A\)
+how the duration of the algorithm changes as the absolute tolerance parameter
+\texttt{xtol} increases.
+It can be seen that for both parameter sets the duration of the algorithm
+on most cases the computational time decreases as the tolerance parameter
+increases.
+There are some cases that do not follow this trend though.
+For example, for parameter set 1 when \(N^A=20\), the duration of the algorithm
+increases, rather than decreasing, from \texttt{xtol=1e-05}
+to \texttt{xtol=0.0001}.
+
+
+
+
 \subsection{Routing Matrix}\label{sec:routing_matrix}
 
 Section~\ref{sec:brent_method_example} showed how Brent's algorithm can be used
@@ -615,22 +762,29 @@ matrix can be calculated by finding the values of \(p_A\) and \(p_B\) for every
 possible pair of thresholds \((T_A, T_B)\).
 The arrival rate of type 2 individuals is arrival rate of type 2 individuals is
 \(\lambda_2 = 4\) and the `weight' is \(\alpha = 0.2\).
-The remaining parameters that relate to the two queueing systems are as follows:
+The remaining parameters that relate to the two queueing systems are shown
+in Table~\ref{tab:routing_matrix_example_parameters}.
 
-\begin{multicols}{2}
-    \begin{itemize}
-        \item \(\lambda_1^A = 2\)
-        \item \(\mu^A = 3\)
-        \item \(C^A = 3\)
-        \item \(N^A = 15\)
-        \item \(M^A = 10\)
-        \item \(\lambda_1^B = 1\)
-        \item \(\mu^B = 1\)
-        \item \(C^B = 3\)
-        \item \(N^B = 10\)
-        \item \(M^B = 5\)
-    \end{itemize}
-\end{multicols}
+\begin{table}[H]
+    \caption{Parameter values for routing matrix example.}
+    \begin{center}
+        \small
+        \begin{tabular}{||c|c||c|c|c|c|c||c|c|c|c|c||}
+            \hline
+            \multicolumn{2}{||c||}{\textbf{Distributor}} &
+            \multicolumn{5}{c||}{\textbf{Queueing system \(A\)}} &
+            \multicolumn{5}{c||}{\textbf{Queueing system \(B\)}} \\
+            \hline
+            \(\lambda_2\) & \(\alpha\) &
+            \(\lambda_1^A\) & \(\mu^A\) & \(C^A\) & \(N^A\) & \(M^A\) &
+            \(\lambda_1^B\) & \(\mu^B\) & \(C^B\) & \(N^B\) & \(M^B\) \\
+            \hline
+            4 & 0.2 & 2 & 3 & 3 & 15 & 10 & 1 & 1 & 3 & 10 & 5 \\
+            \hline
+        \end{tabular}
+    \end{center}
+    \label{tab:routing_matrix_example_parameters}
+\end{table}
 
 Note that the thresholds are not defined for the routing matrix since they are
 not constants.
@@ -756,11 +910,8 @@ for every possible pair of thresholds.
 
 \end{lstlisting}
 
-% TODO: Is this really needed?
-\begin{sloppypar}
 Using the same set of parameters as in the example discussed in
 Section~\ref{sec:routing_matrix_example}, the routing matrix can be calculated.
-\end{sloppypar}
 
 \begin{lstlisting}[
     style=pystyle,
@@ -814,118 +965,6 @@ array([[0.58864276, 0.22335975, 0.15533059, 0.15265663, 0.15078926,
         0.87136701, 0.84412235, 0.81814844, 0.78822172, 0.73774973]])
 
 \end{lstlisting}
-
-
-\subsubsection{Brent's algorithm - tolerance sensitivity analysis}
-\label{sec:brent_tolerance}
-
-The implementation of Brent's algorithm is being done using the
-function~\texttt{brentq}
-from \texttt{SciPy}.
-The function receives two essential arguments; another function for
-which to find the root of, and the interval in which the root is located.
-In addition to these two arguments, the function also receives two optional
-arguments; \texttt{xtol} and
-\texttt{rtol}~\cite{2020SciPy-NMeth}.
-These two parameters are the ones that define the tolerance of the algorithm.
-In other words, the smaller the tolerance parameters are, the more accurate
-the result will be.
-However, the smaller the tolerance parameters are, the more iterations will
-be needed to find the root.
-Therefore, the tolerance parameters are a trade-off between accuracy and
-computation time.
-
-The documentation of the~\texttt{brentq} function states
-that the default values of the tolerance parameters are
-\texttt{xtol=2e-12} and
-\texttt{rtol=8.881784197001252e-16}.
-Within the~\texttt{brentq} function these two parameters
-are used to ensure that
-\texttt{allclose(x, x0, atol=xtol, rtol=rtol) = True}.
-Function \texttt{allclose} is implemented by the
-\texttt{numpy} library~\cite{2020NumPy-Array}.
-and checks if two arrays are element-wise similar given a certain tolerance.
-The way the internal mechanisms of the~\texttt{allclose}
-function work is that given two values \(a\) and \(b\), with some absolute
-tolerance (atol) and relative tolerance (rtol) parameters, the function returns
-\texttt{True} if:
-
-\begin{equation}
-    |a - b| \leq (\text{atol} + \text{rtol} \times |b|)
-\end{equation}
-
-These tolerance parameters are the once used by Brent's algorithm to determine
-if the root has been found.
-In the remainder of this subsection the effect of the absolute tolerance
-parameter \texttt{xtol} will be analysed.
-To determine the effect of the absolute tolerance parameters on the accuracy and
-computation time of Brent's algorithm, the algorithm was ran for different set
-of parameters and different values of the absolute tolerance parameter.
-The two parameter sets that were used for these experiments are:
-
-\begin{center}
-    \small
-    \begin{tabular}{||c|c|c|c|c|c|c|c|c|c|c|c|c||}
-        \hline
-        \(\lambda_2\) & \(\lambda_1^A\) & \(\lambda_1^B\) & \(T^A\) & \(T^B\) &
-        \(\mu^A\) & \(\mu^B\) & \(C^A\) & \(C^B\) & \(N^A\) & \(N^B\) & \(M^A\) &
-        \(M^B\) \\
-        \hline\hline
-        4 & 3 & 3 & 4 & 5 & 4 & 3 & 2 & 3 & [8,25] & 8 & 8 & 8 \\
-        \hline
-        5 & 2 & 2 & 7 & 10 & 3 & 2 & 3 & 4 & [7,24] & 15 & 10 & 10 \\
-        \hline
-    \end{tabular}
-\end{center}
-    
-Note the system capacity of queueing system \(A\) varies for both parameter sets.
-For every value of \(N_A\) Brent's algorithm was run for different values of
-the absolute tolerance parameter \texttt{xtol}.
-The values of the absolute tolerance parameter that were used are:
-\texttt{xtol = [1e-10, 1e-9, 1e-8, 1e-7, 1e-6, 1e-5, 0.0001, 0.001, 0.01, 0.1]}.
-For each value of the absolute tolerance parameter, the algorithm was run 200
-times and the computation time was recorded for each run.
-
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/Bin/brents_method/tolerance/tolerance_violinplots_1.pdf}
-    \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/Bin/brents_method/tolerance/tolerance_violinplots_2.pdf}
-    \caption{
-        Violinplots of the duration of Brent's algorithm for different values of
-        \(N_A\) for two parameter sets.
-    }
-    \label{fig:tolerance_violinplots}
-\end{figure}
-
-It can be seen that for both parameter sets in
-Figure~\ref{fig:tolerance_violinplots} the duration of the algorithm is
-increasing as \(N^A\) increases.
-Note that the violinplots include all values of the tolerance parameters
-\texttt{xtol} that were used.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/Bin/brents_method/tolerance/tolerance_lineplots_1.pdf}
-    \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/Bin/brents_method/tolerance/tolerance_lineplots_2.pdf}
-    \caption{
-        Line plots of the duration of Brent's algorithm for different values of
-        \(N_A\) over different values of the absolute tolerance parameter xtol
-        for two parameter sets.
-    }
-    \label{fig:tolerance_lineplots}
-\end{figure}
-
-The plots of Figure~\ref{fig:tolerance_lineplots} show for each value of \(N^A\)
-how the duration of the algorithm changes as the absolute tolerance parameter
-\texttt{xtol} increases.
-It can be seen that for both parameter sets the duration of the algorithm
-on most cases the computational time decreases as the tolerance parameter
-increases.
-There are some cases that do not follow this trend though.
-For example, for parameter set 1 when \(N^A=20\), the duration of the algorithm
-increases, rather than decreasing, from \texttt{xtol=1e-05}
-to \texttt{xtol=0.0001}.
 
 
 
@@ -1009,49 +1048,30 @@ The game is now a 2-player normal form game with payoff matrices \(A\) and
 Consider an example of the described game with the following parameters:
 
 \begin{table}[H]
-    \caption{Example \(1\) of parameters of the distribution service}
+    \caption{Parameter values for game formulation example}
     \begin{center}
-        \begin{tabular}{||c|c|c|c||}
+        \begin{tabular}{||c|c|c|c||c|c|c|c|c||c|c|c|c|c||}
             \hline
-            \(\lambda_2\) & t & \footnotesize{\(\hat{P}\)} & \(\alpha\) \\
-            \hline\hline
-            4 & 1 & 0.95 & 0.2 \\
+            \multicolumn{4}{||c||}{\textbf{Distributor}} &
+            \multicolumn{5}{c||}{\textbf{Queueing system \(A\)}} &
+            \multicolumn{5}{c||}{\textbf{Queueing system \(B\)}} \\
             \hline
-        \end{tabular}
-    \end{center}
-    \label{tab:implemetation_dist_service_parameters}
-\end{table}
-
-\begin{table}[H]
-    \caption{Example \(1\) of parameters of the two queueing systems}
-    \begin{center}
-        \begin{tabular}{||c|c|c|c|c|c||}
-            \hline
-            \(\lambda_1^A\) & \(\mu^A\) & \(C^A\) & \(N^A\) & \(M^A\) \\
-            \hline
-            2 & 3 & 2 & 7 & 6 \\
-            \hline
-        \end{tabular}
-
-        \vspace{0.5cm}
-        
-        \begin{tabular}{||c|c|c|c|c|c||}
-            \hline
+            \(\lambda_2\) & t & \footnotesize{\(\hat{P}\)} & \(\alpha\) &
+            \(\lambda_1^A\) & \(\mu^A\) & \(C^A\) & \(N^A\) & \(M^A\) &
             \(\lambda_1^B\) & \(\mu^B\) & \(C^B\) & \(N^B\) & \(M^B\) \\
             \hline
-            1 & 1 & 3 & 4 & 3 \\
+            4 & 1 & 0.95 & 0.2 & 2 & 3 & 2 & 7 & 6 & 1 & 1 & 3 & 4 & 3 \\
             \hline
         \end{tabular}
     \end{center}
-    \label{tab:implemetation_queueing_systems_parameters}
+    \label{tab:implemetation_game_parameters_example_1}
 \end{table}
 
 
 \begin{lstlisting}[
     style=pystyle,
     caption={Variables that correspond to the parameter set
-    from~\ref{tab:implemetation_dist_service_parameters}
-    and~\ref{tab:implemetation_queueing_systems_parameters}},
+    from Table~\ref{tab:implemetation_game_parameters_example_1}},
     label={lst:parameters_1},
 ]
 >>> lambda_2 = 4
@@ -1379,7 +1399,7 @@ array([[0.92344478, 0.4632574 , 0.25667497, 0.14225553],
 
 \end{lstlisting}
 
-The final thing to be done is to use the \texttt{nashpy}
+The final task is to use the \texttt{nashpy}
 library to build the game using the payoff matrices.
 
 \begin{lstlisting}[
@@ -1417,13 +1437,13 @@ Column player:
 \subsection{Solving the game}\label{sec:game_solving}
 
 This section describes how everything introduced in this chapter so far can be
-put together to get numerical results of the 3-player game between two queueing
-systems and the individual distribution service.
+put together to obtain numerical results of the 3-player game between two
+queueing systems and the individual distribution service.
 Having formulated the game (Section~\ref{sec:game_formulation}) and obtained
 the payoff matrices for the two players
-(Section~\ref{sec:queueing_systems_and_normal_form_games}) the strategies of
+(Section~\ref{sec:queueing_systems_and_normal_form_games}), the strategies of
 the players can now be investigated.
-For a 2-player game once the two payoff matrices have been calculated
+For a 2-player game once the two payoff matrices have been calculated,
 the game can be solved using the methods described in
 Section~\ref{sec:game_theory_intro}.
 More specifically, the concept of Nash equilibrium described in
@@ -1435,48 +1455,31 @@ Consider a game between queueing systems \(A\) and \(B\) and a distribution
 service \(D\) with the following parameters.
 
 \begin{table}[H]
-    \caption{Example \(2\) of parameters of the distribution service}
+    \caption{Parameter values for example on solving the game}
     \begin{center}
-        \begin{tabular}{||c|c|c|c||}
+        \begin{tabular}{||c|c|c|c||c|c|c|c|c||c|c|c|c|c||}
             \hline
-            \(\lambda_2\) & t & \(\hat{P}\) & \(\alpha\) \\
-            \hline\hline
-            1 & 1 & 0.8 & 0.5 \\
+            \multicolumn{4}{||c||}{\textbf{Distributor}} &
+            \multicolumn{5}{c||}{\textbf{Queueing system \(A\)}} &
+            \multicolumn{5}{c||}{\textbf{Queueing system \(B\)}} \\
             \hline
-        \end{tabular}
-    \end{center}
-    \label{tab:solving_game_dist_service_parameters}
-\end{table}
-
-\begin{table}[H]
-    \caption{Example \(2\) of parameters of the two queueing systems}
-    \begin{center}
-        \begin{tabular}{||c|c|c|c|c|c||}
-            \hline
-            \(\lambda_1^A\) & \(\mu^A\) & \(C^A\) & \(N^A\) & \(M^A\) \\
-            \hline
-            1 & 2 & 1 & 2 & 2 \\
-            \hline
-        \end{tabular}
-
-        \vspace{0.5cm}
-        
-        \begin{tabular}{||c|c|c|c|c|c||}
-            \hline
+            \(\lambda_2\) & t & \footnotesize{\(\hat{P}\)} & \(\alpha\) &
+            \(\lambda_1^A\) & \(\mu^A\) & \(C^A\) & \(N^A\) & \(M^A\) &
             \(\lambda_1^B\) & \(\mu^B\) & \(C^B\) & \(N^B\) & \(M^B\) \\
             \hline
+            1 & 1 & 0.8 & 0.5 &
+            1 & 2 & 1 & 2 & 2 &
             1 & 3 & 1 & 2 & 2 \\
             \hline
         \end{tabular}
     \end{center}
-    \label{tab:solving_game_queueing_systems_parameters}
+    \label{tab:solving_game_parameters}
 \end{table}
 
 \begin{lstlisting}[
     style=pystyle,
     caption={Variables that correspond to the parameter set
-    from~\ref{tab:solving_game_dist_service_parameters}
-    and~\ref{tab:solving_game_queueing_systems_parameters}},
+    from Table~\ref{tab:solving_game_parameters}},
     label={lst:parameters_2},
 ]
 >>> lambda_2 = 1
@@ -1517,8 +1520,8 @@ matrices for the two players can be obtained using the function
 Every function that described in this section is also implemented in the
 \texttt{ambulance\_game} python library that was created for
 this project.
-A detailed description of the library can be found in Section.
-% TODO: reference ambulance_game section {sec:ambulance_game_library}.
+A detailed description of the library can be found in
+Appendix~\ref{appendix:ambulance_game}.
 The code snippet shown in~\ref{lst:payoff_matrices_ambulance_game} how the
 payoff matrices can be obtained using the
 \texttt{ambulance\_game} library.
@@ -1629,6 +1632,8 @@ The code shown in~\ref{lst:ambulance_game_stochastic_fictitious} shows how the
 number of times each strategy was played and
 the distribution of strategies over time.
 
+\vspace{0.5cm}
+
 \begin{lstlisting}[
     style=pystyle,
     caption={Stochastic fictitious play algorithm on the payoff matrices of
@@ -1667,21 +1672,23 @@ smaller than the algorithm can handle.
 
 Finally, the last algorithm to be ran is the asymmetric replicator dynamics
 algorithm.
-This algorithm is ran for \(10000\) timepoints and the final strategies of
+This algorithm is ran for \(10,\!000\) timepoints and the final strategies of
 both players are calculated.
 
+\definecolor{invisiblecomments}{RGB}{253, 246, 220}
 \begin{lstlisting}[
     style=pystyle,
     caption={Asymmetric replicator dynamics algorithm on the payoff matrices
     of the two players},
     label={lst:ambulance_game_asymmetric_replicator},
+    commentstyle=\color{invisiblecomments},
 ]
 >>> xs, ys = game.asymmetric_replicator_dynamics(
 ...     timepoints=np.linspace(0, 10000, 100)    
 ... )
 >>> np.round(xs[-1], 4)
 array([1., 0.])
->>> np.round(ys[-1], 4)
+>>> np.round(ys[-1], 4) # doctest: +SKIP
 array([0., 1.])
 
 \end{lstlisting}

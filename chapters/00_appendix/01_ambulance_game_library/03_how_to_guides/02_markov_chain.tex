@@ -2,7 +2,7 @@
 
 This subsection presents a guide on how to use the \texttt{ambulance\_game}
 library to create and solve the Markov chain (MC) model of the hospital network
-discussed in this thesis (see Chapter~\ref{sec:queueing_section}).
+discussed in this thesis (see Section~\ref{sec:markov_model}).
 The parameters used are defined in Listing~\ref{lst:abg_how_to_markov}.
 For more information on the parameters, refer to
 Section~\ref{sec:queueing_section}.
@@ -72,6 +72,7 @@ function can be used.
 
 The function \texttt{get\_transition\_matrix} builds the transition matrix
 of the MC model.
+The transition matrix is defined in Equation~\ref{eq:markov_transition_rate}.
 
 \begin{lstlisting}[
     style=pystyle,
@@ -101,8 +102,8 @@ array([[-3.,  3.,  0.,  0.,  0.,  0.],
 The functions shown in Listing~\ref{lst:abg_how_to_markov_steady_state} can be
 used to calculate the steady state probabilities of the MC model.
 The steady state probabilities can be calculated using a numerical method or
-an algebraic method.
-For more information on the methods, refer to
+an algebraic method (see Section~\ref{sec:steady_state_probabilities}).
+For more information on the arguments of these methods, refer to
 Section~\ref{sec:ambulance_game_explanation}.
 
 \begin{lstlisting}[
@@ -126,6 +127,8 @@ array([0.44853393, 0.26912036, 0.16147222, 0.07381587, 0.02306746,
 The functions shown in Listing~\ref{lst:abg_how_to_markov_expected_number}
 can be used to calculate the expected number of patients in the system,
 service area and buffer centre.
+The mathematical formulas for these calculations can be found in
+Section~\ref{sec:queueing_performance_measures}.
 
 \begin{lstlisting}[
     style=pystyle,
@@ -159,6 +162,8 @@ service area and buffer centre.
 
 To get the mean waiting time of patients in the system, the code snippet
 shown in Listing~\ref{lst:abg_how_to_markov_waiting} can be used.
+The waiting time formula can be found in
+Section~\ref{sec:waiting_time}.
 
 \begin{lstlisting}[
     style=pystyle,
@@ -190,6 +195,8 @@ returns the mean waiting time of all individuals.
 To get the mean blocking time of type 2 patients in the system (ambulance
 patients), the code snippet shown in
 Listing~\ref{lst:abg_how_to_markov_blocking} can be used.
+The mathematical formula for this calculation can be found in
+Section~\ref{sec:blocking_time}.
 
 \begin{lstlisting}[
     style=pystyle,
@@ -215,6 +222,8 @@ Listing~\ref{lst:abg_how_to_markov_blocking} can be used.
 To get the proportion of individuals that are seen within a time target, the
 code snippet shown in Listing~\ref{lst:abg_how_to_markov_proportion} can be
 used.
+The formulas and distributions used for this calculation can be found in
+Section~\ref{sec:proportion_of_individuals_within_time}.
 
 \begin{lstlisting}[
     style=pystyle,

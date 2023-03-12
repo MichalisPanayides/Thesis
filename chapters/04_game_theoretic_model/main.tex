@@ -6,11 +6,9 @@
 Apart from the queueing theoretic model the second main outcome of this research
 is the construction of a game theoretic model that uses the queueing model
 described in Section~\ref{sec:queueing_section}.
-This game theoretic framework consists of three players where these player in
-Section~\ref{sec:game_ems_ed_application} will represent the Emergency Medical
+This game theoretic framework consists of three players where these players (in
+Section~\ref{sec:game_ems_ed_application}) will represent the Emergency Medical
 Services and two Emergency Departments.
-The main purpose of this game theoretic model is to observe the behavioural
-patterns that arise when the players are interacting with each other.
 The game theoretic model aims to look into behavioural patterns that emerge
 when the players are interacting with each other and act in such a way so that
 they maximise their utility. 
@@ -44,7 +42,7 @@ This chapter extends the concepts described in~\cite{panayides2023game}.
 
 This chapter introduces a 3-player game theoretic model between the decision 
 makers of two queueing systems and a distribution service that distributes
-individuals to the queueing systems.
+individuals to them.
 The game theoretic model is used to investigate the behaviour of the players
 when they interact and try to maximise their own utilities.
 
@@ -54,15 +52,15 @@ A brief introduction on Normal Form games and the concept of Nash equilibrium
 are given, along with some examples of games and there equivalent Nash
 equilibria.
 Additionally, some learning algorithms are introduced.
-Namely, the learning algorithm that is mostly used in this chapter is the
+The learning algorithm that is mostly used in this chapter is the
 asymmetric replicator dynamics algorithm.
-Finally, a description of perfect- and imperfect-information normal form games
-is given.
+Finally, a description of perfect-information and imperfect-information normal
+form games is given.
 
 Section~\ref{sec:game_formulation} describes the formulation of the game
 theoretic model that is used in this thesis.
-An overview of the three players (the two queueing systems and the
-distribution service) and the parameters that are used in the game is given.
+An overview of the three players and the parameters that are used in the game
+is given.
 The parameter that is of most interest here is the threshold parameter that
 is used to determine when individuals are being blocked from entering node
 \(1\) of the queueing system.
@@ -73,9 +71,7 @@ The distribution service's payoff is determined by the number of individuals
 that are blocked in node \(2\) of the queueing system.
 The queueing system's payoff is determined by the proportion of individuals
 whose waiting time is less than a predefined target time.
-Thus, the imperfect-information extensive form game is introduced that is
-used to model the interaction between the two queueing systems and the
-distribution service.
+Thus, the imperfect-information extensive form game is introduced.
 
 Section~\ref{sec:game_methodology} describes the methodology that is used to
 solve the game theoretic model.
@@ -95,7 +91,7 @@ The learning algorithms that are used are fictitious play, stochastic
 fictitious play, and asymmetric replicator dynamics.
 
 Finally, Section~\ref{sec:game_ems_ed_application} maps the game theoretic
-model a healthcare setting to observe the behavioural gaming that takes place
+model to a healthcare setting to observe the behavioural gaming that takes place
 at the EMS~-~ED interface.
 The three players now become the Emergency Medical Services (EMS) and two
 Emergency Departments (EDs).
@@ -103,5 +99,6 @@ The game essentially consists of the EMS deciding what proportion of
 ambulances to send to each hospital so that the blocking time is minimised and
 the EDs choosing what threshold parameter to use so that a certain policy
 objective is met.
-That policy objective is that \(95\%\) of the patients that are admitted to
+In line with the current NHS policy~\cite{fourhourtarget},
+the objective is set to be that \(95\%\) of the patients that are admitted to
 the EDs should be admitted within \(4\) hours.

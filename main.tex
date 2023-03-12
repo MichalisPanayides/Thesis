@@ -9,13 +9,13 @@
     \maketitle
     
     \pagestyle{normal}
-    \input{Frontmatter/declarationStatements}
-    \input{Frontmatter/dedication}
-    \input{Frontmatter/acknowledgements}
-    \input{Frontmatter/abstract}
-
-
+    
+    
     \begin{romanpages}
+        \input{Frontmatter/abstract}
+        \input{Frontmatter/acknowledgements}
+        \input{Frontmatter/dissemination}
+
         \tableofcontents
         \listoffigures
         \listoftables
@@ -36,9 +36,10 @@
     \bibliography{bibliography.bib}
 
     \appendix
+    % Use phantom section to make the hyperlink in the table of contents point
+    % to the correct page. Without it the hyperlink points to the bibliography.
+    \phantomsection
     \addcontentsline{toc}{chapter}{Appendices}
-
     \input{chapters/00_appendix/main.tex}
     
-
 \end{document}

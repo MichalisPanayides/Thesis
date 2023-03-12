@@ -1,1 +1,56 @@
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+
+This thesis investigates the behavioural dynamics that emerge at the
+interface of Emergency Departments (EDs) and the Emergency Medical Service
+(EMS).
+The focus is on the impact that time-targets may have on staff
+behaviour and patient well-being.
+This research is structured into two main parts: the first part is the
+development of a queueing theoretic representation of an ED and the second
+part is the development of a game theoretic model between two EDs and the
+EMS that distributes ambulance patients to them.
+
+This thesis uses a variety of mathematical and computational fields such as
+linear algebra, graph theory, optimisation, probability theory, game
+theory, queueing theory, agent-based simulation and reinforcement learning.
+
+The queueing model is developed using both a discrete event simulation
+and a Markov chain approach.
+The queueing network consists of two queueing nodes where there is some
+strategic managerial behaviour that relates to how two types of individuals
+are routed between the two nodes.
+The first node acts as a buffer for one type of individuals before moving 
+to the second node, while the second node consists of a waiting room and a
+service centre.
+Both approaches are used to obtain performance measures of the queueing
+system and explicit formulas are derived for the mean waiting time, the
+mean blocking time and the proportion of individuals within a given target
+time.
+In addition, some numeric results are presented that compare the
+Markov chain and discrete event simulation approaches.
+
+Consequently, this thesis describes the development and application of a
+3-player game  theoretic model between two such queueing networks and a
+service that distributes individuals to them.
+In particular the game is then reduced to a 2-player normal-form game.
+The resultant model is used to explore dynamics between all players.
+A backwards induction technique is used to get the utilities of the
+normal-form game between the two queueing systems.
+The particular game is then applied to a healthcare scenario to capture the
+emergent behaviour between the EMS and two EDs.
+The results and outcomes that are produced by various instance of the game
+are then analysed and discussed.
+The learning algorithm replicator dynamics is used to explore the
+evolutionary behaviours that emerge in the game.
+In particular, the behaviour that naturally emerges from the game seems to
+be one that causes more blockage and includes less cooperation.
+Several ways to escape this learned inefficient behaviour are discussed.
+
+Finally, the thesis explores an extension of the queueing theoretic model
+that allows servers to choose their own service speed.
+This is implemented using an agent-based simulation approach.
+The agent-based model is then used in conjunction with a reinforcement
+learning algorithm to explore the effect that the servers' behaviour has 
+on the overall performance of the system.
 

@@ -59,7 +59,8 @@ The parameters of the game theoretic model are:
     \item \(t\): The time target for both queueing systems
     \item \(\alpha \in [0, 1]\) : Weighted average of blocking time and
     lost individuals (defined in equation~\eqref{eq:obj_distributor_penalty})
-    % TODO: Define p_hat
+    \item \(\hat{P}\): is the percentage target of individuals that need to be
+    within that target (this is set to 95\% unless otherwise stated)
 \end{itemize}
 
 \subsection{Strategies}\label{sec:game_strategies}
@@ -160,7 +161,8 @@ non-increasing while the mean blocking time is non-decreasing.
 Having a low threshold means that queueing system \(A\) will block type 2
 individuals more often and thus the mean blocking time will be higher and
 hence the mean waiting time will be lower.
-The same logic applies to queueing system \(B\).
+The same logic applies to queueing system \(B\), with
+\(T_B \in \{1, 2, \ldots, N_B\}\).
 
 The strategy space of the distribution service, which is the third player of the
 game is the range of all possible ways to distribute individuals to the two
@@ -195,7 +197,7 @@ queueing system \(B\).
 
 \subsection{Payoffs}
 
-Consider the three players of the game; queueing system \(A\), queueing system
+Consider the three players of the game: queueing system \(A\), queueing system
 \(B\) and
 the distribution service.
 Apart from a strategy space each player also has some objective that they would

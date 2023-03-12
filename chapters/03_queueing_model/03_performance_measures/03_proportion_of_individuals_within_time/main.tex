@@ -59,14 +59,14 @@ starting their service to exiting the system.
 Thus, the waiting and service time of an individual in the model of
 Figure~\ref{fig:distribution_of_time_at_specific_state_1_server}
 can be captured by an
-erlang distributed random variable.
-The general CDF of the erlang distribution \(Erlang(k, \mu)\) is given by:
+Erlang distributed random variable.
+The general CDF of the Erlang distribution \(Erlang(k, \mu)\) is given by:
 
 \begin{equation} \label{eq:cdf_erlang}
     P(S < t) = 1 - \sum_{i=0}^{k-1} \frac{1}{i!} e^{-\mu t} (\mu t)^i
 \end{equation}
 
-Unfortunately, the erlang distribution can only be used for the sum of
+Unfortunately, the Erlang distribution can only be used for the sum of
 identically distributed random variables from the exponential distribution.
 Therefore, this approach cannot be used when one of the random variables has a
 different parameter than the others.
@@ -99,11 +99,11 @@ By applying the same logic, assuming that an individual arrives at state
 \end{align}
 
 Since these exponentially distributed random variables do not share the same
-parameter, an erlang distribution cannot be used.
+parameter, an Erlang distribution cannot be used.
 In fact, the problem can now be viewed as the sum of exponentially
 distributed random variables with different parameters, which is in turn the
-sum of erlang distributed random variables.
-The sum of erlang distributed random variables is said to follow the
+sum of Erlang distributed random variables.
+The sum of Erlang distributed random variables is said to follow the
 hypoexponential distribution.
 The hypoexponential distribution is defined with two vectors of size equal
 to the number of Erlang random variables that are added
@@ -132,7 +132,7 @@ The CDF of this distribution can be therefore used to get the probability of the
 time spent in the system being less than a given target.
 The CDF of the general hypoexponential distribution \(Hypo(\vec{r},
 \vec{\lambda})\), is given by the~\eqref{eq:general_cdf_hypoexponential}, where
-vector \(\vec{r}\) contains all \(k\)-values of the erlang distributions
+vector \(\vec{r}\) contains all \(k\)-values of the Erlang distributions
 defined in~\eqref{eq:erlang_distribution_definition} and \(\vec{\lambda}\)
 is a vector of the distinct parameters~\cite{Favaro2010}.
 
@@ -184,7 +184,7 @@ However, the random variable \(H\), described
 in~\eqref{eq:multiple_servers_distribution_example}, is the sum of only two
 different erlang distributed random variables.
 Thus, perhaps a more simplified version of the above expressions can be derived
-that is specific to the case of two erlang distributed random variables.
+that is specific to the case of two Erlang distributed random variables.
 
 
 \subsubsection{Specific CDF of hypoexponential distribution}
@@ -204,7 +204,7 @@ always be at most two distinct exponential parameters; the parameter for
 finishing a service (\(\mu\)) and the parameter for moving forward in the queue
 (\(C \mu\)).
 For the unique case of \(C=1\) the hypoexponential distribution will not be
-used as this is equivalent to an erlang distribution.
+used as this is equivalent to an Erlang distribution.
 Therefore, by fixing the sizes of \(\vec{r}\) and \(\vec{\lambda}\) to 2, the
 following specific expression for the CDF of the hypoexponential distribution
 arises, where the derivative is removed:
@@ -703,10 +703,7 @@ a given time target.
 ...     the next one is known to be exponentially distributed. The sum of
 ...     exponentially distributed random variables is known to result in
 ...     either an Erlang distribution or a Hypoexponential distribution
-...     (where the former is used when the exponentially distributed r.v.
-...     that we are summing have the same parameters and the latter when
-...     they have at least two distinct parameters). The function works as
-...     follows:
+...     The function works as follows:
 ...     - Checks whether the arriving individual will have to wait
 ...     - Finds the total number of states an individual will have to visit
 ...     - Depending on whether the parameters of the distributions to sum are
@@ -804,8 +801,7 @@ and~\eqref{eq:proportion_of_inds_type_2}.
 ...         The probability of spending less time than the target in the
 ...         system
 ...     """
-...     proportion_within_limit = 0
-...     probability_of_accepting = 0
+...     proportion_within_limit, probability_of_accepting = 0, 0
 ...     for (u, v) in all_states:
 ...         if abg.markov.utils.is_accepting_state(
 ...             state=(u, v),
@@ -865,11 +861,9 @@ can be calculated for a given Markov chain model and a given individual type.
 >>> pi = abg.markov.get_markov_state_probabilities(
 ...     abg.markov.get_steady_state_algebraically(
 ...         Q, algebraic_function=np.linalg.solve
-...     ),
-...     all_states,
+...     ), all_states
 ... )
->>> round(
-...     get_proportion_of_individuals_within_time_target(
+>>> round(get_proportion_of_individuals_within_time_target(
 ...         all_states=all_states,
 ...         pi=pi,
 ...         class_type=0,
@@ -879,8 +873,7 @@ can be calculated for a given Markov chain model and a given individual type.
 ...         system_capacity=3,
 ...         buffer_capacity=4,
 ...         target=1
-...     ), 10
-... )
+...     ), 10)
 0.9190401179
 
 \end{lstlisting}

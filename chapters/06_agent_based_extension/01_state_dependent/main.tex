@@ -20,7 +20,7 @@ defined as follows:
         \mu_{(0,0)}, & \text{if } (u, v) = (0, 0) \\
         \mu_{(0,1)}, & \text{if } (u, v) = (0, 1) \\
         \quad \vdots & \qquad \quad \vdots \\
-        \mu_{(N,M)}, & \text{if } (u, v) = (M, N)
+        \mu_{(M,N)}, & \text{if } (u, v) = (M, N)
     \end{cases}
 \end{equation}
 
@@ -63,8 +63,8 @@ Section~\ref{sec:discrete_event_simulation}.
 All the code used to implement the state-dependent variation of the queueing
 system is archived at~\cite{ambulance_game_github_repo} and developed openly on
 GitHub.
-More details on the code can be found in appendix.
-% TODO: reference appendix section ~\ref{appendix:ambulance_game}.
+More details on the code can be found in
+Appendix~\ref{appendix:ambulance_game}.
 The \texttt{ciw} library is structured in a way that allows the user to create
 their own class for the service time distribution.
 This class must inherit from the \texttt{ciw.dists.Distribution} class and
@@ -134,13 +134,7 @@ queueing system.
 >>> Q = abg.simulation.simulate_model(
 ...     lambda_1=lambda_1,
 ...     lambda_2=lambda_2,
-...     mu={
-...         (0, 0): 2,
-...         (0, 1): 3,
-...         (0, 2): 4,
-...         (1, 1): 4,
-...         (1, 2): 5,
-...     },
+...     mu={(0, 0): 2, (0, 1): 3, (0, 2): 4, (1, 1): 4, (1, 2): 5},
 ...     num_of_servers=num_of_servers,
 ...     threshold=threshold,
 ...     seed_num=seed_num,
