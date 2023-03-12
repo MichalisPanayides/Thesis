@@ -703,10 +703,7 @@ a given time target.
 ...     the next one is known to be exponentially distributed. The sum of
 ...     exponentially distributed random variables is known to result in
 ...     either an Erlang distribution or a Hypoexponential distribution
-...     (where the former is used when the exponentially distributed r.v.
-...     that we are summing have the same parameters and the latter when
-...     they have at least two distinct parameters). The function works as
-...     follows:
+...     The function works as follows:
 ...     - Checks whether the arriving individual will have to wait
 ...     - Finds the total number of states an individual will have to visit
 ...     - Depending on whether the parameters of the distributions to sum are
@@ -804,8 +801,7 @@ and~\eqref{eq:proportion_of_inds_type_2}.
 ...         The probability of spending less time than the target in the
 ...         system
 ...     """
-...     proportion_within_limit = 0
-...     probability_of_accepting = 0
+...     proportion_within_limit, probability_of_accepting = 0, 0
 ...     for (u, v) in all_states:
 ...         if abg.markov.utils.is_accepting_state(
 ...             state=(u, v),
@@ -865,11 +861,9 @@ can be calculated for a given Markov chain model and a given individual type.
 >>> pi = abg.markov.get_markov_state_probabilities(
 ...     abg.markov.get_steady_state_algebraically(
 ...         Q, algebraic_function=np.linalg.solve
-...     ),
-...     all_states,
+...     ), all_states
 ... )
->>> round(
-...     get_proportion_of_individuals_within_time_target(
+>>> round(get_proportion_of_individuals_within_time_target(
 ...         all_states=all_states,
 ...         pi=pi,
 ...         class_type=0,
@@ -879,8 +873,7 @@ can be calculated for a given Markov chain model and a given individual type.
 ...         system_capacity=3,
 ...         buffer_capacity=4,
 ...         target=1
-...     ), 10
-... )
+...     ), 10)
 0.9190401179
 
 \end{lstlisting}

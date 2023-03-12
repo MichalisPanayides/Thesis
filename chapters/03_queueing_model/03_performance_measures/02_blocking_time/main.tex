@@ -299,18 +299,16 @@ function rather than the function itself.
 ...     ),
 ...     all_states,
 ... )
->>> round(
-...     abg.markov.mean_blocking_time_formula_using_direct_approach(
-...         all_states=all_states,
-...         pi=pi,
-...         lambda_1=1,
-...         mu=4,
-...         num_of_servers=1,
-...         threshold=2,
-...         system_capacity=4,
-...         buffer_capacity=3,
-...     ), 10
-... )
+>>> round(abg.markov.mean_blocking_time_formula_using_direct_approach(
+...     all_states=all_states,
+...     pi=pi,
+...     lambda_1=1,
+...     mu=4,
+...     num_of_servers=1,
+...     threshold=2,
+...     system_capacity=4,
+...     buffer_capacity=3,
+... ), 10)
 0.1287843179
 
 \end{lstlisting}
