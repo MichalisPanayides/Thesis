@@ -210,40 +210,41 @@ These are the capacity of Node \(1\), the capacity of Node \(2\), and the
 threshold.
 The capacity of Node \(1\) is set to \(N = 35\), the capacity of Node \(2\) is
 set to \(M = 20\) and the threshold is set to \(T = 10\).
-Therefore the complete set of parameters for the queueing system are:
+Therefore the complete set of parameters for the queueing system are given by
+equation~\eqref{eq:state_server_dependent_example} and
+Table~\ref{tab:case_study_parameters}.
 
-\begin{multicols}{2}
-    \begin{itemize}
-        \item \(\lambda_1 = \frac{1}{57.5}\)
-        \item \(\lambda_2 = \frac{1}{38.3}\)
-        \item \(C = 4\)
-        \item \(\mu^{(1)} =
-        \begin{cases}
-            1.2 \times \frac{1}{86}, & \text{if } u + v < 7 \\
-            1.2 \times \frac{1}{62}, & \text{if } u + v \geq 7    
-        \end{cases}\)
-        \item \(T = 10\)
-        \item \(N = 35\)
-        \item \(M = 20\)
-        \item \(\mu^{(4)} =
-        \begin{cases}
-            0.8 \times \frac{1}{86}, & \text{if } u + v < 7 \\
-            0.8 \times \frac{1}{62}, & \text{if } u + v \geq 7    
-        \end{cases}\)
-    \end{itemize}
-\end{multicols}
+\begin{align}
+    \mu^{(1)} &=
+    \begin{cases}
+        1.2 \times \frac{1}{86}, & \text{if } u + v < 7 \\
+        1.2 \times \frac{1}{62}, & \text{if } u + v \geq 7    
+    \end{cases} \nonumber \\
+    \mu^{(i)} &=
+    \begin{cases}
+        \frac{1}{86}, & \text{if } u + v < 7 \\
+        \frac{1}{62}, & \text{if } u + v \geq 7
+    \end{cases} \quad \text{for } i \in \{2,3\}
+    \label{eq:state_server_dependent_example} \\
+    \mu^{(4)} &=
+    \begin{cases}
+        0.8 \times \frac{1}{86}, & \text{if } u + v < 7 \\
+        0.8 \times \frac{1}{62}, & \text{if } u + v \geq 7    
+    \end{cases} \nonumber
+\end{align}
 
-\begin{center}
-    \begin{minipage}{0.6\textwidth}
-        \begin{itemize}
-            \item \(\mu^{(i)} =
-            \begin{cases}
-                \frac{1}{86}, & \text{if } u + v < 7 \\
-                \frac{1}{62}, & \text{if } u + v \geq 7    
-            \end{cases} \quad \text{for } i \in \{2,3\}\)    
-        \end{itemize}    
-    \end{minipage}
-\end{center}
+\begin{table}[H]
+    \centering
+    \caption{Parameter values used in the case study.}
+    \begin{tabular}{||c|c|c|c|c|c||}
+        \hline
+        \(\lambda_1\) & \(\lambda_2\) & \(C\) & \(T\) & \(N\) & \(M\) \\
+        \hline
+        \(\frac{1}{57.5}\) & \(\frac{1}{38.3}\) & \(4\) & \(10\) & \(35\) & \(20\) \\
+        \hline
+    \end{tabular}
+    \label{tab:case_study_parameters}
+\end{table}
 
 Running the simulation for \(100,\!000\) time units each server's utilisation
 (i.e. what percentage of time they were busy), the proportion of individuals

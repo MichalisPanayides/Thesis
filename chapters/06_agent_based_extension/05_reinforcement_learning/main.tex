@@ -122,19 +122,23 @@ can be found in~\cite{michalis_panayides_2023_7586860}.
 Additional numerical experiments can also be found in
 Appendix~\ref{appendix:reinforcement_learning}.
 
-Consider a queueing system with the following parameters:
+Consider a queueing system with the parameters presented in
+Table~\ref{tab:reinforcement_learning_parameters}.
 
-\begin{multicols}{4}
-    \begin{itemize}
-        \item \(\lambda_2 = 1\)
-        \item \(\lambda_1 = 0.5 \)
-        \item \(\mu = 0.7\)
-        \item \(C = 4\)
-        \item \(T = 7\)
-        \item \(N = 10\)
-        \item \(M = 7 \)
-    \end{itemize}
-\end{multicols}
+\begin{table}[H]
+    \centering
+    \caption{Parameter values for the reinforcement learning algorithm
+    experiments.}
+    \begin{tabular}{||c|c|c|c|c|c|c||}
+        \hline
+        \(\lambda_1\) & \(\lambda_2\) & \(\mu\) & \(C\) & \(T\) & \(N\) & \(M\) \\
+        \hline
+        0.5 & 1 & 0.7 & 4 & 7 & 10 & 7 \\
+        \hline
+    \end{tabular}
+    \label{tab:reinforcement_learning_parameters}
+\end{table}
+
 
 Note that for the initial policy, the service rates of the \(4\) servers are
 set to \(\mu = 0.7\) for all servers and all states.

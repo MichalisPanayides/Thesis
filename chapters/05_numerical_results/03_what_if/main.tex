@@ -9,30 +9,28 @@ motivated to play a more cooperative game with the EMS provider.
 
 \subsection{Example 1}
 
-Consider the game defined by the following parameters:
+Consider the game defined by the parameters in
+Table~\ref{tab:results_what_if_example_1}.
 
-\begin{multicols}{3}
-    \begin{itemize}
-        \item \( \lambda_1^A = 1 \)
-        \item \( \mu^A = 2 \)
-        \item \( C^A = 2 \)
-        \item \( N^A = 10 \)
-        \item \( M^A = 6 \)
-        \columnbreak
-
-        \item \( \lambda_1^B = 2 \)
-        \item \( \mu^B = 2.5 \)
-        \item \( C^B = 2 \)
-        \item \( N^B = 10 \)
-        \item \( M^B = 6 \)
-        \columnbreak
-
-        \item \( \lambda_2 = 2 \)
-        \item \( t = 2 \)
-        \item \( \alpha = 0.5 \)
-        \item \( \hat{P} = 0.95 \)
-    \end{itemize}
-\end{multicols}
+\begin{table}[H]
+    \caption{Parameter values for the first example of the what if scenarios.}
+    \begin{center}
+        \begin{tabular}{||c|c|c|c||c|c|c|c|c||c|c|c|c|c||}
+            \hline
+            \multicolumn{4}{||c||}{\textbf{Distributor}} &
+            \multicolumn{5}{c||}{\textbf{Queueing system \(A\)}} &
+            \multicolumn{5}{c||}{\textbf{Queueing system \(B\)}} \\
+            \hline
+            \(\lambda_2\) & t & \footnotesize{\(\hat{P}\)} & \(\alpha\) &
+            \(\lambda_1^A\) & \(\mu^A\) & \(C^A\) & \(N^A\) & \(M^A\) &
+            \(\lambda_1^B\) & \(\mu^B\) & \(C^B\) & \(N^B\) & \(M^B\) \\
+            \hline
+            2 & 2 & 0.95 & 0.5 & 1 & 2 & 2 & 10 & 6 & 2 & 2.5 & 2 & 10 & 6 \\
+            \hline
+        \end{tabular}
+    \end{center}
+    \label{tab:results_what_if_example_1}
+\end{table}
 
 The set of possible actions to choose from for player 1 and player 2 is the
 set of thresholds that the EDs can choose from: 
@@ -300,30 +298,25 @@ waiting time of patients increases slightly.
 Consider another example now where the parameters \(\lambda_2, \lambda_1^A
 \lambda_1^B\) are set to a relatively high value.
 
-\begin{minipage}{\linewidth}
-\begin{multicols}{3}
-    \begin{itemize}
-        \item \( \lambda_1^A = 4.5 \)
-        \item \( \mu^A = 2 \)
-        \item \( C^A = 3 \)
-        \item \( N^A = 6 \)
-        \item \( M^A = 5 \)
-        \columnbreak
-
-        \item \( \lambda_1^B = 6 \)
-        \item \( \mu^B = 3 \)
-        \item \( C^B = 2 \)
-        \item \( N^B = 7 \)
-        \item \( M^B = 4 \)
-        \columnbreak
-
-        \item \( \lambda_2 = 10.7 \)
-        \item \( t = 2 \)
-        \item \( \alpha = 0.9 \)
-        \item \( \hat{P} = 0.95 \)
-    \end{itemize}
-\end{multicols}
-\end{minipage}
+\begin{table}[H]
+    \caption{Parameter values for the second example of the what if scenarios.}
+    \begin{center}
+        \begin{tabular}{||c|c|c|c||c|c|c|c|c||c|c|c|c|c||}
+            \hline
+            \multicolumn{4}{||c||}{\textbf{Distributor}} &
+            \multicolumn{5}{c||}{\textbf{Queueing system \(A\)}} &
+            \multicolumn{5}{c||}{\textbf{Queueing system \(B\)}} \\
+            \hline
+            \(\lambda_2\) & t & \footnotesize{\(\hat{P}\)} & \(\alpha\) &
+            \(\lambda_1^A\) & \(\mu^A\) & \(C^A\) & \(N^A\) & \(M^A\) &
+            \(\lambda_1^B\) & \(\mu^B\) & \(C^B\) & \(N^B\) & \(M^B\) \\
+            \hline
+            10.7 & 2 & 0.95 & 0.9 & 4.5 & 2 & 3 & 6 & 5 & 6 & 3 & 2 & 7 & 4 \\
+            \hline
+        \end{tabular}
+    \end{center}
+    \label{tab:results_what_if_example_2}
+\end{table}
 
 Recall that the relative traffic intensity of an \(M|M|c\) queue is given by
 \(\rho = \frac{\lambda}{c \mu}\) where \(\lambda\) is the arrival rate, c is

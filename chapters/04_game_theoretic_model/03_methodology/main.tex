@@ -102,24 +102,28 @@ in equation~\eqref{eq:obj_distributor_2}.
 Consider a distribution service whose arrival rate of type 2 individuals is
 \(\lambda_2 = 4\) and the `weight' is \(\alpha = 0.2\).
 Additionally, let queueing system \(A\) and queueing system \(B\) have the
-following parameters:
+parameters shown in Table~\ref{tab:parameters_example_brent_method}.
 
-\begin{multicols}{2}
-    \begin{itemize}
-        \item \(\lambda_1^A = 2\)
-        \item \(\mu^A = 3\)
-        \item \(C^A = 3\)
-        \item \(T^A = 8\)
-        \item \(N^A = 15\)
-        \item \(M^A = 10\)
-        \item \(\lambda_1^B = 1\)
-        \item \(\mu^B = 1\)
-        \item \(C^B = 3\)
-        \item \(T^B = 10\)
-        \item \(N^B = 10\)
-        \item \(M^B = 5\)
-    \end{itemize}
-\end{multicols}
+\begin{table}[H]
+    \small
+    \caption{Parameter values for Brent's method examples.}
+    \begin{center}
+        \begin{tabular}{||c|c||c|c|c|c|c|c||c|c|c|c|c|c||}
+            \hline
+            \multicolumn{2}{||c||}{\textbf{\(D\)}} &
+            \multicolumn{6}{c||}{\textbf{Queueing system \(A\)}} &
+            \multicolumn{6}{c||}{\textbf{Queueing system \(B\)}} \\
+            \hline
+            \(\lambda_2\) & \(\alpha\) &
+            \(\lambda_1^A\) & \(\mu^A\) & \(C^A\) & \(T^A\) & \(N^A\) & \(M^A\) &
+            \(\lambda_1^B\) & \(\mu^B\) & \(C^B\) & \(T^B\) & \(N^B\) & \(M^B\) \\
+            \hline
+            4 & 0.2 & 2 & 3 & 3 & 8 & 15 & 10 & 1 & 1 & 3 & 10 & 10 & 5 \\
+            \hline
+        \end{tabular}
+    \end{center}
+    \label{tab:parameters_example_brent_method}
+\end{table}
 
 The distribution service's best response for this particular example can be
 found at the intersection of the two decision values of the two queueing
@@ -606,23 +610,33 @@ parameter \texttt{xtol} will be analysed.
 To determine the effect of the absolute tolerance parameters on the accuracy and
 computation time of Brent's algorithm, the algorithm was ran for different set
 of parameters and different values of the absolute tolerance parameter.
-The two parameter sets that were used for these experiments are:
+The two parameter sets that were used for these experiments are shown in
+Table~\ref{tab:tolerance_sensitivity_parameters}.
 
-\begin{center}
-    \small
-    \begin{tabular}{||c|c|c|c|c|c|c|c|c|c|c|c|c||}
-        \hline
-        \(\lambda_2\) & \(\lambda_1^A\) & \(\lambda_1^B\) & \(T^A\) & \(T^B\) &
-        \(\mu^A\) & \(\mu^B\) & \(C^A\) & \(C^B\) & \(N^A\) & \(N^B\) & \(M^A\) &
-        \(M^B\) \\
-        \hline\hline
-        4 & 3 & 3 & 4 & 5 & 4 & 3 & 2 & 3 & [8,25] & 8 & 8 & 8 \\
-        \hline
-        5 & 2 & 2 & 7 & 10 & 3 & 2 & 3 & 4 & [7,24] & 15 & 10 & 10 \\
-        \hline
-    \end{tabular}
-\end{center}
-    
+\begin{table}[H]
+    \caption{Parameter sets that were used for the tolerance
+    sensitivity analysis.}
+    \begin{center}
+        \small
+        \begin{tabular}{||c|c|c|c||c|c|c|c|c||c|c|c|c|c||}
+            \hline
+            \multicolumn{4}{||c||}{\textbf{Distributor}} &
+            \multicolumn{5}{c||}{\textbf{Queueing system \(A\)}} &
+            \multicolumn{5}{c||}{\textbf{Queueing system \(B\)}} \\
+            \hline
+            \(\lambda_2\) & \(\alpha\) &
+            \(\lambda_1^A\) & \(\mu^A\) & \(C^A\) & \(T^A\) & \(N^A\) & \(M^A\) &
+            \(\lambda_1^B\) & \(\mu^B\) & \(C^B\) & \(T^B\) & \(N^B\) & \(M^B\) \\
+            \hline
+            4 & 0.2 & 3 & 4 & 2 & 4 & [8, 25] & 8 & 3 & 3 & 3 & 5 & 8 & 8 \\
+            \hline
+            5 & 0.2 & 2 & 3 & 3 & 7 & [7, 24] & 10 & 2 & 2 & 4 & 10 & 15 & 10 \\
+            \hline
+        \end{tabular}
+    \end{center}
+    \label{tab:tolerance_sensitivity_parameters}
+\end{table}
+
 Note the system capacity of queueing system \(A\) varies for both parameter sets.
 For every value of \(N_A\) Brent's algorithm was run for different values of
 the absolute tolerance parameter \texttt{xtol}.
@@ -631,37 +645,55 @@ The values of the absolute tolerance parameter that were used are:
 For each value of the absolute tolerance parameter, the algorithm was run 200
 times and the computation time was recorded for each run.
 
-
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/Bin/brents_method/tolerance/tolerance_violinplots_1.pdf}
+    \caption{
+        Violinplots of the duration of Brent's algorithm for different values of
+        \(N_A\) for the first parameter set.}
+    \label{fig:tolerance_violinplots_1}
+\end{figure}
+
+
+\begin{figure}[H]
+    \centering
     \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/Bin/brents_method/tolerance/tolerance_violinplots_2.pdf}
     \caption{
         Violinplots of the duration of Brent's algorithm for different values of
-        \(N_A\) for two parameter sets.
-    }
-    \label{fig:tolerance_violinplots}
+        \(N_A\) for the second parameter set.}
+    \label{fig:tolerance_violinplots_2}
 \end{figure}
 
 It can be seen that for both parameter sets in
-Figure~\ref{fig:tolerance_violinplots} the duration of the algorithm is
-increasing as \(N^A\) increases.
+Figures~\ref{fig:tolerance_violinplots_1} and~\ref{fig:tolerance_violinplots_2}
+the duration of the algorithm is increasing as \(N^A\) increases.
 Note that the violinplots include all values of the tolerance parameters
 \texttt{xtol} that were used.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/Bin/brents_method/tolerance/tolerance_lineplots_1.pdf}
+    \caption{
+        Line plots of the duration of Brent's algorithm for different values of
+        \(N_A\) over different values of the absolute tolerance parameter xtol
+        for the first parameter set.
+    }
+    \label{fig:tolerance_lineplots_1}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
     \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/Bin/brents_method/tolerance/tolerance_lineplots_2.pdf}
     \caption{
         Line plots of the duration of Brent's algorithm for different values of
         \(N_A\) over different values of the absolute tolerance parameter xtol
-        for two parameter sets.
+        for the second parameter set.
     }
-    \label{fig:tolerance_lineplots}
+    \label{fig:tolerance_lineplots_2}
 \end{figure}
 
-The plots of Figure~\ref{fig:tolerance_lineplots} show for each value of \(N^A\)
+The plots of Figure~\ref{fig:tolerance_lineplots_1}
+and~\ref{fig:tolerance_lineplots_2} show for each value of \(N^A\)
 how the duration of the algorithm changes as the absolute tolerance parameter
 \texttt{xtol} increases.
 It can be seen that for both parameter sets the duration of the algorithm
@@ -728,22 +760,29 @@ matrix can be calculated by finding the values of \(p_A\) and \(p_B\) for every
 possible pair of thresholds \((T_A, T_B)\).
 The arrival rate of type 2 individuals is arrival rate of type 2 individuals is
 \(\lambda_2 = 4\) and the `weight' is \(\alpha = 0.2\).
-The remaining parameters that relate to the two queueing systems are as follows:
+The remaining parameters that relate to the two queueing systems are shown
+in Table~\ref{tab:routing_matrix_example_parameters}.
 
-\begin{multicols}{2}
-    \begin{itemize}
-        \item \(\lambda_1^A = 2\)
-        \item \(\mu^A = 3\)
-        \item \(C^A = 3\)
-        \item \(N^A = 15\)
-        \item \(M^A = 10\)
-        \item \(\lambda_1^B = 1\)
-        \item \(\mu^B = 1\)
-        \item \(C^B = 3\)
-        \item \(N^B = 10\)
-        \item \(M^B = 5\)
-    \end{itemize}
-\end{multicols}
+\begin{table}[H]
+    \caption{Parameter values for routing matrix example.}
+    \begin{center}
+        \small
+        \begin{tabular}{||c|c||c|c|c|c|c||c|c|c|c|c||}
+            \hline
+            \multicolumn{2}{||c||}{\textbf{Distributor}} &
+            \multicolumn{5}{c||}{\textbf{Queueing system \(A\)}} &
+            \multicolumn{5}{c||}{\textbf{Queueing system \(B\)}} \\
+            \hline
+            \(\lambda_2\) & \(\alpha\) &
+            \(\lambda_1^A\) & \(\mu^A\) & \(C^A\) & \(N^A\) & \(M^A\) &
+            \(\lambda_1^B\) & \(\mu^B\) & \(C^B\) & \(N^B\) & \(M^B\) \\
+            \hline
+            4 & 0.2 & 2 & 3 & 3 & 15 & 10 & 1 & 1 & 3 & 10 & 5 \\
+            \hline
+        \end{tabular}
+    \end{center}
+    \label{tab:routing_matrix_example_parameters}
+\end{table}
 
 Note that the thresholds are not defined for the routing matrix since they are
 not constants.
@@ -1007,49 +1046,30 @@ The game is now a 2-player normal form game with payoff matrices \(A\) and
 Consider an example of the described game with the following parameters:
 
 \begin{table}[H]
-    \caption{Example \(1\) of parameters of the distribution service}
+    \caption{Parameter values for game formulation example}
     \begin{center}
-        \begin{tabular}{||c|c|c|c||}
+        \begin{tabular}{||c|c|c|c||c|c|c|c|c||c|c|c|c|c||}
             \hline
-            \(\lambda_2\) & t & \footnotesize{\(\hat{P}\)} & \(\alpha\) \\
-            \hline\hline
-            4 & 1 & 0.95 & 0.2 \\
+            \multicolumn{4}{||c||}{\textbf{Distributor}} &
+            \multicolumn{5}{c||}{\textbf{Queueing system \(A\)}} &
+            \multicolumn{5}{c||}{\textbf{Queueing system \(B\)}} \\
             \hline
-        \end{tabular}
-    \end{center}
-    \label{tab:implemetation_dist_service_parameters}
-\end{table}
-
-\begin{table}[H]
-    \caption{Example \(1\) of parameters of the two queueing systems}
-    \begin{center}
-        \begin{tabular}{||c|c|c|c|c|c||}
-            \hline
-            \(\lambda_1^A\) & \(\mu^A\) & \(C^A\) & \(N^A\) & \(M^A\) \\
-            \hline
-            2 & 3 & 2 & 7 & 6 \\
-            \hline
-        \end{tabular}
-
-        \vspace{0.5cm}
-        
-        \begin{tabular}{||c|c|c|c|c|c||}
-            \hline
+            \(\lambda_2\) & t & \footnotesize{\(\hat{P}\)} & \(\alpha\) &
+            \(\lambda_1^A\) & \(\mu^A\) & \(C^A\) & \(N^A\) & \(M^A\) &
             \(\lambda_1^B\) & \(\mu^B\) & \(C^B\) & \(N^B\) & \(M^B\) \\
             \hline
-            1 & 1 & 3 & 4 & 3 \\
+            4 & 1 & 0.95 & 0.2 & 2 & 3 & 2 & 7 & 6 & 1 & 1 & 3 & 4 & 3 \\
             \hline
         \end{tabular}
     \end{center}
-    \label{tab:implemetation_queueing_systems_parameters}
+    \label{tab:implemetation_game_parameters_example_1}
 \end{table}
 
 
 \begin{lstlisting}[
     style=pystyle,
     caption={Variables that correspond to the parameter set
-    from~\ref{tab:implemetation_dist_service_parameters}
-    and~\ref{tab:implemetation_queueing_systems_parameters}},
+    from Table~\ref{tab:implemetation_game_parameters_example_1}},
     label={lst:parameters_1},
 ]
 >>> lambda_2 = 4
@@ -1433,48 +1453,31 @@ Consider a game between queueing systems \(A\) and \(B\) and a distribution
 service \(D\) with the following parameters.
 
 \begin{table}[H]
-    \caption{Example \(2\) of parameters of the distribution service}
+    \caption{Parameter values for example on solving the game}
     \begin{center}
-        \begin{tabular}{||c|c|c|c||}
+        \begin{tabular}{||c|c|c|c||c|c|c|c|c||c|c|c|c|c||}
             \hline
-            \(\lambda_2\) & t & \(\hat{P}\) & \(\alpha\) \\
-            \hline\hline
-            1 & 1 & 0.8 & 0.5 \\
+            \multicolumn{4}{||c||}{\textbf{Distributor}} &
+            \multicolumn{5}{c||}{\textbf{Queueing system \(A\)}} &
+            \multicolumn{5}{c||}{\textbf{Queueing system \(B\)}} \\
             \hline
-        \end{tabular}
-    \end{center}
-    \label{tab:solving_game_dist_service_parameters}
-\end{table}
-
-\begin{table}[H]
-    \caption{Example \(2\) of parameters of the two queueing systems}
-    \begin{center}
-        \begin{tabular}{||c|c|c|c|c|c||}
-            \hline
-            \(\lambda_1^A\) & \(\mu^A\) & \(C^A\) & \(N^A\) & \(M^A\) \\
-            \hline
-            1 & 2 & 1 & 2 & 2 \\
-            \hline
-        \end{tabular}
-
-        \vspace{0.5cm}
-        
-        \begin{tabular}{||c|c|c|c|c|c||}
-            \hline
+            \(\lambda_2\) & t & \footnotesize{\(\hat{P}\)} & \(\alpha\) &
+            \(\lambda_1^A\) & \(\mu^A\) & \(C^A\) & \(N^A\) & \(M^A\) &
             \(\lambda_1^B\) & \(\mu^B\) & \(C^B\) & \(N^B\) & \(M^B\) \\
             \hline
+            1 & 1 & 0.8 & 0.5 &
+            1 & 2 & 1 & 2 & 2 &
             1 & 3 & 1 & 2 & 2 \\
             \hline
         \end{tabular}
     \end{center}
-    \label{tab:solving_game_queueing_systems_parameters}
+    \label{tab:solving_game_parameters}
 \end{table}
 
 \begin{lstlisting}[
     style=pystyle,
     caption={Variables that correspond to the parameter set
-    from Tables~\ref{tab:solving_game_dist_service_parameters}
-    and~\ref{tab:solving_game_queueing_systems_parameters}},
+    from Table~\ref{tab:solving_game_parameters}},
     label={lst:parameters_2},
 ]
 >>> lambda_2 = 1

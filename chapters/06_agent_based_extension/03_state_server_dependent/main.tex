@@ -265,30 +265,29 @@ The runtime of the simulation is the parameter that is most likely to affect
 the performance measures of the queue, since the longer the simulation is run
 for, the better the estimates of the performance measures will be.
 
-Consider a game with the following parameters:
+Consider a game with the parameters shown in
+Table~\ref{tab:game_with_des_parameters}.
 
-\begin{multicols}{3}
-    \begin{itemize}
-        \item \( \lambda_1^{(1)} = 2 \)
-        \item \( \mu^{(1)} = 2 \)
-        \item \( C^{(1)} = 2 \)
-        \item \( N^{(1)} = 6 \)
-        \item \( M^{(1)} = 2 \)
-
-        \columnbreak
-        \item \( \lambda_1^{(2)} = 2 \)
-        \item \( \mu^{(2)} = 2 \)
-        \item \( C^{(2)} = 2 \)
-        \item \( N^{(2)} = 6 \)
-        \item \( M^{(2)} = 2 \)
-
-        \columnbreak
-        \item \( \lambda_2 = 2 \)
-        \item \( t = 2 \)
-        \item \( \alpha = 0.2 \)
-        \item \( \hat{P} = 0.95 \)
-    \end{itemize}    
-\end{multicols}
+\begin{table}[H]
+    \caption{Parameter values for game theoretic model example to observe the
+    differences of running the game with DES and Markov chains.}
+    \begin{center}
+        \begin{tabular}{||c|c|c|c||c|c|c|c|c||c|c|c|c|c||}
+            \hline
+            \multicolumn{4}{||c||}{\textbf{Distributor}} &
+            \multicolumn{5}{c||}{\textbf{Queueing system \(A\)}} &
+            \multicolumn{5}{c||}{\textbf{Queueing system \(B\)}} \\
+            \hline
+            \(\lambda_2\) & t & \footnotesize{\(\hat{P}\)} & \(\alpha\) &
+            \(\lambda_1^A\) & \(\mu^A\) & \(C^A\) & \(N^A\) & \(M^A\) &
+            \(\lambda_1^B\) & \(\mu^B\) & \(C^B\) & \(N^B\) & \(M^B\) \\
+            \hline
+            2 & 2 & 0.95 & 0.2 & 2 & 2 & 2 & 6 & 2 & 2 & 2 & 2 & 6 & 2 \\
+            \hline
+        \end{tabular}
+    \end{center}
+    \label{tab:game_with_des_parameters}
+\end{table}
 
 For a complete description of parameter notations see
 Section~\ref{sec:game_players_and_parameters}.
