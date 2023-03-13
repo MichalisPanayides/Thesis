@@ -701,11 +701,6 @@ how the duration of the algorithm changes as the absolute tolerance parameter
 It can be seen that for both parameter sets the duration of the algorithm
 on most cases the computational time decreases as the tolerance parameter
 increases.
-There are some cases that do not follow this trend though.
-For example, for parameter set 1 when \(N^A=20\), the duration of the algorithm
-increases, rather than decreasing, from \texttt{xtol=1e-05}
-to \texttt{xtol=0.0001}.
-
 
 
 
@@ -912,6 +907,8 @@ for every possible pair of thresholds.
 
 Using the same set of parameters as in the example discussed in
 Section~\ref{sec:routing_matrix_example}, the routing matrix can be calculated.
+
+\newpage
 
 \begin{lstlisting}[
     style=pystyle,

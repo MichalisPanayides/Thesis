@@ -106,9 +106,11 @@ the state-dependent service time distribution class.
 The function \texttt{simulate\_model} described in
 Section~\ref{sec:discrete_event_simulation} takes \texttt{mu} as one of its
 arguments.
-Whenever the value of \(\mu\) is a dictionary with keys being the possible
-states and values the service rate for that state, the \texttt{mu} argument
-will be a \texttt{StateDependentExponential} object.
+If \texttt{mu} is set to a dictionary, with keys the states of the system and
+values the service rate for each state (as shown in code
+snippet~\ref{lst:state_dependent_example}), the service
+distribution that will be
+used in \texttt{ciw} will be a \texttt{StateDependentExponential} object.
 The following code shows the implementation of the
 \texttt{simulate\_model} function for the state-dependent variation of the
 queueing system.
