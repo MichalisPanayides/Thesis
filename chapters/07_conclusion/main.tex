@@ -1,7 +1,7 @@
 \chapter{Conclusions}\label{sec:conclusion}
 
-This Chapter will act as a summary of the research presented in this thesis.
-It will also provide a reflection on the research process and the
+This Chapter aims to summarise the research presented in this thesis and to
+provide a reflection on the research process and the
 contributions that have been made.
 Finally, it will provide some recommendations for future work.
 Each chapter of this thesis included a \textit{Chapter Summary} section, and
@@ -10,18 +10,19 @@ so the summary here will be brief.
 
 \section{Research Overview}
 
-The motivation behind this thesis has been the fact that emergency departments
+The motivation behind this thesis has been that emergency departments
 are under a lot of pressure to treat patients.
 This is, in practice, often centrally controlled through a mechanism of some
 sort of performance measure target.
 The research presented in this thesis shows how this can negatively impact the
 pathway of both the ambulance patients and the ambulance service itself.
-Due to some managerial decision making that takes place at the ED, ambulances
-stay blocked outside of the ED at the hospital's parking zone in an attempt to
+Due to some managerial decision making that takes place at the Emergency
+Department (ED), ambulances may
+stay blocked outside of the ED in the hospital's parking zone in an attempt to
 satisfy these regulations
 
 This thesis presents a queueing network model that is used to describe an
-Emergency Department (ED) that accepts patients arriving by ambulance and
+ED that accepts patients arriving by ambulance and
 patients that arrive by other means.
 The model is then used to construct a game theoretic model that is informed
 by the queueing network model.
@@ -30,8 +31,8 @@ Emergency Medical Services (EMS) and two EDs.
 The game theoretic model is then used to explore the impact of different
 strategies on the performance of the EDs.
 
-Chapter~\ref{sec:introduction} provides an overview the Operational Research
-(OR) field and the problem of congestion in healthcare which served as the
+Chapter~\ref{sec:introduction} provides an overview of Operational Research
+(OR) and the problem of congestion in healthcare which served as the
 motivation for this research.
 Chapter~\ref{sec:lit_review} then provides a literature review of the
 relevant research that has been done.
@@ -94,7 +95,7 @@ and the overall social welfare of the system.
 \section{Contributions}
 
 The research presented in this thesis has made some novel contributions to the
-literature on Operational Research (OR) models and healthcare applications.
+literature on OR models and healthcare applications.
 The findings of this thesis that relate to the queueing network and the game
 theoretic model have also been published and are presented
 in~\cite{panayides2023game}.
@@ -144,19 +145,29 @@ between two EDs and the EMS are:
     \item Targeted incentivisation of behaviours can help escape inefficiencies.
 \end{itemize}
 
-The former relates to the results of asymmetric replicator dynamics that shown
+The former relates to the results of asymmetric replicator dynamics shown
 in Chapter~\ref{sec:numerical_results}.
-The results showed that inefficient scenarios can arise by letting the players
+The results showed that inefficient scenarios can arise when letting the players
 play the game by prioritising their best interests, while the latter
 implies that these learned inefficiencies can be escaped by carefully applying
 certain incentives to the players.
 In theory, this careful incentivisation of behaviours is done by applying some
 form of penalty to the payoff matrices of the players to force them change
 their strategy.
+In practice, getting that penalty is more difficult.
+
+The motivation for this thesis has been the problem of ambulance congestion
+at EDs. 
+The findings of the thesis suggest that by letting the EDs and the EMS play a
+non-cooperative game, some behaviour that might not be optimal for the EMS, is
+likely to emerge.
+Such behaviour could be escaped with careful incentivisation of the EDs.
 In practice, applying this incentive mechanism to an ED would be difficult
 because the EDs are not a single entity but rather a collection of individuals
 that could be incentivised in different ways.
-
+Although it would require further research to determine the best way to
+apply such incentive mechanisms in practice, the findings of this thesis
+could be used to inform the design of such incentive mechanisms.
 
 Apart from the theoretical contributions, this thesis also made some
 contributions to open-source software.
@@ -167,7 +178,7 @@ The following software contributions were made as part of this thesis:
     queueing network model and the game theoretic model presented in this
     thesis.
     A detailed description of the package can be found in
-    Appendix % TODO: ~\ref{app:ambulance_game}.
+    Appendix~\ref{appendix:ambulance_game}.
     \item \texttt{nashpy} contribution: Implemented the asymmetric replicator
     dynamics algorithm in the \texttt{nashpy} Python library.
     \item \texttt{ciw} contribution: Implemented custom server priorities in
@@ -205,7 +216,8 @@ between the EMS and EDs.
 Further research could be done to explore the potential for cooperation in
 this setting and how it could be further investigated.
 Finally, future work could touch upon the completion of the work presented in
-Section~\ref{sec:state_probs_closed_form}, where an attempt to develop a closed
+Appendix~\ref{app:steady_state_probs_closed_form}, where an attempt to develop
+a closed
 form formula for the steady state probabilities of the queueing model was
 made.
 The formula was not completed and therefore further research could be done to

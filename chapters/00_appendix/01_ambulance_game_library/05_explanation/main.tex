@@ -1,0 +1,97 @@
+\section{Explanation}\label{sec:ambulance_game_explanation}
+
+This section provides some additional information about the
+\texttt{ambulance\_game} library.
+The information provided in this section is not necessary to use the library,
+but it may be useful to understand how the library works.
+
+\subsection{Additional information}
+
+Some of the functions and general functionality of the library has not been
+explained in the previous sections and are not necessary to use the library.
+
+One of the functions that has not been explained is one that relates to the
+transition matrix and is the \texttt{get\_symbolic\_transition\_matrix}
+function.
+This function is part of the \texttt{markov.py} module and is used to calculate
+a symbolic version of the transition matrix of the Markov chain.
+The function makes use of the \texttt{sympy} library~\cite{sympy} to get a
+symbolic version of the transition matrix where the entries are symbols.
+In essence, the function returns a matrix in terms of \(\lambda_1, \lambda_2
+\text{ and } \mu\).
+An additional function is provided to convert the symbolic version of the
+transition matrix to a numerical version of the transition matrix.
+This function is called \texttt{convert\_symbolic\_transition\_matrix}.
+
+Another functionality that has not been explained is the way the transition
+matrix itself is calculated.
+Initially, the transition matrix was calculated by iterating through all
+possible states and calculating the entry of the transition matrix for each
+state.
+This method was not computationally efficient and was replaced by a more
+efficient method.
+The new method creates a matrix with zeros and visits only the entries that
+will have a non-zero value.
+The new method makes use of the function
+\texttt{get\_all\_pairs\_of\_states\_with\_non\_zero\_entries}.
+This function corresponds to the function introduced in
+equation~\eqref{eq:state_map_to_destination_states} of
+Section~\ref{sec:markov_model}.
+
+The module \texttt{tikz.py} has been created for faster creation of
+Markov chain tikz figures.
+There are two main functionalities of this module.
+The first functionality is the ability to generate a tikz figure of the
+specific Markov chain that is described in this thesis with any set of
+parameters.
+This is done by using the function~\texttt{generate\_code\_for\_tikz\_figure}.
+The second functionality is the ability to generate a tikz figure of all
+possible spanning trees rooted at state \((0, 0)\) of a Markov
+chain~\cite{sung2016enumeration, levine2011sandpile}.
+This is done by using the
+function~\texttt{generate\_code\_for\_tikz\_spanning\_trees\_rooted\_at\_00}.
+More information about the investigation between spanning trees and Markov
+chains that was done in this thesis can be found in
+appendix~\ref{app:steady_state_probs_closed_form}.
+
+
+\subsection{Other libraries}
+
+Numerous libraries were used in the construction of this library.
+Some of the key libraries that were used are:
+
+\begin{itemize}
+    \item \texttt{numpy}~\cite{2020NumPy-Array}
+    \item \texttt{scipy}~\cite{2020SciPy-NMeth}
+    \item \texttt{ciw}~\cite{ciwpython}
+    \item \texttt{nashpy}~\cite{thenashpyproject}
+\end{itemize}
+
+In particular the \texttt{numpy} library was used to get the steady state
+probabilities of the Markov chain algebraically and using the least squares
+method.
+Similarly, the \texttt{scipy} library was used to get the steady state
+probabilities of the Markov chain numerically using the \texttt{odeint} and
+\texttt{solve\_ivp} functions.
+Apart from that, the \texttt{scipy} library was also used to get the find
+the best response of the ambulance service using the \texttt{brentq} function.
+The \texttt{brentq} function is part of the \texttt{optimize} module of the
+\texttt{scipy} library and implements Brent's algorithm which is a
+root-finding algorithm.
+
+The primary tool that was used in the construction of the discrete event
+simulation model was the python library \texttt{ciw}.
+See Ciw's documentation for a more detailed explanation of how it works and
+what are its capabilities~\cite{ciwpython}.
+The way the library is structured, allowed for the creation of a custom
+node class that inherits from the \texttt{Node} class of \texttt{ciw} and
+was used to create a waiting area that individuals could be blocked in if
+there were more individuals in the next node.
+
+Finally, the \texttt{nashpy} library~\cite{thenashpyproject} was used for all
+the calculations related to the Nash equilibrium and the learning algorithms
+that were applied to the game.
+The \texttt{nashpy} library is a game theoretic Python library that provides
+tools for the solution of two-player normal form games.
+See the documentation of \texttt{nashpy} for a more detailed list of the
+functionality that is provided by the library~\cite{thenashpyproject}.

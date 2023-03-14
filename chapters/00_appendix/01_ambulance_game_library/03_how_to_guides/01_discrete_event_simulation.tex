@@ -1,0 +1,293 @@
+\subsection{Discrete Event Simulation}
+
+For the purposes of this study, a discrete event simulation (DES) model was
+constructed that is also described in
+Section~\ref{sec:discrete_event_simulation}.
+The queueing model was built in python using the Ciw
+library~\cite{ciwpython}.
+
+The same performance measures described in Section~\ref{sec:waiting_time},
+Section~\ref{sec:blocking_time} and
+Section~\ref{sec:proportion_of_individuals_within_time} can also be
+calculated using the DES model.
+The simulation can be ran a number of times to eliminate stochasticity and the
+outcomes of the two methods can be directly comparable.
+
+The DES representation of the hospital network is a discrete event simulation
+that is implemented using the \texttt{ciw} library~\cite{ciwpython}.
+The required arguments that need to be passed to the
+\texttt{simulate\_model} function are the following:
+
+\begin{itemize}
+    \item \texttt{lambda\_1} (\(\lambda_1\)): The arrival rate of class 1
+    individuals.
+    \item \texttt{lambda\_2} (\(\lambda_2\)): The arrival rate of class 2
+    individuals.
+    \item \texttt{mu} (\(\mu\)): The service rate of the servers.
+    \item \texttt{num\_of\_servers} (\(C\)): The number of servers in the
+    system.
+    \item \texttt{threshold} (\(T\)): The threshold that indicates when to start
+    blocking type 2 individuals.
+\end{itemize}
+
+\begin{lstlisting}[style=pystyle]
+>>> lambda_1 = 3
+>>> lambda_2 = 2
+>>> mu = 1
+>>> num_of_servers = 6
+>>> threshold = 10
+    
+\end{lstlisting}
+
+To get the \texttt{simulation} object with all the data records, the following
+code can be used:
+
+\begin{lstlisting}[style=pystyle]
+>>> import ambulance_game as abg
+>>> import numpy as np
+>>> simulation = abg.simulation.simulate_model(
+...     lambda_1=lambda_1,
+...     lambda_2=lambda_2,
+...     mu=mu,
+...     num_of_servers=num_of_servers,
+...     threshold=threshold,
+...     seed_num=0,
+... )
+>>> simulation.get_all_records()[4]
+Record(id_number=2, customer_class=0, node=2, arrival_date=0.5727571550618586, waiting_time=0.0, service_start_date=0.5727571550618586, service_time=0.7159547497671506, service_end_date=1.2887119048290092, time_blocked=0.0, exit_date=1.2887119048290092, destination=-1, queue_size_at_arrival=1, queue_size_at_departure=3)
+
+\end{lstlisting}
+
+Additional arguments that can be passed to the function are:
+\begin{itemize}
+    \item \texttt{system\_capacity} (\(N\)): The maximum number of individuals
+    in waiting zone 1.
+    \item \texttt{buffer\_capacity} \(M\): The maximum number of individuals in
+    waiting zone 2.
+    \item \texttt{seed\_num}: The seed number for the random number generator.
+    \item \texttt{runtime}: How long to run the simulation for.
+\end{itemize}
+
+From a single run of the simulation the data records can be used to get the
+average for certain performance measures.
+The following code can be used to get the mean waiting time, blocking time,
+service time and the proportion of individuals within target.
+
+\begin{lstlisting}[style=pystyle]
+>>> records = simulation.get_all_records()
+>>> mean_wait = np.mean(
+...     [w.waiting_time for w in records]
+... )
+>>> mean_wait
+0.23845862661827116
+
+>>> mean_block = np.mean(
+...     [b.time_blocked for b in records]
+... )
+>>> mean_block
+0.08501727452006658
+
+>>> mean_service = np.mean(
+...     [s.service_time for s in records]
+... )
+>>> mean_service
+0.7102610863960119
+
+>>> target = 1
+>>> proportion_within_target = np.mean(
+...     [r.waiting_time + r.service_time <= target for r in records]
+... )
+>>> proportion_within_target
+0.6200119712689545
+
+\end{lstlisting}
+
+To reduce the effects of stochasticity in the simulation, the simulation can be
+run numerous times and get the average performance measures out of all the runs.
+
+\begin{lstlisting}[style=pystyle]
+>>> all_simulations = abg.simulation.get_multiple_runs_results(
+...     lambda_1=lambda_1,
+...     lambda_2=lambda_2,
+...     mu=mu,
+...     num_of_servers=num_of_servers,
+...     threshold=threshold,
+...     system_capacity=20,
+...     buffer_capacity=10,
+...     seed_num=0,
+...     runtime=2000,
+...     num_of_trials=10,
+...     target=1,
+... )
+>>> mean_wait = np.mean([
+...     np.mean(w.waiting_times) for w in all_simulations
+... ])
+>>> mean_wait
+0.35585979549204577
+
+>>> mean_service = np.mean([
+...     np.mean(s.service_times) for s in all_simulations
+... ])
+>>> mean_service
+1.002184850213415
+
+>>> mean_block = np.mean([
+...     np.mean(b.blocking_times) for b in all_simulations
+... ])
+>>> mean_block
+0.3976966024549059
+
+>>> mean_prop = np.mean([
+...     p.proportion_within_target for p in all_simulations
+... ])
+>>> mean_prop
+0.45785790578122043
+
+\end{lstlisting}
+
+To get the steady state probabilities of the model based on the simulation the
+following code can be used:
+
+\begin{lstlisting}[style=pystyle]
+>>> import numpy as np
+>>> import ambulance_game as abg
+>>> simulation_object = abg.simulation.simulate_model(
+...     lambda_1=1,
+...     lambda_2=2,
+...     mu=2,
+...     num_of_servers=2,
+...     threshold=3,
+...     system_capacity=4,
+...     buffer_capacity=2,
+...     seed_num=0,
+...     runtime=2000,
+... )
+>>> probs = abg.simulation.get_simulated_state_probabilities(
+...    simulation_object=simulation_object,
+... )
+>>> np.round(probs, decimals=3)
+array([[0.166, 0.266, 0.192, 0.147, 0.025],
+       [  nan,   nan,   nan, 0.094, 0.024],
+       [  nan,   nan,   nan, 0.058, 0.027]])
+
+>>> total = np.nansum(probs)
+>>> np.round(total, decimals=5)
+1.0
+
+\end{lstlisting}
+
+Similarly to get the average steady state probabilities over multiple runs,
+one can use the code in Listing~\ref{lst:average_simulated_state_probabilities}
+to get the average steady state probabilities out of multiple runs.
+
+\begin{lstlisting}[
+    style=pystyle,
+    caption={The average steady state probabilities of the model based on the simulation.},
+    label={lst:average_simulated_state_probabilities}
+]
+>>> import numpy as np
+>>> import ambulance_game as abg
+>>> probs = abg.simulation.get_average_simulated_state_probabilities(
+...     lambda_1=1,
+...     lambda_2=2,
+...     mu=2,
+...     num_of_servers=2,
+...     threshold=3,
+...     system_capacity=4,
+...     buffer_capacity=2,
+...     seed_num=0,
+...     runtime=2000,
+...     num_of_trials=10,
+... )
+>>> np.round(probs, decimals=3)
+array([[0.18 , 0.267, 0.197, 0.144, 0.024],
+       [  nan,   nan,   nan, 0.085, 0.022],
+       [  nan,   nan,   nan, 0.054, 0.026]])
+
+>>> total = np.nansum(probs)
+>>> np.round(total, decimals=5)
+1.0
+
+\end{lstlisting}
+
+As an additional feature, the simulation can use a service rate that is state
+dependent, server dependent or both.
+This feature was implemented to accompany
+Chapter~\ref{sec:agent_based_extension} of this thesis.
+The state-dependent service rate is defined as a dictionary with the keys
+being the states (see Section~\ref{sec:state_dependent}).
+The server-dependent service rate is defined as a dictionary with the keys
+being the servers (see Section~\ref{sec:server_dependent}).
+The state and server dependent service rate is defined as a dictionary with
+the keys being the servers and the values being dictionaries with the keys
+being the states (see Section~\ref{sec:state_server_dependent_model}).
+The code snippet in Listing~\ref{lst:state_server_dependent_service_rate} shows
+examples of how to define these service rates.
+
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Examples of how to define the state-dependent, server-dependent and state and server dependent service rates.},
+    label={lst:state_server_dependent_service_rate}
+]
+>>> state_dependent_service_rate = {
+...     (0, 0): np.nan,
+...     (0, 1): 0.5,
+...     (0, 2): 0.3,
+...     (0, 3): 0.2,
+...     (1, 3): 0.2,
+...     (0, 4): 0.2,
+...     (1, 4): 0.4,
+... }
+>>> server_dependent_service_rate = {
+...     1: 0.5,
+...     2: 0.3,
+... }
+>>> state_server_dependent_service_rate = {
+...     1: {
+...         (0, 1): 0.5,
+...         (0, 2): 0.3,
+...         (0, 3): 0.2,
+...         (1, 3): 0.2,
+...         (0, 4): 0.2,
+...         (1, 4): 0.4,
+...     },
+...     2: {
+...         (0, 1): 1.5,
+...         (0, 2): 1.3,
+...         (0, 3): 1.2,
+...         (1, 3): 1.2,
+...         (0, 4): 1.2,
+...         (1, 4): 1.4,
+...     },
+... }
+
+\end{lstlisting}
+
+Note that for this particular example server \(1\) is much slower than server
+\(2\) for all states.
+The code shown in~\ref{lst:state_server_dependent_service_rate_simulation}
+shows how to use the state and server dependent service rate in the simulation.
+At the end the busy time of the two servers can be compared.
+
+\begin{lstlisting}[
+    style=pystyle,
+    caption={The simulation using the state and server dependent service rate.},
+    label={lst:state_server_dependent_service_rate_simulation}
+]
+>>> simulation_object = abg.simulation.simulate_model(
+...     lambda_1=0.2,
+...     lambda_2=0.15,
+...     mu=state_server_dependent_service_rate,
+...     num_of_servers=2,
+...     threshold=4,
+...     seed_num=0,
+...     runtime=100,
+... )
+>>> servers = simulation_object.nodes[2].servers
+>>> [server.busy_time for server in servers]
+[32.88159812544271, 8.576662185652019]
+
+\end{lstlisting}
+
+It can be seen that the busy time of server \(1\) is much higher than the busy
+time of server \(2\).

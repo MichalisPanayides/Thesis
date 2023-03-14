@@ -1,0 +1,142 @@
+\subsection{Game Theoretic Model}
+
+This section explains how to use the \texttt{ambulance\_game} library to create
+a game theoretic model between two hospitals and an ambulance service as
+described in Chapter~\ref{sec:game_theoretic_model}.
+The parameters of the model are defined in
+Listing~\ref{lst:abg_how_to_game_parameters}.
+
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Parameters for the game theoretic model.},
+    label={lst:abg_how_to_game_parameters},
+]
+>>> lambda_2 = 20
+>>> p_hat = 0.99
+>>> alpha = 0.7
+>>> target = 1
+>>> 
+>>> lambda_1_1 = 2
+>>> mu_1 = 5
+>>> num_of_servers_1 = 3
+>>> threshold_1 = 4
+>>> system_capacity_1 = 6
+>>> buffer_capacity_1 = 4
+>>> 
+>>> lambda_1_2 = 1
+>>> mu_2 = 7
+>>> num_of_servers_2 = 2
+>>> threshold_2 = 3
+>>> system_capacity_2 = 5
+>>> buffer_capacity_2 = 4
+
+\end{lstlisting}
+
+The parameters \texttt{threshold\_1} and \texttt{threshold\_2} will only be
+used in code snippet~\ref{lst:abg_how_to_game_best_response} to determine the
+best response of the ambulance service, given the strategies of the hospitals.
+This relates to the concepts described in Section~\ref{sec:game_methodology}.
+
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Calculating the best response of the ambulance service given
+    the strategies of the hospitals \((T_1, T_2)\).},
+    label={lst:abg_how_to_game_best_response},
+]
+>>> import ambulance_game as abg
+>>> import numpy as np
+>>> best_response = abg.game.calculate_class_2_individuals_best_response(
+...     lambda_2=lambda_2,
+...     lambda_1_1=lambda_1_1,
+...     lambda_1_2=lambda_1_2,
+...     mu_1=mu_1,
+...     mu_2=mu_2,
+...     num_of_servers_1=num_of_servers_1,
+...     num_of_servers_2=num_of_servers_2,
+...     threshold_1=threshold_1,
+...     threshold_2=threshold_2,
+...     system_capacity_1=system_capacity_1,
+...     system_capacity_2=system_capacity_2,
+...     buffer_capacity_1=buffer_capacity_1,
+...     buffer_capacity_2=buffer_capacity_2,
+... )
+>>> np.round(best_response, 3)
+0.507
+
+\end{lstlisting}
+
+For the particular example the best response of the ambulance service is
+to send \(0.507\) individuals to hospital \(1\) and \(1 - 0.507 = 0.493\) to
+hospital \(2\).
+This can also be done for all possible strategies of the hospitals.
+The code shown in Listing~\ref{lst:abg_how_to_game_routing} calculates the
+best response of the ambulance service for all possible strategies of the
+hospitals and stores the results in a \texttt{numpy} array.
+For more information on the routing matrix see
+Section~\ref{sec:routing_matrix}.
+
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Routing matrix for the ambulance service.},
+    label={lst:abg_how_to_game_routing},
+]
+>>> R = abg.game.get_routing_matrix(
+...     lambda_2=lambda_2,
+...     lambda_1_1=lambda_1_1,
+...     lambda_1_2=lambda_1_2,
+...     mu_1=mu_1,
+...     mu_2=mu_2,
+...     num_of_servers_1=num_of_servers_1,
+...     num_of_servers_2=num_of_servers_2,
+...     system_capacity_1=system_capacity_1,
+...     system_capacity_2=system_capacity_2,
+...     buffer_capacity_1=buffer_capacity_1,
+...     buffer_capacity_2=buffer_capacity_2,
+...     alpha=alpha
+... )
+>>> np.round(R, 2)
+array([[0.33, 0.18, 0.17, 0.17, 0.15],
+       [0.59, 0.38, 0.36, 0.35, 0.32],
+       [0.71, 0.5 , 0.48, 0.46, 0.42],
+       [0.72, 0.53, 0.5 , 0.48, 0.45],
+       [0.73, 0.55, 0.52, 0.5 , 0.47],
+       [0.77, 0.6 , 0.57, 0.55, 0.51]])
+
+\end{lstlisting}
+
+Thus, the ambulance service will send \(33\%\) of the individuals to hospital
+\(1\) if both hospitals choose a threshold of \(T_i = 1\), \(59\%\) if hospital
+\(1\) chooses a threshold of \(T_1 = 2\) and hospital \(2\) chooses a threshold
+of \(T_2 = 1\), and so on.
+Finally, the code shown in Listing~\ref{lst:abg_how_to_game_payoff} creates the
+game using \texttt{nashpy} and calculates a Nash equilibrium of the game
+using the Lemke-Howson algorithm that is implemented in \texttt{nashpy}.
+For more information on the \(2\)-player normal form game that is created
+see Section~\ref{sec:game_methodology}.
+
+\begin{lstlisting}[
+    style=pystyle,
+    caption={Building the game and getting the Nash equilibrium of the game.},
+    label={lst:abg_how_to_game_payoff},
+]
+>>> game = abg.game.build_game_using_payoff_matrices(
+...     lambda_2=lambda_2,
+...     lambda_1_1=lambda_1_1,
+...     lambda_1_2=lambda_1_2,
+...     mu_1=mu_1,
+...     mu_2=mu_2,
+...     num_of_servers_1=num_of_servers_1,
+...     num_of_servers_2=num_of_servers_2,
+...     system_capacity_1=system_capacity_1,
+...     system_capacity_2=system_capacity_2,
+...     buffer_capacity_1=buffer_capacity_1,
+...     buffer_capacity_2=buffer_capacity_2,
+...     target=target,
+...     alpha=alpha,
+...     p_hat=p_hat,
+... )
+>>> game.lemke_howson(initial_dropped_label=0)
+(array([0., 0., 0., 0., 1., 0.]), array([0., 0., 0., 0., 1.]))
+    
+\end{lstlisting}
+

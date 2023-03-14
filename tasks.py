@@ -23,33 +23,45 @@ def spellcheck(c):
     """
     Check the spelling of all .tex files
     """
+    exception_files = ["packages.tex", "Frontmatter/acknowledgements.tex"]
     all_tex_files = list(pathlib.Path().glob("**/*.tex"))
     exit_codes = [0]
     for path in all_tex_files:
-        latex = path.read_text()
-        aspell_output = subprocess.check_output(
-            ["aspell", "-t", "--list", "--lang=en_GB"], input=latex, text=True
-        )
-        errors = set(aspell_output.split("\n")) - {""}
-        incorrect_words = set()
-        for error in errors:
-            if not any(
-                re.fullmatch(word.lower(), error.lower()) for word in known.words
-            ):
-                incorrect_words.add(error)
+        if str(path) not in exception_files:
+            latex = path.read_text()
+            aspell_output = subprocess.check_output(
+                ["aspell", "-t", "--list", "--lang=en_GB"], input=latex, text=True
+            )
+            errors = set(aspell_output.split("\n")) - {""}
+            incorrect_words = set()
+            for error in errors:
+                if not any(
+                    re.fullmatch(word.lower(), error.lower()) for word in known.words
+                ):
+                    incorrect_words.add(error)
 
-        if len(incorrect_words) > 0:
-            print(f"In {path} the following words are not known: ")
-            for string in sorted(incorrect_words):
-                print(string)
-            exit_codes.append(1)
+            if len(incorrect_words) > 0:
+                print(f"In {path} the following words are not known: ")
+                for string in sorted(incorrect_words):
+                    print(string)
+                exit_codes.append(1)
     sys.exit(max(exit_codes))
 
 
 @task
 def proselint(c):
     """
-    Check the spelling of all .tex files
+    Check the prose of all .tex files using the proselint tool. The steps that
+    this function performs are:
+        1. Open the .proselint.yaml file and read in what errors should be
+        ignored and what files should be ignored.
+        2. Find all .tex files and remove the files that should be ignored.
+        3. For each .tex file:
+            a. Read in the file
+            b. Remove all unnecessary lines that should not be checked
+            c. Get the errors from proselint
+            d. Remove the errors that were expected
+            e. Print the errors
     """
 
     def remove_expected_errors(path, errors, errors_to_ignore):
@@ -149,6 +161,8 @@ def proselint(c):
             for error in errors:
                 print(error)
             exit_codes.append(1)
+        else:
+            print(f"No errors found in {path}")
     sys.exit(max(exit_codes))
 
 
@@ -157,7 +171,7 @@ def alex(c):
     """
     Check for inconsiderate and insensitive writing of all .tex files
     """
-    exception_files = ["packages.tex"]
+    exception_files = ["packages.tex", "Frontmatter\\acknowledgements.tex"]
     all_tex_files = list(pathlib.Path().glob("**/*.tex"))
     for file in all_tex_files:
         if str(file) not in exception_files:
