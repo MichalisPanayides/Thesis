@@ -97,6 +97,7 @@ words = {
     "EDs",
     "elif",
     "EMS's",
+    "env",
     "eq",
     "equilibria",
     "erlang",
