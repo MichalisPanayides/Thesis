@@ -135,8 +135,8 @@ best response for this particular example.
     \centering
     \includegraphics[width=\textwidth]{chapters/04_game_theoretic_model/Bin/brents_method/brent_method_example.pdf}
     \caption{Decision values for queueing system \(A\) and queueing system \(B\)
-    where decision value 1 \(= \alpha L_A(p_A) + (1 - \alpha) B_A(p_A)\) and
-    decision value 2 \(= \alpha L_B(p_B) - (1 - \alpha) B_B(p_B)\)}
+    where \((\textit{decision value 1}) = \alpha L_A(p_A)+(1 - \alpha) B_A(p_A)\)
+    and \((\textit{decision value 2}) = \alpha L_B(p_B) - (1 - \alpha) B_B(p_B)\)}
     \label{fig:brent_method_example}
 \end{figure}
 
@@ -1514,12 +1514,12 @@ is that queueing system \(A\) has a lower service rate than queueing system
 As shown in Section~\ref{sec:queueing_systems_and_normal_form_games} the payoff
 matrices for the two players can be obtained using the function
 \texttt{get\_payoff\_matrices}.
-Every function that described in this section is also implemented in the
+Every function described in this section is also implemented in the
 \texttt{ambulance\_game} python library that was created for
 this project.
 A detailed description of the library can be found in
 Appendix~\ref{appendix:ambulance_game}.
-The code snippet shown in~\ref{lst:payoff_matrices_ambulance_game} how the
+The code snippet shown in~\ref{lst:payoff_matrices_ambulance_game} shows how the
 payoff matrices can be obtained using the
 \texttt{ambulance\_game} library.
 

@@ -36,7 +36,7 @@ For each time step
     4. Rerun simulation
     5. Calculate utility U_new
     6. If utility U is higher than previous utility
-        - Update service rate s
+        - Accept policy s
         - Update U_current to U_new
 
 \end{lstlisting}
@@ -372,9 +372,9 @@ The service rates of the remaining servers don't matter since every individual
 that arrives, is served by server \(1\) almost instantly and leaves the system
 immediately.
 This results in the state probabilities being \(0\) in every state except state
-\(0,0\).
-In fact, only states \(0,0\) and \(0,1\) are visited in the system, where
-\(0,1\) is visited for a short time because of how fast server \(1\) is
+\((0,0)\).
+In fact, only states \((0,0)\) and \((0,1)\) are visited in the system, where
+\((0,1)\) is visited for a short time because of how fast server \(1\) is
 serving individuals.
 
 
@@ -431,8 +431,8 @@ equation~\eqref{eq:no_upper_bound_states_example} indicate that not only the
 state probabilities are \(0\) for these states, but can't even be visited by
 the system.
 With a service rate of \(4\times10^{15}\) for server \(1\), state
-probability \(2.44\times10^{-19}\) for state \(0,1\) and state probability
-\(1.0\) for state \(0,0\), the weighted mean service rate of server \(1\) is:
+probability \(2.44\times10^{-19}\) for state \((0,1)\) and state probability
+\(1.0\) for state \((0,0)\), the weighted mean service rate of server \(1\) is:
 
 \begin{equation}\label{eq:no_upper_bound_mean_rate_example}
     0\times2.44\times10^{-19} + 4\times10^{15}\times1.0 \approx 0.001

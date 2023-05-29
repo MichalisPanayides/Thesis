@@ -26,8 +26,8 @@ be written as the disjoint union:
 \end{align}
 
 \(S_1\) consists of the set of states where the number of individuals in node
-is less than \(T\) (i.e. \(v < 0\)) and subsequently the number of
-individuals in node 2 is zero (i.e. \(u = 0\)).
+\(1\) is less than \(T\) (i.e. \(v < T\)) and subsequently the number of
+individuals in node \(2\) is zero (i.e. \(u = 0\)).
 Similarly, \(S_2\) consists of the set of states where the number of individuals
 in node 1 is greater than or equal to \(T\) (i.e. \(v \geq T\)) and
 hence it is possible for individuals to be at node 2 (i.e.
@@ -50,9 +50,9 @@ both types of individuals (i.e. \(\Lambda = \lambda_1 + \lambda_2\)).
     Q_{ij} =
     \begin{cases}
         \Lambda, & \textbf{if } (u_i, v_i) - (u_j, v_j) = (0,-1) \textbf{ and }
-        v_i < \text{t} \\
+        v_i < \text{T} \\
         \lambda_1, & \textbf{if } (u_i, v_i) - (u_j, v_j) = (0,-1)
-        \textbf{ and } v_i \geq \text{t} \\
+        \textbf{ and } v_i \geq \text{T} \\
         \lambda_2, & \textbf{if } (u_i, v_i) - (u_j, v_j) = (-1,0) \\
         v_i \mu, & \textbf{if } (u_i, v_i) - (u_j, v_j) = (0,1) \textbf{ and }
         v_i \leq C \textbf{ or} \\ & \hspace{0.37cm}(u_i, v_i) - (u_j, v_j) =

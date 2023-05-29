@@ -89,15 +89,16 @@ server objects to allow for further analysis of each server's performance.
 ... 
 ...     def sample(self, t=None, ind=None):
 ...         """
-...         This method is used to sample the service time for an individual based
-...         on the current state and the server that the individual is assigned to.
-...         The following steps are being taken:
+...         This method is used to sample the service time for an individual
+...         based on the current state and the server that the individual is
+...         assigned to. The following steps are being taken:
 ...             1. Find the server
 ...             2. Find the state
-...             3. Check if the state is valid. Note that there are some cases where
-...                 the visited state is not valid. These are the cases where the
-...                 state `(u, T-1)` is visited where `u > 0`. This is meant to be
-...                 an unreachable state. In such case remap the state to `(u+1, T)`
+...             3. Check if the state is valid. Note that there are some cases
+...                 where the visited state is not valid. These are the cases
+...                 where the state `(u, T-1)` is visited where `u > 0`. This
+...                 is meant to be an unreachable state. In such case remap
+...                 the state to `(u+1, T)`
 ...             4. Get the service rate for that server and state
 ...             5. Sample the service time
 ...             6. Update any possible attributes for the server
@@ -107,8 +108,8 @@ server objects to allow for further analysis of each server's performance.
 ...             len(ind.simulation.nodes[1].individuals[0]),
 ...             len(ind.simulation.nodes[2].individuals[0]),
 ...         )
-...         is_invalid_state = state[0] > 0 and state[1] < ind.simulation.threshold
-...         if is_invalid_state:
+...         is_invalid = state[0] > 0 and state[1] < ind.simulation.threshold
+...         if is_invalid:
 ...             state = (state[0] - 1, state[1] + 1)
 ...         rate = self.rates[server][state]
 ...         service_time = random.expovariate(rate)
@@ -303,8 +304,8 @@ Markov chain model.
     \label{fig:game_des_markov_baseline}
 \end{figure}
 
-It can be seen that both player end up playing strategy \(s_3\) which is the
-choosing a threshold of \((T^{(1)} = 3, T^{(2)} = 3)\).
+It can be seen that both player end up playing strategy \(s_3\) which
+corresponds to choosing a threshold of \(T^{(A)} = 3\) and \(T^{(B)} = 3\).
 Figures~\ref{fig:game_des_runtime_300}, \ref{fig:game_des_runtime_500} and
 \ref{fig:game_des_runtime_1000} show the asymmetric replicator dynamics run of
 the game when the payoff matrices are calculated using the DES model with
@@ -362,12 +363,12 @@ individuals in node 1 and \(\mu^{(2)} = 2\) otherwise.
 In other words the service rate is now defined as:
 
 \begin{align}
-    \mu_1 =
+    \mu^{(1)} =
     \begin{cases}
         6, & \text{if server id \(= 1\) and } u_1 + v_1 \geq 4 \\
         2, & \text{otherwise}
     \end{cases} \\
-    \mu_2 =
+    \mu^{(2)} =
     \begin{cases}
         8, & \text{if server id \(= 1\) and } u_1 \geq 3 \\
         2, & \text{otherwise}

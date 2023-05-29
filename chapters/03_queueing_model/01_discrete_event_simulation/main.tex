@@ -45,7 +45,7 @@ Node 1 has an exponentially distributed service time with rate \(\mu\),
 a total of \(C\) servers and a queueing capacity of \(N - C\) (making the
 overall capacity \(N\)). 
 Node 2 has a deterministic service time of \(0\), a total of \(M\)
-servers and a queueing capacity of \(M\).
+servers and a queueing capacity of \(0\).
 Note here that, similar to Figure \ref{fig:diagram_of_queueing_system},
 parameters \(N\) and \(M\) are used to approximate the real world system 
 and in fact can be taken to be infinite in the DES.
@@ -124,10 +124,9 @@ For the current implementation the routing matrix is a \(2 \times 2\) array
 that routes individuals from node 2 to node 1 with a probability of
 \(1.0\).
 Furthermore, the server availability for nodes 1 and 2 are set to
-the \texttt{buffer\_capacity} and
-\texttt{num\_of\_servers} respectively and the queue capacities
-are set to \texttt{0} and
-\texttt{system\_capacity - num\_of\_servers}.
+the \texttt{num\_of\_servers} and
+\texttt{buffer\_capacity} respectively and the queue capacities
+are set to \texttt{system\_capacity - num\_of\_servers} and \texttt{0}.
 Note that for node 2 queue capacity is set to 0 and its
 number of servers is set to the buffer capacity.
 From \texttt{ciw}'s data records perspective this made more
