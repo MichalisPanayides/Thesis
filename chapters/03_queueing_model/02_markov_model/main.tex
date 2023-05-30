@@ -129,6 +129,13 @@ Figure~\ref{fig:adjusted_markov_model}.
     \label{fig:adjusted_markov_model}
 \end{figure}
 
+The parameters \(N\) and \(M\) represent the capacities of Node \(1\) and Node
+\(2\) respectively.
+In order to define the state space \( \tilde S \), these two parameters need to
+be finite and greater than zero.
+However, there is also the situation where \(N\) and \(M\) may be infinite.
+In that case, the Markov chain cannot model such infinite state space, but
+can consider these two parameters as the truncation points of the state space.
 
 \subsection{Steady state probability vector}
 \label{sec:steady_state_probabilities}

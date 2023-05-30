@@ -44,9 +44,20 @@ The parameters of the described queueing model are:
     \item \(M\): The capacity of node 2
 \end{itemize}
 
+Note that the parameters \(N\) and \(M\) are defined as the capacities of nodes
+1 and 2 respectively.
+In the case where these capacities are infinite, the queueing network can only
+be modelled using the Discrete Event Simulation (DES) approach.
+The Markov chain approach can only use \(N\) and \(M\) as artificial truncation
+parameters to approximate the behaviour of the system.
+In addition, when type \(1\) individuals arrive at node \(1\) and it is at full
+capacity, they become lost from the system.
+Similarly, when type \(2\) individuals arrive at node \(2\) and it is at full
+capacity, they are also lost from the system.
+
 In Section~\ref{sec:queueing_ems_ed_application} this queueing network will be
-used to model the emergent behaviour between
-Emergency Departments (EDs) and the Emergency Medical System (EMS).
+used to model the structure of an Emergency Department (ED) that receives
+patients in ambulances from the Emergency Medical Services (EMS).
 This chapter extends the concepts described in~\cite{panayides2023game} and
 consists of the following sections:
 
