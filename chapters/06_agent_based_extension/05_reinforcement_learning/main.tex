@@ -17,9 +17,15 @@ rates based on the utilities they receive from the queueing system.
 The service rates will be referred to as the policy in this section.
 A policy is a set of service rates for every server for each possible state
 they can be in.
+The general form of a policy is given by
+equation~\eqref{eq:state_server_dependent_service_rate}.
+
 The following pseudo-code describes the reinforcement learning algorithm.
-At each time step, the agent receives a utility $U$ from the queueing system
+At each iteration, the agent receives a utility $U$ from the queueing system
 and updates its service rate $s$ based on the utility it received.
+A policy update is considered a change in the service rate of a server \(k\) at
+a state $(u, v)$ that was visited in the last simulation run (i.e. increasing
+or decreasing the value of \(\mu_{k, (u,v)}\) for some \(k\) and \((u, v)\)).
 Recall from Section~\ref{sec:agent_based_model} that each agent (server) has
 a different service rate for each possible state they can be in.
 
@@ -29,7 +35,7 @@ a different service rate for each possible state they can be in.
 Choose an initial policy
 Run simulation with current policy
 Calculate initial utility U_current
-For each time step
+For each iteration
     1. Choose a server k
     2. Choose a state (u, v)
     3. Update policy for server k and state (u, v)
@@ -44,11 +50,11 @@ For each time step
 The algorithm has been implemented in python and the scripts are archived and
 can be found in~\cite{michalis_panayides_2023_7586860}.
 
-The total number of time steps is a parameter that needs to be set to a high
+The total number of iterations is a parameter that needs to be set to a high
 enough value to ensure that the agents have enough time to learn from their
 interactions with the queueing system.
 Additionally, in order to eliminate any stochasticity from the simulation
-at each time step, the simulation is run for a fixed runtime and a fixed number
+at each iteration, the simulation is run for a fixed runtime and a fixed number
 of trials.
 Furthermore, when choosing a new policy for a server and a state, the
 algorithm will choose a new policy that is within a certain range of the
@@ -87,13 +93,13 @@ set to:
 \end{equation*}
 
 Figures~\ref{fig:reinforcement_learning_policy_exmaple_1}~-~\ref{fig:reinforcement_learning_policy_exmaple_3} show the
-policy for the \(2\) servers for the first \(3\) time steps of the
+policy for the \(2\) servers for the first \(3\) iterations of the
 reinforcement learning algorithm.
 
 \begin{figure}[H]
     \includegraphics[width=0.45\textwidth]{chapters/06_agent_based_extension/Bin/reinforcement_learning_policy_example/server_1_1.pdf}
     \includegraphics[width=0.45\textwidth]{chapters/06_agent_based_extension/Bin/reinforcement_learning_policy_example/server_2_1.pdf}
-    \caption{Example policy for server \(1\) and server \(2\) at time step \(1\)}
+    \caption{Example policy for server \(1\) and server \(2\) at iteration \(1\)}
     \label{fig:reinforcement_learning_policy_exmaple_1}
 \end{figure}
 
@@ -101,14 +107,14 @@ reinforcement learning algorithm.
 \begin{figure}[H]
     \includegraphics[width=0.45\textwidth]{chapters/06_agent_based_extension/Bin/reinforcement_learning_policy_example/server_1_2.pdf}
     \includegraphics[width=0.45\textwidth]{chapters/06_agent_based_extension/Bin/reinforcement_learning_policy_example/server_2_2.pdf}
-    \caption{Example policy for server \(1\) and server \(2\) at time step \(2\)}
+    \caption{Example policy for server \(1\) and server \(2\) at iteration \(2\)}
     \label{fig:reinforcement_learning_policy_exmaple_2}
 \end{figure}
 
 \begin{figure}[H]
     \includegraphics[width=0.45\textwidth]{chapters/06_agent_based_extension/Bin/reinforcement_learning_policy_example/server_1_3.pdf}
     \includegraphics[width=0.45\textwidth]{chapters/06_agent_based_extension/Bin/reinforcement_learning_policy_example/server_2_3.pdf}
-    \caption{Example policy for server \(1\) and server \(2\) at time step \(3\)}
+    \caption{Example policy for server \(1\) and server \(2\) at iteration \(3\)}
     \label{fig:reinforcement_learning_policy_exmaple_3}
 \end{figure}
 
@@ -174,13 +180,13 @@ This means that in order for servers to increase their utility they either
 need to work faster or increase the amount of time they are idle.
 Figure~\ref{fig:RL_utility3_1_e01} shows the utilities and mean service rate
 of servers from the reinforcement learning run using utility function
-\(U_k^{(3)}\) with \(e = 0.1\) and \(100,\!000\) time steps.
+\(U_k^{(3)}\) with \(e = 0.1\) and \(100,\!000\) iterations.
 
 \begin{figure}[H]
     \includegraphics[width=\textwidth]{chapters/06_agent_based_extension/Bin/reinforcement_learning_results/utility_3/u3_1_e01.pdf}
     \caption{Utilities (left) and mean service rate (right) of servers from the
     reinforcement learning run using utility function \(U_k^{(3)}\) with
-    \(e = 0.1\) and \(100,\!000\) time steps}
+    \(e = 0.1\) and \(100,\!000\) iterations}
     \label{fig:RL_utility3_1_e01}
 \end{figure}
 
@@ -193,17 +199,17 @@ In addition, the mean service rate of server \(4\) is the lowest while servers
 All servers managed to increase their utility by reducing their mean service
 rate (i.e. working faster).
 Figure~\ref{fig:RL_utility3_2_e01} shows the same example as above but with
-\(500,\!000\) time steps.
+\(500,\!000\) iterations.
 
 \begin{figure}[H]
     \includegraphics[width=\textwidth]{chapters/06_agent_based_extension/Bin/reinforcement_learning_results/utility_3/u3_2_e01.pdf}
     \caption{Utilities (left) and mean service rate (right) of servers from the
     reinforcement learning run using utility function \(U_k^{(3)}\) with
-    \(e = 0.1\) and \(500,\!000\) time steps}
+    \(e = 0.1\) and \(500,\!000\) iterations}
     \label{fig:RL_utility3_2_e01}
 \end{figure}
 
-Running the algorithm again for a longer runtime of \(500,\!000\) time steps
+Running the algorithm again for a longer runtime of \(500,\!000\) iterations
 does not change the results significantly.
 The same observations can be made for both figures.
 
@@ -218,7 +224,7 @@ Figures~\ref{fig:RL_utility3_1_e01}~and~\ref{fig:RL_utility3_2_e01}
 The service rate of each server consists of a different service rate for each
 state \((u, v)\) of the system.
 The way the reinforcement learning algorithm is constructed, the service rate
-of each server is updated at each time step based on the visited states of the
+of each server is updated at each iteration based on the visited states of the
 system.
 This means that it doesn't make sense to calculate the mean service rate from
 all states of the system.
@@ -452,13 +458,13 @@ That is a using a utility function \(U_k^{(7)}\) with \(e = 0.5\) and arrival
 rates of \(\lambda_1 = 0.5\) and \(\lambda_2 = 1\).
 In this subsection the reinforcement learning algorithm is run with the same
 parameters, but the arrival rates are changed during the run.
-The total runtime of the reinforcement learning algorithm is 5000 time steps.
+The total runtime of the reinforcement learning algorithm is 5000 iterations.
 The arrival rates are set to \(\lambda_1 = 0.5\) and \(\lambda_2 = 1\) for the
-first \(2000\) time steps.
+first \(2000\) iterations.
 Then the arrival rates are increased to \(\lambda_1 = 3\) and
-\(\lambda_2 = 3.5\) for time steps \(2000\) to \(4000\) and then the arrival
+\(\lambda_2 = 3.5\) for iterations \(2000\) to \(4000\) and then the arrival
 rates are decreased back to \(\lambda_1 = 0.5\) and \(\lambda_2 = 1\) for the
-last \(1000\) time steps.
+last \(1000\) iterations.
 
 \begin{figure}[H]
     \includegraphics[width=\textwidth]{chapters/06_agent_based_extension/Bin/reinforcement_learning_results/utility_7/u7_6_final.pdf}
@@ -470,9 +476,9 @@ last \(1000\) time steps.
 
 Figure~\ref{fig:RL_utility7_6_final} shows the utilities and the weighted mean
 service rates of the servers.
-The first \(2000\) time steps are identical with the first \(2000\) time steps
+The first \(2000\) iterations are identical with the first \(2000\) iterations
 of the reinforcement learning run of Figure~\ref{fig:RL_utility7_4_e05}.
-At time step \(2000\), when the arrival rates are increased to \(\lambda_1 = 3\)
+At iteration \(2000\), when the arrival rates are increased to \(\lambda_1 = 3\)
 and \(\lambda_2 = 3.5\), the utilities of the agents drop significantly.
 At the same time the weighted mean service rates of servers \(2\), \(3\) and
 \(4\) increase significantly while server \(1\)'s rates are decreased.
@@ -481,13 +487,13 @@ the servers does not matter that much anymore.
 All servers are constantly busy an they end up having more similar service
 rates with each other.
 
-At time step \(4000\) the arrival rates are decreased back to \(\lambda_1 =
+At iteration \(4000\) the arrival rates are decreased back to \(\lambda_1 =
 0.5\) and \(\lambda_2 = 1\).
 The utilities of the agents increase again and the weighted mean service rates
 of servers \(2\), \(3\) and \(4\) decrease while server \(1\)'s rates are
 increased.
 What is more important here is how the utilities and the weighted mean service
 rates change.
-Having learned their optimal service rates during the first \(2000\) time steps
+Having learned their optimal service rates during the first \(2000\) iterations
 the servers are able to quickly retrieve their chosen service rates when the
 arrival rates are decreased back to \(\lambda_1 = 0.5\) and \(\lambda_2 = 1\).
