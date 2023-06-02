@@ -164,7 +164,7 @@ Consider the utility function of the two players from
 equation~\eqref{eq:utility_queueing_systems}:
 
 \begin{equation*}
-    U_{T^A, T_B}^i = 1 - \left( \hat{P} - P(W_i < t) \right)^2
+    U_{T^A, T^B}^i = 1 - \left( \hat{P} - P(W_i < t) \right)^2
     \qquad i \in {A, B}
 \end{equation*}
 
@@ -182,7 +182,7 @@ Hospitals \(A\) and \(B\) are able to achieve a target of \(t = 2\) and do not
 need to block ambulances unless they reach their maximum capacity.
 
 What if the target time \(t\) was decreased from \(t = 2\) to \(t = 1.7\)?
-Now, in order for the hospitals to be maximise their utility, \(95\%\) of
+Now, in order for the hospitals to maximise their utility, \(95\%\) of
 patients would need to receive treatment within \(1.7\) hours from their time
 of arrival instead of \(2\) hours.
 Using the Lemke-Howson algorithm, the following pure strategy Nash equilibrium
@@ -198,8 +198,6 @@ hospital \(B\) playing a strategy of \(T^B = 5\).
 This means that hospital \(A\) will only block ambulances when the number of
 patients in hospital \(A\) reaches \(3\) and hospital \(B\) will only block
 ambulances when the number of patients in hospital \(B\) reaches \(5\).
-Now 
-these strategies emerge.
 Figure~\ref{fig:asymmetric_replicator_dynamics_example_1_what_if_1} shows the
 results of the asymmetric replicator dynamics algorithm with the decreased
 target time \(t = 1.7\).

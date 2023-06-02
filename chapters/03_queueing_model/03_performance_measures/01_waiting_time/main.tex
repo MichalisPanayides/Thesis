@@ -37,14 +37,14 @@ Figure~\ref{fig:markov_variation_no_arrivals} shows this new Markov chain model.
     \label{fig:markov_variation_no_arrivals}
 \end{figure}
 
-For this particular Markov chain variation the expected waiting time spent at
+For this particular Markov chain variation the expected time spent at
 each state \((u,v)\) for type \(i\) individuals is denoted by \(c_w^i(u,v)\).
 From a type 1 individual's perspective, when they arrive at the system, no
 matter how many other individuals of either type arrive after them it will not
-affect their own waiting time.
-The desired waiting time by acquired by calculating the inverse of the sum of
-the out-flow rate of that state.
-Therefore by eliminating the arrival rates of both individuals, the waiting time
+affect their own time.
+The desired time spent at each state can be acquired by calculating the inverse
+of the sum of the out-flow rate of that state.
+Therefore by eliminating the arrival rates of both individuals, the time spent
 at each state for type 1 individuals can be expressed as:
 
 \begin{equation}\label{eq:waiting_time_state_type_1}
@@ -58,10 +58,10 @@ at each state for type 1 individuals can be expressed as:
 Note here that whenever any type 1 individual is at a state \((u,v)\) where
 \(u > 0\) and \(v = T\) (i.e. all states \((1,T), (2,T) \dots, (M,T)\)) the
 expected waiting time is set to \(0\).
-This is done to capture the trip thorough the Markov chain from the perspective
+This is done to capture the trip through the Markov chain from the perspective
 of type 1 individuals,
 meaning that individuals visit all states of the threshold column but only the
-one in the first row will return a non-zero waiting time.
+one in the first row will return a non-zero time.
 Additionally, in equation~\eqref{eq:waiting_time_state_type_1} the service rate
 \(\mu\) is multiplied by the minimum of \(v\) and \(C\) since, when the system
 is at a state \((u,v)\) where \(v \geq C\), the maximum out-flow service rate
@@ -72,8 +72,8 @@ Similarly from a type 2 individual's perspective the same logic holds.
 The only difference is that type 2 individuals cannot have a waiting time when
 they are blocked in node 2.
 From the Markov chain model's perspective, type 2 individuals cannot have a wait
-whenever they are at state \(u, v\) where \(u > 0\).
-Thus, the waiting time at each state for type 2 individuals can be expressed as:
+whenever they are at state \((u, v)\) where \(u > 0\).
+Thus, the time at each state for type 2 individuals can be expressed as:
 
 \begin{equation}\label{eq:waiting_time_state_type_2}
     c^{(2)}_w(u,v) =
@@ -409,7 +409,7 @@ Note that this function uses both of the functions defined earlier.
 
 Additionally, before getting the mean waiting time for each type of individuals,
 a function for the set of accepting states described
-in~\eqref{eq:accepting_states_type_1} and~\eqref{eq:accepting_states_type_1}
+in~\eqref{eq:accepting_states_type_1} and~\eqref{eq:accepting_states_type_2}
 needs to be constructed.
 
 \begin{lstlisting}[

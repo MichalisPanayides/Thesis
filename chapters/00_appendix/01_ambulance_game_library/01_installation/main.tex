@@ -17,8 +17,9 @@ $ python -m pip install ambulance_game
 
 Alternatively, a development version of the library can be installed from
 GitHub.
-The following commands clone the repository, install the \texttt{flit}
-package manager and install the library in development mode: 
+The following commands clone the repository, activate the \texttt{conda}
+environment, install the \texttt{flit} package manager and install the library
+in development mode: 
 
 \begin{lstlisting}[
     language=bash,
@@ -29,6 +30,8 @@ package manager and install the library in development mode:
 ]
 $ git clone https://github.com/MichalisPanayides/AmbulanceDecisionGame.git
 $ cd AmbulanceDecisionGame
+$ conda env create --file environment.yml
+$ conda activate ambulance_game
 $ python -m pip install flit
 $ python -m flit install --symlink
 \end{lstlisting}

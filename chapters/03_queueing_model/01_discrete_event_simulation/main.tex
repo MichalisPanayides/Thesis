@@ -23,8 +23,9 @@ Node 2 is defined as a non-service node where there is only a queueing
 space for individuals to wait there until they are allowed to node 1.
 From an implementation perspective there is an equivalent system that can be
 used where instead of a node with no service and queueing capacity \(M\), there
-are \(M\) servers each serving with a service rate of \(0\) and no queueing
-capacity, as shown in Figure~\ref{fig:equivalent_diagram_of_queueing_system}.
+are \(M\) servers each serving with a deterministic service time of \(0\) and no
+queueing capacity, as shown in
+Figure~\ref{fig:equivalent_diagram_of_queueing_system}.
 
 \begin{figure}[H]
     \centering
@@ -45,7 +46,7 @@ Node 1 has an exponentially distributed service time with rate \(\mu\),
 a total of \(C\) servers and a queueing capacity of \(N - C\) (making the
 overall capacity \(N\)). 
 Node 2 has a deterministic service time of \(0\), a total of \(M\)
-servers and a queueing capacity of \(M\).
+servers and a queueing capacity of \(0\).
 Note here that, similar to Figure \ref{fig:diagram_of_queueing_system},
 parameters \(N\) and \(M\) are used to approximate the real world system 
 and in fact can be taken to be infinite in the DES.
@@ -63,6 +64,15 @@ from node 2 to node 1.
     \right]
 \end{equation}
 
+The routing parameter is a matrix that represents how nodes are connected to
+each other.
+For example the element in the first row and second column of the routing
+parameter corresponds to the probability of an individual leaving the first
+node and arriving at the second node.
+In addition, when a row of the routing parameter contains only zeros, the
+equivalent node routes individuals to the exit of the system.
+Note that, in the particular routing parameter the nodes are reversed because
+in the implementation node 2 is assigned id 1 and node 1 is assigned id 2.
 
 \subsection{Implementation}
 The python library \texttt{ciw}~\cite{ciwpython, ciwarticle}
@@ -124,10 +134,9 @@ For the current implementation the routing matrix is a \(2 \times 2\) array
 that routes individuals from node 2 to node 1 with a probability of
 \(1.0\).
 Furthermore, the server availability for nodes 1 and 2 are set to
-the \texttt{buffer\_capacity} and
-\texttt{num\_of\_servers} respectively and the queue capacities
-are set to \texttt{0} and
-\texttt{system\_capacity - num\_of\_servers}.
+the \texttt{num\_of\_servers} and
+\texttt{buffer\_capacity} respectively and the queue capacities
+are set to \texttt{system\_capacity - num\_of\_servers} and \texttt{0}.
 Note that for node 2 queue capacity is set to 0 and its
 number of servers is set to the buffer capacity.
 From \texttt{ciw}'s data records perspective this made more
@@ -378,8 +387,9 @@ mean number of individuals in Node 2.
 These metrics can also by calculated using an additional functionality of
 \texttt{ciw}.
 There is an additional argument that can be passed to the
-\texttt{ciw.Simulation} object called \texttt{tracker} where it makes the
-simulation object track the state of the system throughout the simulation.
+\texttt{ciw.Simulation} object called \texttt{tracker} that makes the
+simulation object track the state probabilities of the system throughout the
+simulation.
 Thus, at the end of the simulation, the probability distribution of the number
 of individuals in each node can be extracted.
 Section~\ref{sec:queueing_performance_measures} gives a more detailed
